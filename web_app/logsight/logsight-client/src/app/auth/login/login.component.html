@@ -1,21 +1,7 @@
 <h1 id="title" class="title">Login</h1>
 <p class="sub-title">Hello! Log in with your email.</p>
 
-<nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger" role="alert">
-  <p class="alert-title"><b>Oh snap!</b></p>
-  <ul class="alert-message-list">
-    <li *ngFor="let error of errors" class="alert-message">{{ error }}</li>
-  </ul>
-</nb-alert>
-
-<nb-alert *ngIf="showMessages.success && messages?.length && !submitted" outline="success" role="alert">
-  <p class="alert-title"><b>Hooray!</b></p>
-  <ul class="alert-message-list">
-    <li *ngFor="let message of messages" class="alert-message">{{ message }}</li>
-  </ul>
-</nb-alert>
-
-<form [formGroup]="form" aria-labelledby="title">
+<form [formGroup]="form" aria-labelledby="title" >
   <div class="form-control-group">
     <label class="label" for="email">Email address:</label>
     <input nbInput
@@ -26,14 +12,15 @@
            pattern=".+@.+\..+"
            placeholder="Email address"
            autofocus
+           [status]="form.controls['email'].dirty ? (form.controls['email'].invalid  ? 'danger' : 'success') : ''"
            [required]="getConfigValue('forms.validation.email.required')"
            [attr.aria-invalid]="form.invalid && form.touched ? true : null">
-    <ng-container *ngIf="form.invalid && form.touched">
-      <p class="error-message" *ngIf="form.errors?.required">
+    <ng-container *ngIf="form.controls['email'].invalid && form.touched">
+      <p class="error-message" *ngIf="form.controls['email'].errors?.required">
         Email is required!
       </p>
-      <p class="error-message" *ngIf="form.errors?.pattern">
-        Email should be the real one!
+      <p class="error-message" *ngIf="form.controls['email'].errors?.pattern">
+        Email is invalid!
       </p>
     </ng-container>
   </div>
@@ -47,19 +34,15 @@
            id="password"
            placeholder="Password"
            autofocus
-           [required]="getConfigValue('forms.validation.email.required')"
+           [status]="form.controls['password'].dirty ? (form.controls['password'].invalid  ? 'danger' : 'success') : ''"
+           [required]="true"
            [attr.aria-invalid]="form.invalid && form.touched ? true : null">
-    <ng-container *ngIf="form.invalid && form.touched ">
-      <p class="error-message" *ngIf="form.errors?.required">
+    <ng-container *ngIf="form.controls['password'].invalid && form.controls['password'].touched ">
+      <p class="error-message" *ngIf="form.controls['password'].errors?.required">
         Password is required!
       </p>
     </ng-container>
   </div>
-
-<!--  <div class="form-control-group accept-group">-->
-  <!--    <nb-checkbox name="rememberMe" [(ngModel)]="user.rememberMe" *ngIf="rememberMe">Remember me</nb-checkbox>-->
-  <!--    <a class="forgot-password" routerLink="../request-password">Forgot Password?</a>-->
-  <!--  </div>-->
 
   <button nbButton
           fullWidth
@@ -69,24 +52,6 @@
     Log In
   </button>
 </form>
-
-<section *ngIf="socialLinks && socialLinks.length > 0" class="links" aria-label="Social sign in">
-  or enter with:
-  <div class="socials">
-    <ng-container *ngFor="let socialLink of socialLinks">
-      <a *ngIf="socialLink.link"
-         [routerLink]="socialLink.link"
-         [attr.target]="socialLink.target"
-         [attr.class]="socialLink.icon"
-         [class.with-icon]="socialLink.icon">{{ socialLink.title }}</a>
-      <a *ngIf="socialLink.url"
-         [attr.href]="socialLink.url"
-         [attr.target]="socialLink.target"
-         [attr.class]="socialLink.icon"
-         [class.with-icon]="socialLink.icon">{{ socialLink.title }}</a>
-    </ng-container>
-  </div>
-</section>
 
 <section class="another-action" aria-label="Register">
   Don't have an account? <a class="text-link" routerLink="../register">Register</a>

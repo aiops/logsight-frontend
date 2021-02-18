@@ -35,15 +35,15 @@ export class DashboardPage implements OnInit, OnDestroy {
         domain: [colors.primaryLight, colors.infoLight, colors.successLight, colors.warningLight, colors.dangerLight],
       };
 
-      setInterval(() => {
-        this.dashboardService.loadLineChartData().subscribe(data => {
-          data.datasets[0].backgroundColor = NbColorHelper.hexToRgbA(colors.primary, 0.3);
-          data.datasets[1].backgroundColor = NbColorHelper.hexToRgbA(colors.danger, 0.3);
-          data.datasets[0].borderColor = colors.primary;
-          data.datasets[1].borderColor = colors.danger;
-          this.data = data;
-        });
-      }, 2000);
+      // setInterval(() => {
+      this.dashboardService.loadLineChartData().subscribe(data => {
+        data.datasets[0].backgroundColor = NbColorHelper.hexToRgbA(colors.primary, 0.3);
+        data.datasets[1].backgroundColor = NbColorHelper.hexToRgbA(colors.danger, 0.3);
+        data.datasets[0].borderColor = colors.primary;
+        data.datasets[1].borderColor = colors.danger;
+        this.data = data;
+      });
+      // }, 2000);
 
       this.getOptions(chartjs);
     });

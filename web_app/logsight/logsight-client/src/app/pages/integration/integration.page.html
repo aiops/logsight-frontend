@@ -1,0 +1,36 @@
+<div class="row" style="width: 100%">
+  <nb-card class="p-3" style="width: 100%">
+    <div class="row">
+      <div class="col-md-8">
+        <h5 class="mb-3">Create new application</h5>
+        <form class="col-lg-6 col-lg-8 col-sm-12 pl-0" [formGroup]="form" (submit)="createApplication()"
+              aria-labelledby="title">
+          <div class="form-control-group">
+            <label class="label mr-2" for="name">Application name:</label>
+            <input nbInput class="mr-3"
+                   type="text"
+                   formControlName="name"
+                   id="name"
+                   placeholder="Application name"
+                   [required]="true"
+                   [attr.aria-invalid]="form.invalid && form.touched ? true : null">
+            <ng-container *ngIf="form.controls['name'].invalid && form.touched">
+              <p class="error-message" *ngIf="form.controls['email'].errors?.required">
+                Application name is required!
+              </p>
+            </ng-container>
+
+            <button nbButton style="margin-bottom: 3px"
+                    status="success"
+                    [disabled]="!form.valid">
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-4">
+        <p class="mb-3 text-right">Your key is: <b>{{key}}</b></p>
+      </div>
+    </div>
+  </nb-card>
+</div>

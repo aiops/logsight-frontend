@@ -12,19 +12,26 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
-  NbChatModule,
+  NbAlertModule, NbButtonModule,
+  NbChatModule, NbCheckboxModule,
   NbDatepickerModule,
-  NbDialogModule,
+  NbDialogModule, NbInputModule,
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { AuthService } from './auth/auth.service';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -39,8 +46,15 @@ import {
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    NbAlertModule,
+    NbInputModule,
+    NbCheckboxModule,
+    ReactiveFormsModule,
+    NbButtonModule,
+    SimpleNotificationsModule.forRoot()
   ],
   bootstrap: [AppComponent],
+  providers: [AuthService]
 })
 export class AppModule {
 }

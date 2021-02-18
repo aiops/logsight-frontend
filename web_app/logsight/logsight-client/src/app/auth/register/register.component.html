@@ -1,0 +1,71 @@
+<h1 id="title" class="title">Register</h1>
+
+<form [formGroup]="form" aria-labelledby="title" (submit)="onRegister()">
+  <div class="form-control-group">
+    <label class="label" for="email">Email address:</label>
+    <input nbInput
+           fullWidth
+           type="email"
+           formControlName="email"
+           id="email"
+           pattern=".+@.+\..+"
+           placeholder="Email address"
+           autofocus
+           [status]="form.controls['email'].dirty ? (form.controls['email'].invalid  ? 'danger' : 'success') : ''"
+           [required]="true"
+           [attr.aria-invalid]="form.invalid && form.touched ? true : null">
+    <ng-container *ngIf="form.controls['email'].invalid && form.touched">
+      <p class="error-message" *ngIf="form.controls['email'].errors?.required">
+        Email is required!
+      </p>
+      <p class="error-message" *ngIf="form.controls['email'].errors?.pattern">
+        Email is invalid!
+      </p>
+    </ng-container>
+  </div>
+
+  <div class="form-control-group">
+    <label class="label" for="password">Password:</label>
+    <input nbInput
+           fullWidth
+           type="password"
+           formControlName="password"
+           id="password"
+           placeholder="Password"
+           autofocus
+           [status]="form.controls['password'].dirty ? (form.controls['password'].invalid  ? 'danger' : 'success') : ''"
+           [required]="true"
+           [attr.aria-invalid]="form.invalid && form.touched ? true : null">
+    <ng-container *ngIf="form.controls['password'].invalid && form.controls['password'].touched ">
+      <p class="error-message" *ngIf="form.controls['password'].errors?.required">
+        Password is required!
+      </p>
+    </ng-container>
+  </div>
+
+  <div class="form-control-group">
+    <label class="label" for="repeatPassword">Repeat Password:</label>
+    <input nbInput
+           fullWidth
+           type="password"
+           formControlName="repeatPassword"
+           id="repeatPassword"
+           placeholder="Repeat Password"
+           [status]="form.controls['repeatPassword'].dirty ? (form.controls['repeatPassword'].invalid || form.controls['repeatPassword'].value != form.controls['password'].value  ? 'danger' : 'success') : ''"
+           autofocus
+           [required]="true"
+           [attr.aria-invalid]="form.controls['repeatPassword'].invalid && form.controls['repeatPassword'].touched ? true : null">
+    <ng-container *ngIf="form.controls['repeatPassword'].invalid && form.controls['repeatPassword'].touched ">
+      <p class="error-message" *ngIf="form.controls['repeatPassword'].errors?.required">
+        Password is required!
+      </p>
+    </ng-container>
+  </div>
+
+  <button nbButton
+          fullWidth
+          status="success"
+          [disabled]="!form.valid">
+    Register
+  </button>
+</form>

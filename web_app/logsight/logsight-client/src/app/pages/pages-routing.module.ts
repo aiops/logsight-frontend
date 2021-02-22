@@ -24,6 +24,11 @@ const routes: Routes = [{
         .then(m => m.IncidentsModule),
     },
     {
+      path: 'integration',
+      loadChildren: () => import('./integration/integration.module')
+        .then(m => m.IntegrationModule),
+    },
+    {
       path: 'forms',
       loadChildren: () => import('./forms/forms.module')
         .then(m => m.FormsModule),

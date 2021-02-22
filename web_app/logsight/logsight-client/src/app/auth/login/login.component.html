@@ -1,7 +1,7 @@
 <h1 id="title" class="title">Login</h1>
 <p class="sub-title">Hello! Log in with your email.</p>
 
-<form [formGroup]="form" aria-labelledby="title" >
+<form [formGroup]="form" (submit)="onLogin()" aria-labelledby="title">
   <div class="form-control-group">
     <label class="label" for="email">Email address:</label>
     <input nbInput
@@ -13,7 +13,7 @@
            placeholder="Email address"
            autofocus
            [status]="form.controls['email'].dirty ? (form.controls['email'].invalid  ? 'danger' : 'success') : ''"
-           [required]="getConfigValue('forms.validation.email.required')"
+           [required]="true"
            [attr.aria-invalid]="form.invalid && form.touched ? true : null">
     <ng-container *ngIf="form.controls['email'].invalid && form.touched">
       <p class="error-message" *ngIf="form.controls['email'].errors?.required">
@@ -47,8 +47,7 @@
   <button nbButton
           fullWidth
           status="success"
-          [disabled]="submitted || !form.valid"
-          [class.btn-pulse]="submitted">
+          [disabled]="!form.valid">
     Log In
   </button>
 </form>

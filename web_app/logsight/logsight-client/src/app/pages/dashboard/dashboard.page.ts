@@ -21,7 +21,7 @@ export class DashboardPage implements OnInit {
   ngOnInit(): void {
     this.loadHeatmapData()
     this.loadPieChartData()
-    // this.loadStackedAreaChartData()
+    this.loadStackedAreaChartData()
   }
 
   loadHeatmapData() {

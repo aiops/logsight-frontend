@@ -21,24 +21,27 @@ export class DashboardPage implements OnInit {
   ngOnInit(): void {
     this.loadHeatmapData()
     this.loadPieChartData()
-    this.loadStackedAreaChartData()
+    // this.loadStackedAreaChartData()
   }
 
   loadHeatmapData() {
     this.dashboardService.loadHeatmapData().subscribe(data => {
-      this.heatmapData = data;
+      console.log(data, "from loadHeatmapData")
+      this.heatmapData = data.data;
     });
   }
 
   loadPieChartData() {
     this.dashboardService.loadPieChartData().subscribe(data => {
-      this.pieChartData = data;
+      console.log(data.data, "from loadPieChartData")
+      this.pieChartData = data.data;
     });
   }
 
   loadStackedAreaChartData() {
     this.dashboardService.loadStackedChartData().subscribe(data => {
-      this.stackedChartData = data;
+      console.log(data.data, "from loadStackedAreaChartData")
+      this.stackedChartData = data.data;
     });
   }
 }

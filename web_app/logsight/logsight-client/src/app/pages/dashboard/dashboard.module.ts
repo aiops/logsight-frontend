@@ -15,7 +15,7 @@ import { StackedAreaChartComponent } from './stacked-area-chart/stacked-area-cha
     ThemeModule,
     NgxChartsModule,
     ChartModule,
-    NbCardModule,
+    NbCardModule
   ],
   declarations: [
     DashboardPage,

@@ -43,10 +43,11 @@
     }
 
     .logo {
-      padding: 0 1.25rem;
-      font-size: 1.75rem;
-      @include nb-ltr(border-left, 1px solid nb-theme(divider-color));
-      @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: #6d48e5 !important;
+      vertical-align: middle;
       white-space: nowrap;
       text-decoration: none;
     }

@@ -26,9 +26,11 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthService } from './auth/auth.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { LandingPage } from './landing-page/landing.page';
+import { ActivateComponent } from './auth/activation/activate.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent],
   imports: [
     BrowserModule,
     FormsModule,

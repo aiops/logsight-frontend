@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbLoginComponent } from '@nebular/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { LoginService } from '../login.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService,
+  constructor(private authService: LoginService,
               private notificationService: NotificationsService,
               private router: Router) {
   }

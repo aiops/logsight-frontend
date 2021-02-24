@@ -11,6 +11,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
+import { AuthenticationGuard } from './auth/authentication-guard';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,8 @@ export const routes: Routes = [
   },
   {
     path: 'pages',
+    canActivate: [AuthenticationGuard],
+    canActivateChild: [AuthenticationGuard],
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
   },

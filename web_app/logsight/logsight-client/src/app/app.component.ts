@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   onContextItemSelection(data) {
     if (data === 'log_out') {
       localStorage.setItem('key', null)
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/']);
     }
   }
 }

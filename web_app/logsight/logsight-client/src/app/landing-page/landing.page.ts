@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { LoginService } from '../auth/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -17,7 +17,7 @@ export class LandingPage {
   });
   message = '';
 
-  constructor(private authService: AuthService,
+  constructor(private authService: LoginService,
               private notificationService: NotificationsService,
               private router: Router) {
   }

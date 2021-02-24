@@ -5,7 +5,7 @@ import { LogsightUser } from '../@core/common/logsight-user';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class AuthService {
+export class LoginService {
   constructor(private apiService: ApiService) {
   }
 
@@ -27,5 +27,9 @@ export class AuthService {
 
   activateUser(key: string) {
     return this.apiService.post(`/api/users/activate`, { key });
+  }
+
+  isUserLoggedIn() {
+
   }
 }

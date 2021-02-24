@@ -24,7 +24,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { AuthService } from './auth/auth.service';
+import { LoginService } from './auth/login.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
@@ -56,7 +56,7 @@ import { ActivateComponent } from './auth/activation/activate.component';
     SimpleNotificationsModule.forRoot()
   ],
   bootstrap: [AppComponent],
-  providers: [AuthService]
+  providers: [LoginService]
 })
 export class AppModule {
 }

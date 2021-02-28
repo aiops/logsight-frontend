@@ -18,7 +18,7 @@ export class LoginService {
   }
 
   login(login: { email: string, password: string }): any {
-    return this.apiService.post('/api/auth/login', login);
+    return this.apiService.post('/login', login);
   }
 
   getUser(key: string): Observable<LogsightUser> {

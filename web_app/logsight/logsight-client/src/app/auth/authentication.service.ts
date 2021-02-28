@@ -43,6 +43,10 @@ export class AuthenticationService {
     }
   }
 
+  getAuthToken() {
+    return this.loggedUser?.key;
+  }
+
   isUserLoggedIn() {
     return this.getLoggedUser()
       .pipe(

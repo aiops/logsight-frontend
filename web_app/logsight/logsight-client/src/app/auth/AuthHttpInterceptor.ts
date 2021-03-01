@@ -35,9 +35,6 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 
   handleResponse(event: HttpEvent<any>) {
     if (event instanceof HttpResponse) {
-      if (event.status === 401) {
-        console.error('401 go to login', event);
-      }
     }
   }
 

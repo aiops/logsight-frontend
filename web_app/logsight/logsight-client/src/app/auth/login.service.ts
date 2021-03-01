@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class LoginService {
-  constructor(private apiService: ApiService, private http: HttpClient) {
+  constructor(private apiService: ApiService) {
   }
 
   register(registerForm: Register): any {
@@ -19,9 +19,7 @@ export class LoginService {
   }
 
   login(login: { email: string, password: string }): any {
-    const auht = 'Basic ' + btoa('username:password')
-    let headers = { 'Authorization': auht, 'Access-Control-Allow-Origin': 'Authorization' };
-    return this.http.post('/login', login, { headers });
+    return this.apiService.post('/api/auth/login', login);
   }
 
   getUser(key: string): Observable<LogsightUser> {
@@ -30,9 +28,5 @@ export class LoginService {
 
   activateUser(key: string) {
     return this.apiService.post(`/api/users/activate`, { key });
-  }
-
-  isUserLoggedIn() {
-
   }
 }

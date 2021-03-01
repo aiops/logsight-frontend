@@ -28,7 +28,7 @@ import { LoginService } from './auth/login.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
-import { AuthHttpInterceptor } from './auth/AuthHttpInterceptor';
+import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent],

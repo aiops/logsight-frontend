@@ -22,14 +22,13 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild {
   }
 
   private canActivateCheck(): Observable<boolean> {
-    // return this.authService.isUserLoggedIn().pipe(
-    //   map(canActivate => {
-    //     if (!canActivate) {
-    //       this.router.navigate(['/']);
-    //       return false
-    //     }
-    //     return true
-    //   }))
-    return of(true)
+    return this.authService.isUserLoggedIn().pipe(
+      map(canActivate => {
+        if (!canActivate) {
+          this.router.navigate(['/']);
+          return false
+        }
+        return true
+      }))
   }
 }

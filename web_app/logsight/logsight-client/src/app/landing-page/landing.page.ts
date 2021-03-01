@@ -30,20 +30,8 @@ export class LandingPage {
     }
   }
 
-  // onLogin() {
-  //   this.authService.login(this.form.value).subscribe(resp => {
-  //     if (resp?.key) {
-  //       localStorage.setItem('key', resp.key);
-  //       this.router.navigate(['/pages/dashboard'])
-  //     } else {
-  //       this.notificationService.error('Error', 'Incorrect email or password')
-  //     }
-  //   })
-  // }
-
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
-      console.log('resp');
         this.router.navigate(['/pages/dashboard'])
       }, err => {
         console.log('login error', err)

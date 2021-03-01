@@ -13,16 +13,14 @@ export class AuthenticationService {
   private loggedUser: LogsightUser | null;
 
   constructor(private apiService: ApiService) {
-
     this.getLoggedUser();
-
   }
 
   getLoggedUser(): Observable<LogsightUser | null> {
-    const key = localStorage.getItem('key');
-    if (key) {
+    const token = localStorage.getItem('token');
+    if (token) {
       if (!this.userChecked) {
-        return this.apiService.get(`/api/users/${key}`).pipe(
+        return this.apiService.get(`/api/users/${token}`).pipe(
           map(user => {
             this.userChecked = true;
             this.loggedUser = user
@@ -41,10 +39,6 @@ export class AuthenticationService {
     } else {
       return of(null)
     }
-  }
-
-  getAuthToken() {
-    return this.loggedUser?.key;
   }
 
   isUserLoggedIn() {

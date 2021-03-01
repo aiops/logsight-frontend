@@ -13,12 +13,9 @@ import { of } from 'rxjs';
 
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
-  constructor(private auth: AuthenticationService) {
-  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    let token = this.auth.getAuthToken();
+    let token = localStorage['token'];
     if (!token) {
       return next.handle(req).do(this.handleResponse).catch(this.handleError);
     }
@@ -33,8 +30,12 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 
   }
 
-  handleResponse(event: HttpEvent<any>) {
-    if (event instanceof HttpResponse) {
+  handleResponse(resp: HttpEvent<any>) {
+    if (resp instanceof HttpResponse) {
+      if (resp?.body?.token) {
+        console.log('set token', resp.body.token)
+        localStorage['token'] = resp.body.token
+      }
     }
   }
 
@@ -43,7 +44,6 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     if ((contentType === 'application/json' || contentType === null) && event.error.text === '') {
       return of(null);
     }
-
     return Observable.throw(event);
   }
 }

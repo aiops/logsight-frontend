@@ -3,10 +3,11 @@ import { ApiService } from '../@core/service/api.service';
 import { Register } from '../@core/common/register';
 import { LogsightUser } from '../@core/common/logsight-user';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class LoginService {
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private http: HttpClient) {
   }
 
   register(registerForm: Register): any {
@@ -18,7 +19,9 @@ export class LoginService {
   }
 
   login(login: { email: string, password: string }): any {
-    return this.apiService.post('/login', login);
+    const auht = 'Basic ' + btoa('username:password')
+    let headers = { 'Authorization': auht, 'Access-Control-Allow-Origin': 'Authorization' };
+    return this.http.post('/login', login, { headers });
   }
 
   getUser(key: string): Observable<LogsightUser> {

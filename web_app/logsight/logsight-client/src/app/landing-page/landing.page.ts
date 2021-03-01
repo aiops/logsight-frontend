@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'landing',
-  styleUrls: ['./animate.css', './owl.carousel.css', './owl.theme.css', './style.css'],
+  styleUrls: ['.assets/css/animate.css', '.assets/css/owl.carousel.css', '.assets/css/owl.theme.css', '.assets/css/style.css'],
   templateUrl: './landing.page.html',
 })
 export class LandingPage {

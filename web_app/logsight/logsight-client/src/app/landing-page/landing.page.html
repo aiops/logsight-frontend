@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+  <meta charset="utf-8">
+  <title>LogSight</title>
+  <link rel="icon" href="assets/icons/favicon.png" type="image/png" sizes="16x16">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Array Multipurpose Startup Business Template">
+  <meta name="keywords" content="Array HTML Template, Array Startup Business Template, Startup Template">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+</head>
+
+
 <body>
 <div class="wrapper">
   <!-- Navbar Section -->
@@ -17,8 +29,7 @@
           <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#features">Features</a></li>
           <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#reviews">Reviews</a></li>
           <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#pricing">Pricing</a></li>
-          <li class="nav-item"><a class="btn-cta nav-link js-scroll-trigger" href="#signup">Sign Up</a></li>
-          <li class="nav-item"><a class="btn-cta nav-link js-scroll-trigger" href="#login">Login</a></li>
+          <li class="nav-item" (click)="redirectToLogin()"><a class="btn-cta nav-link js-scroll-trigger">Login</a></li>
         </ul>
       </div>
     </div>
@@ -26,35 +37,26 @@
 
 
   <div id="main" class="main">
-    <div class="home hero-2" id="login"><!-- Hero Section-->
-      <div class="hero-content wow fadeIn">
-        <h1>Your AI assistant for Log messages</h1>
-        <p>Your AI assistant for Log messages.</p>
-        <div class="form-alt">
-          <form [formGroup]="form" (submit)="onLogin()" id="form" class="subscribe-form wow zoomIn"
-                accept-charset="UTF-8"
-                enctype="application/x-www-form-urlencoded" autocomplete="off" novalidate>
-            <input class="mail" formControlName="email" id="email" type="email" name="email" placeholder="Work Email"
-                   autocomplete="off"><input class="submit-button" type="submit" value="Log In">
-          </form>
-          <p>{{message}}</p>
+    <div id="signup" class="cta-sm">
+      <div class="container-m text-center">
+        <h1>Let AI help you deliver perfect software, faster.</h1>
+        <div class="cta-content">
+          <div class="form wow fadeIn" data-wow-delay="0.2s">
+            <form id="chimp-form" [formGroup]="form" (submit)="onSignUp()" class="subscribe-form wow zoomIn" accept-charset="UTF-8"
+                  enctype="application/x-www-form-urlencoded" autocomplete="off" novalidate>
+              <input formControlName="email" class="mail" id="chimp-email" type="email" name="email" placeholder="Enter your email address"
+                     autocomplete="off">
+              <input class="submit-button" type="submit" value="Sign up now">
+            </form>
+            <div id="response"></div>
+          </div>
+          <div class="form-note">
+            <p>14-day free trial and no credit card required.</p>
+          </div>
         </div>
       </div>
-      <div class="hero-img wow fadeIn">
-        <img class="img-fluid" src="assets/images/hero2.png" alt="Home">
-      </div>
-      <p>Integrations</p>
-      <div class="client-list">
-        <ul>
-          <li><img class="img-fluid" src="assets/icons/01a.png" alt="Client"></li>
-          <li><img class="img-fluid" src="assets/icons/02a.svg" alt="Client"></li>
-          <li><img class="img-fluid" src="assets/icons/04a.svg" alt="Client"></li>
-          <li><img class="img-fluid" src="assets/icons/03a.svg" alt="Client"></li>
-          <!--<li><img class="img-fluid" src="assets/icons/5.png" alt="Client"> </li>-->
-        </ul>
-      </div>
-      <!-- </div>-->
-    </div><!-- Hero End -->
+    </div>
+
 
 
     <div id="products" class="features wow fadeInDown">
@@ -405,26 +407,7 @@
     <!-- Array Pricing Ends -->
 
     <!-- CTA Signup Section -->
-    <div id="signup" class="cta-sm">
-      <div class="container-m text-center">
-        <div class="cta-content">
-          <h4>GRAB ARRAY FOR BEST PRICE TODAY</h4>
-          <h1>Start now and turn your online business into a profitable route.</h1>
-          <div class="form wow fadeIn" data-wow-delay="0.2s">
-            <form id="chimp-form" [formGroup]="form" (submit)="onSignUp()" class="subscribe-form wow zoomIn" accept-charset="UTF-8"
-                  enctype="application/x-www-form-urlencoded" autocomplete="off" novalidate>
-              <input formControlName="email" class="mail" id="chimp-email" type="email" name="email" placeholder="Enter your email address"
-                     autocomplete="off">
-              <input class="submit-button" type="submit" value="Sign up now">
-            </form>
-            <div id="response"></div>
-          </div>
-          <div class="form-note">
-            <p>14-day free trial and no credit card required.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
 
     <!-- Array Footer Section -->

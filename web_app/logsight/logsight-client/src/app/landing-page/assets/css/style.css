@@ -235,44 +235,45 @@ body {
 
 @media only screen and (min-width: 240px) {
 
-.navbar.past-main {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	background-color: rgba(255, 255, 255, 0.99) !important;
-	-webkit-box-shadow: 0 2px 3px 0 rgba(96, 96, 96, 0.1);
-	-moz-box-shadow: 0 2px 3px 0 rgba(96, 96, 96, 0.1);
-	box-shadow: 0 2px 3px 0 rgba(96, 96, 96, 0.1);
-}
+  .navbar.past-main {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.99) !important;
+    -webkit-box-shadow: 0 2px 3px 0 rgba(96, 96, 96, 0.1);
+    -moz-box-shadow: 0 2px 3px 0 rgba(96, 96, 96, 0.1);
+    box-shadow: 0 2px 3px 0 rgba(96, 96, 96, 0.1);
+  }
 
-.navbar.effect-main {
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-}
+  .navbar.effect-main {
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
 
-.navbar.past-main .navbar-brand {
-	color: #6d48e5 !important;
-}
+  .navbar.past-main .navbar-brand {
+    color: #6d48e5 !important;
+  }
 
-.nav-white.past-main .nav-item .nav-link {
-  color: #364655;
-	font-weight:500;
-}
+  .nav-white.past-main .nav-item .nav-link {
+    color: #364655;
+    font-weight: 500;
+  }
 
-.navbar.past-main .nav-item .nav-link {
-	font-weight: 500;
-}
+  .navbar.past-main .nav-item .nav-link {
+    font-weight: 500;
+  }
 
-.nav-white.past-main .navbar-brand {
-	color: #364655;
-}
+  .nav-white.past-main .navbar-brand {
+    color: #364655;
+  }
 
-.navbar.past-main span.navbar-toggler-icon {
-	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-}
+  .navbar.past-main span.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
 
-.nav-white.effect-main {
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  .nav-white.effect-main {
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
 }
 
 /*----------------------------------------------------------
@@ -416,13 +417,13 @@ body {
 .btn-cta {
 	font-family: 'Montserrat';
 	display: inline-block;
-  height: 30px;
-  padding: 0 30px;
+  height: 20px;
+  padding: 0 0px;
   text-align: center;
   font-size: 12px;
   font-weight: 700;
-  line-height: 28px;
-  letter-spacing: 1px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
 	text-transform: capitalize;
 	text-decoration: none !important;
 	white-space: nowrap;
@@ -1097,7 +1098,7 @@ body {
 
 	.ar-reviews {
 		padding: 5%;
-		background: url(../images/bg.jpg) no-repeat center center;
+		background: url(/../images/bg.jpg) no-repeat center center;
 		background: #f6f6fd;
 	}
 

@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
 
-  currentTheme = 'default';
+  currentTheme = 'corporate';
 
   userMenu = [{ title: 'Profile', data: 'profile' }, { title: 'Log out', data: 'log_out' }];
 
@@ -69,6 +69,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+
   }
 
   ngOnDestroy() {
@@ -81,6 +83,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleSidebar(): boolean {
+
     this.sidebarService.toggle(true, 'menu-sidebar');
     this.layoutService.changeLayoutSize();
 

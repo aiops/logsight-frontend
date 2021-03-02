@@ -5,9 +5,11 @@ import { ChartModule } from 'angular2-chartjs';
 import { NbCardModule } from '@nebular/theme';
 import { DashboardPage } from './dashboard.page';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { PiechartComponent } from './chart-heatmap/piechart.component';
-import { HeatmapComponent } from './pie-chart/heatmap.component';
 import { StackedAreaChartComponent } from './stacked-area-chart/stacked-area-chart.component';
+import { HeatmapComponent } from './heatmap/heatmap.component';
+import { PiechartComponent } from './pie-chart/piechart.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { StackedAreaChartComponent } from './stacked-area-chart/stacked-area-cha
     ThemeModule,
     NgxChartsModule,
     ChartModule,
-    NbCardModule
+    NbCardModule,
+    Ng2SmartTableModule,
+    NgxDatatableModule
   ],
   declarations: [
     DashboardPage,
@@ -24,4 +28,5 @@ import { StackedAreaChartComponent } from './stacked-area-chart/stacked-area-cha
     StackedAreaChartComponent
   ],
 })
-export class DashboardModule { }
+export class DashboardModule {
+}

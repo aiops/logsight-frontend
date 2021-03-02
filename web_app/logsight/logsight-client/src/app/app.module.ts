@@ -6,7 +6,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
@@ -24,11 +24,14 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { AuthService } from './auth/auth.service';
+import { LoginService } from './auth/login.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { LandingPage } from './landing-page/landing.page';
+import { ActivateComponent } from './auth/activation/activate.component';
+import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -54,7 +57,11 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     SimpleNotificationsModule.forRoot()
   ],
   bootstrap: [AppComponent],
-  providers: [AuthService]
+  providers: [LoginService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthHttpInterceptor,
+    multi: true
+  }]
 })
 export class AppModule {
 }

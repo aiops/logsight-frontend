@@ -22,7 +22,7 @@ export const DARK_THEME = {
     solar: {
       gradientLeft: baseThemeVariables.primary,
       gradientRight: baseThemeVariables.primary,
-      shadowColor: 'rgba(0, 0, 0, 0)',
+      shadowColor: 'rgba(0,0,0,0)',
       secondSeriesFill: baseThemeVariables.bg2,
       radius: ['80%', '90%'],
     },
@@ -152,7 +152,7 @@ export const DARK_THEME = {
 
     orders: {
       tooltipBg: baseThemeVariables.bg,
-      tooltipLineColor: 'rgba(0, 0, 0, 0)',
+      tooltipLineColor: 'rgba(0,0,0,0)',
       tooltipLineWidth: '0',
       tooltipBorderColor: baseThemeVariables.border2,
       tooltipExtraCss: 'border-radius: 10px; padding: 8px 24px;',

@@ -9,10 +9,19 @@ import {
 } from '@nebular/auth';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { LandingPage } from './landing-page/landing.page';
+import { ActivateComponent } from './auth/activation/activate.component';
+import { AuthenticationGuard } from './auth/authentication-guard';
 
 export const routes: Routes = [
   {
+    path: '',
+    component: LandingPage
+  },
+  {
     path: 'pages',
+    canActivate: [AuthenticationGuard],
+    canActivateChild: [AuthenticationGuard],
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
   },
@@ -33,6 +42,10 @@ export const routes: Routes = [
         component: RegisterComponent,
       },
       {
+        path: 'activate/:key',
+        component: ActivateComponent
+      },
+      {
         path: 'logout',
         component: NbLogoutComponent,
       },
@@ -46,8 +59,7 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  { path: '**', redirectTo: '' },
 ];
 
 const config: ExtraOptions = {

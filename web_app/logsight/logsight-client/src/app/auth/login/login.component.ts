@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbLoginComponent } from '@nebular/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { LoginService } from '../login.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 
@@ -12,14 +12,14 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService,
+  constructor(private authService: LoginService,
               private notificationService: NotificationsService,
               private router: Router) {
   }
 
   form = new FormGroup({
     email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    password: new FormControl('demo')
   });
 
   ngOnInit(): void {
@@ -32,12 +32,10 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
-        if (resp?.key) {
-          localStorage.setItem('key', resp.key);
-          this.router.navigate(['/pages/dashboard'])
-        } else {
-          this.notificationService.error('Error', 'Incorrect email or password')
-        }
+        this.router.navigate(['/pages/dashboard'])
+      }, err => {
+        console.log('login error', err)
+        this.notificationService.error('Error', 'Incorrect email or password')
       }
     )
   }

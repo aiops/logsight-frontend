@@ -22,4 +22,7 @@ export class DashboardService {
     return this.apiService.get('/api/charts/log_level_stacked_line_chart');
   }
 
+  loadTopKIncidentsData() {
+    return this.apiService.get('/api/incidents/top_k_incidents');
+  }
 }

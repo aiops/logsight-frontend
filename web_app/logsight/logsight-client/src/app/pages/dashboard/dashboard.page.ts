@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { DashboardService } from './dashboard.service';
+import { TopKIncident } from '../../@core/common/TopKIncident';
 
 @Component({
   selector: 'dashboard',
@@ -11,9 +12,11 @@ export class DashboardPage implements OnInit {
   heatmapData = [];
   pieChartData = [];
   stackedChartData = [];
+  topKIncidents: TopKIncident[] = [];
   options: any;
   themeSubscription: any;
   colorScheme: any;
+  @ViewChild('myTable') table: any;
 
   constructor(private theme: NbThemeService, private dashboardService: DashboardService) {
   }
@@ -21,27 +24,37 @@ export class DashboardPage implements OnInit {
   ngOnInit(): void {
     this.loadHeatmapData()
     this.loadPieChartData()
-    // this.loadStackedAreaChartData()
+    this.loadStackedAreaChartData()
+    this.loadTopKIncidents()
   }
 
   loadHeatmapData() {
     this.dashboardService.loadHeatmapData().subscribe(data => {
-      console.log(data, "from loadHeatmapData")
+      console.log(data, 'from loadHeatmapData')
       this.heatmapData = data.data;
     });
   }
 
   loadPieChartData() {
     this.dashboardService.loadPieChartData().subscribe(data => {
-      console.log(data.data, "from loadPieChartData")
+      console.log(data.data, 'from loadPieChartData')
       this.pieChartData = data.data;
     });
   }
 
   loadStackedAreaChartData() {
     this.dashboardService.loadStackedChartData().subscribe(data => {
-      console.log(data.data, "from loadStackedAreaChartData")
+      console.log(data.data, 'from loadStackedAreaChartData')
       this.stackedChartData = data.data;
     });
   }
+
+  loadTopKIncidents() {
+    this.topKIncidents = [];
+    this.dashboardService.loadTopKIncidentsData().subscribe(data => {
+      console.log(data, 'from loadTopKIncidents')
+      this.topKIncidents = data;
+    });
+  }
+
 }

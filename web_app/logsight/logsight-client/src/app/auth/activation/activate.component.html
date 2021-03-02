@@ -1,0 +1,16 @@
+<div *ngIf="!loading">
+  <h1 *ngIf="user" class="text-center">Welcome <i>{{user.email}}</i> to our site</h1>
+  <div *ngIf="activationSuccess" class="text-center"><h5>Your account has been successfully activated, now you can Log
+    in
+    with your email</h5>
+    <a nbButton [routerLink]="['/auth', 'login']"
+       fullWidth
+       status="success">
+      Go to Log in
+    </a>
+  </div>
+
+  <div *ngIf="!activationSuccess" class="text-center">
+    <h5>We are really sorry, some error happened. Your account is not successfully activated.</h5>
+  </div>
+</div>

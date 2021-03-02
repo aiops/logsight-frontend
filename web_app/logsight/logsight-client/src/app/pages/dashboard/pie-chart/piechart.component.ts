@@ -16,7 +16,7 @@ export class PiechartComponent {
   isDoughnut: boolean = false;
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#fff000', '#e85d04', '#393bff', '#00e1ff']
   };
 
   constructor() {

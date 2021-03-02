@@ -9,7 +9,7 @@ import { multi } from './data';
 export class HeatmapComponent {
   @Input() data = [];
 
-  legend: boolean = true;
+  legend: boolean = false;
   showLabels: boolean = false;
   animations: boolean = true;
   xAxis: boolean = true;
@@ -22,14 +22,13 @@ export class HeatmapComponent {
 
   colorScheme = {
     domain: [
-      '#d3e7c2',
-      '#b4d596',
-      '#9fc97c',
-      '#96c271',
-      '#8cbc67',
-      '#DAA520',
-      '#FFA500',
-      '#ff631f',
+      '#f0ff00',
+      '#ffba08',
+      '#faa307',
+      '#f48c06',
+      '#e85d04',
+      '#dc2f02',
+      '#D00000',
     ]
   };
 

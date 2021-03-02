@@ -11,7 +11,47 @@ export class DashboardPage implements OnInit {
   heatmapData = [];
   pieChartData = [];
   stackedChartData = [];
-  topKIncidents = [{name: 'asd', gender: 'bb', company: 'tt'}, {name: 'asd', gender: 'bb', company: 'tt'}];
+  topKIncidents = [
+    {
+      "id": 0,
+      "name": "Ramsey Cummings",
+      "gender": "male",
+      "age": 52,
+      "address": {
+        "state": "South Carolina",
+        "city": "Glendale"
+      }
+    },
+    {
+      "id": 1,
+      "name": "Stefanie Huff",
+      "gender": "female",
+      "age": 70,
+      "address": {
+        "state": "Arizona",
+        "city": "Beaverdale"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Mabel David",
+      "gender": "female",
+      "age": 52,
+      "address": {
+        "state": "New Mexico",
+        "city": "Grazierville"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Frank Bradford",
+      "gender": "male",
+      "age": 61,
+      "address": {
+        "state": "Wisconsin",
+        "city": "Saranap"
+      }
+    }];
   options: any;
   themeSubscription: any;
   colorScheme: any;
@@ -24,7 +64,7 @@ export class DashboardPage implements OnInit {
     this.loadHeatmapData()
     this.loadPieChartData()
     // this.loadStackedAreaChartData()
-    this.loadTopKIncidents()
+    // this.loadTopKIncidents()
   }
 
   loadHeatmapData() {

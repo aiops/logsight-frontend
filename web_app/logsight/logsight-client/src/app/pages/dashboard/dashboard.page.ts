@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { DashboardService } from './dashboard.service';
+import { TopKIncident } from '../../@core/common/TopKIncident';
 
 @Component({
   selector: 'dashboard',
@@ -11,47 +12,7 @@ export class DashboardPage implements OnInit {
   heatmapData = [];
   pieChartData = [];
   stackedChartData = [];
-  topKIncidents = [
-    {
-      "id": 0,
-      "name": "Ramsey Cummings",
-      "gender": "male",
-      "age": 52,
-      "address": {
-        "state": "South Carolina",
-        "city": "Glendale"
-      }
-    },
-    {
-      "id": 1,
-      "name": "Stefanie Huff",
-      "gender": "female",
-      "age": 70,
-      "address": {
-        "state": "Arizona",
-        "city": "Beaverdale"
-      }
-    },
-    {
-      "id": 2,
-      "name": "Mabel David",
-      "gender": "female",
-      "age": 52,
-      "address": {
-        "state": "New Mexico",
-        "city": "Grazierville"
-      }
-    },
-    {
-      "id": 3,
-      "name": "Frank Bradford",
-      "gender": "male",
-      "age": 61,
-      "address": {
-        "state": "Wisconsin",
-        "city": "Saranap"
-      }
-    }];
+  topKIncidents: TopKIncident[] = [];
   options: any;
   themeSubscription: any;
   colorScheme: any;
@@ -63,8 +24,8 @@ export class DashboardPage implements OnInit {
   ngOnInit(): void {
     this.loadHeatmapData()
     this.loadPieChartData()
-    // this.loadStackedAreaChartData()
-    // this.loadTopKIncidents()
+    this.loadStackedAreaChartData()
+    this.loadTopKIncidents()
   }
 
   loadHeatmapData() {
@@ -96,7 +57,4 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  toggleExpandRow(row) {
-    this.table.rowDetail.toggleExpandRow(row);
-  }
 }

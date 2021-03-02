@@ -28,6 +28,5 @@ export class StackedAreaChartComponent {
   }
 
   onSelect(event) {
-    console.log(event);
   }
 }

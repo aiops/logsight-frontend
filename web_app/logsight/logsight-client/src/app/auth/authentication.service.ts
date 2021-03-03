@@ -20,7 +20,7 @@ export class AuthenticationService {
     const token = localStorage.getItem('token');
     if (token) {
       if (!this.userChecked) {
-        return this.apiService.get(`/api/users/${token}`).pipe(
+        return this.apiService.get(`/api/users`).pipe(
           map(user => {
             this.userChecked = true;
             this.loggedUser = user
@@ -51,5 +51,4 @@ export class AuthenticationService {
         })
       );
   }
-
 }

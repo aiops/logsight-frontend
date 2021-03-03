@@ -1,15 +1,19 @@
 <div id="chart-parent">
-  <ngx-charts-area-chart-stacked
+  <ngx-charts-area-chart
     [scheme]="colorScheme"
     [legend]="legend"
     [showXAxisLabel]="showXAxisLabel"
     [showYAxisLabel]="showYAxisLabel"
+    [showGridLines]="showGridLines"
     [xAxis]="xAxis"
     [yAxis]="yAxis"
+    [view]=""
     [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel"
     [timeline]="timeline"
     [results]="data"
-    (select)="onSelect($event)">
-  </ngx-charts-area-chart-stacked>
+    [curve]="linearCurve"
+    (select)="onSelect($event)"
+    style="fill: white">
+  </ngx-charts-area-chart>
 </div>

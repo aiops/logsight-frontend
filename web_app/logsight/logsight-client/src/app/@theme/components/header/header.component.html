@@ -1,8 +1,8 @@
 <div class="header-container">
   <div class="logo-container">
-    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
-      <nb-icon icon="menu-2-outline"></nb-icon>
-    </a>
+<!--    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">-->
+<!--      <nb-icon icon="menu-2-outline"></nb-icon>-->
+<!--    </a>-->
     <a class="logo" href="#" (click)="navigateHome()">LogSight.</a>
   </div>
 <!--  <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">-->
@@ -19,6 +19,7 @@
 <!--    </nb-action>-->
 <!--    <nb-action class="control-item" icon="email-outline"></nb-action>-->
 <!--    <nb-action class="control-item" icon="bell-outline"></nb-action>-->
+
     <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"

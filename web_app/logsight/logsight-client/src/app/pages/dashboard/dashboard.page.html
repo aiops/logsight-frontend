@@ -1,21 +1,24 @@
 <nb-card>
   <nb-card-body>
     <div class="row">
-      <div class="col-lg-6">
-        <p>Log Levels</p>
+      <div class="col-lg-4">
+        <h6>Log levels</h6>
         <piechart [data]="pieChartData"></piechart>
       </div>
-      <div class="col-lg-6">
-        <p>Timeline of Logs</p>
+      <div class="col-lg-8">
+        <h6>Log levels over time</h6>
         <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
       </div>
+
+
     </div>
   </nb-card-body>
 </nb-card>
+
 <nb-card>
   <nb-card-body>
     <div class="col-lg-12">
-      <p>System Overview</p>
+      <h6>System overview</h6>
       <chart-heatmap [data]="heatmapData"></chart-heatmap>
     </div>
   </nb-card-body>
@@ -24,8 +27,8 @@
 <nb-card>
   <nb-card-body>
     <div class="col-lg-12">
-      <p>System Overview</p>
-      <table class="table table-striped">
+      <h6>Top incidents</h6>
+      <table class="table table-borderless ">
         <thead>
         <tr>
           <th scope="col">Index Name</th>

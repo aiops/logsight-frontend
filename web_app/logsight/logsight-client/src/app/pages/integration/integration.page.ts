@@ -3,6 +3,7 @@ import { IntegrationService } from './integration.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { NotificationsService } from 'angular2-notifications';
+import { Application } from '../../@core/common/application';
 
 @Component({
   selector: 'integration',
@@ -11,6 +12,7 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class IntegrationPage implements OnInit {
   key: string
+  applications: Application[] = [];
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -21,18 +23,26 @@ export class IntegrationPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.getLoggedUser().subscribe(user => this.key = user.key)
+    this.authService.getLoggedUser().subscribe(user => {
+      this.key = user.key
+      this.loadApplications()
+    })
   }
 
   createApplication() {
     if (this.key) {
       this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
         resp => {
+          this.loadApplications()
           this.notificationService.success('Success', 'Application successfully created')
         }, error => this.notificationService.error('Error', 'Sorry, a problem happened'))
     } else {
       this.notificationService.error('Error', 'Sorry, a problem happened')
     }
+  }
+
+  loadApplications() {
+    this.integrationService.loadApplications(this.key).subscribe(resp => this.applications = resp)
   }
 
 }

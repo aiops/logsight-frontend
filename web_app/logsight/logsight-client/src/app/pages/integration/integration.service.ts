@@ -11,4 +11,8 @@ export class IntegrationService {
   createApplication(app: { name: string; key: string }): Observable<Application> {
     return this.apiService.post('/api/applications', app)
   }
+
+  loadApplications(key: string): Observable<Application[]> {
+    return this.apiService.get(`/api/applications/user/${key}`)
+  }
 }

@@ -22,8 +22,8 @@ export class LoginService {
     return this.apiService.post('/api/auth/login', login);
   }
 
-  getUser(key: string): Observable<LogsightUser> {
-    return this.apiService.get(`/api/users/${key}`);
+  getUser(): Observable<LogsightUser> {
+    return this.apiService.get(`/api/users`);
   }
 
   activateUser(key: string) {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { DashboardService } from './dashboard.service';
-import { TopKIncident } from '../../@core/common/TopKIncident';
+import { TopKIncident } from '../../@core/common/top-k-Incident';
 
 @Component({
   selector: 'dashboard',
@@ -30,21 +30,18 @@ export class DashboardPage implements OnInit {
 
   loadHeatmapData() {
     this.dashboardService.loadHeatmapData().subscribe(data => {
-      console.log(data, 'from loadHeatmapData')
       this.heatmapData = data.data;
     });
   }
 
   loadPieChartData() {
     this.dashboardService.loadPieChartData().subscribe(data => {
-      console.log(data.data, 'from loadPieChartData')
       this.pieChartData = data.data;
     });
   }
 
   loadStackedAreaChartData() {
     this.dashboardService.loadStackedChartData().subscribe(data => {
-      console.log(data.data, 'from loadStackedAreaChartData')
       this.stackedChartData = data.data;
     });
   }
@@ -52,7 +49,6 @@ export class DashboardPage implements OnInit {
   loadTopKIncidents() {
     this.topKIncidents = [];
     this.dashboardService.loadTopKIncidentsData().subscribe(data => {
-      console.log(data, 'from loadTopKIncidents')
       this.topKIncidents = data;
     });
   }

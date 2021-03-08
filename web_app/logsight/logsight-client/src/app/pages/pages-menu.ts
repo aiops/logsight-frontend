@@ -21,6 +21,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Integration',
     icon: 'file-text',
     link: '/pages/integration',
+  },
+  {
+    title: 'Variable analysis',
+    icon: 'file-text',
+    link: '/pages/variable-analysis',
   }
   // {
   //   title: 'FEATURES',

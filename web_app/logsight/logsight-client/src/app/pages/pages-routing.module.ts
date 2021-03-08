@@ -29,9 +29,9 @@ const routes: Routes = [{
         .then(m => m.IntegrationModule),
     },
     {
-      path: 'forms',
-      loadChildren: () => import('./forms/forms.module')
-        .then(m => m.FormsModule),
+      path: 'variable-analysis',
+      loadChildren: () => import('./variable-analysis/variable-analysis.module')
+        .then(m => m.VariableAnalysisModule),
     },
     {
       path: 'layout',

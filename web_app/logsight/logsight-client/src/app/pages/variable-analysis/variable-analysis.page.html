@@ -26,18 +26,14 @@
         <table class="table table-striped">
           <thead>
           <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Status</th>
+            <th scope="col">Result</th>
+            <th scope="col">Params</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let row of variableAnalysis">
-            <td>{{row.id}}</td>
-            <td>{{row.name}}</td>
-            <td><i [title]="row.status" *ngIf="row.status == 'IN_PROGRESS'" class="ml-3 fas fa-spinner fa-spin"></i>
-              <i [title]="row.status" *ngIf="row.status == 'ACTIVE'" class="ml-3 fas fa-check-circle"></i>
-            </td>
+          <tr *ngFor="let row of variableAnalysisHits">
+            <td [innerHTML]="row.result"></td>
+            <td>{{row.params | json}}</td>
           </tr>
           </tbody>
         </table>

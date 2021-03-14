@@ -1,10 +1,10 @@
 {
   "/api": {
-    "target": "http://localhost:8080",
+    "target": "http://web-app-backend:8080",
     "secure": true
   },
   "/login": {
-    "target": "http://localhost:8080",
+    "target": "http://web-app-backend:8080",
     "secure": false
   }
 }

@@ -53,6 +53,7 @@
             ],
             "allowedCommonJsDependencies": [
               "angular2-chartjs",
+              "rxjs-compat",
               "echarts",
               "lodash",
               "zrender/lib/svg/svg",

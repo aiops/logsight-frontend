@@ -1,35 +1,32 @@
+### STAGE 1: Build ###
 
-# ---- Base Node ----
-FROM alpine:3.5 AS base
-# install node
-RUN apk add --no-cache nodejs-current tini
-RUN apk add --no-cache --virtual .build-deps make gcc g++ python \
- && npm install --production --silent \
- && apk del .build-deps
-# set working directory
-WORKDIR /root/chat
-# Set tini as entrypoint
-ENTRYPOINT ["/sbin/tini", "--"]
-# copy project file
+# We label our stage as ‘builder’
+FROM node:14 as builder
+
+COPY package.json package-lock.json ./
+
+## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
+RUN npm i && mkdir /ng-app && mv ./node_modules ./ng-app
+
+WORKDIR /ng-app
+
 COPY . .
 
-#
-# ---- Dependencies ----
-FROM base AS dependencies
-# install node packages
-RUN npm set progress=false && npm config set depth 0
-RUN npm install --only=production
-# copy production node_modules aside
-RUN cp -R node_modules prod_node_modules
-# install ALL node_modules, including 'devDependencies'
-RUN npm install
+## Build the angular app in production mode and store the artifacts in dist folder
+RUN $(npm bin)/ng build --prod --output-path=dist
 
-# ---- Release ----
-FROM base AS release
-# copy production node_modules
-COPY --from=dependencies /root/chat/prod_node_modules ./node_modules
-# copy app sources
-COPY . .
-# expose port and define CMD
-CMD [ "npm", "start" ]
-# CMD npm run start
+
+### STAGE 2: Setup ###
+
+FROM nginx:1.14.1-alpine
+
+## Copy our default nginx config
+COPY nginx/default.conf /etc/nginx/conf.d/
+
+## Remove default nginx website
+RUN rm -rf /usr/share/nginx/html/*
+
+## From ‘builder’ stage copy over the artifacts in dist folder to default nginx public folder
+COPY --from=builder /ng-app/dist /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]

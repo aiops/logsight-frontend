@@ -12,7 +12,7 @@
       </div>
     </div>
   </nb-card>
-  <nb-card class="p-3" style="width: 100%">
+  <nb-card class="p-3" style="width: 100%" *ngIf="selectedApplicationId && variableAnalysisHits.length">
     <div class="row">
       <div class="col-md-12">
         <h5 class="mb-3">Data</h5>
@@ -32,7 +32,7 @@
           </thead>
           <tbody>
           <tr *ngFor="let row of variableAnalysisHits">
-            <td [innerHTML]="row.result"></td>
+            <td><app-ad-banner [row]="row"></app-ad-banner></td>
             <td>{{row.params | json}}</td>
           </tr>
           </tbody>

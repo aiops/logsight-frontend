@@ -6,8 +6,7 @@ import { NbButtonModule, NbCardModule, NbInputModule, NbSelectModule } from '@ne
 import { ReactiveFormsModule } from '@angular/forms';
 import { VariableAnalysisRoutingModule } from './variable-analysis-routing.module';
 import { VariableAnalysisPage } from './variable-analysis.page';
-import { TemplatesDirective } from '../../@core/components/host-directive';
-import { AdDirective } from '../../@core/components/app/ad.directive';
+import { HostDirective } from '../../@core/components/app/host.directive';
 import { VariableAnalysisTemplate } from '../../@core/components/app/variable-analysis-template';
 import { VariableAnalysisTemplateResolver } from '../../@core/components/app/variable-analysis-template-resolver';
 
@@ -23,9 +22,9 @@ import { VariableAnalysisTemplateResolver } from '../../@core/components/app/var
     ReactiveFormsModule,
     NbSelectModule,
   ],
-  declarations: [VariableAnalysisPage, TemplatesDirective, VariableAnalysisTemplateResolver,
+  declarations: [VariableAnalysisPage, VariableAnalysisTemplateResolver,
     VariableAnalysisTemplate,
-    AdDirective],
+    HostDirective],
   entryComponents: [VariableAnalysisTemplate]
 })
 export class VariableAnalysisModule {

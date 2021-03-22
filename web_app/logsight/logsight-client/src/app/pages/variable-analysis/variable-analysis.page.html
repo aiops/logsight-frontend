@@ -27,13 +27,13 @@
           <thead>
           <tr>
             <th scope="col">Result</th>
-            <th scope="col">Params</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let row of variableAnalysisHits">
-            <td><app-ad-banner [row]="row"></app-ad-banner></td>
-            <td>{{row.params | json}}</td>
+            <td>
+              <app-ad-banner [row]="row"></app-ad-banner>
+            </td>
           </tr>
           </tbody>
         </table>

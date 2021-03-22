@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class VariableAnalysisService {
@@ -12,5 +13,11 @@ export class VariableAnalysisService {
       searchParam = `search=${search}`
     }
     return this.apiService.get(`/api/variable-analysis/application/${applicationId}?${searchParam}`)
+  }
+
+  loadSpecificTemplate(applicationId: number,
+    item: { template: string; param: string; paramValue: string }): Observable<any> {
+    return this.apiService.get(
+      `/api/variable-analysis/application/${applicationId}?template=${item.template}&param=${item.param}&paramValue=${item.paramValue}`)
   }
 }

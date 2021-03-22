@@ -9,6 +9,7 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { IntegrationService } from '../@core/service/integration.service';
 import { VariableAnalysisService } from '../@core/service/variable-analysis.service';
+import { MessagingService } from '../@core/service/messaging.service';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { VariableAnalysisService } from '../@core/service/variable-analysis.serv
   declarations: [
     PagesComponent,
   ],
-  providers: [IntegrationService, VariableAnalysisService]
+  providers: [IntegrationService, VariableAnalysisService, MessagingService]
 })
 export class PagesModule {
 }

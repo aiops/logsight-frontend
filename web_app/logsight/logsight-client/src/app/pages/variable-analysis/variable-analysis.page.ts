@@ -8,7 +8,8 @@ import { VariableAnalysisService } from '../../@core/service/variable-analysis.s
 import { FormControl, FormGroup } from '@angular/forms';
 import { VariableAnalysisHit } from '../../@core/common/variable-analysis-hit';
 import { HitParam } from '../../@core/common/hit-param';
-import { AdDirective } from '../../@core/components/app/ad.directive';
+import { HostDirective } from '../../@core/components/app/host.directive';
+import { MessagingService } from '../../@core/service/messaging.service';
 
 @Component({
   selector: 'variable-analysis',
@@ -26,22 +27,21 @@ export class VariableAnalysisPage implements OnInit {
     params: [{ key: 'param_0', value: 'param0' }, { key: 'param_1', value: 'param1' },
       { key: 'param_2', value: 'param2' }]
   }];
-  @ViewChild(AdDirective, {static: true}) adHost: AdDirective;
   // variableAnalysisHits: VariableAnalysisHit[] = []
   filterForm = new FormGroup({
     search: new FormControl(),
   });
+
   constructor(private variableAnalysisService: VariableAnalysisService, private integrationService: IntegrationService,
-              private authService: AuthenticationService,
-              private notificationService: NotificationsService,
-              private componentFactoryResolver: ComponentFactoryResolver) {
+    private authService: AuthenticationService,
+    private notificationService: NotificationsService,
+    private messagingService: MessagingService) {
   }
 
   ngOnInit(): void {
     this.authService.getLoggedUser().pipe(
       switchMap(user => this.integrationService.loadApplications(user.key))
     ).subscribe(resp => this.applications = resp)
-
 
     this.filterForm.get('search').valueChanges
       .pipe(
@@ -55,44 +55,20 @@ export class VariableAnalysisPage implements OnInit {
           })
       });
 
-    this.variableAnalysisHits = this.parseVariableAnalysisTemplates(this.variableAnalysisHits)
+    this.messagingService.getVariableAnalysisTemplate().pipe(
+      switchMap(item => this.variableAnalysisService.loadSpecificTemplate(item))
+    ).subscribe(resp => this.applications = resp)
   }
 
   applicationSelected(appId: number) {
     this.selectedApplicationId = appId
-    this.variableAnalysisService.loadData(this.selectedApplicationId).subscribe(resp => {
-      // this.variableAnalysisHits = this.parseVariableAnalysisTemplates(resp)
-      console.log('variableAnalysisHits', this.variableAnalysisHits)
-    })
+    // this.variableAnalysisService.loadData(this.selectedApplicationId).subscribe(resp => {
+    //   this.variableAnalysisHits = resp
+    // })
   }
 
-  parseVariableAnalysisTemplates(data: VariableAnalysisHit[]) {
-    const a = data.map(it => {
-      let templates = it.template.split('<*>')
-      let parsedTemplates = ''
-      for (let i = 0; i < it.params.length; i++) {
-        if (templates[i] == '' && i == it.params.length - 1) {
-          parsedTemplates += ''
-        } else {
-          const paramValue = this.getValueForParam(it.params, `param_${i}`)
-          parsedTemplates +=
-            `${templates[i]}<span class="template" (click)="selectTemplate(${it.template}, param_${i}, ${paramValue})">${paramValue}</span>`
-        }
-      }
-      it.result = parsedTemplates
-      return it
-    })
-
-    return a;
-  }
 
   selectTemplate(template: string, param: string, value: string) {
-    console.log('template', template);
-    console.log('param', param);
-    console.log('value', value);
-  }
 
-  getValueForParam(params: HitParam[], param) {
-    return params.find(it => it.key == param).value
   }
 }

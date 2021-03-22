@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild, ComponentFactoryResolver, OnDestroy } from '@angular/core';
 
-import { AdDirective } from './ad.directive';
+import { HostDirective } from './host.directive';
 import { VariableAnalysisHit } from '../../common/variable-analysis-hit';
 import { VariableAnalysisTemplate } from './variable-analysis-template';
 
@@ -13,7 +13,7 @@ import { VariableAnalysisTemplate } from './variable-analysis-template';
 export class VariableAnalysisTemplateResolver implements OnInit, OnDestroy {
   @Input() row: VariableAnalysisHit;
   currentAdIndex = -1;
-  @ViewChild(AdDirective, { static: true }) adHost: AdDirective;
+  @ViewChild(HostDirective, { static: true }) adHost: HostDirective;
   interval: any;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {

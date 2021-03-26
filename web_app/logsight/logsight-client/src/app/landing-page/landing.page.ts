@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from '../auth/login.service';
@@ -29,7 +29,16 @@ export class LandingPage {
       el.style['display'] = 'none';
     }
   }
-
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(e) {
+    if (window.pageYOffset > 0) {
+      let element = document.getElementById('navbar');
+      element.classList.add('sticky');
+    } else {
+      let element = document.getElementById('navbar');
+      element.classList.remove('sticky');
+    }
+  }
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/dashboard'])

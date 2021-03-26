@@ -12,29 +12,36 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
 </head>
 
-
 <body>
-<div class="wrapper">
-  <!-- Navbar Section -->
-  <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
-    <div class="container container-s">
-      <a class="navbar-brand" href="#">LogSight.</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto navbar-right">
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#products">About</a></li>
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#features">Features</a></li>
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#reviews">Reviews</a></li>
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#pricing">Pricing</a></li>
-          <li class="nav-item" (click)="redirectToLogin()"><a class="btn-cta nav-link js-scroll-trigger">Login</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav><!-- Navbar End -->
+<header class="animated fadeInDown" id="navbar">
+  <section class="web_homePage" (scroll)="onWindowScroll($event);">
+      <!-- Navbar Section -->
 
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <div class="container-fluid container-new">
+        <div class="navbar-header">
+<!--        <div class="container container-l">-->
+<!--          <div class="navbar navbar-title">-->
+            <a class="navbar-brand" href="#">LogSight.</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto navbar-right">
+              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#products">About</a></li>
+              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#features">Features</a></li>
+              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#reviews">Reviews</a></li>
+              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#pricing">Pricing</a></li>
+              <li class="nav-item" (click)="redirectToLogin()"><a class="btn-login nav-link js-scroll-trigger"><span class="icon-login"></span>Login</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav> <!-- Navbar End -->
+    </section>
+</header>
+  <section class = "banner"></section>
 
   <div id="main" class="main">
     <div id="signup" class="cta-sm">
@@ -430,8 +437,12 @@
     </div>
 
   </div> <!-- Main -->
-</div><!-- Wrapper -->
-
-
+  <!-- Wrapper -->
 </body>
 </html>
+
+
+
+
+
+

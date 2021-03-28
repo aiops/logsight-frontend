@@ -1,0 +1,35 @@
+<nb-card class="model-full">
+  <nb-card-header>Line chart</nb-card-header>
+  <nb-card-body>
+    <!--    <ngx-charts-line-chart *ngif="false"-->
+    <!--      [scheme]="colorScheme"-->
+    <!--      [legend]="legend"-->
+    <!--      [showXAxisLabel]="showXAxisLabel"-->
+    <!--      [showYAxisLabel]="showYAxisLabel"-->
+    <!--      [xAxis]="xAxis"-->
+    <!--      [yAxis]="yAxis"-->
+    <!--      [xAxisLabel]="xAxisLabel"-->
+    <!--      [yAxisLabel]="yAxisLabel"-->
+    <!--      [timeline]="timeline"-->
+    <!--      [results]="data"-->
+    <!--    >-->
+    <!--    </ngx-charts-line-chart>-->
+    <ngx-charts-bar-vertical-2d
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="data"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [legendTitle]="legendTitle">
+    </ngx-charts-bar-vertical-2d>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button nbButton hero status="primary" (click)="dismiss()">Close</button>
+  </nb-card-footer>
+</nb-card>

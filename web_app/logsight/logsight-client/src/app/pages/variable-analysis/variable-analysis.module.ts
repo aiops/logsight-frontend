@@ -9,6 +9,7 @@ import { VariableAnalysisPage } from './variable-analysis.page';
 import { HostDirective } from '../../@core/components/app/host.directive';
 import { VariableAnalysisTemplate } from '../../@core/components/app/variable-analysis-template';
 import { VariableAnalysisTemplateResolver } from '../../@core/components/app/variable-analysis-template-resolver';
+import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { VariableAnalysisTemplateResolver } from '../../@core/components/app/var
   ],
   declarations: [VariableAnalysisPage, VariableAnalysisTemplateResolver,
     VariableAnalysisTemplate,
-    HostDirective],
+    HostDirective, SpecificTemplateModalComponent],
   entryComponents: [VariableAnalysisTemplate]
 })
 export class VariableAnalysisModule {

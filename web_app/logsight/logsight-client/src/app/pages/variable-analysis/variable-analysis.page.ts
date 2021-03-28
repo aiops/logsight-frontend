@@ -7,9 +7,10 @@ import { IntegrationService } from '../../@core/service/integration.service';
 import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { VariableAnalysisHit } from '../../@core/common/variable-analysis-hit';
-import { HitParam } from '../../@core/common/hit-param';
-import { HostDirective } from '../../@core/components/app/host.directive';
 import { MessagingService } from '../../@core/service/messaging.service';
+import { NbDialogService } from '@nebular/theme';
+import { ShowcaseDialogComponent } from '../modal-overlays/dialog/showcase-dialog/showcase-dialog.component';
+import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 
 @Component({
   selector: 'variable-analysis',
@@ -33,9 +34,10 @@ export class VariableAnalysisPage implements OnInit {
   });
 
   constructor(private variableAnalysisService: VariableAnalysisService, private integrationService: IntegrationService,
-    private authService: AuthenticationService,
-    private notificationService: NotificationsService,
-    private messagingService: MessagingService) {
+              private authService: AuthenticationService,
+              private notificationService: NotificationsService,
+              private messagingService: MessagingService,
+              private dialogService: NbDialogService) {
   }
 
   ngOnInit(): void {
@@ -51,22 +53,29 @@ export class VariableAnalysisPage implements OnInit {
       .subscribe(search => {
         this.variableAnalysisService.loadData(this.selectedApplicationId, search).subscribe(
           resp => {
-            // this.variableAnalysisHits = resp
+            this.variableAnalysisHits = resp
           })
       });
 
-    this.messagingService.getVariableAnalysisTemplate().pipe(
-      switchMap(item => this.variableAnalysisService.loadSpecificTemplate(item))
-    ).subscribe(resp => this.applications = resp)
+    this.messagingService.getVariableAnalysisTemplate().subscribe(resp => {
+      this.variableAnalysisService.loadSpecificTemplate(this.selectedApplicationId, resp['item']).subscribe(resp => {
+        this.dialogService.open(SpecificTemplateModalComponent, {
+          context: {
+            data: resp.second
+          }, dialogClass: 'model-full'
+        });
+      }, err => {
+        this.notificationService.error('errror')
+      })
+    })
   }
 
   applicationSelected(appId: number) {
     this.selectedApplicationId = appId
-    // this.variableAnalysisService.loadData(this.selectedApplicationId).subscribe(resp => {
-    //   this.variableAnalysisHits = resp
-    // })
+    this.variableAnalysisService.loadData(this.selectedApplicationId).subscribe(resp => {
+      this.variableAnalysisHits = resp
+    })
   }
-
 
   selectTemplate(template: string, param: string, value: string) {
 

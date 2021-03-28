@@ -16,8 +16,9 @@ export class VariableAnalysisService {
   }
 
   loadSpecificTemplate(applicationId: number,
-    item: { template: string; param: string; paramValue: string }): Observable<any> {
-    return this.apiService.get(
-      `/api/variable-analysis/application/${applicationId}?template=${item.template}&param=${item.param}&paramValue=${item.paramValue}`)
+                       item: { template: string; param: string; paramValue: string }): Observable<any> {
+    return this.apiService.post(
+      `/api/variable-analysis/application/${applicationId}/specific_template`,
+      { template: item.template, param: item.param, paramValue: item.paramValue })
   }
 }

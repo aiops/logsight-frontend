@@ -41,7 +41,7 @@ export class LandingPage {
   }
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
-        this.router.navigate(['/pages/dashboard'])
+        this.router.navigate(['/pages/quickstart'])
       }, err => {
         console.log('login error', err)
         this.notificationService.error('Error', 'Incorrect email or password')

@@ -21,4 +21,12 @@ export class VariableAnalysisService {
       `/api/variable-analysis/application/${applicationId}/specific_template`,
       { template: item.template, param: item.param, paramValue: item.paramValue })
   }
+
+  getLogCountLineChart(applicationId: number): Observable<any> {
+    return this.apiService.get(`/api/variable-analysis/application/${applicationId}/log_count_line_chart`)
+  }
+
+  getTopNTemplates(applicationId: number) {
+    return this.apiService.get(`/api/variable-analysis/application/${applicationId}/top_n_templates`)
+  }
 }

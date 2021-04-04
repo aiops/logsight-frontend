@@ -10,6 +10,8 @@ import { HostDirective } from '../../@core/components/app/host.directive';
 import { VariableAnalysisTemplate } from '../../@core/components/app/variable-analysis-template';
 import { VariableAnalysisTemplateResolver } from '../../@core/components/app/variable-analysis-template-resolver';
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
+import { PagesModule } from '../pages.module';
+import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.module';
 
 @NgModule({
   imports: [
@@ -22,6 +24,8 @@ import { SpecificTemplateModalComponent } from '../../@core/components/specific-
     NbButtonModule,
     ReactiveFormsModule,
     NbSelectModule,
+    PagesModule,
+    ChartsWrapperModule
   ],
   declarations: [VariableAnalysisPage, VariableAnalysisTemplateResolver,
     VariableAnalysisTemplate,

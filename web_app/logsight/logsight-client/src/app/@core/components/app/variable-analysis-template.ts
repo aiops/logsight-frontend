@@ -6,7 +6,7 @@ import { HitParam } from '../../common/hit-param';
 
 @Component({
   template: `
-    <div style="display: flex; flex-direction: row">
+    <div style="float: left">
     <span *ngFor="let pt of parsedTemplates">
       <span>{{pt.parsedTemplate}}</span>
       <span class="template"
@@ -24,7 +24,7 @@ export class VariableAnalysisTemplate implements OnInit {
   }
 
   @Input() data: VariableAnalysisHit;
-  parsedTemplates: {template: string, parsedTemplate: string, param: string, paramValue: string }[] = []
+  parsedTemplates: { template: string, parsedTemplate: string, param: string, paramValue: string }[] = []
 
   selectTemplate(template: string, param: string, paramValue: string) {
     const item = { template: template, param, paramValue }
@@ -38,7 +38,8 @@ export class VariableAnalysisTemplate implements OnInit {
       if (templates[i] == '' && i == item.params.length - 1) {
       } else {
         const paramValue = this.getValueForParam(item.params, `param_${i}`)
-        this.parsedTemplates.push({template: item.template, parsedTemplate: templates[i], param: `param_${i}`, paramValue: paramValue });
+        this.parsedTemplates.push(
+          { template: item.template, parsedTemplate: templates[i], param: `param_${i}`, paramValue: paramValue });
       }
     }
   }

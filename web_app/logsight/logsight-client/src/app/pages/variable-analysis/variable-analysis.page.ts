@@ -1,16 +1,16 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Application } from '../../@core/common/application';
-import { debounceTime, distinctUntilChanged, map, mergeMap, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { IntegrationService } from '../../@core/service/integration.service';
 import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { VariableAnalysisHit } from '../../@core/common/variable-analysis-hit';
 import { MessagingService } from '../../@core/service/messaging.service';
 import { NbDialogService } from '@nebular/theme';
-import { ShowcaseDialogComponent } from '../modal-overlays/dialog/showcase-dialog/showcase-dialog.component';
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
+import { TopNTemplatesData } from '../../@core/common/top-n-templates-data';
 
 @Component({
   selector: 'variable-analysis',
@@ -21,17 +21,20 @@ import { SpecificTemplateModalComponent } from '../../@core/components/specific-
 export class VariableAnalysisPage implements OnInit {
   applications: Application[] = [];
   selectedApplicationId: number | null;
-  variableAnalysisHits: VariableAnalysisHit[] = [{
-    result: '',
-    message: '',
-    template: 'oslo_service.periodic_task <*> - - - - -] Running periodic task <*> run_periodic_tasks <*>',
-    params: [{ key: 'param_0', value: 'param0' }, { key: 'param_1', value: 'param1' },
-      { key: 'param_2', value: 'param2' }]
-  }];
-  // variableAnalysisHits: VariableAnalysisHit[] = []
+  // variableAnalysisHits: VariableAnalysisHit[] = [{
+  //   result: '',
+  //   message: '',
+  //   template: 'oslo_service.periodic_task <*> - - - - -] Running periodic task <*> run_periodic_tasks <*>',
+  //   params: [{ key: 'param_0', value: 'param0' }, { key: 'param_1', value: 'param1' },
+  //     { key: 'param_2', value: 'param2' }]
+  // }];
+  variableAnalysisHits: VariableAnalysisHit[] = []
+  logCountLineChart = []
   filterForm = new FormGroup({
     search: new FormControl(),
   });
+  topNTemplatesNow: TopNTemplatesData[];
+  topNTemplatesOlder: TopNTemplatesData[];
 
   constructor(private variableAnalysisService: VariableAnalysisService, private integrationService: IntegrationService,
               private authService: AuthenticationService,
@@ -47,7 +50,7 @@ export class VariableAnalysisPage implements OnInit {
 
     this.filterForm.get('search').valueChanges
       .pipe(
-        debounceTime(400),
+        debounceTime(300),
         distinctUntilChanged()
       )
       .subscribe(search => {
@@ -61,11 +64,13 @@ export class VariableAnalysisPage implements OnInit {
       this.variableAnalysisService.loadSpecificTemplate(this.selectedApplicationId, resp['item']).subscribe(resp => {
         this.dialogService.open(SpecificTemplateModalComponent, {
           context: {
-            data: resp.second
+            data: resp.second,
+            type: resp.first
           }, dialogClass: 'model-full'
         });
       }, err => {
-        this.notificationService.error('errror')
+        console.log(err)
+        this.notificationService.error('Error', 'Error fetching data')
       })
     })
   }
@@ -74,10 +79,15 @@ export class VariableAnalysisPage implements OnInit {
     this.selectedApplicationId = appId
     this.variableAnalysisService.loadData(this.selectedApplicationId).subscribe(resp => {
       this.variableAnalysisHits = resp
-    })
-  }
+    });
 
-  selectTemplate(template: string, param: string, value: string) {
+    this.variableAnalysisService.getLogCountLineChart(this.selectedApplicationId).subscribe(resp => {
+      this.logCountLineChart = resp
+    });
 
+    this.variableAnalysisService.getTopNTemplates(this.selectedApplicationId).subscribe(resp => {
+      this.topNTemplatesNow = resp.now;
+      this.topNTemplatesOlder = resp.older;
+    });
   }
 }

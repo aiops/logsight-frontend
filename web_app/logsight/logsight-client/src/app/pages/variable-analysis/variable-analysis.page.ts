@@ -60,18 +60,21 @@ export class VariableAnalysisPage implements OnInit {
           })
       });
 
-    this.messagingService.getVariableAnalysisTemplate().subscribe(resp => {
-      this.variableAnalysisService.loadSpecificTemplate(this.selectedApplicationId, resp['item']).subscribe(resp => {
-        this.dialogService.open(SpecificTemplateModalComponent, {
-          context: {
-            data: resp.second,
-            type: resp.first
-          }, dialogClass: 'model-full'
-        });
-      }, err => {
-        console.log(err)
-        this.notificationService.error('Error', 'Error fetching data')
-      })
+    this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
+      if (this.selectedApplicationId) {
+        this.variableAnalysisService.loadSpecificTemplate(this.selectedApplicationId, selected['item']).subscribe(
+          resp => {
+            this.dialogService.open(SpecificTemplateModalComponent, {
+              context: {
+                data: resp.second,
+                type: resp.first
+              }, dialogClass: 'model-full'
+            });
+          }, err => {
+            console.log(err)
+            this.notificationService.error('Error', 'Error fetching data')
+          })
+      }
     })
   }
 

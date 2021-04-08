@@ -27,6 +27,6 @@ export class LoginService {
   }
 
   activateUser(key: string) {
-    return this.apiService.post(`/api/users/activate`, { key });
+    return this.apiService.post(`/api/auth/activate`, { key });
   }
 }

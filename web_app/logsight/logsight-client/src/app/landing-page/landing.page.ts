@@ -6,7 +6,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'landing',
-  styleUrls: ['./assets/css/animate.css', './assets/css/owl.carousel.css', './assets/css/owl.theme.css', './assets/css/style.css'],
+  styleUrls: ['./assets/css/animate.css', './assets/css/owl.carousel.css', './assets/css/owl.theme.css',
+    './assets/css/style.css'],
   templateUrl: './landing.page.html',
 })
 export class LandingPage {
@@ -35,25 +36,25 @@ export class LandingPage {
         this.router.navigate(['/pages/dashboard'])
       }, err => {
         console.log('login error', err)
-        this.notificationService.error('Error', 'Incorrect email or password')
+        this.notificationService.error('Error', 'Incorrect or not activated email')
       }
     )
   }
 
   onSignUp() {
-    this.authService.registerDemo(this.form.value).subscribe(resp => {
+    this.authService.registerDemo(this.form.value).subscribe(_ => {
         this.notificationService.success('Success',
           'You are successfully registered. Please check your email to activate')
         this.router.navigate(['/auth/login'])
+      }, err => {
+        this.notificationService.error('Error', err)
       }
     )
   }
 
   redirectToLogin() {
     this.router.navigate(['/auth/login'])
-      }
-
-
+  }
 
 }
 

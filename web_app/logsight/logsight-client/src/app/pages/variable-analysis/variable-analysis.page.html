@@ -1,0 +1,102 @@
+<div class="row" style="width: 100%">
+  <nb-card class="p-3" style="width: 100%">
+    <div class="row">
+      <div class="col-md-6">
+        <h5 class="mb-3">Application</h5>
+        <nb-select class="period-select col-md-4 pl-3" (selectedChange)="applicationSelected($event)"
+                   placeholder="Select application">
+          <nb-option *ngFor="let app of applications" [value]="app.id">
+            {{ app.name }}
+          </nb-option>
+        </nb-select>
+      </div>
+    </div>
+  </nb-card>
+  <nb-card *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">
+    <div class="row">
+
+      <div class="col-md-6">
+        <p class="font-weight-bold">Top 5 templates between Last 2 Hours and Last Hour</p>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th style="width: 70%">Template</th>
+            <th style="width: 15%" scope="col">Count</th>
+            <th style="width: 15%">Percentage</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of topNTemplatesOlder">
+            <td>
+              {{row.template}}
+            </td>
+            <td>
+              {{row.count}}
+            </td>
+            <td>
+              /
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <p class="font-weight-bold">Top 5 templates from Last Hour</p>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th style="width: 70%">Template</th>
+            <th style="width: 15%" scope="col">Count</th>
+            <th style="width: 15%">Percentage Difference</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of topNTemplatesNow">
+            <td>
+              {{row.template}}
+            </td>
+            <td>
+              {{row.count}}
+            </td>
+            <td>
+              {{row.percentage}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nb-card>
+  <nb-card class="p-3" style="width: 100%" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
+    <h5 class="mb-3">Log Count</h5>
+    <stacked-area-chart [data]="logCountLineChart"></stacked-area-chart>
+  </nb-card>
+  <nb-card class="p-3" style="width: 100%" *ngIf="selectedApplicationId && variableAnalysisHits.length">
+    <div class="row">
+      <div class="col-md-12">
+        <h5 class="mb-3">Data</h5>
+        <form [formGroup]="filterForm" class="filter-form">
+          <div class="form-group col-md-3">
+            <input class="form-control" type="text" id="search"
+                   placeholder="Search"
+                   formControlName="search"/>
+          </div>
+        </form>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Result</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of variableAnalysisHits">
+            <td>
+              <app-ad-banner [row]="row"></app-ad-banner>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nb-card>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../@core/service/api.service';
-import { Application } from '../../@core/common/application';
 import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
+import { Application } from '../common/application';
 
 @Injectable()
 export class IntegrationService {

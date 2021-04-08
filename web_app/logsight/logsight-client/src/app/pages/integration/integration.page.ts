@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IntegrationService } from './integration.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Application } from '../../@core/common/application';
+import { IntegrationService } from '../../@core/service/integration.service';
 
 @Component({
   selector: 'integration',

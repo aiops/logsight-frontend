@@ -5,11 +5,9 @@ import { ChartModule } from 'angular2-chartjs';
 import { NbCardModule } from '@nebular/theme';
 import { DashboardPage } from './dashboard.page';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { StackedAreaChartComponent } from './stacked-area-chart/stacked-area-chart.component';
-import { HeatmapComponent } from './heatmap/heatmap.component';
-import { PiechartComponent } from './pie-chart/piechart.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.module';
 
 @NgModule({
   imports: [
@@ -19,13 +17,11 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     ChartModule,
     NbCardModule,
     Ng2SmartTableModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    ChartsWrapperModule
   ],
   declarations: [
     DashboardPage,
-    HeatmapComponent,
-    PiechartComponent,
-    StackedAreaChartComponent
   ],
 })
 export class DashboardModule {

@@ -18,6 +18,7 @@ import { TopNTemplatesData } from '../../@core/common/top-n-templates-data';
   templateUrl: './variable-analysis.page.html',
   encapsulation: ViewEncapsulation.None,
 })
+
 export class VariableAnalysisPage implements OnInit {
   applications: Application[] = [];
   selectedApplicationId: number | null;
@@ -35,6 +36,7 @@ export class VariableAnalysisPage implements OnInit {
   });
   topNTemplatesNow: TopNTemplatesData[];
   topNTemplatesOlder: TopNTemplatesData[];
+  allTemplatesLoading: boolean;
 
   constructor(private variableAnalysisService: VariableAnalysisService, private integrationService: IntegrationService,
               private authService: AuthenticationService,
@@ -54,9 +56,14 @@ export class VariableAnalysisPage implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(search => {
+        this.allTemplatesLoading = true
         this.variableAnalysisService.loadData(this.selectedApplicationId, search).subscribe(
           resp => {
-            this.variableAnalysisHits = resp
+            this.variableAnalysisHits = resp;
+            this.allTemplatesLoading = false;
+          }, error => {
+            this.allTemplatesLoading = false;
+            this.notificationService.error('Error', 'Error loading templates')
           })
       });
 

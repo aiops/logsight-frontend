@@ -12,7 +12,7 @@ th, td {
   color: red;
 }
 
-.template:hover{
+.template:hover {
   cursor: pointer;
   opacity: .7;
 }
@@ -20,5 +20,10 @@ th, td {
 table {
   table-layout: fixed;
   width: 100%;
+}
+
+.table-height {
+  max-height: 80vh;
+  overflow-y: auto
 }
 

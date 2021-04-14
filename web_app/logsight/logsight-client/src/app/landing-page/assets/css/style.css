@@ -83,6 +83,7 @@ html * {
 	text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -208,6 +209,7 @@ header {
 
 .sticky .navbar .navbar-brand{
   color: #c5c5c5;
+  text-indent: 2em;
 }
 .sticky .navbar .navbar-brand {
   font-family: 'Montserrat';
@@ -224,6 +226,7 @@ header {
 	letter-spacing: 0;
 	color: #6d48e5 !important;
 	vertical-align: middle;
+  text-indent: 2em;
 }
 
 .navbar .navbar-brand img {

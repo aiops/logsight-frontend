@@ -60,9 +60,6 @@ export class LandingPage {
 
   redirectToLogin() {
     this.router.navigate(['/auth/login'])
-      }
-
-
-
+  }
 }
 

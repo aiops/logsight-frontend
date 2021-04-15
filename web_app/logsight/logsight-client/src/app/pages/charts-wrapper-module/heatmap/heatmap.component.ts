@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { multi } from './data';
 
 @Component({
@@ -8,6 +8,7 @@ import { multi } from './data';
 })
 export class HeatmapComponent {
   @Input() data = [];
+  @Output() select = new EventEmitter();
 
   legend: boolean = false;
   showLabels: boolean = false;
@@ -37,11 +38,6 @@ export class HeatmapComponent {
   }
 
   onSelect(data): void {
-  }
-
-  onActivate(data): void {
-  }
-
-  onDeactivate(data): void {
+    console.log('onSelect', data)
   }
 }

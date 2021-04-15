@@ -9,7 +9,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs-compat/add/observable/fromPromise';
 import { AuthenticationService } from './authentication.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
@@ -44,6 +44,6 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     if ((contentType === 'application/json' || contentType === null) && event.error.text === '') {
       return of(null);
     }
-    return Observable.throw(event);
+    return throwError(event);
   }
 }

@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
-import { UserData } from '../../../@core/data/users';
-import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -41,20 +39,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userMenu = [{ title: 'Profile', data: 'profile' }, { title: 'Log out', data: 'log_out' }];
 
   constructor(private sidebarService: NbSidebarService,
-    private menuService: NbMenuService,
-    private themeService: NbThemeService,
-    private userService: UserData,
-    private layoutService: LayoutService,
-    private breakpointService: NbMediaBreakpointsService) {
+              private menuService: NbMenuService,
+              private themeService: NbThemeService,
+              private breakpointService: NbMediaBreakpointsService) {
   }
 
   ngOnInit() {
 
     this.currentTheme = this.themeService.currentTheme;
     this.sidebarService.collapse('menu-sidebar')
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -71,7 +64,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(themeName => this.currentTheme = themeName);
 
-
   }
 
   ngOnDestroy() {
@@ -83,13 +75,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.themeService.changeTheme(themeName);
   }
 
-  toggleSidebar(): boolean {
-
-    this.sidebarService.toggle(true, 'menu-sidebar');
-    this.layoutService.changeLayoutSize();
-
-    return false;
-  }
+  // toggleSidebar(): boolean {
+  //
+  //   this.sidebarService.toggle(true, 'menu-sidebar');
+  //   this.layoutService.changeLayoutSize();
+  //
+  //   return false;
+  // }
 
   navigateHome() {
     this.menuService.navigateHome();

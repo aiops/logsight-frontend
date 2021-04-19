@@ -13,7 +13,13 @@ import { IntegrationService } from '../../@core/service/integration.service';
 export class IntegrationPage implements OnInit {
   key: string
   applications: Application[] = [];
-
+  public show:boolean = false;
+  public python:boolean = true;
+  public fileBeats:boolean = false;
+  public showHideAppBtn:any = 'Show';
+  public pythonBtn:any = 'Python';
+  public filebeatBtn:any = 'Filebeat';
+  public restBtn:any = 'Rest';
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });
@@ -27,6 +33,28 @@ export class IntegrationPage implements OnInit {
       this.key = user.key
       this.loadApplications()
     })
+  }
+
+  onBtnShowApp() {
+    this.show = !this.show;
+    if(this.show)
+      this.showHideAppBtn = "Hide";
+    else
+      this.showHideAppBtn = "Show";
+  }
+
+  onPythonBtn(){
+    this.python = true
+    this.fileBeats = false
+  }
+
+  onFileBeatBtn(){
+    this.python = false
+    this.fileBeats = true
+  }
+
+  onRestBtn(){
+
   }
 
   createApplication() {

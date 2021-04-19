@@ -1,0 +1,29 @@
+th, td {
+  color: white;
+}
+
+///deep/ .select-button {
+//  background-color: white !important;
+//  color: #495057;
+//}
+
+
+.template {
+  color: red;
+}
+
+.template:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.table-height {
+  max-height: 80vh;
+  overflow-y: auto
+}
+

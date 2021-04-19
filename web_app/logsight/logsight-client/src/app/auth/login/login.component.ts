@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/pages/quickstart'])
       }, err => {
         console.log('login error', err)
-        this.notificationService.error('Error', 'Incorrect email or password')
+        this.notificationService.error('Error', 'Incorrect or not activated email')
       }
     )
   }

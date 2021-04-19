@@ -76,13 +76,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.themeService.changeTheme(themeName);
   }
 
-  toggleSidebar(): boolean {
-
-    this.sidebarService.toggle(true, 'menu-sidebar');
-    // this.layoutService.changeLayoutSize();
-
-    return false;
-  }
+  // toggleSidebar(): boolean {
+  //
+  //   this.sidebarService.toggle(true, 'menu-sidebar');
+  //   // this.layoutService.changeLayoutSize();
+  //
+  //   return false;
+  // }
 
   navigateHome() {
     this.menuService.navigateHome();

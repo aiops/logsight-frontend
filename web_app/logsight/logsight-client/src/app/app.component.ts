@@ -6,7 +6,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NbMenuService } from '@nebular/theme';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'ngx-app',
   template: '<router-outlet></router-outlet> <simple-notifications [options]="notificationOptions"></simple-notifications>',
@@ -30,6 +29,7 @@ export class AppComponent implements OnInit {
       .subscribe((event) => {
         this.onContextItemSelection(event.item.data);
       });
+
   }
 
   onContextItemSelection(data) {

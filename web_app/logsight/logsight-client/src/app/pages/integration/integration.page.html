@@ -1,17 +1,45 @@
 <div class="row" style="width: 100%">
 
-  <div class="col">
+  <div class="col-md-3">
 
     <div class="row user_info">
       <nb-card class="p-3 row-one" >
         <div class="row no-gutters">
-          <div class = "col">
-            <h5 class="mb-3">Your key is</h5>
+          <div class = "col" align="center">
+            <p class="mb-3"><b>{{email}}</b></p>
+            <p class="mb-3">Private key: <b>{{key}}</b></p>
+          </div>
+        </div>
+<!--        <div class="row">-->
+<!--          <div class="col" style="margin-left: 20px">-->
+<!--            <p class="key_text"><b>{{key}}</b></p>-->
+<!--          </div>-->
+<!--        </div>-->
+      </nb-card>
+    </div>
+
+    <div class ="row integration_types">
+      <nb-card class="p-3 row-one">
+        <div class="row no-gutters">
+          <div class="col">
+            <h6><b>Integration types</b></h6>
           </div>
         </div>
         <div class="row">
-          <div class="col" style="margin-left: 20px">
-            <h6 class="key_text"><b>{{key}}</b></h6>
+          <div class=".col-6 .col-md-4">
+            <button nbButton class="python-btn" type="button" (click)="onPythonBtn()" >
+              {{pythonBtn}}
+            </button>
+          </div>
+          <div class=".col-6 .col-md-4">
+            <button nbButton class="filebeat-btn" type="button" (click)="onFileBeatBtn()" >
+              {{filebeatBtn}}
+            </button>
+          </div>
+          <div class=".col-6 .col-md-4">
+            <button nbButton class="rest-btn" type="button" (click)="onRestBtn()" >
+              {{restBtn}}
+            </button>
           </div>
         </div>
       </nb-card>
@@ -21,28 +49,23 @@
       <nb-card class="p-3 row-one">
         <div class="row no-gutters">
           <div class="col">
-            <h5 class="mb-3">Create new application</h5>
+            <h6 class="mb-3">Create application</h6>
           </div>
         </div>
         <div class="row justify-content-between">
           <div class="col" style="margin-bottom: 3px">
             <form [formGroup]="form" (submit)="createApplication()" aria-labelledby="title">
               <div class="form-control-group">
-                <div class="col-md-4" style="margin-bottom: 3px">
-                  <label class="label" style="margin: 3px" for="name">Application name:</label>
+                <div class="col-md-12" style="margin-bottom: 3px">
+<!--                  <label class="label" style="margin: 3px" for="name">Application name:</label>-->
+
                   <input nbInput class="mr-2" type="text" formControlName="name" id="name" placeholder="Application name" [required]="true" [attr.aria-invalid]="form.invalid && form.touched ? true : null">
+                  <button nbButton class="create-app-btn" status="success" [disabled]="!form.valid">Create</button>
                   <ng-container *ngIf="form.controls['name'].invalid && form.touched">
                     <p class="error-message" *ngIf="form.controls['email'].errors?.required">
                       Application name is required!
                     </p>
                   </ng-container>
-                </div>
-              </div>
-              <div class="col-md-4 ml-auto" style="margin-bottom: 3px">
-                <div class="row align-items-center">
-                  <div class="col">
-                    <button nbButton class="create-app-btn" status="success" [disabled]="!form.valid">Create</button>
-                  </div>
                 </div>
               </div>
             </form>
@@ -54,7 +77,7 @@
       <nb-card class="p-3 row-one">
         <div class="row justify-content-end">
           <div class="col-md-4">
-            <h5 class="mb-3">Applications</h5>
+            <h6 class="mb-3">Active applications</h6>
           </div>
           <div class="col-md-4 ml-auto" style="margin-bottom: 3px">
             <button nbButton class="btn btn-link show-app-btn" type="button" (click)="onBtnShowApp()" id="bt">
@@ -88,45 +111,21 @@
       </nb-card>
     </div>
 
-    <div class ="row integration_types">
-      <nb-card class="p-3 row-one">
-        <div class="row no-gutters">
-          <div class="col">
-            <h5><b>Integration Types</b></h5>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3">
-            <button nbButton class="python-btn" type="button" (click)="onPythonBtn()" >
-              {{pythonBtn}}
-            </button>
-          </div>
-          <div class="col-md-3 filebeat">
-            <button nbButton class="filebeat-btn" type="button" (click)="onFileBeatBtn()" >
-              {{filebeatBtn}}
-            </button>
-          </div>
-          <div class="col-md-3">
-            <button nbButton class="rest-btn" type="button" (click)="onRestBtn()" >
-              {{restBtn}}
-            </button>
-          </div>
-        </div>
-      </nb-card>
-    </div>
+
 
   </div>
 
-  <div class="col-5">
+  <div class="col-5 px-4" >
     <ng-container *ngIf="python">
       <div class="row description">
 <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h3>Description</h3>
+            <h5>Usage</h5>
           </div>
           <div class="row">
-            <p class="dscr" >Logsight exposes an API that allows you to send your logs from basically everywhere, here is how:</p>
+            <p class="dscr">To start sending logs from a Python script you need to install the Logsight Python-SDK:</p>
+            <pre><code highlight="pip install git+ssh://git@github.com/aiops/logsight-python-sdk.git"></code></pre>
           </div>
         </div>
 <!--        </nb-card>-->
@@ -136,34 +135,48 @@
       <div class="row user_guidance">
         <div class="col">
           <div class="row">
-            <h3>Endpoint Details</h3>
+            <h5>Endpoint Details</h5>
           </div>
           <div class="row">
+            <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with the following attributes: </p>
             <table class="table table-striped">
               <tr>
-                <th>Step 1:</th>
-                <td>pip install git+ssh://git@github.com/aiops/logsight-python-sdk.git</td>
+                <td>PRIVATE_KEY</td>
+                <td>A private key which is used to validate your authenticity.</td>
               </tr>
               <tr>
-                <th>Step 2:</th>
-                <td>python3 example-logging.py</td>
+                <th>APP_NAME</th>
+                <td>The name of your application/service. For example, a company "x" wants to debug their test environment they might insert the “x_test”</td>
               </tr>
             </table>
           </div>
         </div>
       </div>
 
+      <div class="row user_guidance">
+        <div class="col">
+          <div class="row">
+            <h5>Integration help?</h5>
+          </div>
+          <div class="row">
+            <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>
+          </div>
+        </div>
+      </div>
+
     </ng-container>
+
+
 
     <ng-container *ngIf="fileBeats">
       <div class="row description">
       <!--      <nb-card class="p-2 rows" style="width: 100%">-->
       <div class="col">
         <div class="row">
-          <h3>Description</h3>
+          <h5>Usage</h5>
         </div>
         <div class="row">
-          <p class="dscr" >Logsight exposes an API that allows you to send your logs from basically everywhere, here is how:</p>
+          <p class="dscr">Logsight provides integration with Filebeat</p>
         </div>
       </div>
       <!--        </nb-card>-->
@@ -190,42 +203,21 @@
     </div>
   </div>
     </ng-container>
-
     </div>
-
-
-    <div class="col-4">
-      <pre><code class="python">
-        import logging
-from logsight import LogsightLogger
-
-# Get an instance of Python standard logger.
-logger = logging.getLogger("Python Logger")
-logger.setLevel(logging.DEBUG)
-
-PRIVATE_KEY = '{{key}}'
-APP_NAME = 'demo-app'
-logsight_handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
-logsight_handler.setLevel(logging.INFO)
-
-logger.addHandler(logsight_handler)
-
-# Send message
-logger.info("Hello World!")
-logger.error("Hello Error!")
-logger.warning("Hello Warning!")
-logger.debug("Hello Debug!")
-logger.info("Hello World!")
-logger.info("Hello World!")
-logger.info("Hello World!")
-logger.error("Hello Error!")
-logger.warning("Hello Warning!")
-logger.debug("Hello Debug!")
-logger.info("Hello World!")
-logger.info("Hello World!")
-logger.info("------------")
-        </code></pre>
+  <ng-container *ngIf="python">
+    <div class="col-4 px-3 ">
+      <h5>Example code</h5>
+      <div><pre><code [highlight]="code_python" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre></div>
     </div>
+  </ng-container>
+
+  <ng-container *ngIf="fileBeats">
+    <div class="col-4 px-3 ">
+      <h5>Example code</h5>
+      <div><pre><code [highlight]="code_filebeats" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre></div>
+    </div>
+  </ng-container>
+
 </div>
 
 

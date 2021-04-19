@@ -6,6 +6,7 @@ import { NbButtonModule, NbCardModule, NbInputModule } from '@nebular/theme';
 import { IntegrationPage } from './integration.page';
 import { IntegrationRoutingModule } from './integration-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HighlightModule} from "ngx-highlightjs";
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     NbInputModule,
     NbButtonModule,
     ReactiveFormsModule,
+    HighlightModule,
   ],
   declarations: [
     IntegrationPage,

@@ -4,29 +4,30 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Quickstart',
     icon: 'flash',
-    link: '/pages/quickstart',
-    home: true,
+    link: '/pages/quickstart'
   },
   {
     title: 'Dashboard',
-    icon: 'home-outline',
+    icon: 'grid-outline',
     link: '/pages/dashboard',
+    home: true
   },
   {
     title: 'Incidents',
-    icon: 'browser-outline',
+    icon: 'radio-button-on-outline',
     link: '/pages/incidents',
   },
   {
-    title: 'Integration',
-    icon: 'file-text',
-    link: '/pages/integration',
+    title: 'Variable analysis',
+    icon: 'bar-chart',
+    link: '/pages/variable-analysis',
   },
   {
-    title: 'Variable analysis',
-    icon: 'file-text',
-    link: '/pages/variable-analysis',
+    title: 'Send logs',
+    icon: 'link-outline',
+    link: '/pages/integration',
   }
+
   // {
   //   title: 'FEATURES',
   //   group: true,

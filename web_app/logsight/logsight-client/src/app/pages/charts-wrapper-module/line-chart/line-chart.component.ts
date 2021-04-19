@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-
 @Component({
   selector: 'line-chart',
   styleUrls: ['./line-chart.component.scss'],

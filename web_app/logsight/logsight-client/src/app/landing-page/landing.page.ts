@@ -3,6 +3,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from '../auth/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {timeout} from "rxjs/operators";
 
 @Component({
   selector: 'landing',
@@ -53,7 +54,10 @@ export class LandingPage {
     this.authService.registerDemo(this.form.value).subscribe(resp => {
         this.notificationService.success('Success',
           'You are successfully registered. Please check your email to activate')
-        this.router.navigate(['/auth/login'])
+        this.router.navigate(['/auth/activate'])
+      }, err => {
+        console.log('login error', err)
+        this.notificationService.error('Error', 'User already exists, please sign in!')
       }
     )
   }

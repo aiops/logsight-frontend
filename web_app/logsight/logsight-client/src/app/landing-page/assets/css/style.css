@@ -47,6 +47,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
+
 ol, ul {
 	list-style: none;
 }
@@ -82,6 +83,7 @@ html * {
 	text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -115,6 +117,13 @@ body {
   z-index: 9999;
 }
 
+.container-l {
+  margin: 0 auto !important;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: relative;
+}
+
 .container-m {
 	max-width: 1024px;
 	margin: 0 auto !important;
@@ -130,9 +139,62 @@ body {
 	padding-right: 20px;
 	position: relative;
 }
+/* ----- Login button -----*/
+.btn span.icon {
+  background: url("../icons/f2.png") no-repeat;
+  float: left;
+  width: 10px;
+  height: 40px;
+}
+.button {
+  background: #9fcdff;
+  border-radius: 6px;
+  display: inline-block;
+  padding: 5px;
+  text-align: center;
+  max-width: 20px;
+  text-decoration: none;
+}
 
+.button figure {
+  margin: 50px 10px 5px;
+}
 
+.button figure img {
+  border-radius: 50%;
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.button .text {
+  font-weight: 400;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  color: #1d368a;
+  margin: 0 0 15px;
+  font-size: 16px;
+}
 /*------ Navbar Styling ------*/
+.sticky {
+  background: #6836c6;
+  box-shadow: 0 3px 12px 0 rgba(0,0,0,.08);
+  position: fixed;
+  top: 0;
+  height: 80px;
+  width: 100%;
+  z-index: 1000;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px;
+  background: transparent;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
 
 .navbar {
   font-family: "Montserrat";
@@ -141,15 +203,30 @@ body {
 	background-color: transparent !important;
 	-webkit-transition: 0.5s all ease;
 	transition: 0.5s all ease;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.sticky .navbar .navbar-brand{
+  color: #c5c5c5;
+  text-indent: 2em;
+}
+.sticky .navbar .navbar-brand {
+  font-family: 'Montserrat';
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0;
+  color: white !important;
+  vertical-align: middle;
+}
 .navbar .navbar-brand {
 	font-family: 'Montserrat';
-	font-size: 16px;
-	font-weight: 600;
+	font-size: 24px;
+	font-weight: 800;
 	letter-spacing: 0;
 	color: #6d48e5 !important;
 	vertical-align: middle;
+  text-indent: 2em;
 }
 
 .navbar .navbar-brand img {
@@ -176,7 +253,7 @@ body {
 .navbar-nav {
 	text-align: center;
 	margin-top: 15px;
-	background: #FFF;
+	/*background: #FFF;*/
 	-webkit-transition: 0.5s all ease; /* For Safari 3.1 to 6.0 */
 	transition: 0.5s all ease;
 }
@@ -187,7 +264,12 @@ body {
 	font-size: 0.85rem;
 	font-weight: 400;
   text-transform: capitalize;
-  color: #563D7C;
+  color: orange;
+}
+.sticky .navbar-nav .nav-item .nav-link{
+  color: #acacac;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .navbar-nav .nav-item .nav-link {
@@ -413,7 +495,30 @@ body {
 	opacity: 0.9;
 }
 
-
+.btn-login{
+  margin-top: -1px;
+  font-family: 'Montserrat';
+  /*display: inline-block;*/
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+  text-decoration: none !important;
+  white-space: nowrap;
+  cursor: pointer;
+  color: #6d48e5 !important;
+  border: 1px solid transparent !important;
+  border-radius: 1px;
+  box-sizing: border-box;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  transition: 0.2s;
+}
+.sticky .btn-login {
+  color: #FFFFFF !important;
+  font-size: 1.2rem;
+}
 .btn-cta {
 	font-family: 'Montserrat';
 	display: inline-block;
@@ -1580,7 +1685,7 @@ body {
 	.navbar-nav .nav-item {
 		margin-top: 0;
 		margin-right: 15px;
-	  font-size: 0.85rem;
+	  font-size: 1.2rem;
 	  font-weight: 400;
 	}
 

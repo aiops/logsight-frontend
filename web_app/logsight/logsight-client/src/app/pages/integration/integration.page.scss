@@ -1,3 +1,49 @@
 th, td {
   color: white;
 }
+
+html, body {
+  height: 100%;
+  margin: 0em;
+}
+// Div
+.filebeat{
+  margin-right: 5px;
+}
+
+// Columns and rows
+
+.row-one{
+  width: 100%;
+  margin-right:10px
+}
+// Label
+.label dscr{
+  margin: 3px;
+  font-size: large;
+}
+
+// Buttons
+
+.create-app-btn{
+  margin: 3px
+}
+.show-app-btn{
+
+}
+
+.python-btn {
+ // background-image: url('../../../assets/icons/03a.svg') !important;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.filebeat-btn {
+  // background-image: url('../../../assets/icons/03a.svg') !important;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.rest-btn {
+  // background-image: url('../../../assets/icons/03a.svg') !important;
+  border-radius: 50%;
+  margin-right: 5px;
+}

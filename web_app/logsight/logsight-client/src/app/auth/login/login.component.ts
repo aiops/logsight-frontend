@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
-        this.router.navigate(['/pages/dashboard'])
+        this.router.navigate(['/pages/quickstart'])
       }, err => {
         console.log('login error', err)
         this.notificationService.error('Error', 'Incorrect or not activated email')

@@ -29,6 +29,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
 import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
+import {HIGHLIGHT_OPTIONS, HighlightModule} from "ngx-highlightjs";
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent],
@@ -54,14 +55,22 @@ import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
     NbCheckboxModule,
     ReactiveFormsModule,
     NbButtonModule,
-    SimpleNotificationsModule.forRoot()
+    SimpleNotificationsModule.forRoot(),
+    HighlightModule
   ],
   bootstrap: [AppComponent],
   providers: [LoginService, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthHttpInterceptor,
     multi: true
-  }]
+  },
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        fullLibraryLoader: () => import('highlight.js'),
+      }
+    }
+  ]
 })
 export class AppModule {
 }

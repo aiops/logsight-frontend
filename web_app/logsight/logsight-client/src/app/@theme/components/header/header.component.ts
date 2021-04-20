@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
-
+import {NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
+// import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       name: 'Corporate',
     },
   ];
+
 
   currentTheme = 'dark';
 
@@ -78,7 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // toggleSidebar(): boolean {
   //
   //   this.sidebarService.toggle(true, 'menu-sidebar');
-  //   this.layoutService.changeLayoutSize();
+  //   // this.layoutService.changeLayoutSize();
   //
   //   return false;
   // }

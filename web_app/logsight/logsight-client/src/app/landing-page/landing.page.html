@@ -3,38 +3,48 @@
 
 <head>
   <meta charset="utf-8">
-  <title>LogSight</title>
+  <title>Logsight</title>
   <link rel="icon" href="assets/icons/favicon.png" type="image/png" sizes="16x16">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Array Multipurpose Startup Business Template">
   <meta name="keywords" content="Array HTML Template, Array Startup Business Template, Startup Template">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+  <script>hljs.highlightAll();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js" integrity="sha512-s+tOYYcC3Jybgr9mVsdAxsRYlGNq4mlAurOrfNuGMQ/SCofNPu92tjE7YRZCsdEtWL1yGkqk15fU/ark206YTg==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/a11y-light.min.css" integrity="sha512-PW96n2amVglidqEDLPUdjJ0zByhT20poSqWJYZRutR6CP2QH58k96WmorqNnC4QXnosNeqMJM8FR/93isIifDQ==" crossorigin="anonymous" />
 </head>
 
-
 <body>
-<div class="wrapper">
-  <!-- Navbar Section -->
-  <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
-    <div class="container container-s">
-      <a class="navbar-brand" href="#">LogSight.</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto navbar-right">
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#products">About</a></li>
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#features">Features</a></li>
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#reviews">Reviews</a></li>
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#pricing">Pricing</a></li>
-          <li class="nav-item" (click)="redirectToLogin()"><a class="btn-cta nav-link js-scroll-trigger">Login</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav><!-- Navbar End -->
+<header class="animated fadeInDown" id="navbar">
+  <section class="web_homePage" (scroll)="onWindowScroll($event);">
+      <!-- Navbar Section -->
 
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <div class="container-fluid container-new">
+        <div class="navbar-header">
+<!--        <div class="container container-l">-->
+<!--          <div class="navbar navbar-title">-->
+            <a class="navbar-brand" href="#"><img alt="logo" src="../../../../assets/images/logsight_logo.png" height="50" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto navbar-right">
+              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#products">About</a></li>
+              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#features">Features</a></li>
+              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#reviews">Reviews</a></li>
+              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#pricing">Pricing</a></li>
+              <li class="nav-item" (click)="redirectToLogin()"><a class="btn-login nav-link js-scroll-trigger">Login</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav> <!-- Navbar End -->
+    </section>
+</header>
+  <section class = "banner"></section>
 
   <div id="main" class="main">
     <div id="signup" class="cta-sm">
@@ -430,8 +440,12 @@
     </div>
 
   </div> <!-- Main -->
-</div><!-- Wrapper -->
-
-
+  <!-- Wrapper -->
 </body>
 </html>
+
+
+
+
+
+

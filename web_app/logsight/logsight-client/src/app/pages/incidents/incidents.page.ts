@@ -52,7 +52,8 @@ export class IncidentsPage implements OnInit {
 
   private loadIncidentsTableData(startTime: string, endTime: string) {
     this.incidentsService.loadIncidentsTableData(startTime, endTime).subscribe(resp => {
-      this.chartData = resp
+      this.tableData = resp
+      console.log('this.tableData', this.tableData)
     })
   }
 }

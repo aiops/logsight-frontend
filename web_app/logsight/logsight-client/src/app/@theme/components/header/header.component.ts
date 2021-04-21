@@ -5,7 +5,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'ngx-header',
+  selector: "'ngx-header','ngx-pages'",
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
@@ -13,8 +13,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
+  menu = MENU_ITEMS;
   user: any;
-
+  horizontal: boolean = true;
   themes = [
     {
       value: 'default',
@@ -88,4 +89,41 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     return false;
   }
+
+  flow(){
+    if(this.horizontal)
+      return 'horizontal';
+    return;
+  }
+
 }
+
+
+export const MENU_ITEMS: NbMenuItem[] = [
+  {
+    title: 'Quickstart',
+    icon: 'flash',
+    link: '/pages/quickstart'
+  },
+  {
+    title: 'Dashboard',
+    icon: 'grid-outline',
+    link: '/pages/dashboard',
+    home: true
+  },
+  {
+    title: 'Incidents',
+    icon: 'radio-button-on-outline',
+    link: '/pages/incidents',
+  },
+  {
+    title: 'Variable analysis',
+    icon: 'bar-chart',
+    link: '/pages/variable-analysis',
+  },
+  {
+    title: 'Send logs',
+    icon: 'link-outline',
+    link: '/pages/integration',
+  }
+]

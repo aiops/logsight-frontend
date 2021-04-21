@@ -8,19 +8,163 @@
     </a>
   </div>
 
-<!--  <nb-actions class="left">-->
-<!--    <nb-action icon='home-outline' [routerLink]="['/pages/dashboard']"></nb-action>-->
-<!--    <nb-action icon='browser-outline' [routerLink]="['/pages/incidents']"></nb-action>-->
-<!--    <nb-action icon='stats-chart-outline'  [routerLink]="['/pages/variable-analysis']"></nb-action>-->
-<!--    <nb-action icon='planet' [routerLink]="['/pages/integration']"></nb-action>-->
-<!--  </nb-actions>-->
 </div>
-
 <div class="header-container">
+
+<!--  <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">-->
+<!--    <div class="container">-->
+<!--      <div class="row justify-content-end">-->
+<!--        <div class="col-md-2" style="margin-right: 5px">-->
+<!--          <ul class="nav navbar-nav" routerLinkActive="active">-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" routerLink="/pages/dashboard">-->
+<!--                <nb-icon icon="grid-outline" ></nb-icon>-->
+<!--                Dashboard-->
+<!--              </a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--        <div class="col-md-2" style="margin-right: 5px">-->
+<!--          <ul class="nav navbar-nav" routerLinkActive="active">-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" routerLink="/pages/incidents">-->
+<!--                <nb-icon icon="radio-button-on-outline" ></nb-icon>-->
+<!--                Incidents-->
+<!--              </a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--        <div class="col-md-3" style="white-space: nowrap;">-->
+<!--          <ul class="nav navbar-nav" routerLinkActive="active">-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" routerLink="/pages/variable-analysis">-->
+<!--                <nb-icon icon="bar-chart" ></nb-icon>-->
+<!--                Variable Analysis-->
+<!--              </a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--        <div class="col-md-2" >-->
+<!--          <ul class="nav navbar-nav" routerLinkActive="active">-->
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" routerLink="/pages/integration">-->
+<!--                <nb-icon icon="link-outline" ></nb-icon>-->
+<!--                Integration-->
+<!--              </a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </nav>-->
+
+
+
+<!--  <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">-->
+<!--    <div class="container">-->
+      <div class="row justify-content-end" style="margin-right: 10px">
+        <div class="col-md-2" style="margin-right: 5px">
+          <ul class="nav navbar-nav" routerLinkActive="active">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/pages/dashboard">
+                <nb-icon icon="grid-outline" ></nb-icon>
+                Dashboard
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-2" style="margin-right: 5px">
+          <ul class="nav navbar-nav" routerLinkActive="active">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/pages/incidents">
+                <nb-icon icon="radio-button-on-outline" ></nb-icon>
+                Incidents
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-3" style="white-space: nowrap;">
+          <ul class="nav navbar-nav" routerLinkActive="active">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/pages/variable-analysis">
+                <nb-icon icon="bar-chart" ></nb-icon>
+                Variable Analysis
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-2" >
+          <ul class="nav navbar-nav" routerLinkActive="active">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/pages/integration">
+                <nb-icon icon="link-outline" ></nb-icon>
+                Integration
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+<!--    </div>-->
+<!--  </nav>-->
+
+
+<!--<div class = top_navigation>-->
+<!--    <nb-actions size="small">-->
+<!--      <nb-action [routerLink]="['/pages/dashboard']">-->
+<!--        <div class="row align-items-center" style="position: center">-->
+<!--          <div class="col">-->
+<!--            <nb-icon icon="grid-outline"></nb-icon>-->
+<!--          </div>-->
+<!--          <div class="col">-->
+<!--            <p> Dashboard</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </nb-action>-->
+<!--      <nb-action [routerLink]="['/pages/incidents']">-->
+<!--        <div class="row align-items-center" style="position: center">-->
+<!--          <div class="col">-->
+<!--            <nb-icon icon='radio-button-on-outline'></nb-icon>-->
+<!--          </div>-->
+<!--          <div class="col">-->
+<!--            <p> Incidents </p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </nb-action>-->
+<!--      <nb-action [routerLink]="['/pages/variable-analysis']">-->
+<!--        <div class="row align-items-center" style="position: center">-->
+<!--          <div class="col">-->
+<!--            <nb-icon icon='bar-chart'></nb-icon>-->
+<!--          </div>-->
+<!--          <div class="col">-->
+<!--            <p> Variable Analysis</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </nb-action>-->
+<!--      <nb-action icon='link-outline' [routerLink]="['/pages/integration']">-->
+<!--        <div class="row align-items-center" style="position: center">-->
+<!--          <div class="col">-->
+<!--            <nb-icon icon='link-outline'></nb-icon>-->
+<!--          </div>-->
+<!--          <div class="col">-->
+<!--            <p> Integration</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </nb-action>-->
+<!--    </nb-actions>-->
+<!--  </div>-->
+
+<!--</div>-->
+<!--<div class="header-container">-->
 
 <!--  <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">-->
 <!--    <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>-->
 <!--  </nb-select>-->
+<!--  <div class = top_navigation>-->
+<!--    <nb-menu [items]="menu" class="flow()"></nb-menu>-->
+<!--    <ng-content select="nb-menu" class="menu-horizontal"></ng-content>-->
+<!--  </div>-->
+
+
 
 
   <nb-actions size="small">
@@ -40,3 +184,19 @@
     </nb-action>
   </nb-actions>
 </div>
+<style>
+  ol,ul {
+    list-style: none;
+  }
+  li {
+    display:block;
+    width:120px;
+    float:left;
+    margin-left:2px;
+  }
+  a {
+    display:block;
+    padding:3px;
+    text-decoration:none;
+  }
+</style>

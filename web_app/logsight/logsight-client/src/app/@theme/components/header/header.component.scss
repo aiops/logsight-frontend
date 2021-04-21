@@ -7,12 +7,21 @@
   justify-content: space-between;
   width: 100%;
 
+  :host ::ng-deep {
+    .horizontal {
+      display: flex;
+    }
+  }
   .logo-container {
     display: flex;
     align-items: center;
     width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
   }
-
+  .top_navigation{
+    position:relative;      // positioning relative to parent
+    float:right;            // float right inside it's parent
+    list-style-type:none;
+  }
   nb-action {
     height: auto;
     display: flex;
@@ -22,7 +31,10 @@
   nb-user {
     cursor: pointer;
   }
-
+  nb-icon{
+    display: inline-block;
+    text-align: center;
+  }
   ::ng-deep nb-search button {
     padding: 0!important;
   }

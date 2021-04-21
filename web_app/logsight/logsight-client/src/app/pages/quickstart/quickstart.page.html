@@ -1,52 +1,34 @@
+<div align="center">
+
+  <h2> Choose a way to connect</h2>
+  Let's get your logs to your Logsight.AI.
+</div>
+<br>
+<br>
 <div class="col-md-12 col-lg-12 col-xxxl-12">
   <nb-card>
-    <nb-card-body>
-      <nb-stepper #stepper>
-        <nb-step [stepControl]="firstForm" label="Choose data">
-          <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
-            <div class="input-group">
-              <input type="text" placeholder="Enter your name" class="form-control" formControlName="firstCtrl"
-                     [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
-            </div>
-            <button nbButton nbStepperNext>next</button>
-          </form>
-        </nb-step>
-        <nb-step [stepControl]="secondForm" label="Basic Guide">
-          <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
-            <p class="lorem">
-              Pellentesque we gonna chung tortor.
-              Sizzle pizzle. Fizzle izzle dolor dapibus fo shizzle mah nizzle fo rizzle, mah home g-dizzle tempus
-              tempor.
-              Maurizzle cool nibh owned turpizzle. My shizz fo shizzle tortor.
-            </p>
-            <div class="input-group">
-              <input type="text" placeholder="Enter favorite movie" class="form-control" formControlName="secondCtrl"
-                     [ngClass]="{'form-control-danger': secondForm.invalid && (secondForm.dirty || secondForm.touched)}">
-            </div>
-            <button nbButton nbStepperPrevious>prev</button>
-            <button nbButton nbStepperNext>next</button>
-          </form>
-        </nb-step>
-        <nb-step [stepControl]="thirdForm" label="Enjoy LogSight">
-          <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
-            <p class="lorem">
-              Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta platea dictumst. Check it out pot.
-            </p>
-            <div class="input-group">
-              <input type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
-                     [ngClass]="{'form-control-danger': thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)}">
-            </div>
-            <button nbButton nbStepperPrevious>prev</button>
-            <button nbButton nbStepperNext>Confirm</button>
-          </form>
-        </nb-step>
-        <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
-          <div class="step-container">
-            <h3>Wizard completed!</h3>
-            <button nbButton (click)="stepper.reset()">Try again</button>
-          </div>
-        </nb-step>
-      </nb-stepper>
+    <nb-card-body align="center">
+      <h3>Explore the power of AI without setup</h3>
+      <h6>Use our sample log data to explore logsight AI features, no production data required.</h6>
+      <button nbButton class="python-btn" type="button" (click)="createApplication()"> Try now
+      </button>
     </nb-card-body>
   </nb-card>
+
+<div align="center">
+
+  <h4>OR</h4>
+  Send us logs
+</div>
+<br>
+  <br>
+  <nb-card>
+    <nb-card-body align="center">
+      <h3>Via plugins</h3>
+      <h6>We provide integrations for various platforms</h6>
+
+      <p> We need to list here in cards</p>
+    </nb-card-body>
+  </nb-card>
+
 </div>

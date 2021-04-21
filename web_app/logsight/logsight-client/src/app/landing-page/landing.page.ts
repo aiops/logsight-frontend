@@ -54,7 +54,7 @@ export class LandingPage {
     this.authService.registerDemo(this.form.value).subscribe(resp => {
         this.notificationService.success('Success',
           'You are successfully registered. Please check your email to activate')
-        this.router.navigate(['/auth/activate'])
+        this.router.navigate(['/auth/login'])
       }, err => {
         console.log('login error', err)
         this.notificationService.error('Error', 'User already exists, please sign in!')

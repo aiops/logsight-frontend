@@ -1,11 +1,11 @@
 import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
-  {
-    title: 'Quickstart',
-    icon: 'flash',
-    link: '/pages/quickstart'
-  },
+  // {
+  //   title: 'Quickstart',
+  //   icon: 'flash',
+  //   link: '/pages/quickstart'
+  // },
   {
     title: 'Dashboard',
     icon: 'grid-outline',

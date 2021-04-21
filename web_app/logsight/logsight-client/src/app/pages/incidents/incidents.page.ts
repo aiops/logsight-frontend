@@ -1,12 +1,24 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IncidentsService } from './incidents.service';
 import { options } from './chart-options';
+import { IncidentTableData } from '../../@core/common/incident-table-data';
+import 'd3';
+import 'nvd3';
 
 @Component({
   selector: 'incidents',
-  styleUrls: ['./incidents.page.scss'],
+  styleUrls: ['./incidents.page.scss', '../../../../node_modules/nvd3/build/nv.d3.min.css'],
   templateUrl: './incidents.page.html',
+  encapsulation: ViewEncapsulation.None
 })
 export class IncidentsPage implements OnInit {
 
@@ -19,22 +31,8 @@ export class IncidentsPage implements OnInit {
   //     { x: 1613689200000, y: 1 }]
   // }];
   chartData = [];
-  tableData = [];
+  tableData: IncidentTableData;
   options = options.timelineChart()
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (!changes.data.isFirstChange()) {
-  //     this.setEventListener();
-  //   }
-  // }
-  //
-  // setEventListener() {
-  //   const focus = this.chart.chart.focus;
-  //   focus.dispatch.on('onBrush', extent => {
-  //     const [start, end] = extent;
-  //     this.onRangeChange.next([moment(start), moment(end)]);
-  //   });
-  // }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParams => {

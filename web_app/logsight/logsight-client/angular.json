@@ -123,6 +123,7 @@
               "node_modules/chart.js/dist/Chart.min.js"
             ],
             "styles": [
+              "node_modules/nvd3/build/nv.d3.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/typeface-exo/index.css",
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
@@ -131,8 +132,7 @@
               "node_modules/socicon/css/socicon.css",
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-              "src/app/@theme/styles/styles.scss",
-              "node_modules/nvd3/build/nv.d3.css"
+              "src/app/@theme/styles/styles.scss"
             ],
             "assets": [
               "src/assets",

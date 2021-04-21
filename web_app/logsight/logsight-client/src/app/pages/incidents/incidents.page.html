@@ -1,6 +1,102 @@
 <nb-card>
   <nb-card-header>
-    Incidents
+    <h6>Incidents</h6>
   </nb-card-header>
   <nvd3 #chart [data]="chartData" [options]="options"></nvd3>
+</nb-card>
+
+<nb-card *ngIf="tableData?.countAds">
+  <nb-card-body>
+    <div class="col-lg-12 p-0">
+      <h6>Count Ads</h6>
+      <div class="scrollable">
+        <table class="table">
+          <thead>
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 95%" scope="col">Template</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of tableData.countAds; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{row}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="tableData?.semanticCountAds">
+  <nb-card-body>
+    <div class="col-lg-12 p-0">
+      <h6>Semantic Count Ads</h6>
+      <div class="scrollable">
+        <table class="table">
+          <thead>
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 95%" scope="col">Template</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of tableData.semanticCountAds; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{row}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="tableData?.newTemplates">
+  <nb-card-body>
+    <div class="col-lg-12 p-0">
+      <h6>New Templates</h6>
+      <div class="scrollable">
+        <table class="table">
+          <thead>
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 95%" scope="col">Template</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of tableData.newTemplates; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{row}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="tableData?.semanticAd">
+  <nb-card-body>
+    <div class="col-lg-12 p-0">
+      <h6>Semantic Ads</h6>
+      <div class="scrollable">
+        <table class="table">
+          <thead>
+          <tr>
+            <th style="width: 5%" scope="col">#</th>
+            <th style="width: 95%" scope="col">Template</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of tableData.semanticAd; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{row}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nb-card-body>
 </nb-card>

@@ -19,7 +19,6 @@ export const options = {
         focusMargin: {
           bottom: 60
         },
-        color: ['#2ca02c', 'darkred'],
         height: 400,
         xAxis: {
           tickFormat: d => moment(d).format('hh:mm')
@@ -33,7 +32,7 @@ export const options = {
           },
           renderEnd: function (a, b) {
           }
-        }
+        },
       }
     };
   }

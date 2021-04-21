@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { DashboardService } from './dashboard.service';
 import { TopKIncident } from '../../@core/common/top-k-Incident';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'dashboard',
@@ -13,12 +14,8 @@ export class DashboardPage implements OnInit {
   pieChartData = [];
   stackedChartData = [];
   topKIncidents: TopKIncident[] = [];
-  options: any;
-  themeSubscription: any;
-  colorScheme: any;
-  @ViewChild('myTable') table: any;
 
-  constructor(private theme: NbThemeService, private dashboardService: DashboardService) {
+  constructor(private dashboardService: DashboardService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -51,6 +48,10 @@ export class DashboardPage implements OnInit {
     this.dashboardService.loadTopKIncidentsData().subscribe(data => {
       this.topKIncidents = data;
     });
+  }
+
+  onHeatMapSelect(data: any) {
+    this.router.navigate(['/pages', 'incidents'], { queryParams: { 'startTime': data.series } })
   }
 
 }

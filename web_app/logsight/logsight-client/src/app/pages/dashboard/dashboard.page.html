@@ -19,7 +19,7 @@
   <nb-card-body>
     <div class="col-lg-12">
       <h6>System overview</h6>
-      <chart-heatmap [data]="heatmapData"></chart-heatmap>
+      <chart-heatmap [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
     </div>
   </nb-card-body>
 </nb-card>

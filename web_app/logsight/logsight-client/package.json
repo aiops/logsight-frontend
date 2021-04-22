@@ -63,6 +63,7 @@
     "leaflet": "1.2.0",
     "nebular-icons": "1.1.0",
     "ng2-ckeditor": "^1.2.9",
+    "ng2-nvd3": "^2.0.0",
     "ng2-smart-table": "^1.6.0",
     "ngx-echarts": "^4.2.2",
     "ngx-highlightjs": "^4.1.3",

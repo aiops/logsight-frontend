@@ -1,10 +1,10 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { IncidentsComponent } from './incidents.component';
+import { IncidentsPage } from './incidents.page';
 
 const routes: Routes = [{
   path: '',
-  component: IncidentsComponent,
+  component: IncidentsPage,
 }];
 
 @NgModule({

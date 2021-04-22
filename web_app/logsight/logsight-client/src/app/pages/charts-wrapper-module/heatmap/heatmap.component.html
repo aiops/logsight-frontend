@@ -11,10 +11,7 @@
     [results]="data"
     [min]="0"
     [max]="1"
-    (select)="onSelect($event)"
-    (activate)="onActivate($event)"
-    (deactivate)="onDeactivate($event)"
+    (select)="select.emit($event)"
     style="fill: white">
-
   </ngx-charts-heat-map>
 </div>

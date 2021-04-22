@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
+import { NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 // import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -35,8 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
 
-
-  currentTheme = 'dark';
+  currentTheme = 'default';
 
   userMenu = [{ title: 'Profile', data: 'profile' }, { title: 'Log out', data: 'log_out' }];
 
@@ -77,13 +76,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.themeService.changeTheme(themeName);
   }
 
-  // toggleSidebar(): boolean {
-  //
-  //   this.sidebarService.toggle(true, 'menu-sidebar');
-  //   // this.layoutService.changeLayoutSize();
-  //
-  //   return false;
-  // }
+  toggleSidebar(): boolean {
+
+    this.sidebarService.toggle(true, 'menu-sidebar');
+    // this.layoutService.changeLayoutSize();
+
+    return false;
+  }
 
   navigateHome() {
     this.menuService.navigateHome();

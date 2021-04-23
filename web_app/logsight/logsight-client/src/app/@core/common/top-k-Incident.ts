@@ -1,7 +1,8 @@
 export interface TopKIncident {
   indexName: string
-  firstLog: string,
-  lastLog: string,
+  newTemplates: string,
+  semanticAD: string,
+  countAD: string,
   startTimestamp: Date,
   stopTimestamp: Date,
   totalScore: number,

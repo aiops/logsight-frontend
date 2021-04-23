@@ -1,16 +1,14 @@
 <nb-card>
   <nb-card-body>
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-4">
         <h6>Log levels</h6>
         <piechart [data]="pieChartData"></piechart>
       </div>
-      <div class="col-lg-8">
+      <div class="col-8">
         <h6>Log levels over time</h6>
         <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
       </div>
-
-
     </div>
   </nb-card-body>
 </nb-card>
@@ -32,8 +30,9 @@
         <thead>
         <tr>
           <th scope="col">Index Name</th>
-          <th scope="col">First Log</th>
-          <th scope="col">Last Log</th>
+          <th scope="col">New Templates</th>
+          <th scope="col">Semantic Anomalies</th>
+          <th scope="col">Count Anomalies</th>
           <th scope="col">Start Time</th>
           <th scope="col">Stop Time</th>
           <th scope="col">Total Score</th>
@@ -42,8 +41,9 @@
         <tbody>
         <tr *ngFor="let row of topKIncidents">
           <td>{{row.indexName}}</td>
-          <td>{{row.firstLog}}</td>
-          <td>{{row.lastLog}}</td>
+          <td>{{row.newTemplates}}</td>
+          <td>{{row.semanticAD}}</td>
+          <td>{{row.countAD}}</td>
           <td>{{row.startTimestamp}}</td>
           <td>{{row.stopTimestamp}}</td>
           <td>{{row.totalScore}}</td>

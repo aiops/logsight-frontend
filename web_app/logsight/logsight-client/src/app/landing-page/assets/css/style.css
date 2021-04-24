@@ -189,8 +189,8 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 30px;
-  background: transparent;
+  padding: 40px;
+  background: #6836c6;
   text-align: center;
   display: flex;
   justify-content: space-between;
@@ -198,7 +198,7 @@ header {
 
 .navbar {
   font-family: "Montserrat";
-	padding-top: 25px;
+	padding-top: 12px;
 	padding-bottom: 25px;
 	background-color: transparent !important;
 	-webkit-transition: 0.5s all ease;
@@ -267,13 +267,13 @@ header {
   color: orange;
 }
 .sticky .navbar-nav .nav-item .nav-link{
-  color: #acacac;
+  color: #ffffff;
   font-weight: 500;
   font-size: 18px;
 }
 
 .navbar-nav .nav-item .nav-link {
-  color: #364655;
+  color: #ffffff;
 	font-weight: 500;
 }
 
@@ -507,7 +507,7 @@ header {
   text-decoration: none !important;
   white-space: nowrap;
   cursor: pointer;
-  color: #6d48e5 !important;
+  color: #ffffff !important;
   border: 1px solid transparent !important;
   border-radius: 1px;
   box-sizing: border-box;

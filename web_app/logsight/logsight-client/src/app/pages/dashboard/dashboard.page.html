@@ -1,38 +1,45 @@
-<nb-card>
-  <nb-card-body>
+<!--<nb-card>-->
+<!--  <nb-card-body>-->
     <div class="row">
       <div class="col-4">
-        <h6>Log levels</h6>
+        <h6>Logs 12 hours</h6>
         <piechart [data]="pieChartData"></piechart>
       </div>
-      <div class="col-8">
-        <h6>Log levels over time</h6>
+      <div class="col-4">
+        <h6>Error distribution 12 hours</h6>
         <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
       </div>
-    </div>
-  </nb-card-body>
-</nb-card>
 
-<nb-card>
-  <nb-card-body>
+      <div class="col-4">
+        <h6>Anomalies 12 hours</h6>
+        <grouped-vertical-bar-chart [data]="barData"></grouped-vertical-bar-chart>
+      </div>
+    </div>
+<!--  </nb-card-body>-->
+<!--</nb-card>-->
+
+<!--<nb-card>-->
+<!--  <nb-card-body>-->
+<hr size="30" noshade>
     <div class="col-lg-12">
       <h6>System overview</h6>
       <chart-heatmap [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
     </div>
-  </nb-card-body>
-</nb-card>
-
+<!--  </nb-card-body>-->
+<!--</nb-card>-->
+<hr size="30" noshade>
 <nb-card>
   <nb-card-body>
     <div class="col-lg-12">
-      <h6>Top incidents</h6>
+      <h6>Top 5 incidents in 24 hours</h6>
       <table class="table table-borderless ">
         <thead>
         <tr>
-          <th scope="col">Index Name</th>
+          <th scope="col">Application</th>
+          <th scope="col">Timestamp</th>
           <th scope="col">New Templates</th>
           <th scope="col">Semantic Anomalies</th>
-          <th scope="col">Count Anomalies</th>
+          <th scope="col">Count Anomalies</th>n
           <th scope="col">Start Time</th>
           <th scope="col">Stop Time</th>
           <th scope="col">Total Score</th>
@@ -40,7 +47,8 @@
         </thead>
         <tbody>
         <tr *ngFor="let row of topKIncidents">
-          <td>{{row.indexName}}</td>
+          <td>{{row.indexName.split('_').slice(1,row.indexName.split('_').length-1)}}</td>
+          <td>{{row.timestamp}}</td>
           <td>{{row.newTemplates}}</td>
           <td>{{row.semanticAD}}</td>
           <td>{{row.countAD}}</td>

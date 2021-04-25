@@ -1,5 +1,6 @@
 export interface TopKIncident {
-  indexName: string
+  indexName: string,
+  timestamp: string,
   newTemplates: string,
   semanticAD: string,
   countAD: string,

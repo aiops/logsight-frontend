@@ -1,16 +1,18 @@
-<ngx-charts-bar-vertical-2d
+<div id="chart-parent">
+<ngx-charts-bar-vertical-stacked
   [scheme]="colorScheme"
   [results]="data"
   [gradient]="false"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [legend]="showLegend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="true"
+  [yAxis]="false"
+  [legend]="true"
+  [showXAxisLabel]="false"
+  [showYAxisLabel]="false"
   [xAxisLabel]="xAxisLabel"
   [yAxisLabel]="yAxisLabel"
   [showGridLines]="false"
-  [barPadding]="1"
+  [barPadding]="20"
   [legendTitle]="legendTitle"
   style="fill: white">
-</ngx-charts-bar-vertical-2d>
+</ngx-charts-bar-vertical-stacked>
+</div>

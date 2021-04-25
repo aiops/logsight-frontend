@@ -13,6 +13,7 @@ export class DashboardPage implements OnInit {
   heatmapData = [];
   pieChartData = [];
   stackedChartData = [];
+  barData = [];
   topKIncidents: TopKIncident[] = [];
 
   constructor(private dashboardService: DashboardService, private router: Router) {
@@ -23,11 +24,19 @@ export class DashboardPage implements OnInit {
     this.loadPieChartData()
     this.loadStackedAreaChartData()
     this.loadTopKIncidents()
+    this.loadBarData()
   }
 
   loadHeatmapData() {
     this.dashboardService.loadHeatmapData().subscribe(data => {
       this.heatmapData = data.data;
+    });
+  }
+
+  loadBarData() {
+    this.dashboardService.loadBarData().subscribe(data => {
+      this.barData = data;
+      console.log(data)
     });
   }
 

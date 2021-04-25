@@ -1,9 +1,11 @@
 <div id="chart-parent">
-  <ngx-charts-advanced-pie-chart
+  <ngx-charts-pie-chart
     [scheme]="colorScheme"
     [results]="data"
+    [labels]="showLabels"
     (select)="onSelect($event)"
     (activate)="onActivate($event)"
-    (deactivate)="onDeactivate($event)">
-  </ngx-charts-advanced-pie-chart>
+    (deactivate)="onDeactivate($event)"
+    style="fill: white"><!--    [explodeSlices]="true"-->
+  </ngx-charts-pie-chart>
 </div>

@@ -19,7 +19,7 @@ export class StackedAreaChartComponent {
   xAxisLabel: string = 'Year';
   yAxisLabel: string = 'Population';
   timeline: boolean = true;
-  linearCurve = shape.curveBasis;
+  linearCurve = shape.curveMonotoneX;
   colorScheme = {
     domain: ['#fff000', '#e85d04', '#393bff', '#00e1ff']
   };

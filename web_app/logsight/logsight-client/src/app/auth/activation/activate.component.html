@@ -1,5 +1,8 @@
 <div *ngIf="!loading">
-  <h6 *ngIf="user" class="text-center">Welcome {{user.email}} to <a class="navbar-brand" href="#"><img alt="logo" src="../../../../assets/images/logsight_logo.png" height="70" /></a></h6>
+  <a class="navbar-brand" href="#"><img alt="logo" src="../../../../assets/images/logsight_logo.png" height="70" /></a>
+  <br>
+  <br>
+  <h6 *ngIf="user" class="text-center">Welcome {{user.email}}</h6>
   <div *ngIf="activationSuccess" class="text-center"><h6>Your account has been successfully activated, please sign in
     with your email</h6>
     <a nbButton [routerLink]="['/auth', 'login']"

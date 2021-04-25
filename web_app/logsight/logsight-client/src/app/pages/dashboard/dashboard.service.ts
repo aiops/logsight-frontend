@@ -14,6 +14,10 @@ export class DashboardService {
     return this.apiService.get('/api/charts/system_overview_heatmap');
   }
 
+  loadBarData() {
+    return this.apiService.get('/api/charts/dashboard_bar_anomalies');
+  }
+
   loadPieChartData() {
     return this.apiService.get('/api/charts/log_level_advanced_pie_chart');
   }

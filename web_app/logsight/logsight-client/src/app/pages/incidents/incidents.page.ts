@@ -54,4 +54,8 @@ export class IncidentsPage implements OnInit {
       console.log('this.tableData', this.tableData)
     })
   }
+
+  onDateRangeChange(dateRange: { startDateTime: Date, endDateTime: Date }) {
+    console.log('change', dateRange)
+  }
 }

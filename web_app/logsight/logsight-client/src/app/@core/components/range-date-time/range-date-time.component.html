@@ -1,0 +1,9 @@
+<form [formGroup]="dateForm">
+  <label class="m-0">
+    <input class="form-control" style="width: 300px" placeholder="Choose Date" [owlDateTimeTrigger]="rangeDateTime"
+           formControlName="dateRange"
+           [owlDateTime]="rangeDateTime"
+           [selectMode]="'range'">
+    <owl-date-time #rangeDateTime></owl-date-time>
+  </label>
+</form>

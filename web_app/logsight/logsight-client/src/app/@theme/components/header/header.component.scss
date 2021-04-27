@@ -17,10 +17,10 @@
     align-items: center;
     width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
   }
-  .top_navigation{
-    position:relative;      // positioning relative to parent
-    float:right;            // float right inside it's parent
-    list-style-type:none;
+  .top_navigation {
+    position: relative; // positioning relative to parent
+    float: right; // float right inside it's parent
+    list-style-type: none;
   }
   nb-action {
     height: auto;
@@ -31,12 +31,12 @@
   nb-user {
     cursor: pointer;
   }
-  nb-icon{
+  nb-icon {
     display: inline-block;
     text-align: center;
   }
   ::ng-deep nb-search button {
-    padding: 0!important;
+    padding: 0 !important;
   }
 
   .header-container {
@@ -49,6 +49,7 @@
       @include nb-rtl(padding-left, 1.25rem);
       text-decoration: none;
       color: nb-theme(text-hint-color);
+
       nb-icon {
         font-size: 1.75rem;
       }
@@ -80,4 +81,8 @@
       display: none;
     }
   }
+}
+
+.navbar-nav:hover {
+  opacity: 0.7;
 }

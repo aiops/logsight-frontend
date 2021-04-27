@@ -6,6 +6,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { IncidentsService } from './incidents.service';
 import { NvD3Module } from 'ng2-nvd3';
 import { IncidentsPage } from './incidents.page';
+import { PagesModule } from '../pages.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { IncidentsPage } from './incidents.page';
     NbInputModule,
     ThemeModule,
     Ng2SmartTableModule,
-    NvD3Module
+    NvD3Module,
+    PagesModule
   ],
   declarations: [
     IncidentsPage,

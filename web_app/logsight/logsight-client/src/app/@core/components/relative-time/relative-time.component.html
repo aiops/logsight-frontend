@@ -1,0 +1,21 @@
+<form [formGroup]="formGroup">
+  <div class="row">
+    <div class="row form-group mr-3">
+      <nb-select class="period-select" formControlName="lastNext">
+        <nb-option *ngFor="let it of ['Last', 'Next']" [value]="it">
+          {{ it }}
+        </nb-option>
+      </nb-select>
+    </div>
+    <div class="form-group mr-3" style="padding-top: 1px">
+      <input type="number" formControlName="measurementNumber" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <nb-select class="period-select" formControlName="measurement">
+        <nb-option *ngFor="let it of measurements" [value]="it">
+          {{ it }}
+        </nb-option>
+      </nb-select>
+    </div>
+  </div>
+</form>

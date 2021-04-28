@@ -12,6 +12,7 @@ export class RangeDateTimeComponent implements OnInit {
     dateRange: new FormControl(),
   });
 
+  @Input() disabled: boolean
   @Output() change: EventEmitter<{ startDateTime: Date, endDateTime: Date }> = new EventEmitter()
 
   constructor() {

@@ -1,16 +1,30 @@
 <nb-card>
   <div class="row p-4">
-    <div class="offset-md-6"></div>
-    <div class="col-md-6 text-right">
-      <div class="row text-right">
+    <div class="col-md-12 text-right">
+      <div class="row mr-4" style="justify-content: flex-end">
         <div class="mr-5 text-left">
-          <p>Relative</p>
-          <relative-time class="mr-4"></relative-time>
+          <div class="form-check mb-2" style="margin-left: -28px;">
+            <input type="checkbox" [(ngModel)]="relativeTimeChecked"
+                   (change)="onRelativeTimeChecked(relativeTimeChecked)"
+                   class="form-check-input" id="relativeTime">
+            <label class="form-check-label" for="relativeTime">Relative Time</label>
+          </div>
+          <relative-time [disabled]="!relativeTimeChecked" class="mr-4"
+                         (onChange)="onRelativeDateChange($event)"></relative-time>
         </div>
         <div class="text-left">
-          <p>Absolute</p>
-          <range-date-time (change)="onDateRangeChange($event)"></range-date-time>
+          <div class="form-check mb-2">
+            <input type="checkbox" [(ngModel)]="absoluteTimeChecked"
+                   (change)="onAbsoluteTimeChecked(absoluteTimeChecked)"
+                   class="form-check-input" id="absoluteTime">
+            <label class="form-check-label" for="absoluteTime">Absolute Time</label>
+          </div>
+          <range-date-time [disabled]="!absoluteTimeChecked" (change)="onDateRangeChange($event)"></range-date-time>
         </div>
+        <button [disabled]="!relativeDateTime && !absoluteDateTime" nbButton type="button" class="ml-3 search-button"
+                (click)="search()">
+          Search
+        </button>
       </div>
     </div>
   </div>

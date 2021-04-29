@@ -65,37 +65,31 @@ export class IncidentsPage implements OnInit {
     })
   }
 
-  onDateRangeChange(dateRange: { startDateTime: Date, endDateTime: Date }) {
+  onAbsoluteDateChange(dateRange: { startDateTime: Date, endDateTime: Date }) {
     this.absoluteDateTime = dateRange
-  }
-
-  onRelativeTimeChecked(checked) {
-    if (checked) {
-      this.absoluteTimeChecked = false;
-      this.absoluteDateTime = null
-    } else {
-      this.relativeDateTime = null;
-    }
-  }
-
-  onAbsoluteTimeChecked(checked) {
-    if (checked) {
-      this.relativeTimeChecked = false;
-      this.relativeDateTime = null
-    } else {
-      this.absoluteDateTime = null
-    }
   }
 
   onRelativeDateChange(value) {
     this.relativeDateTime = value;
   }
 
+  onRelativeTimeChecked(checked) {
+    if (checked) {
+      this.absoluteTimeChecked = false;
+    }
+  }
+
+  onAbsoluteTimeChecked(checked) {
+    if (checked) {
+      this.relativeTimeChecked = false;
+    }
+  }
+
   search() {
-    if (this.relativeDateTime) {
+    if (this.relativeTimeChecked) {
       this.loadIncidentsBarChart(this.relativeDateTime, 'now')
       this.loadIncidentsTableData(this.relativeDateTime, 'now')
-    } else {
+    } else if (this.absoluteDateTime) {
       this.loadIncidentsBarChart(
         this.absoluteDateTime.startDateTime.toISOString(),
         this.absoluteDateTime.endDateTime.toISOString())

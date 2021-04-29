@@ -19,7 +19,7 @@
                    class="form-check-input" id="absoluteTime">
             <label class="form-check-label" for="absoluteTime">Absolute Time</label>
           </div>
-          <range-date-time [disabled]="!absoluteTimeChecked" (change)="onDateRangeChange($event)"></range-date-time>
+          <range-date-time [disabled]="!absoluteTimeChecked" (change)="onAbsoluteDateChange($event)"></range-date-time>
         </div>
         <button [disabled]="!relativeDateTime && !absoluteDateTime" nbButton type="button" class="ml-3 search-button"
                 (click)="search()">

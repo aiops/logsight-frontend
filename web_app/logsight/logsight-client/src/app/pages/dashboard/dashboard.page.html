@@ -37,6 +37,7 @@
         <tr>
           <th scope="col">Application</th>
           <th scope="col">Timestamp</th>
+          <th scope="col">SC Anomalies</th>
           <th scope="col">New Templates</th>
           <th scope="col">Semantic Anomalies</th>
           <th scope="col">Count Anomalies</th>n
@@ -49,6 +50,7 @@
         <tr *ngFor="let row of topKIncidents">
           <td>{{row.indexName.split('_').slice(1,row.indexName.split('_').length-1).toString()}}</td>
           <td>{{row.timestamp}}</td>
+          <td>{{row.scAnomalies}}</td>
           <td>{{row.newTemplates}}</td>
           <td>{{row.semanticAD}}</td>
           <td>{{row.countAD}}</td>

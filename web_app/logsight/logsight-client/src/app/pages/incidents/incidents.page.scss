@@ -15,3 +15,22 @@ th, td {
   margin-top: 27px;
   height: 39px
 }
+
+.template {
+  color: red;
+}
+
+.template:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.table-height {
+  max-height: 80vh;
+  overflow-y: auto
+}

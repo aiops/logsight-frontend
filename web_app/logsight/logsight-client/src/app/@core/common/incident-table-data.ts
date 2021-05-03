@@ -1,6 +1,8 @@
+import { VariableAnalysisHit } from './variable-analysis-hit';
+
 export interface IncidentTableData {
-  countAds: string[]
-  semanticCountAds: string[],
-  newTemplates: string[]
-  semanticAd: string[],
+  countAds: VariableAnalysisHit[]
+  semanticCountAds: VariableAnalysisHit[],
+  newTemplates: VariableAnalysisHit[]
+  semanticAd: VariableAnalysisHit[],
 }

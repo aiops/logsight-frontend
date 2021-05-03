@@ -21,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     NvD3Module,
     PagesModule,
     FormsModule,
-    NbButtonModule
+    NbButtonModule,
+    PagesModule
   ],
   declarations: [
     IncidentsPage,

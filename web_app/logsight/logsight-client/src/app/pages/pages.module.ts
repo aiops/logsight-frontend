@@ -19,7 +19,7 @@ import { LoadingComponent } from '../@core/components/loading/loading.component'
   ],
   declarations: [
     PagesComponent,
-    LoadingComponent,
+    LoadingComponent
   ],
   exports: [
     LoadingComponent

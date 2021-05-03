@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 // import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
+import {filter, map, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {Router} from "@angular/router";
 
 @Component({
   selector: "'ngx-header','ngx-pages'",
@@ -42,6 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
+              private router: Router,
               private breakpointService: NbMediaBreakpointsService) {
   }
 
@@ -65,6 +67,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(themeName => this.currentTheme = themeName);
 
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'context-menu'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe(title => this.router.navigate(['/pages/profile']));
   }
 
   ngOnDestroy() {

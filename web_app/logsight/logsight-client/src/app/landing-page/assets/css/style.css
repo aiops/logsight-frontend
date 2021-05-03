@@ -176,7 +176,7 @@ body {
 }
 /*------ Navbar Styling ------*/
 .sticky {
-  background: #6836c6;
+  background: #222b45;
   box-shadow: 0 3px 12px 0 rgba(0,0,0,.08);
   position: fixed;
   top: 0;
@@ -190,7 +190,7 @@ header {
   left: 0;
   width: 100%;
   padding: 40px;
-  background: #6836c6;
+  background: #222b45;
   text-align: center;
   display: flex;
   justify-content: space-between;
@@ -306,7 +306,7 @@ header {
 	}
 
 	.nav-white .nav-item .nav-link {
-		color: #4957B8;
+		color: #222b45;
 	}
 
 	.navbar .btn-cta {
@@ -445,7 +445,7 @@ header {
   white-space: nowrap;
   cursor: pointer;
 	background-color: #387ed1;
-	background: #6d48e5;
+	background: #222b45;
   color: #FFFFFF;
   border: 1px solid transparent !important;
   border-radius: 4px;
@@ -464,7 +464,7 @@ header {
 }
 
 .btn-action:focus, .btn-action:active {
-	background: #6d48e5;
+	background: #222b45;
 	color: #FFFFFF;
 	border: 1px solid transparent !important;
 	outline: none !important;
@@ -507,13 +507,14 @@ header {
   text-decoration: none !important;
   white-space: nowrap;
   cursor: pointer;
-  color: #ffffff !important;
+  /*color: #ffffff !important;*/
   border: 1px solid transparent !important;
   border-radius: 1px;
   box-sizing: border-box;
   -webkit-transition: 0.2s;
   -moz-transition: 0.2s;
   transition: 0.2s;
+  background: #222b45;
 }
 .sticky .btn-login {
   color: #FFFFFF !important;
@@ -534,7 +535,7 @@ header {
 	white-space: nowrap;
 	cursor: pointer;
 	background-color: #387ed1;
-	background: #6d48e5;
+	background: #222b45;
 	color: #FFFFFF !important;
 	border: 1px solid transparent !important;
 	border-radius: 4px;
@@ -553,7 +554,7 @@ header {
 }
 
 .btn-cta:focus, .btn-cta:active {
-	background: #6d48e5;
+	background: #222b45;
 	color: #FFFFFF;
 	border: 1px solid transparent !important;
 	outline: none !important;
@@ -624,7 +625,7 @@ header {
   border-radius: 0 4px 4px 0;
   margin-left: -25px;
   padding: 0 25px 0 25px;
-	background: #6d48e5;
+	background: #222b45;
 	font-family: 'Montserrat';
 	font-size: 14px;
 	font-weight: 500;
@@ -874,7 +875,7 @@ header {
 
 .yd-stats {
 	padding: 100px 0;
-	background: #6d48e5;
+	background: #222b45;
 }
 
 .yd-stats .intro {
@@ -1463,7 +1464,7 @@ header {
   margin: 0 auto;
 	margin: 15px 0;
   padding: 0 25px 0 25px;
-	background: #6d48e5;
+	background: #222b45;
 	font-family: 'Montserrat';
 	font-size: 14px;
 	font-weight: 500;
@@ -1483,7 +1484,7 @@ header {
 }
 
 .form .submit-button:focus, .form .submit-button:active {
-	background: #6d48e5;
+	background: #222b45;
 }
 
 #email-error {

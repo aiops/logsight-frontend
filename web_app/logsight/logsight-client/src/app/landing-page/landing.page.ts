@@ -10,7 +10,7 @@ import {timeout} from "rxjs/operators";
   styleUrls: ['./assets/css/animate.css', './assets/css/owl.carousel.css', './assets/css/owl.theme.css', './assets/css/style.css'],
   templateUrl: './landing.page.html',
 })
-export class LandingPage {
+export class LandingPage implements OnInit{
 
   form = new FormGroup({
     email: new FormControl('', Validators.required),

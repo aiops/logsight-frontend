@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbDialogService, NbMenuModule, NbSelectModule } from '@nebular/theme';
+import {NbCardModule, NbDialogService, NbMenuModule, NbSelectModule} from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -17,6 +17,7 @@ import { VariableAnalysisTemplateResolver } from '../@core/components/app/variab
 import { VariableAnalysisTemplate } from '../@core/components/app/variable-analysis-template';
 import { HostDirective } from '../@core/components/app/host.directive';
 import { SpecificTemplateModalComponent } from '../@core/components/specific-template-modal/specific-template-modal.component';
+import {ChartsWrapperModule} from "./charts-wrapper-module/charts-wrapper.module";
 
 @NgModule({
   imports: [
@@ -27,7 +28,9 @@ import { SpecificTemplateModalComponent } from '../@core/components/specific-tem
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    NbSelectModule
+    NbSelectModule,
+    NbCardModule,
+    ChartsWrapperModule
   ],
   declarations: [
     PagesComponent,

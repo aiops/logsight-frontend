@@ -47,7 +47,7 @@ export class IncidentsPage implements OnInit {
   tableData: IncidentTableData;
   options = options.timelineChart()
   absoluteDateTime: { startDateTime: Date, endDateTime: Date }
-  relativeDateTime: string = 'now-12H';
+  relativeDateTime: string = 'now-12h';
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParams => {
@@ -88,6 +88,7 @@ export class IncidentsPage implements OnInit {
   private loadIncidentsTableData(startTime: string, endTime: string) {
     this.incidentsService.loadIncidentsTableData(startTime, endTime).subscribe(resp => {
       this.tableData = resp
+      console.log(resp)
     })
   }
 

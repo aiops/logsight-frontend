@@ -26,6 +26,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Send logs',
     icon: 'link-outline',
     link: '/pages/integration',
+  },
+  {
+    title: 'Profile',
+    icon: '',
+    link: '/pages/profile',
   }
 
   // {

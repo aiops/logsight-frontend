@@ -74,7 +74,7 @@ export const NB_CORE_PROVIDERS = [
     CommonModule,
   ],
   exports: [
-    NbAuthModule,
+    NbAuthModule
   ],
   declarations: [],
 })

@@ -3,41 +3,41 @@
   <div class="col-md-3">
 
     <div class="row user_info">
-      <nb-card class="p-3 row-one" >
+      <nb-card class="p-3 row-one">
         <div class="row no-gutters">
-          <div class = "col" align="center">
+          <div class="col" align="center">
             <p class="mb-3"><b>{{email}}</b></p>
             <p class="mb-3">Private key: <b>{{key}}</b></p>
           </div>
         </div>
-<!--        <div class="row">-->
-<!--          <div class="col" style="margin-left: 20px">-->
-<!--            <p class="key_text"><b>{{key}}</b></p>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--        <div class="row">-->
+        <!--          <div class="col" style="margin-left: 20px">-->
+        <!--            <p class="key_text"><b>{{key}}</b></p>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </nb-card>
     </div>
 
-    <div class ="row integration_types">
+    <div class="row integration_types">
       <nb-card class="p-3 row-one">
         <div class="row no-gutters">
           <div class="col">
             <h6><b>Integration types</b></h6>
           </div>
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
           <div class=".col-6 .col-md-4">
-            <button nbButton class="python-btn" type="button" (click)="onPythonBtn()" >
+            <button nbButton class="python-btn" type="button" (click)="onPythonBtn()">
               {{pythonBtn}}
             </button>
           </div>
           <div class=".col-6 .col-md-4">
-            <button nbButton class="filebeat-btn" type="button" (click)="onFileBeatBtn()" >
+            <button nbButton class="filebeat-btn" type="button" (click)="onFileBeatBtn()">
               {{filebeatBtn}}
             </button>
           </div>
           <div class=".col-6 .col-md-4">
-            <button nbButton class="rest-btn" type="button" (click)="onRestBtn()" >
+            <button nbButton class="rest-btn" type="button" (click)="onRestBtn()">
               {{restBtn}}
             </button>
           </div>
@@ -45,7 +45,7 @@
       </nb-card>
     </div>
 
-    <div class ="row create_new_app">
+    <div class="row create_new_app">
       <nb-card class="p-3 row-one">
         <div class="row no-gutters">
           <div class="col">
@@ -57,9 +57,11 @@
             <form [formGroup]="form" (submit)="createApplication()" aria-labelledby="title">
               <div class="form-control-group">
                 <div class="col-md-12" style="margin-bottom: 3px">
-<!--                  <label class="label" style="margin: 3px" for="name">Application name:</label>-->
+                  <!--                  <label class="label" style="margin: 3px" for="name">Application name:</label>-->
 
-                  <input nbInput class="mr-2" type="text" formControlName="name" id="name" placeholder="Application name" [required]="true" [attr.aria-invalid]="form.invalid && form.touched ? true : null">
+                  <input nbInput class="mr-2" type="text" formControlName="name" id="name"
+                         placeholder="Application name" [required]="true"
+                         [attr.aria-invalid]="form.invalid && form.touched ? true : null">
                   <button nbButton class="create-app-btn" status="success" [disabled]="!form.valid">Create</button>
                   <ng-container *ngIf="form.controls['name'].invalid && form.touched">
                     <p class="error-message" *ngIf="form.controls['email'].errors?.required">
@@ -73,7 +75,7 @@
         </div>
       </nb-card>
     </div>
-    <div class ="row applications">
+    <div class="row applications">
       <nb-card class="p-3 row-one">
         <div class="row justify-content-end">
           <div class="col-md-4">
@@ -89,21 +91,21 @@
           <div class="row" style="margin-top: 10px">
             <table class="table table-striped">
               <thead>
-                <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Status</th>
-                </tr>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+              </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let row of applications">
-                  <td>{{row.id}}</td>
-                  <td>{{row.name}}</td>
-                  <td>
-                    <i [title]="row.status" *ngIf="row.status == 'IN_PROGRESS'" class="ml-3 fas fa-spinner fa-spin"></i>
-                    <i [title]="row.status" *ngIf="row.status == 'ACTIVE'" class="ml-3 fas fa-check-circle"></i>
-                  </td>
-                </tr>
+              <tr *ngFor="let row of applications">
+                <td>{{row.id}}</td>
+                <td>{{row.name}}</td>
+                <td>
+                  <i [title]="row.status" *ngIf="row.status == 'IN_PROGRESS'" class="ml-3 fas fa-spinner fa-spin"></i>
+                  <i [title]="row.status" *ngIf="row.status == 'ACTIVE'" class="ml-3 fas fa-check-circle"></i>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -112,13 +114,12 @@
     </div>
 
 
-
   </div>
 
-  <div class="col-5 px-4" >
+  <div class="col-5 px-4">
     <ng-container *ngIf="python">
       <div class="row description">
-<!--      <nb-card class="p-2 rows" style="width: 100%">-->
+        <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
             <h5>Usage</h5>
@@ -128,7 +129,7 @@
             <pre><code highlight="pip install git+ssh://git@github.com/aiops/logsight-python-sdk.git"></code></pre>
           </div>
         </div>
-<!--        </nb-card>-->
+        <!--        </nb-card>-->
       </div>
       <br>
       <br>
@@ -138,7 +139,8 @@
             <h5>Endpoint Details</h5>
           </div>
           <div class="row">
-            <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with the following attributes: </p>
+            <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with
+              the following attributes: </p>
             <table class="table table-striped">
               <tr>
                 <td>PRIVATE_KEY</td>
@@ -146,7 +148,9 @@
               </tr>
               <tr>
                 <th>APP_NAME</th>
-                <td>The name of your application/service. For example, a company "x" wants to debug their test environment they might insert the “x_test”</td>
+                <td>The name of your application/service. For example, a company "x" wants to debug their test
+                  environment they might insert the “x_test”
+                </td>
               </tr>
             </table>
           </div>
@@ -167,54 +171,57 @@
     </ng-container>
 
 
-
     <ng-container *ngIf="fileBeats">
       <div class="row description">
-      <!--      <nb-card class="p-2 rows" style="width: 100%">-->
-      <div class="col">
-        <div class="row">
-          <h5>Usage</h5>
+        <!--      <nb-card class="p-2 rows" style="width: 100%">-->
+        <div class="col">
+          <div class="row">
+            <h5>Usage</h5>
+          </div>
+          <div class="row">
+            <p class="dscr">Logsight provides integration with Filebeat</p>
+          </div>
         </div>
-        <div class="row">
-          <p class="dscr">Logsight provides integration with Filebeat</p>
+        <!--        </nb-card>-->
+      </div>
+      <br>
+      <br>
+      <div class="row user_guidance">
+        <div class="col">
+          <div class="row">
+            <h3>Endpoint Details for FileBeats</h3>
+          </div>
+          <div class="row">
+            <table class="table table-striped">
+              <tr>
+                <th>Step 1:</th>
+                <td>?</td>
+              </tr>
+              <tr>
+                <th>Step 2:</th>
+                <td>?</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
-      <!--        </nb-card>-->
-  </div>
-  <br>
-  <br>
-  <div class="row user_guidance">
-    <div class="col">
-      <div class="row">
-        <h3>Endpoint Details for FileBeats</h3>
-      </div>
-      <div class="row">
-        <table class="table table-striped">
-          <tr>
-            <th>Step 1:</th>
-            <td>?</td>
-          </tr>
-          <tr>
-            <th>Step 2:</th>
-            <td>?</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
     </ng-container>
-    </div>
+  </div>
   <ng-container *ngIf="python">
     <div class="col-4 px-3 ">
       <h5>Example code</h5>
-      <div><pre><code [highlight]="code_python" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre></div>
+      <div>
+        <pre><code [highlight]="code_python" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
+      </div>
     </div>
   </ng-container>
 
   <ng-container *ngIf="fileBeats">
     <div class="col-4 px-3 ">
       <h5>Example code</h5>
-      <div><pre><code [highlight]="code_filebeats" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre></div>
+      <div>
+        <pre><code [highlight]="code_filebeats" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
+      </div>
     </div>
   </ng-container>
 

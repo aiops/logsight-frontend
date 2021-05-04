@@ -47,7 +47,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let row of topKIncidents">
-          <td>{{row.indexName.split('_').slice(1,row.indexName.split('_').length-1)}}</td>
+          <td>{{row.indexName.split('_').slice(1,row.indexName.split('_').length-1).toString()}}</td>
           <td>{{row.timestamp}}</td>
           <td>{{row.newTemplates}}</td>
           <td>{{row.semanticAD}}</td>

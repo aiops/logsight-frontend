@@ -29,7 +29,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
 import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
-import {HIGHLIGHT_OPTIONS, HighlightModule} from "ngx-highlightjs";
+import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent],

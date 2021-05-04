@@ -13,6 +13,10 @@ import { RangeDateTimeComponent } from '../@core/components/range-date-time/rang
 import { ReactiveFormsModule } from '@angular/forms';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { RelativeTimeComponent } from '../@core/components/relative-time/relative-time.component';
+import { VariableAnalysisTemplateResolver } from '../@core/components/app/variable-analysis-template-resolver';
+import { VariableAnalysisTemplate } from '../@core/components/app/variable-analysis-template';
+import { HostDirective } from '../@core/components/app/host.directive';
+import { SpecificTemplateModalComponent } from '../@core/components/specific-template-modal/specific-template-modal.component';
 
 @NgModule({
   imports: [
@@ -29,12 +33,16 @@ import { RelativeTimeComponent } from '../@core/components/relative-time/relativ
     PagesComponent,
     LoadingComponent,
     RangeDateTimeComponent,
-    RelativeTimeComponent
+    RelativeTimeComponent,
+    VariableAnalysisTemplateResolver,
+    VariableAnalysisTemplate,
+    HostDirective, SpecificTemplateModalComponent
   ],
   exports: [
     LoadingComponent,
     RangeDateTimeComponent,
-    RelativeTimeComponent
+    RelativeTimeComponent,
+    VariableAnalysisTemplateResolver
   ],
   providers: [IntegrationService, VariableAnalysisService, MessagingService, NbDialogService]
 })

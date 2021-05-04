@@ -52,7 +52,7 @@
           <tbody>
           <tr *ngFor="let row of tableData.countAds; let i = index">
             <td>{{i + 1}}</td>
-            <td>{{row}}</td>
+            <td><app-ad-banner [row]="row"></app-ad-banner></td>
           </tr>
           </tbody>
         </table>
@@ -76,7 +76,7 @@
           <tbody>
           <tr *ngFor="let row of tableData.semanticCountAds; let i = index">
             <td>{{i + 1}}</td>
-            <td>{{row}}</td>
+            <td><app-ad-banner [row]="row"></app-ad-banner></td>
           </tr>
           </tbody>
         </table>
@@ -100,7 +100,7 @@
           <tbody>
           <tr *ngFor="let row of tableData.newTemplates; let i = index">
             <td>{{i + 1}}</td>
-            <td>{{row}}</td>
+            <td><app-ad-banner [row]="row"></app-ad-banner></td>
           </tr>
           </tbody>
         </table>
@@ -124,7 +124,7 @@
           <tbody>
           <tr *ngFor="let row of tableData.semanticAd; let i = index">
             <td>{{i + 1}}</td>
-            <td>{{row}}</td>
+            <td><app-ad-banner [row]="row"></app-ad-banner></td>
           </tr>
           </tbody>
         </table>

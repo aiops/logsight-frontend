@@ -14,6 +14,11 @@ import { IncidentTableData } from '../../@core/common/incident-table-data';
 import 'd3';
 import 'nvd3';
 import { Observable } from 'rxjs';
+import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
+import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
+import { MessagingService } from '../../@core/service/messaging.service';
+import { NotificationsService } from 'angular2-notifications';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'incidents',
@@ -23,7 +28,11 @@ import { Observable } from 'rxjs';
 })
 export class IncidentsPage implements OnInit {
 
-  constructor(private route: ActivatedRoute, private incidentsService: IncidentsService) {
+  constructor(private route: ActivatedRoute, private incidentsService: IncidentsService,
+    private variableAnalysisService: VariableAnalysisService,
+    private messagingService: MessagingService,
+    private notificationService: NotificationsService,
+    private dialogService: NbDialogService) {
   }
 
   // data = [{
@@ -51,6 +60,23 @@ export class IncidentsPage implements OnInit {
         this.loadIncidentsTableData(this.relativeDateTime, 'now')
       }
     });
+
+    this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
+      if (true) {
+        this.variableAnalysisService.loadSpecificTemplate(1, selected['item']).subscribe(
+          resp => {
+            this.dialogService.open(SpecificTemplateModalComponent, {
+              context: {
+                data: resp.second,
+                type: resp.first
+              }, dialogClass: 'model-full'
+            });
+          }, err => {
+            console.log(err)
+            this.notificationService.error('Error', 'Error fetching data')
+          })
+      }
+    })
   }
 
   private loadIncidentsBarChart(startTime: string, endTime: string) {
@@ -98,4 +124,5 @@ export class IncidentsPage implements OnInit {
         this.absoluteDateTime.endDateTime.toISOString())
     }
   }
+
 }

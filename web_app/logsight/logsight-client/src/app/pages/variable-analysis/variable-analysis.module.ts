@@ -27,9 +27,7 @@ import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.mod
     PagesModule,
     ChartsWrapperModule
   ],
-  declarations: [VariableAnalysisPage, VariableAnalysisTemplateResolver,
-    VariableAnalysisTemplate,
-    HostDirective, SpecificTemplateModalComponent],
+  declarations: [VariableAnalysisPage],
   entryComponents: [VariableAnalysisTemplate]
 })
 export class VariableAnalysisModule {

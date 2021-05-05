@@ -21,7 +21,7 @@ export class StackedAreaChartComponent {
   timeline: boolean = false;
   linearCurve = shape.curveMonotoneX;
   colorScheme = {
-    domain: ['#fff000', '#e85d04', '#393bff', '#00e1ff']
+    domain: ['#ffbe0b', '#d94800', '#ff006e', '#8338ec', '#3a86ff']
   };
 
   constructor() {

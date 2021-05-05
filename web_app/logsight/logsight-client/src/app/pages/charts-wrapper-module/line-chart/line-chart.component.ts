@@ -19,7 +19,7 @@ export class LineChartComponent {
   timeline: boolean = true;
 
   colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    domain: ['#ffbe0b', '#fb5607', '#ff006e', '#8338ec', '#3a86ff']
   };
 
   constructor() {

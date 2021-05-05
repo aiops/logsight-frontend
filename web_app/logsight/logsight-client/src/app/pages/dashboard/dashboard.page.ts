@@ -7,6 +7,10 @@ import { SpecificTemplateModalComponent } from '../../@core/components/specific-
 import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
 import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
+import {AuthenticationService} from "../../auth/authentication.service";
+import {switchMap} from "rxjs/operators";
+import {Application} from "../../@core/common/application";
+import {IntegrationService} from "../../@core/service/integration.service";
 
 @Component({
   selector: 'dashboard',
@@ -19,12 +23,14 @@ export class DashboardPage implements OnInit {
   stackedChartData = [];
   barData = [];
   topKIncidents: TopKIncident[] = [];
-
+  applications: Application[] = [];
   constructor(private dashboardService: DashboardService, private router: Router,
               private variableAnalysisService: VariableAnalysisService,
               private messagingService: MessagingService,
               private notificationService: NotificationsService,
-              private dialogService: NbDialogService) {
+              private dialogService: NbDialogService,
+              private authService: AuthenticationService,
+              private integrationService: IntegrationService) {
   }
 
   ngOnInit(): void {
@@ -34,9 +40,13 @@ export class DashboardPage implements OnInit {
     this.loadTopKIncidents()
     this.loadBarData()
 
+    this.authService.getLoggedUser().pipe(
+        switchMap(user => this.integrationService.loadApplications(user.key))
+    ).subscribe(resp => this.applications = resp)
+
     this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
       if (true) {
-        this.variableAnalysisService.loadSpecificTemplate(108, selected['item']).subscribe(
+        this.variableAnalysisService.loadSpecificTemplate(this.applications[0].id, selected['item']).subscribe(
           resp => {
             this.dialogService.open(SpecificTemplateModalComponent, {
               context: {

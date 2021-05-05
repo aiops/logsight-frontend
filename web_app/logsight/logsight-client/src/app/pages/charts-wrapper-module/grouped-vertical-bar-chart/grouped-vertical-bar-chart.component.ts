@@ -19,7 +19,7 @@ export class GroupedVerticalBarChartComponent {
   legendTitle: string = '';
 
   colorScheme = {
-    domain: ['#fff000', '#e85d04', '#393bff', '#00e1ff']
+    domain: ['#ffbe0b', '#d94800', '#ff006e', '#8338ec', '#3a86ff']
   };
 
   constructor() {

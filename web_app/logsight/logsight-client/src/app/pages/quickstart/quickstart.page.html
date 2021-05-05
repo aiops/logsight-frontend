@@ -1,33 +1,70 @@
 <div align="center">
 
-  <h2> Choose a way to connect</h2>
-  Let's get your logs to your Logsight.AI.
+  <h1> Choose a way to connect and explore your logs through the lenses of AI</h1>
 </div>
 <br>
 <br>
 <div class="col-md-12 col-lg-12 col-xxxl-12">
   <nb-card>
     <nb-card-body align="center">
-      <h3>Explore the power of AI without setup</h3>
-      <h6>Use our sample log data to explore logsight AI features, no production data required.</h6>
-      <button nbButton class="python-btn" type="button" (click)="createApplication()"> Try now
+      <h1>Without setup</h1>
+      <h5>Use our sample log data to explore logsight AI features, no production data required.</h5>
+      <br>
+      <button nbButton size="giant" type="button" (click)="createApplication()"> Try now
       </button>
     </nb-card-body>
   </nb-card>
 
 <div align="center">
-
-  <h4>OR</h4>
-  Send us logs
+  <h1>OR</h1>
+  <h5>Send us logs</h5>
 </div>
-<br>
-  <br>
   <nb-card>
     <nb-card-body align="center">
-      <h3>Via plugins</h3>
-      <h6>We provide integrations for various platforms</h6>
-
-      <p> We need to list here in cards</p>
+      <h1>Via plugins</h1>
+      <h5>We provide integrations for various platforms</h5>
+      <div class="row" align="center">
+        <div class="text-white col-md-3 p-3 border-0">
+          <div class="card">
+            <img alt="Python SDK" class="card-img" src="https://images.ctfassets.net/mrop88jh71hl/55rrbZfwMaURHZKAUc5oOW/9e5fe805eb03135b82e962e92169ce6d/python-programming-language.png?w=2400&h=2400&q=100" />
+            <div class="card-img-overlay">
+              <a href="/pages/integration" class="stretched-link" id="cardlink">
+<!--                <h2 class="card-title">Title here</h2>-->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="text-white col-md-3 p-3 border-0">
+          <div class="card">
+            <img alt="Filebeats" class="card-img" src="data:image/png;base64,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" />
+            <div class="card-img-overlay">
+              <a href="/pages/integration" class="stretched-link" id="cardlink">
+                <!--                <h2 class="card-title">Title here</h2>-->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="text-white col-md-3 p-3 border-0">
+          <div class="card">
+            <img alt="Logstash" class="card-img" src="https://cdn.worldvectorlogo.com/logos/elastic-logstash.svg" />
+            <div class="card-img-overlay">
+              <a href="/pages/integration" class="stretched-link" id="cardlink">
+                <!--                <h2 class="card-title">Title here</h2>-->
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="text-white col-md-3 p-3 border-0">
+          <div class="card">
+            <img alt="REST API" class="card-img" src="https://logodix.com/logo/875327.png" />
+            <div class="card-img-overlay">
+              <a href="/pages/integration" class="stretched-link" id="cardlink">
+                <!--                <h2 class="card-title">Title here</h2>-->
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </nb-card-body>
   </nb-card>
 

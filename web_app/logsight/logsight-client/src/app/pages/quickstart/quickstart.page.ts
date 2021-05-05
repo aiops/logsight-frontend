@@ -44,11 +44,14 @@ export class QuickstartPage implements OnInit {
     this.thirdForm.markAsDirty();
   }
 
+  onCardClick(){
+    this.router.navigate(['/pages/integration'])
+  }
   createApplication() {
     if (this.key) {
       this.integrationService.createApplication({ name: "sample_app", key: this.key }).subscribe(
         resp => {
-          this.notificationService.success('Success', 'Sample data is streaming into logsight.ai')
+          this.notificationService.success('Success', 'Please wait couple of minutes... sample data is streaming into logsight.ai.')
           this.router.navigate(['/pages/dashboard'])
         }, error => this.notificationService.error('Error', 'Sorry, a problem happened'))
     } else {

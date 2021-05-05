@@ -18,6 +18,7 @@ export class IntegrationPage implements OnInit {
   public show:boolean = false;
   public python:boolean = true;
   public fileBeats:boolean = false;
+  public rest:boolean = false;
   public showHideAppBtn:any = 'Show';
   public pythonBtn:any = 'Python';
   public filebeatBtn:any = 'Filebeat';
@@ -30,6 +31,7 @@ export class IntegrationPage implements OnInit {
 
   code_python = ''
   code_filebeats = ''
+  code_rest = ''
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService) {
@@ -42,6 +44,7 @@ export class IntegrationPage implements OnInit {
       this.loadApplications()
       this.code_python = this.getPythonCode()
       this.code_filebeats = this.getFilebeatsCode()
+      this.code_rest = this.getCodeRest()
     })
   }
 
@@ -57,15 +60,19 @@ export class IntegrationPage implements OnInit {
   onPythonBtn(){
     this.python = true
     this.fileBeats = false
+    this.rest = false
   }
 
   onFileBeatBtn(){
     this.python = false
     this.fileBeats = true
+    this.rest = false
   }
 
   onRestBtn(){
-
+    this.python = false
+    this.fileBeats = false
+    this.rest = true
   }
 
   createApplication() {
@@ -126,17 +133,47 @@ logger.info("------------")`;
   }
 
   private getFilebeatsCode() {
-    return "filebeat.inputs:\n" +
-        "- type: log\n" +
-        "  paths:\n" +
-        "    - /var/log/*.log\n" +
-        "\n" +
-        "fields_under_root: true\n" +
-        "fields:\n" +
-        "  PRIVATE_KEY: \"0i9wnjlvgzhdsqevfpjkitvaaq\"\n" +
-        "  APP_NAME: \"demo-app\"\n" +
-        "\n" +
-        "output.logstash:\n" +
-        "  hosts: [\"logsight.ai:12350\"]";
+    return `
+    filebeat.inputs:
+      - type: log
+        paths:
+          - /var/log/*.log
+
+      fields_under_root: true
+      fields:
+        PRIVATE_KEY: "0i9wnjlvgzhdsqevfpjkitvaaq"
+        APP_NAME: "demo-app"
+
+      output.logstash:
+        hosts: ["logsight.ai:12350"]`;
+  }
+
+  private getCodeRest(){
+    return `
+    //json
+    {
+    "private-key": "${this.key}",
+    "app": "demo-app",
+    "message": "This is an error message, representing failure!",
+    "level": "ERROR"
+    }
+
+    //shell script
+    #!/bin/bash
+    while IFS= read -r line; do
+      curl -X POST "https://logsight.ai/api_v1/data"
+      -H "accept: application/json"
+      -H "Content-Type: application/json"
+      -d "{ \\"private-key\\": \\"0i9wnjlvgzhdsqevfpjkitvaaq\\",
+      \\"app\\": \\"demo-app\\", \\"message\\": \\"$line\\",
+       \\"level\\": \\"string\\"}"
+      echo "Text read from file: $line"
+    done < "$1"
+
+
+    // to use the shell script just
+    // copy the above shell code into send-rest.sh
+    // ./send-rest.sh File_name
+    `
   }
 }

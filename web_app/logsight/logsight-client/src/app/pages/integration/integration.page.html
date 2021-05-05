@@ -3,11 +3,16 @@
   <div class="col-md-3">
 
     <div class="row user_info">
-      <nb-card class="p-3 row-one">
-        <div class="row no-gutters">
+<!--      <nb-card class="p-3 row-one">-->
+      <div class="col">
+        <h5><b>User info</b></h5>
+      </div>
+        <div class="row no-gutters p-3 row-one">
           <div class="col" align="center">
+            <p class="mb-3">Username:</p>
             <p class="mb-3"><b>{{email}}</b></p>
-            <p class="mb-3">Private key: <b>{{key}}</b></p>
+            <p class="mb-3">PRIVATE_KEY:</p>
+            <p class="mb-3"><b>{{key}}</b></p>
           </div>
         </div>
         <!--        <div class="row">-->
@@ -15,14 +20,13 @@
         <!--            <p class="key_text"><b>{{key}}</b></p>-->
         <!--          </div>-->
         <!--        </div>-->
-      </nb-card>
+<!--      </nb-card>-->
     </div>
-
     <div class="row integration_types">
       <nb-card class="p-3 row-one">
         <div class="row no-gutters">
           <div class="col">
-            <h6><b>Integration types</b></h6>
+            <h5><b>Integration types</b></h5>
           </div>
         </div>
         <div class="row justify-content-center">
@@ -49,7 +53,7 @@
       <nb-card class="p-3 row-one">
         <div class="row no-gutters">
           <div class="col">
-            <h6 class="mb-3">Create application</h6>
+            <h5 class="mb-3">Create application</h5>
           </div>
         </div>
         <div class="row justify-content-between">
@@ -79,7 +83,7 @@
       <nb-card class="p-3 row-one">
         <div class="row justify-content-end">
           <div class="col-md-4">
-            <h6 class="mb-3">Active applications</h6>
+            <h5 class="mb-3">Active applications</h5>
           </div>
           <div class="col-md-4 ml-auto" style="margin-bottom: 3px">
             <button nbButton class="btn btn-link show-app-btn" type="button" (click)="onBtnShowApp()" id="bt">
@@ -126,24 +130,23 @@
           </div>
           <div class="row">
             <p class="dscr">To start sending logs from a Python script you need to install the Logsight Python-SDK:</p>
-            <pre><code highlight="pip install git+ssh://git@github.com/aiops/logsight-python-sdk.git"></code></pre>
+            <pre><code style="color: white">pip install git+ssh://git@github.com/aiops/logsight-python-sdk.git</code></pre>
           </div>
         </div>
         <!--        </nb-card>-->
       </div>
       <br>
-      <br>
       <div class="row user_guidance">
         <div class="col">
           <div class="row">
-            <h5>Endpoint Details</h5>
+            <h5>Endpoint details</h5>
           </div>
           <div class="row">
             <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with
               the following attributes: </p>
-            <table class="table table-striped">
+            <table class="table table-striped table-borderless">
               <tr>
-                <td>PRIVATE_KEY</td>
+                <th>PRIVATE_KEY</th>
                 <td>A private key which is used to validate your authenticity.</td>
               </tr>
               <tr>
@@ -189,29 +192,164 @@
       <div class="row user_guidance">
         <div class="col">
           <div class="row">
-            <h3>Endpoint Details for FileBeats</h3>
+            <h5>Endpoint details</h5>
           </div>
           <div class="row">
-            <table class="table table-striped">
+            <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with
+              the following attributes: </p>
+            <table class="table table-borderless">
               <tr>
-                <th>Step 1:</th>
-                <td>?</td>
+                <th>PRIVATE_KEY</th>
+                <td>A private key which is used to validate your authenticity.</td>
               </tr>
               <tr>
-                <th>Step 2:</th>
-                <td>?</td>
+                <th>APP_NAME</th>
+                <td>The name of your application/service. For example, a company "x" wants to debug their test
+                  environment they might insert the “x_test”
+                </td>
               </tr>
             </table>
           </div>
+
+          <div class="row">
+            <h5>Prerequisites</h5>
+            <p>Have Filebeat installed, for more information on how to install: <a href="Have Filebeat installed, for more information on how to install: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html">https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html</a></p>
+          </div>
+
+          <div class="row">
+            <h5>Configuration</h5>
+            <div class="row">
+              <table class="table table-borderless">
+                <tr>
+                <td>
+                  Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable Elastic output).
+                </td>
+                </tr>
+                <tr>
+                <td>
+                  For more information about configuring Filebeat to use Logstash please refer to:
+                </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    For more information about configuring Filebeat to use Logstash please refer to:
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="row user_guidance">
+            <div class="col">
+              <div class="row">
+                <h5>Integration help?</h5>
+              </div>
+              <div class="row">
+                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="rest">
+      <div class="row description">
+        <!--      <nb-card class="p-2 rows" style="width: 100%">-->
+        <div class="col">
+          <div class="row">
+            <h5>Usage</h5>
+          </div>
+          <div class="row">
+            <p class="dscr">Logsight exposes an API that allows you to send your logs from anywhere, here is how:</p>
+          </div>
+        </div>
+        <!--        </nb-card>-->
+      </div>
+      <br>
+      <br>
+      <div class="row user_guidance">
+        <div class="col">
+          <div class="row">
+            <h5>Endpoint details</h5>
+          </div>
+          <div class="row">
+            <table class="table table-borderless">
+              <tr>
+                <th>URL</th>
+                <td>https://logsight.ai/api_v1/data</td>
+              </tr>
+              <tr>
+                <th>HTTP method	</th>
+                <td>POST</td>
+              </tr>
+              <tr>
+                <th>Content type</th>
+                <td>application/json</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="row">
+            <h5>POST BODY</h5>
+          </div>
+          <div class="row">
+            <table class="table table-borderless">
+              <tr>
+                <th>private-key</th>
+                <td>{{key}} (your private key)</td>
+              </tr>
+              <tr>
+                <th>app</th>
+                <td>string, name of the application you have created)</td>
+              </tr>
+              <tr>
+                <th>message</th>
+                <td>string, the content of the log message</td>
+              </tr>
+              <tr>
+                <th>level</th>
+                <td>string, the log level</td>
+              </tr>
+              <tr>
+                <th>Other fields</th>
+                <td>Related to the log message</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="row user_guidance">
+            <div class="col">
+              <div class="row">
+                <h5>Integration help?</h5>
+              </div>
+              <div class="row">
+                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </ng-container>
   </div>
+
   <ng-container *ngIf="python">
-    <div class="col-4 px-3 ">
+    <div class="col-4 px-3">
       <h5>Example code</h5>
       <div>
-        <pre><code [highlight]="code_python" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
+        <pre><code style="background-color: transparent" [highlight]="code_python" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
       </div>
     </div>
   </ng-container>
@@ -220,11 +358,19 @@
     <div class="col-4 px-3 ">
       <h5>Example code</h5>
       <div>
-        <pre><code [highlight]="code_filebeats" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
+        <pre><code style="background-color: transparent" [highlight]="code_filebeats" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
       </div>
     </div>
   </ng-container>
 
+  <ng-container *ngIf="rest">
+    <div class="col-4 px-3 ">
+      <h5>Example code</h5>
+      <div>
+        <pre><code style="background-color: transparent" [highlight]="code_rest" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
+      </div>
+    </div>
+  </ng-container>
 </div>
 
 

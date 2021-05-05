@@ -18,7 +18,7 @@ export class StackedAreaChartComponent {
   showGridLines: boolean = false;
   xAxisLabel: string = 'Year';
   yAxisLabel: string = 'Population';
-  timeline: boolean = true;
+  timeline: boolean = false;
   linearCurve = shape.curveMonotoneX;
   colorScheme = {
     domain: ['#fff000', '#e85d04', '#393bff', '#00e1ff']

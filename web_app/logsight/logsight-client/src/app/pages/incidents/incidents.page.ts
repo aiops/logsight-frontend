@@ -28,11 +28,12 @@ import { NbDialogService } from '@nebular/theme';
 })
 export class IncidentsPage implements OnInit {
 
-  constructor(private route: ActivatedRoute, private incidentsService: IncidentsService,
-    private variableAnalysisService: VariableAnalysisService,
-    private messagingService: MessagingService,
-    private notificationService: NotificationsService,
-    private dialogService: NbDialogService) {
+  constructor(private route: ActivatedRoute,
+              private incidentsService: IncidentsService,
+              private variableAnalysisService: VariableAnalysisService,
+              private messagingService: MessagingService,
+              private notificationService: NotificationsService,
+              private dialogService: NbDialogService) {
   }
 
   // data = [{

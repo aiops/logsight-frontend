@@ -24,7 +24,6 @@ import {ChartsWrapperModule} from "./charts-wrapper-module/charts-wrapper.module
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
-    DashboardModule,
     ReactiveFormsModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,

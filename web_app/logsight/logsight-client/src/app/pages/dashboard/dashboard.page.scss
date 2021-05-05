@@ -1,3 +1,40 @@
 th, td {
   color: white;
 }
+
+.error {
+  color: red !important;
+}
+
+.info {
+  color: #00b0e8 !important;
+}
+
+/deep/ .template:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+p {
+  margin: 0;
+}
+
+.parent {
+  margin-bottom: 10px !important;
+}
+
+.main-row {
+  margin-bottom: 30px;
+}
+
+.details {
+  font-weight: bold;
+  font-style: italic;
+  color: lightcoral
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center
+}

@@ -1,11 +1,9 @@
+import { VariableAnalysisHit } from './variable-analysis-hit';
+
 export interface TopKIncident {
-  indexName: string,
   timestamp: string,
-  scAnomalies: string,
-  newTemplates: string,
-  semanticAD: string,
-  countAD: string,
-  startTimestamp: Date,
-  stopTimestamp: Date,
-  totalScore: number,
+  scAnomalies: VariableAnalysisHit[],
+  newTemplates: VariableAnalysisHit[],
+  semanticAD: VariableAnalysisHit[],
+  countAD: VariableAnalysisHit[],
 }

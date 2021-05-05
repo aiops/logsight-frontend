@@ -8,8 +8,8 @@ import { HitParam } from '../../common/hit-param';
   template: `
     <div style="float: left">
     <span *ngFor="let pt of parsedTemplates">
-      <span>{{pt.parsedTemplate}}</span>
-      <span class="template"
+      <span style="color: white">{{pt.parsedTemplate}}</span>
+      <span class="template" style="color: red"
             (click)="selectTemplate(pt.template, pt.param, pt.paramValue)">{{pt.paramValue}}</span>
     </span>
     </div>

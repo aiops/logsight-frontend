@@ -19,7 +19,6 @@ import { FormsModule } from '@angular/forms';
     ThemeModule,
     Ng2SmartTableModule,
     NvD3Module,
-    PagesModule,
     FormsModule,
     NbButtonModule,
     PagesModule

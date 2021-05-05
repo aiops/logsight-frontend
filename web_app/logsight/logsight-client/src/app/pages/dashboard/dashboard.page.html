@@ -1,30 +1,30 @@
 <!--<nb-card>-->
 <!--  <nb-card-body>-->
-    <div class="row">
-      <div class="col-4">
-        <h6>Logs 12 hours</h6>
-        <piechart [data]="pieChartData"></piechart>
-      </div>
-      <div class="col-4">
-        <h6>Error distribution 12 hours</h6>
-        <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
-      </div>
+<div class="row">
+  <div class="col-4">
+    <h6>Logs 12 hours</h6>
+    <piechart [data]="pieChartData"></piechart>
+  </div>
+  <div class="col-4">
+    <h6>Error distribution 12 hours</h6>
+    <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
+  </div>
 
-      <div class="col-4">
-        <h6>Anomalies 12 hours</h6>
-        <grouped-vertical-bar-chart [data]="barData"></grouped-vertical-bar-chart>
-      </div>
-    </div>
+  <div class="col-4">
+    <h6>Anomalies 12 hours</h6>
+    <grouped-vertical-bar-chart [data]="barData"></grouped-vertical-bar-chart>
+  </div>
+</div>
 <!--  </nb-card-body>-->
 <!--</nb-card>-->
 
 <!--<nb-card>-->
 <!--  <nb-card-body>-->
 <hr size="30" noshade>
-    <div class="col-lg-12">
-      <h6>System overview</h6>
-      <chart-heatmap [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
-    </div>
+<div class="col-lg-12">
+  <h6>System overview</h6>
+  <chart-heatmap [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
+</div>
 <!--  </nb-card-body>-->
 <!--</nb-card>-->
 <hr size="30" noshade>
@@ -32,34 +32,218 @@
   <nb-card-body>
     <div class="col-lg-12">
       <h6>Top 5 incidents in 24 hours</h6>
-      <table class="table table-striped table-borderless ">
-        <thead>
-        <tr>
-          <th scope="col">Application</th>
-          <th scope="col">Timestamp</th>
-          <th scope="col">SC Anomalies</th>
-          <th scope="col">New Templates</th>
-          <th scope="col">Semantic Anomalies</th>
-          <th scope="col">Count Anomalies</th>n
-          <th scope="col">Start Time</th>
-          <th scope="col">Stop Time</th>
-          <th scope="col">Total Score</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let row of topKIncidents">
-          <td>{{row.indexName.split('_').slice(1,row.indexName.split('_').length-1).toString()}}</td>
-          <td>{{row.timestamp}}</td>
-          <td>{{row.scAnomalies}}</td>
-          <td>{{row.newTemplates}}</td>
-          <td>{{row.semanticAD}}</td>
-          <td>{{row.countAD}}</td>
-          <td>{{row.startTimestamp}}</td>
-          <td>{{row.stopTimestamp}}</td>
-          <td>{{row.totalScore}}</td>
-        </tr>
-        </tbody>
-      </table>
+      <div *ngFor="let topKIncident of topKIncidents">
+        <!--scAnomalies-->
+        <ng-container *ngIf="topKIncident.scAnomalies.length > 0">
+          <div class="row">
+            <div class="col-md-11">
+              <div *ngIf="topKIncident.scAnomalies.length > 1">
+                <div class="main-row">
+                  <div class="row parent">
+                    <div class="col-md-1">
+                 <span style="float: left; font-weight: bold; color: yellow;"
+                       [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
+                       [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
+                       class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}</span>
+                    </div>
+                    <div class="col-md-11">
+                      <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
+                    </div>
+                  </div>
+                  <div class="row parent">
+                    <div class="col-md-1">
+                   <span style="float: left; font-weight: bold; color: yellow;"
+                         [class.error]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'ERROR'"
+                         [class.info]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'INFO'"
+                         class="mr-2">
+                {{topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]?.actualLevel}}</span>
+                    </div>
+                    <div class="col-md-11">
+                      <app-ad-banner
+                        [row]="topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]"></app-ad-banner>
+                    </div>
+                  </div>
+                  <div class="row offset-md-1 details">
+                    <span class="pr-2">Sample App</span>
+                    <span class="pr-2">{{topKIncident?.scAnomalies?.length}} critical event[s]</span>
+                    <span class="pr-2">{{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2">{{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2">{{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2">Time {{topKIncident?.timestamp | date}}</span>
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="topKIncident.scAnomalies.length <= 1">
+                <div class="row main-row">
+                  <div class="col-md-1">
+                <span style="float: left; font-weight: bold; color: yellow;"
+                      [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
+                      [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
+                      class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}
+             </span>
+                  </div>
+                  <div class="offset-md-1 col-md-11">
+                    <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
+                  </div>
+                  <div class="row offset-md-1 details">
+                    <span class="pr-2">Sample App</span>
+                    <span class="pr-2">{{topKIncident?.scAnomalies?.length}} critical event[s]</span>
+                    <span class="pr-2">{{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2">{{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2">{{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2">Time {{topKIncident?.timestamp | date}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1 center">
+              <button nbButton>View Details</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!--semanticAD-->
+        <ng-container *ngIf="topKIncident.semanticAD.length > 0 && topKIncident?.scAnomalies.length == 0">
+          <div class="row">
+
+            <div class="col-md-11">
+              <div *ngIf="topKIncident.semanticAD.length > 1">
+
+                <div class="main-row">
+                  <div class="row parent">
+                    <div class="col-md-1">
+                 <span style="float: left; font-weight: bold; color: yellow;"
+                       [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
+                       [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
+                       class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}</span>
+                    </div>
+                    <div class="col-md-11">
+                      <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
+                    </div>
+                  </div>
+                  <div class="row parent">
+                    <div class="col-md-1">
+                   <span style="float: left; font-weight: bold; color: yellow;"
+                         [class.error]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'ERROR'"
+                         [class.info]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'INFO'"
+                         class="mr-2">
+                {{topKIncident.semanticAD[topKIncident.semanticAD.length - 1]?.actualLevel}}</span>
+                    </div>
+                    <div class="col-md-11">
+                      <app-ad-banner
+                        [row]="topKIncident.semanticAD[topKIncident.semanticAD.length - 1]"></app-ad-banner>
+                    </div>
+                  </div>
+                  <div class="row offset-md-1 details">
+                    <span class="pr-2">Sample App</span>
+                    <span class="pr-2">{{topKIncident?.scAnomalies?.length}} critical event[s]</span>
+                    <span class="pr-2">{{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2">{{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2">{{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2">Time {{topKIncident?.timestamp | date}}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="topKIncident.semanticAD.length <= 1">
+                <div class="row main-row">
+                  <div class="col-md-1">
+                <span style="float: left; font-weight: bold; color: yellow;"
+                      [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
+                      [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
+                      class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}
+             </span>
+                  </div>
+                  <div class="offset-md-1 col-md-11">
+                    <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
+                  </div>
+                  <div class="row offset-md-1 details">
+                    <span class="pr-2">Sample App</span>
+                    <span class="pr-2">{{topKIncident?.scAnomalies?.length}} critical event[s]</span>
+                    <span class="pr-2">{{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2">{{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2">{{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2">Time {{topKIncident?.timestamp | date}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1 center">
+              <button nbButton>View Details</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container
+          *ngIf="topKIncident.newTemplates.length > 0 && topKIncident?.scAnomalies.length == 0 && topKIncident?.semanticAD.length == 0">
+          <div class="row">
+            <div class="col-md-1 center">
+              <button nbButton>View Details</button>
+            </div>
+            <div class="col-md-11">
+              <div *ngIf="topKIncident.newTemplates.length > 1">
+                <div class="main-row">
+                  <div class="row parent">
+                    <div class="col-md-1">
+                 <span style="float: left; font-weight: bold; color: yellow;"
+                       [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
+                       [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
+                       class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}</span>
+                    </div>
+                    <div class="col-md-11">
+                      <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
+                    </div>
+                  </div>
+                  <div class="row parent">
+                    <div class="col-md-1">
+                   <span style="float: left; font-weight: bold; color: yellow;"
+                         [class.error]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'ERROR'"
+                         [class.info]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'INFO'"
+                         class="mr-2">
+                {{topKIncident.newTemplates[topKIncident.newTemplates.length - 1]?.actualLevel}}</span>
+                    </div>
+                    <div class="col-md-11">
+                      <app-ad-banner
+                        [row]="topKIncident.newTemplates[topKIncident.newTemplates.length - 1]"></app-ad-banner>
+                    </div>
+                  </div>
+                  <div class="row offset-md-1 details">
+                    <span class="pr-2">Sample App</span>
+                    <span class="pr-2">{{topKIncident?.scAnomalies?.length}} critical event[s]</span>
+                    <span class="pr-2">{{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2">{{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2">{{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2">Time {{topKIncident?.timestamp | date}}</span>
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="topKIncident.newTemplates.length <= 1">
+                <div class="row main-row">
+                  <div class="col-md-1">
+                <span style="float: left; font-weight: bold; color: yellow;"
+                      [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
+                      [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
+                      class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}
+             </span>
+                  </div>
+                  <div class="offset-md-1 col-md-11">
+                    <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
+                  </div>
+                  <div class="row offset-md-1 details">
+                    <span class="pr-2">Sample App</span>
+                    <span class="pr-2">{{topKIncident?.scAnomalies?.length}} critical event[s]</span>
+                    <span class="pr-2">{{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2">{{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2">{{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2">Time {{topKIncident?.timestamp | date}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </nb-card-body>
 </nb-card>

@@ -141,7 +141,7 @@ logger.info("------------")`;
 
       fields_under_root: true
       fields:
-        PRIVATE_KEY: "0i9wnjlvgzhdsqevfpjkitvaaq"
+        PRIVATE_KEY: "${this.key}"
         APP_NAME: "demo-app"
 
       output.logstash:
@@ -164,7 +164,7 @@ logger.info("------------")`;
       curl -X POST "https://logsight.ai/api_v1/data"
       -H "accept: application/json"
       -H "Content-Type: application/json"
-      -d "{ \\"private-key\\": \\"0i9wnjlvgzhdsqevfpjkitvaaq\\",
+      -d "{ \\"private-key\\": \\"${this.key}\\",
       \\"app\\": \\"demo-app\\", \\"message\\": \\"$line\\",
        \\"level\\": \\"string\\"}"
       echo "Text read from file: $line"

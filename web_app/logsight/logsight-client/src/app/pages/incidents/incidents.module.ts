@@ -8,21 +8,23 @@ import { NvD3Module } from 'ng2-nvd3';
 import { IncidentsPage } from './incidents.page';
 import { PagesModule } from '../pages.module';
 import { FormsModule } from '@angular/forms';
+import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.module';
 
 @NgModule({
-  imports: [
-    IncidentsRoutingModule,
-    NbCardModule,
-    NbTreeGridModule,
-    NbIconModule,
-    NbInputModule,
-    ThemeModule,
-    Ng2SmartTableModule,
-    NvD3Module,
-    FormsModule,
-    NbButtonModule,
-    PagesModule
-  ],
+    imports: [
+        IncidentsRoutingModule,
+        NbCardModule,
+        NbTreeGridModule,
+        NbIconModule,
+        NbInputModule,
+        ThemeModule,
+        Ng2SmartTableModule,
+        NvD3Module,
+        FormsModule,
+        NbButtonModule,
+        PagesModule,
+        ChartsWrapperModule
+    ],
   declarations: [
     IncidentsPage,
   ],

@@ -6,6 +6,7 @@ import { PiechartComponent } from './pie-chart/piechart.component';
 import { StackedAreaChartComponent } from '../dashboard/stacked-area-chart/stacked-area-chart.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { GroupedVerticalBarChartComponent } from './grouped-vertical-bar-chart/grouped-vertical-bar-chart.component';
+import { VerticalBarChartComponent } from './vertical-bar-chart/vertical-bar-chart.component';
 
 @NgModule({
   imports: [
@@ -17,14 +18,16 @@ import { GroupedVerticalBarChartComponent } from './grouped-vertical-bar-chart/g
     StackedAreaChartComponent,
     HeatmapComponent,
     LineChartComponent,
-    GroupedVerticalBarChartComponent
+    GroupedVerticalBarChartComponent,
+    VerticalBarChartComponent
   ],
   declarations: [
     HeatmapComponent,
     PiechartComponent,
     StackedAreaChartComponent,
     LineChartComponent,
-    GroupedVerticalBarChartComponent
+    GroupedVerticalBarChartComponent,
+    VerticalBarChartComponent
   ]
 })
 export class ChartsWrapperModule {

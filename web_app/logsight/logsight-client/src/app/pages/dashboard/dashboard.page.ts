@@ -7,10 +7,10 @@ import { SpecificTemplateModalComponent } from '../../@core/components/specific-
 import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
 import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
-import {AuthenticationService} from "../../auth/authentication.service";
-import {switchMap} from "rxjs/operators";
-import {Application} from "../../@core/common/application";
-import {IntegrationService} from "../../@core/service/integration.service";
+import { AuthenticationService } from '../../auth/authentication.service';
+import { switchMap } from 'rxjs/operators';
+import { Application } from '../../@core/common/application';
+import { IntegrationService } from '../../@core/service/integration.service';
 
 @Component({
   selector: 'dashboard',
@@ -24,6 +24,7 @@ export class DashboardPage implements OnInit {
   barData = [];
   topKIncidents: TopKIncident[] = [];
   applications: Application[] = [];
+
   constructor(private dashboardService: DashboardService, private router: Router,
               private variableAnalysisService: VariableAnalysisService,
               private messagingService: MessagingService,
@@ -41,7 +42,7 @@ export class DashboardPage implements OnInit {
     this.loadBarData()
 
     this.authService.getLoggedUser().pipe(
-        switchMap(user => this.integrationService.loadApplications(user.key))
+      switchMap(user => this.integrationService.loadApplications(user.key))
     ).subscribe(resp => this.applications = resp)
 
     this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
@@ -90,7 +91,6 @@ export class DashboardPage implements OnInit {
     this.topKIncidents = [];
 
     this.dashboardService.loadTopKIncidentsData().subscribe(data => {
-      console.log('data', data)
       this.topKIncidents = data.map(it => {
         const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
         const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
@@ -98,12 +98,11 @@ export class DashboardPage implements OnInit {
         const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
         return { timestamp: it.timestamp, scAnomalies, newTemplates, semanticAD, countAD }
       });
-      console.log('this.topKIncidents', this.topKIncidents)
     });
   }
 
   onHeatMapSelect(data: any) {
-    this.router.navigate(['/pages', 'incidents'], { queryParams: { 'startTime': data.series } })
+    this.router.navigate(['/pages', 'incidents'], { queryParams: { 'startTime': data.series} })
   }
 
   parseTemplates(data, incident) {

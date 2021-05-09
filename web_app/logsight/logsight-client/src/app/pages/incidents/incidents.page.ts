@@ -19,6 +19,8 @@ import { VariableAnalysisService } from '../../@core/service/variable-analysis.s
 import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
 import { NbDialogService } from '@nebular/theme';
+import * as moment from 'moment'
+import { Moment } from 'moment';
 
 @Component({
   selector: 'incidents',
@@ -36,11 +38,6 @@ export class IncidentsPage implements OnInit {
               private dialogService: NbDialogService) {
   }
 
-  // data = [{
-  //   'key': 'data',
-  //   'values': [{ x: 1613516400000, y: 9 }, { x: 1613602800000, y: 8 },
-  //     { x: 1613689200000, y: 1 }]
-  // }];
   relativeTimeChecked = true;
   absoluteTimeChecked = false;
 
@@ -54,8 +51,15 @@ export class IncidentsPage implements OnInit {
     this.route.queryParamMap.subscribe(queryParams => {
       const dateTime = queryParams.get('startTime')
       if (dateTime) {
-        this.loadIncidentsBarChart(dateTime, dateTime)
-        this.loadIncidentsTableData(dateTime, dateTime)
+        const date = dateTime.split(' ')[0].split('-');
+        const time = dateTime.split(' ')[1].split(':');
+        const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+          +time[1]);
+
+        this.loadIncidentsBarChart(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
+          startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
+        this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
+          startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
       } else {
         this.loadIncidentsBarChart(this.relativeDateTime, 'now')
         this.loadIncidentsTableData(this.relativeDateTime, 'now')
@@ -63,7 +67,7 @@ export class IncidentsPage implements OnInit {
     });
 
     this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
-      if (true) {
+      if (true) { //if selectedApplication and change 1
         this.variableAnalysisService.loadSpecificTemplate(1, selected['item']).subscribe(
           resp => {
             this.dialogService.open(SpecificTemplateModalComponent, {
@@ -89,7 +93,6 @@ export class IncidentsPage implements OnInit {
   private loadIncidentsTableData(startTime: string, endTime: string) {
     this.incidentsService.loadIncidentsTableData(startTime, endTime).subscribe(resp => {
       this.tableData = resp
-      console.log(resp)
     })
   }
 

@@ -1,40 +1,41 @@
 <!--<nb-card>-->
-  <div class="row p-4">
-    <div class="col-md-12 text-right">
-      <div class="row mr-4" style="justify-content: flex-end">
-        <div class="mr-5 text-left">
-          <div class="form-check mb-2" style="margin-left: -28px;">
-            <input type="checkbox" [(ngModel)]="relativeTimeChecked"
-                   (change)="onRelativeTimeChecked(relativeTimeChecked)"
-                   class="form-check-input" id="relativeTime">
-            <label class="form-check-label" for="relativeTime">Relative Time</label>
-          </div>
-          <relative-time [disabled]="!relativeTimeChecked" class="mr-4"
-                         (onChange)="onRelativeDateChange($event)"></relative-time>
+<div class="row p-4">
+  <div class="col-md-12 text-right">
+    <div class="row mr-4" style="justify-content: flex-end">
+      <div class="mr-5 text-left">
+        <div class="form-check mb-2" style="margin-left: -28px;">
+          <input type="checkbox" [(ngModel)]="relativeTimeChecked"
+                 (change)="onRelativeTimeChecked(relativeTimeChecked)"
+                 class="form-check-input" id="relativeTime">
+          <label class="form-check-label" for="relativeTime">Relative Time</label>
         </div>
-        <div class="text-left">
-          <div class="form-check mb-2">
-            <input type="checkbox" [(ngModel)]="absoluteTimeChecked"
-                   (change)="onAbsoluteTimeChecked(absoluteTimeChecked)"
-                   class="form-check-input" id="absoluteTime">
-            <label class="form-check-label" for="absoluteTime">Absolute Time</label>
-          </div>
-          <range-date-time [disabled]="!absoluteTimeChecked" (change)="onAbsoluteDateChange($event)"></range-date-time>
-        </div>
-        <button [disabled]="!relativeDateTime && !absoluteDateTime" nbButton type="button" class="ml-3 search-button"
-                (click)="search()">
-          Search
-        </button>
+        <relative-time [disabled]="!relativeTimeChecked" class="mr-4"
+                       (onChange)="onRelativeDateChange($event)"></relative-time>
       </div>
+      <div class="text-left">
+        <div class="form-check mb-2">
+          <input type="checkbox" [(ngModel)]="absoluteTimeChecked"
+                 (change)="onAbsoluteTimeChecked(absoluteTimeChecked)"
+                 class="form-check-input" id="absoluteTime">
+          <label class="form-check-label" for="absoluteTime">Absolute Time</label>
+        </div>
+        <range-date-time [disabled]="!absoluteTimeChecked" (change)="onAbsoluteDateChange($event)"></range-date-time>
+      </div>
+      <button [disabled]="!relativeDateTime && !absoluteDateTime" nbButton type="button" class="ml-3 search-button"
+              (click)="search()">
+        Search
+      </button>
     </div>
   </div>
+</div>
 <!--</nb-card>-->
 
 <!--<nb-card>-->
 <!--  <nb-card-header>-->
-    <h6>Incidents</h6>
+<h6>Incidents</h6>
 <!--  </nb-card-header>-->
-  <nvd3 #chart [data]="chartData" [options]="options"></nvd3>
+<vertical-bar-chart [data]="chartData"></vertical-bar-chart>
+<!--<nvd3 #chart [data]="chartData" [options]="options"></nvd3>-->
 <!--</nb-card>-->
 
 <nb-card *ngIf="tableData?.countAds">
@@ -52,7 +53,9 @@
           <tbody>
           <tr *ngFor="let row of tableData.countAds; let i = index">
             <td>{{i + 1}}</td>
-            <td><app-ad-banner [row]="row"></app-ad-banner></td>
+            <td>
+              <app-ad-banner [row]="row"></app-ad-banner>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -76,7 +79,9 @@
           <tbody>
           <tr *ngFor="let row of tableData.semanticCountAds; let i = index">
             <td>{{i + 1}}</td>
-            <td><app-ad-banner [row]="row"></app-ad-banner></td>
+            <td>
+              <app-ad-banner [row]="row"></app-ad-banner>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -100,7 +105,9 @@
           <tbody>
           <tr *ngFor="let row of tableData.newTemplates; let i = index">
             <td>{{i + 1}}</td>
-            <td><app-ad-banner [row]="row"></app-ad-banner></td>
+            <td>
+              <app-ad-banner [row]="row"></app-ad-banner>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -124,7 +131,9 @@
           <tbody>
           <tr *ngFor="let row of tableData.semanticAd; let i = index">
             <td>{{i + 1}}</td>
-            <td><app-ad-banner [row]="row"></app-ad-banner></td>
+            <td>
+              <app-ad-banner [row]="row"></app-ad-banner>
+            </td>
           </tr>
           </tbody>
         </table>

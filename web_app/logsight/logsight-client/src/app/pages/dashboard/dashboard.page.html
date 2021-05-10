@@ -99,7 +99,7 @@
               </div>
             </div>
             <div class="col-md-1 center">
-              <button nbButton>View Details</button>
+              <button (click)="viewDetails(topKIncident.timestamp)" nbButton>View Details</button>
             </div>
           </div>
         </ng-container>
@@ -170,7 +170,7 @@
               </div>
             </div>
             <div class="col-md-1 center">
-              <button nbButton>View Details</button>
+              <button (click)="viewDetails(topKIncident.timestamp)" nbButton>View Details</button>
             </div>
           </div>
         </ng-container>
@@ -179,7 +179,7 @@
           *ngIf="topKIncident.newTemplates.length > 0 && topKIncident?.scAnomalies.length == 0 && topKIncident?.semanticAD.length == 0">
           <div class="row">
             <div class="col-md-1 center">
-              <button nbButton>View Details</button>
+              <button (click)="viewDetails(topKIncident.timestamp)" nbButton>View Details</button>
             </div>
             <div class="col-md-11">
               <div *ngIf="topKIncident.newTemplates.length > 1">

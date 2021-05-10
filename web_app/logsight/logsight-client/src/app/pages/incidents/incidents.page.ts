@@ -50,13 +50,10 @@ export class IncidentsPage implements OnInit {
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParams => {
       const dateTime = queryParams.get('startTime')
+      const applicationId = queryParams.get('applicationId') //TODO send the applicationId
       if (dateTime) {
-        const date = dateTime.split(' ')[0].split('-');
-        const time = dateTime.split(' ')[1].split(':');
-        const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
-          +time[1]);
-
-        this.loadIncidentsBarChart(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
+        const startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
+        this.loadIncidentsBarChart(dateTime,
           startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
         this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
           startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))

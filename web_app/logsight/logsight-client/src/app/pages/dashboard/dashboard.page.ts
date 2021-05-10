@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NbDialogService, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './dashboard.service';
 import { TopKIncident } from '../../@core/common/top-k-Incident';
@@ -8,22 +8,32 @@ import { VariableAnalysisService } from '../../@core/service/variable-analysis.s
 import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
 import { AuthenticationService } from '../../auth/authentication.service';
-import { switchMap } from 'rxjs/operators';
+import { retry, share, switchMap, takeUntil } from 'rxjs/operators';
 import { Application } from '../../@core/common/application';
 import { IntegrationService } from '../../@core/service/integration.service';
+import { Observable, Subject, timer } from 'rxjs';
+import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'dashboard',
   styleUrls: ['./dashboard.page.scss'],
   templateUrl: './dashboard.page.html',
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements OnInit, OnDestroy {
   heatmapData = [];
   pieChartData = [];
   stackedChartData = [];
   barData = [];
   topKIncidents: TopKIncident[] = [];
   applications: Application[] = [];
+  private stopPolling = new Subject();
+
+  heatmapData$: Observable<any>;
+  pieChartData$: Observable<any>;
+  stackedAreaChartData$: Observable<any>;
+  topKIncidents$: Observable<any>;
+  barData$: Observable<any>;
 
   constructor(private dashboardService: DashboardService, private router: Router,
               private variableAnalysisService: VariableAnalysisService,
@@ -32,14 +42,72 @@ export class DashboardPage implements OnInit {
               private dialogService: NbDialogService,
               private authService: AuthenticationService,
               private integrationService: IntegrationService) {
+
+    this.heatmapData$ = timer(1, 10000).pipe(
+      switchMap(() => this.loadHeatmapData()),
+      retry(),
+      share(),
+      takeUntil(this.stopPolling)
+    );
+
+    this.pieChartData$ = timer(1, 10000).pipe(
+      switchMap(() => this.loadPieChartData()),
+      retry(),
+      share(),
+      takeUntil(this.stopPolling)
+    );
+
+    this.stackedAreaChartData$ = timer(1, 10000).pipe(
+      switchMap(() => this.loadStackedAreaChartData()),
+      retry(),
+      share(),
+      takeUntil(this.stopPolling)
+    );
+
+    this.topKIncidents$ = timer(1, 10000).pipe(
+      switchMap(() => this.loadTopKIncidents()),
+      retry(),
+      share(),
+      takeUntil(this.stopPolling)
+    );
+
+    this.barData$ = timer(1, 10000).pipe(
+      switchMap(() => this.loadBarData()),
+      retry(),
+      share(),
+      takeUntil(this.stopPolling)
+    );
+
   }
 
   ngOnInit(): void {
-    this.loadHeatmapData()
-    this.loadPieChartData()
-    this.loadStackedAreaChartData()
-    this.loadTopKIncidents()
     this.loadBarData()
+
+    this.heatmapData$.subscribe(data => {
+      this.heatmapData = data.data;
+    })
+
+    this.pieChartData$.subscribe(data => {
+      this.pieChartData = data.data;
+    })
+
+    this.stackedAreaChartData$.subscribe(data => {
+      this.stackedChartData = data.data;
+    })
+
+    this.topKIncidents$.subscribe(data => {
+      this.topKIncidents = data.map(it => {
+        const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
+        const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
+        const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
+        const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
+        return { timestamp: it.timestamp, scAnomalies, newTemplates, semanticAD, countAD }
+      });
+    })
+
+    this.barData$.subscribe(data => {
+      this.barData = data.data;
+    })
 
     this.authService.getLoggedUser().pipe(
       switchMap(user => this.integrationService.loadApplications(user.key))
@@ -64,45 +132,32 @@ export class DashboardPage implements OnInit {
   }
 
   loadHeatmapData() {
-    this.dashboardService.loadHeatmapData().subscribe(data => {
-      this.heatmapData = data.data;
-    });
+    return this.dashboardService.loadHeatmapData()
   }
 
   loadBarData() {
-    this.dashboardService.loadBarData().subscribe(data => {
-      this.barData = data;
-    });
+    return this.dashboardService.loadBarData();
   }
 
   loadPieChartData() {
-    this.dashboardService.loadPieChartData().subscribe(data => {
-      this.pieChartData = data.data;
-    });
+    return this.dashboardService.loadPieChartData();
   }
 
   loadStackedAreaChartData() {
-    this.dashboardService.loadStackedChartData().subscribe(data => {
-      this.stackedChartData = data.data;
-    });
+    return this.dashboardService.loadStackedChartData();
   }
 
   loadTopKIncidents() {
-    this.topKIncidents = [];
-
-    this.dashboardService.loadTopKIncidentsData().subscribe(data => {
-      this.topKIncidents = data.map(it => {
-        const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
-        const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
-        const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
-        const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
-        return { timestamp: it.timestamp, scAnomalies, newTemplates, semanticAD, countAD }
-      });
-    });
+    return this.dashboardService.loadTopKIncidentsData();
   }
 
   onHeatMapSelect(data: any) {
-    this.router.navigate(['/pages', 'incidents'], { queryParams: { 'startTime': data.series} })
+    const dateTime = data.series
+    const date = dateTime.split(' ')[0].split('-');
+    const time = dateTime.split(' ')[1].split(':');
+    const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+    this.navigateToIncidentsPage(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
   }
 
   parseTemplates(data, incident) {
@@ -123,4 +178,15 @@ export class DashboardPage implements OnInit {
     });
   }
 
+  viewDetails(timestamp: string) {
+    this.navigateToIncidentsPage(timestamp)
+  }
+
+  ngOnDestroy() {
+    this.stopPolling.next();
+  }
+
+  private navigateToIncidentsPage(startTime: string, applicationId: number = 1) {
+    this.router.navigate(['/pages', 'incidents'], { queryParams: { startTime, applicationId } })
+  }
 }

@@ -81,8 +81,6 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadBarData()
-
     this.heatmapData$.subscribe(data => {
       this.heatmapData = data.data;
     })
@@ -106,7 +104,8 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
 
     this.barData$.subscribe(data => {
-      this.barData = data.data;
+      this.barData = data;
+      console.log('barData', this.barData)
     })
 
     this.authService.getLoggedUser().pipe(

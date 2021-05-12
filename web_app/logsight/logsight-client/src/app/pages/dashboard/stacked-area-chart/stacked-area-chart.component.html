@@ -1,5 +1,5 @@
 <div id="chart-parent">
-  <ngx-charts-line-chart
+  <ngx-charts-area-chart-stacked
     [scheme]="colorScheme"
     [legend]="false"
     [showXAxisLabel]="showXAxisLabel"
@@ -12,7 +12,8 @@
     [timeline]="timeline"
     [results]="data"
     (select)="onSelect($event)"
+    [curve]="linearCurve"
     [xAxisTickFormatting]='dateTickFormatting'
     style="fill: white">
-  </ngx-charts-line-chart>
+  </ngx-charts-area-chart-stacked>
 </div>

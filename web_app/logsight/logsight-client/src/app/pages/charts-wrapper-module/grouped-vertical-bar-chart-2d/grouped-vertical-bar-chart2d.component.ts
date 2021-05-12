@@ -30,6 +30,7 @@ export class GroupedVerticalBarChart2dComponent {
   dateTickFormatting(val: any) {
     const datepipe: DatePipe = new DatePipe('en-US');
     let yourDate: Date = new Date(val + ' UTC-1');
+    console.log("DAS",yourDate)
     return (datepipe.transform(yourDate, 'shortTime').toString())
   }
 

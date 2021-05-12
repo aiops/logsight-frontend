@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { data } from './data';
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'vertical-bar-chart',
@@ -18,11 +19,17 @@ export class VerticalBarChartComponent {
   yAxisLabel = 'Count';
 
   colorScheme = {
-    domain: ['#5AA454']
+    domain: [
+      '#f0ff00'
+    ]
   };
 
   constructor() {
     this.data = data
   }
-
+  dateTickFormatting(val: any) {
+    const datepipe: DatePipe = new DatePipe('en-US');
+    let yourDate: Date = new Date(val);
+    return (datepipe.transform(yourDate, 'shortTime').toString())
+  }
 }

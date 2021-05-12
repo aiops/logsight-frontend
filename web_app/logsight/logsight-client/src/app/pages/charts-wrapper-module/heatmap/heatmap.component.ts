@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { multi } from './data';
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'chart-heatmap',
@@ -35,6 +36,12 @@ export class HeatmapComponent {
 
   constructor() {
     this.data = multi
+  }
+
+  dateTickFormatting(val: any) {
+    const datepipe: DatePipe = new DatePipe('en-US');
+    let yourDate: Date = new Date(val + ' UTC-1');
+    return (datepipe.transform(yourDate, 'shortTime').toString())
   }
 
   onSelect(data): void {

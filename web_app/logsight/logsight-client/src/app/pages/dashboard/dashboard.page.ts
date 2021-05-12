@@ -78,6 +78,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       takeUntil(this.stopPolling)
     );
 
+
   }
 
   ngOnInit(): void {
@@ -99,7 +100,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
         const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
         const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
-        return { timestamp: it.timestamp, scAnomalies, newTemplates, semanticAD, countAD }
+        return { timestamp: it.timestamp, startTimestamp: it.startTimestamp, stopTimestamp: it.stopTimestamp, scAnomalies, newTemplates, semanticAD, countAD }
       });
     })
 
@@ -152,11 +153,12 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   onHeatMapSelect(data: any) {
     const dateTime = data.series
+    console.log("TIME", dateTime)
     const date = dateTime.split(' ')[0].split('-');
     const time = dateTime.split(' ')[1].split(':');
     const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
       +time[1]);
-    this.navigateToIncidentsPage(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
+    this.navigateToIncidentsPage(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), null)
   }
 
   parseTemplates(data, incident) {
@@ -177,15 +179,18 @@ export class DashboardPage implements OnInit, OnDestroy {
     });
   }
 
-  viewDetails(timestamp: string) {
-    this.navigateToIncidentsPage(timestamp)
+  viewDetails(startTime: string, endTime: string) {
+    console.log("III", startTime, endTime)
+    this.navigateToIncidentsPage(startTime, endTime)
   }
+
+
 
   ngOnDestroy() {
     this.stopPolling.next();
   }
 
-  private navigateToIncidentsPage(startTime: string, applicationId: number = 1) {
-    this.router.navigate(['/pages', 'incidents'], { queryParams: { startTime, applicationId } })
+  private navigateToIncidentsPage(startTime: string, endTime: String, applicationId: number = 1) {
+    this.router.navigate(['/pages', 'incidents'], { queryParams: { startTime, endTime, applicationId } })
   }
 }

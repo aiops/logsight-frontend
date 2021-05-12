@@ -21,6 +21,8 @@ import { NotificationsService } from 'angular2-notifications';
 import { NbDialogService } from '@nebular/theme';
 import * as moment from 'moment'
 import { Moment } from 'moment';
+import {start} from "repl";
+import {query} from "@angular/animations";
 
 @Component({
   selector: 'incidents',
@@ -50,12 +52,19 @@ export class IncidentsPage implements OnInit {
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParams => {
       const dateTime = queryParams.get('startTime')
+      const endTime = queryParams.get('endTime')
       const applicationId = queryParams.get('applicationId') //TODO send the applicationId
-      if (dateTime) {
+      if (dateTime && endTime) {
         const startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
+        const endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss.sss');
+        this.loadIncidentsBarChart(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
+        this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
+      } else if(dateTime && !endTime){
+        var startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
         this.loadIncidentsBarChart(dateTime,
           startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
-        this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
+        var startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
+        this.loadIncidentsTableData(dateTime,
           startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
       } else {
         this.loadIncidentsBarChart(this.relativeDateTime, 'now')

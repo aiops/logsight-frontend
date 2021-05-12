@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { data } from './data';
+import {DatePipe} from "@angular/common";
 @Component({
   selector: 'grouped-vertical-bar-chart',
   styleUrls: ['./grouped-vertical-bar-chart.component.scss'],
@@ -24,6 +25,12 @@ export class GroupedVerticalBarChartComponent {
 
   constructor() {
     this.data = data
+  }
+
+  dateTickFormatting(val: any) {
+    const datepipe: DatePipe = new DatePipe('en-US');
+    let yourDate: Date = new Date(val + ' UTC-1');
+    return (datepipe.transform(yourDate, 'shortTime').toString())
   }
 
 }

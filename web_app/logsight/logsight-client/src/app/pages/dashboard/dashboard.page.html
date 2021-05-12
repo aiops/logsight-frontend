@@ -70,7 +70,7 @@
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
                     <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
                     <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.timestamp | date}}</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
 
@@ -93,13 +93,13 @@
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
                     <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
                     <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.timestamp | date}}</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.timestamp)" nbButton>View Details</button>
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)" nbButton>View Details</button>
             </div>
           </div>
         </ng-container>
@@ -142,7 +142,7 @@
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
                     <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
                     <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.timestamp | date}}</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
               </div>
@@ -164,7 +164,7 @@
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
                     <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
                     <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.timestamp | date}}</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
               </div>
@@ -214,7 +214,7 @@
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
                     <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
                     <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.timestamp | date}}</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
 
@@ -237,7 +237,7 @@
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
                     <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
                     <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.timestamp | date}}</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
               </div>

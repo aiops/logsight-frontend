@@ -13,7 +13,7 @@ import { options } from './chart-options';
 import { IncidentTableData } from '../../@core/common/incident-table-data';
 import 'd3';
 import 'nvd3';
-import { Observable } from 'rxjs';
+import {Observable, Subject, timer} from 'rxjs';
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
 import { MessagingService } from '../../@core/service/messaging.service';
@@ -23,6 +23,8 @@ import * as moment from 'moment'
 import { Moment } from 'moment';
 import {start} from "repl";
 import {query} from "@angular/animations";
+import {retry, share, switchMap, takeUntil} from "rxjs/operators";
+import {DashboardService} from "../dashboard/dashboard.service";
 
 @Component({
   selector: 'incidents',
@@ -31,23 +33,38 @@ import {query} from "@angular/animations";
   encapsulation: ViewEncapsulation.None
 })
 export class IncidentsPage implements OnInit {
+  heatmapData$: Observable<any>;
+  heatmapData = [];
+  relativeTimeChecked = true;
+  absoluteTimeChecked = false;
+
+  chartData = [];
+
+  tableData: IncidentTableData;
+  options = options.timelineChart()
+  absoluteDateTime: { startDateTime: Date, endDateTime: Date }
+  relativeDateTime: string = 'now-12h';
+  private stopPolling = new Subject();
 
   constructor(private route: ActivatedRoute,
               private incidentsService: IncidentsService,
               private variableAnalysisService: VariableAnalysisService,
               private messagingService: MessagingService,
               private notificationService: NotificationsService,
-              private dialogService: NbDialogService) {
+              private dialogService: NbDialogService,
+              private dashboardService: DashboardService) {
+
+    this.heatmapData$ = timer(1, 10000).pipe(
+      switchMap(() => this.loadHeatmapData()),
+      retry(),
+      share(),
+      takeUntil(this.stopPolling)
+    );
   }
 
-  relativeTimeChecked = true;
-  absoluteTimeChecked = false;
-
-  chartData = [];
-  tableData: IncidentTableData;
-  options = options.timelineChart()
-  absoluteDateTime: { startDateTime: Date, endDateTime: Date }
-  relativeDateTime: string = 'now-12h';
+  loadHeatmapData() {
+    return this.dashboardService.loadHeatmapData()
+  }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParams => {
@@ -57,20 +74,25 @@ export class IncidentsPage implements OnInit {
       if (dateTime && endTime) {
         const startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
         const endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss.sss');
-        this.loadIncidentsBarChart(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
+        this.loadIncidentsBarChart(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss')) // TODO heatmap with the times
         this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
       } else if(dateTime && !endTime){
         var startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
         this.loadIncidentsBarChart(dateTime,
-          startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
+          startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss')) // TODO heatmap with the times
         var startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
         this.loadIncidentsTableData(dateTime,
           startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
       } else {
-        this.loadIncidentsBarChart(this.relativeDateTime, 'now')
+        this.loadIncidentsBarChart(this.relativeDateTime, 'now')  // TODO heatmap with the times
         this.loadIncidentsTableData(this.relativeDateTime, 'now')
       }
     });
+
+
+    this.heatmapData$.subscribe(data => {
+      this.heatmapData = data.data;
+    })
 
     this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
       if (true) { //if selectedApplication and change 1
@@ -98,6 +120,7 @@ export class IncidentsPage implements OnInit {
 
   private loadIncidentsTableData(startTime: string, endTime: string) {
     this.incidentsService.loadIncidentsTableData(startTime, endTime).subscribe(resp => {
+      console.log("RESP", resp)
       this.tableData = resp
     })
   }

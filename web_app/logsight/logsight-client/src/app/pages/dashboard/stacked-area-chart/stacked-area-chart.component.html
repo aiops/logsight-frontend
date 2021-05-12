@@ -1,19 +1,18 @@
 <div id="chart-parent">
-  <ngx-charts-area-chart
+  <ngx-charts-line-chart
     [scheme]="colorScheme"
     [legend]="false"
     [showXAxisLabel]="showXAxisLabel"
     [showYAxisLabel]="showYAxisLabel"
-    [showGridLines]="showGridLines"
+    [showGridLines]="false"
     [xAxis]="true"
     [yAxis]="false"
     [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel"
     [timeline]="timeline"
     [results]="data"
-    [curve]="linearCurve"
     (select)="onSelect($event)"
     [xAxisTickFormatting]='dateTickFormatting'
     style="fill: white">
-  </ngx-charts-area-chart>
+  </ngx-charts-line-chart>
 </div>

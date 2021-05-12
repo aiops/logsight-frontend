@@ -11,8 +11,8 @@
   </div>
 
   <div class="col-4">
-    <h6>Anomalies 12 hours</h6>
-    <grouped-vertical-bar-chart [data]="barData"></grouped-vertical-bar-chart>
+    <h6>Cognitive anomalies 12 hours</h6>
+    <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
   </div>
 </div>
 <!--  </nb-card-body>-->
@@ -99,7 +99,7 @@
               </div>
             </div>
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)" nbButton>View Details</button>
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)" _ngcontent-dfy-c356="" nbbutton="" matripple="" outline="" class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition" aria-disabled="false" tabindex="0"> View details </button>
             </div>
           </div>
         </ng-container>
@@ -170,7 +170,7 @@
               </div>
             </div>
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.timestamp)" nbButton>View Details</button>
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)" _ngcontent-dfy-c356="" nbbutton="" matripple="" outline="" class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition" aria-disabled="false" tabindex="0"> View details </button>
             </div>
           </div>
         </ng-container>
@@ -179,7 +179,7 @@
           *ngIf="topKIncident.newTemplates.length > 0 && topKIncident?.scAnomalies.length == 0 && topKIncident?.semanticAD.length == 0">
           <div class="row">
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.timestamp)" nbButton>View Details</button>
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)" _ngcontent-dfy-c356="" nbbutton="" matripple="" outline="" class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition" aria-disabled="false" tabindex="0"> View details </button>
             </div>
             <div class="col-md-11">
               <div *ngIf="topKIncident.newTemplates.length > 1">

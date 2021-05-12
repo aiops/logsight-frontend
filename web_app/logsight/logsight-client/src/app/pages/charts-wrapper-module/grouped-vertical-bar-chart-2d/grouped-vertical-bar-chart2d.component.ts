@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { data } from './data';
 import {DatePipe} from "@angular/common";
 @Component({
-  selector: 'grouped-vertical-bar-chart',
-  styleUrls: ['./grouped-vertical-bar-chart.component.scss'],
-  templateUrl: './grouped-vertical-bar-chart.component.html',
+  selector: 'grouped-vertical-bar-chart-2d',
+  styleUrls: ['./grouped-vertical-bar-chart2d.component.scss'],
+  templateUrl: './grouped-vertical-bar-chart2d.component.html',
 })
-export class GroupedVerticalBarChartComponent {
+export class GroupedVerticalBarChart2dComponent {
   @Input() data = [];
 
   showXAxis: boolean = true;
@@ -20,10 +20,7 @@ export class GroupedVerticalBarChartComponent {
   legendTitle: string = '';
 
   colorScheme = {
-    domain: ['#ffe700', '#7fd900', '#03ffa6', '#37bdfc',
-      '#3a86ff', '#035eff', '#1900ff', '#8900ff',
-      '#c000ff', '#ff00c8', '#ff009d', '#ff0059',
-      '#ff001f', '#840000', '#6d0000']
+    domain: ['#f0ff00', '#d94800', '#ff006e', '#8338ec', '#3a86ff']
   };
 
   constructor() {

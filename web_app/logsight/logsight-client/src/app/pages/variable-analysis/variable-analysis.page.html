@@ -1,5 +1,5 @@
 <div class="row" style="width: 100%">
-  <nb-card class="p-3" style="width: 100%">
+  <div class="p-3" style="width: 100%">
     <div class="row">
       <div class="col-md-6">
         <h6 class="mb-3">Application</h6>
@@ -11,8 +11,15 @@
         </nb-select>
       </div>
     </div>
-  </nb-card>
-  <nb-card *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">
+  </div>
+  <hr noshade="true">
+  <div class="p-3" style="width: 100%" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
+    <h6 class="mb-3">Log Count</h6>
+    <stacked-area-chart [data]="logCountLineChart"></stacked-area-chart>
+  </div>
+
+  <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">
+    <hr noshade="true">
     <div class="row">
 <!--      <div class="col-md-6">-->
 <!--        <p class="font-weight-bold">Top 5 templates between Last 2 Hours and Last Hour</p>-->
@@ -64,12 +71,10 @@
         </table>
       </div>
     </div>
-  </nb-card>
-  <nb-card class="p-3" style="width: 100%" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
-    <h6 class="mb-3">Log Count</h6>
-    <stacked-area-chart [data]="logCountLineChart"></stacked-area-chart>
-  </nb-card>
-  <nb-card class="p-3" style="width: 100%" *ngIf="selectedApplicationId">
+  </div>
+
+  <div class="p-3" style="width: 100%" *ngIf="selectedApplicationId">
+    <hr noshade="true">
     <div class="row">
       <div class="col-md-12">
         <h6 class="mb-3">Data</h6>
@@ -99,5 +104,5 @@
        <loading *ngIf="allTemplatesLoading" [height]="500"></loading>
       </div>
     </div>
-  </nb-card>
+  </div>
 </div>

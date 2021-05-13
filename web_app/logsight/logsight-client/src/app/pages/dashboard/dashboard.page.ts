@@ -106,7 +106,6 @@ export class DashboardPage implements OnInit, OnDestroy {
 
     this.barData$.subscribe(data => {
       this.barData = data;
-      console.log('barData', this.barData)
     })
 
     this.authService.getLoggedUser().pipe(

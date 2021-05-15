@@ -1,32 +1,28 @@
-<!--<nb-card>-->
-<!--  <nb-card-body>-->
+<div style="width: 100%;" class="text-right">
+  <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
+          (click)="openPopover()"
+          nbPopoverTrigger="noop"><i class="fa fa-calendar"></i></button>
+</div>
 <div class="row">
   <div class="col-4">
-    <h6>Logs 12h</h6>
+    <h6>Logs</h6>
     <piechart [data]="pieChartData"></piechart>
   </div>
   <div class="col-4">
-    <h6>Error distribution 12h</h6>
+    <h6>Error distribution</h6>
     <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
   </div>
 
   <div class="col-4">
-    <h6>Cognitive anomalies 12h</h6>
+    <h6>Cognitive anomalies</h6>
     <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
   </div>
 </div>
-<!--  </nb-card-body>-->
-<!--</nb-card>-->
-
-<!--<nb-card>-->
-<!--  <nb-card-body>-->
 <hr size="30" noshade>
 <div class="col-lg-12">
   <h6>System overview</h6>
   <chart-heatmap [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
 </div>
-<!--  </nb-card-body>-->
-<!--</nb-card>-->
 <hr size="30" noshade>
 <nb-card>
   <nb-card-body>
@@ -66,11 +62,16 @@
                   </div>
                   <div class="row offset-md-1 details">
                     <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
-                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon> {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
-                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
-                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
-                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
+                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
+                      {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
+                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
+                      {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon>
+                      {{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon>
+                      {{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon>
+                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
 
@@ -89,17 +90,26 @@
                   </div>
                   <div class="row offset-md-1 details">
                     <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
-                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon> {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
-                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
-                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
-                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
+                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
+                      {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
+                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
+                      {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon>
+                      {{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon>
+                      {{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon>
+                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)" _ngcontent-dfy-c356="" nbbutton="" matripple="" outline="" class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition" aria-disabled="false" tabindex="0"> View details </button>
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)"
+                      _ngcontent-dfy-c356="" nbbutton="" matripple="" outline=""
+                      class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition"
+                      aria-disabled="false" tabindex="0"> View details
+              </button>
             </div>
           </div>
         </ng-container>
@@ -138,11 +148,16 @@
                   </div>
                   <div class="row offset-md-1 details">
                     <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
-                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon> {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
-                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
-                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
-                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
+                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
+                      {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
+                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
+                      {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon>
+                      {{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon>
+                      {{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon>
+                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
               </div>
@@ -160,17 +175,26 @@
                   </div>
                   <div class="row offset-md-1 details">
                     <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
-                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon> {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
-                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
-                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
-                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
+                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
+                      {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
+                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
+                      {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon>
+                      {{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon>
+                      {{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon>
+                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)" _ngcontent-dfy-c356="" nbbutton="" matripple="" outline="" class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition" aria-disabled="false" tabindex="0"> View details </button>
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)"
+                      _ngcontent-dfy-c356="" nbbutton="" matripple="" outline=""
+                      class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition"
+                      aria-disabled="false" tabindex="0"> View details
+              </button>
             </div>
           </div>
         </ng-container>
@@ -179,7 +203,11 @@
           *ngIf="topKIncident.newTemplates.length > 0 && topKIncident?.scAnomalies.length == 0 && topKIncident?.semanticAD.length == 0">
           <div class="row">
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)" _ngcontent-dfy-c356="" nbbutton="" matripple="" outline="" class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition" aria-disabled="false" tabindex="0"> View details </button>
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)"
+                      _ngcontent-dfy-c356="" nbbutton="" matripple="" outline=""
+                      class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition"
+                      aria-disabled="false" tabindex="0"> View details
+              </button>
             </div>
             <div class="col-md-11">
               <div *ngIf="topKIncident.newTemplates.length > 1">
@@ -210,11 +238,16 @@
                   </div>
                   <div class="row offset-md-1 details">
                     <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
-                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon> {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
-                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
-                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
-                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
+                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
+                      {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
+                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
+                      {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon>
+                      {{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon>
+                      {{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon>
+                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
 
@@ -233,11 +266,16 @@
                   </div>
                   <div class="row offset-md-1 details">
                     <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
-                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon> {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
-                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon> {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
-                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon> {{topKIncident?.countAD?.length}} flow anomalies</span>
-                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon> {{topKIncident?.newTemplates?.length}} new log types</span>
-                    <span class="pr-2"><nb-icon icon="clock"></nb-icon> {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
+                    <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
+                      {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
+                    <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
+                      {{topKIncident?.semanticAD?.length}} cognitive anomalies</span>
+                    <span class="pr-2"><nb-icon icon="flip-2"></nb-icon>
+                      {{topKIncident?.countAD?.length}} flow anomalies</span>
+                    <span class="pr-2"><nb-icon icon="bulb"></nb-icon>
+                      {{topKIncident?.newTemplates?.length}} new log types</span>
+                    <span class="pr-2"><nb-icon icon="clock"></nb-icon>
+                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</span>
                   </div>
                 </div>
               </div>
@@ -249,3 +287,7 @@
     </div>
   </nb-card-body>
 </nb-card>
+
+<ng-template #dateTimePicker>
+  <elastic-custom-datepicker (search)="onDateTimeSearch($event)"></elastic-custom-datepicker>
+</ng-template>

@@ -1,0 +1,25 @@
+<div class="p-4">
+  <div class="text-left" style="margin-left: 28px; margin-right: 10px;">
+    <div class="form-check mb-2" style="margin-left: -28px">
+      <input type="checkbox" [(ngModel)]="relativeTimeChecked"
+             (change)="onRelativeTimeChecked(relativeTimeChecked)"
+             class="form-check-input" id="relativeTime">
+      <label class="form-check-label" for="relativeTime">Relative Time</label>
+    </div>
+    <relative-time [disabled]="!relativeTimeChecked" class="mr-4"
+                   (onChange)="onRelativeDateChange($event)"></relative-time>
+  </div>
+  <div class="text-left">
+    <div class="form-check mb-2">
+      <input type="checkbox" [(ngModel)]="absoluteTimeChecked"
+             (change)="onAbsoluteTimeChecked(absoluteTimeChecked)"
+             class="form-check-input" id="absoluteTime">
+      <label class="form-check-label" for="absoluteTime">Absolute Time</label>
+    </div>
+    <range-date-time [disabled]="!absoluteTimeChecked" (change)="onAbsoluteDateChange($event)"></range-date-time>
+  </div>
+  <button [disabled]="!relativeDateTime && !absoluteDateTime" nbButton type="button" class="search-button"
+          (click)="submit()">
+    Search
+  </button>
+</div>

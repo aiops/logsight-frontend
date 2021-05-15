@@ -1,10 +1,6 @@
 import {
-  AfterViewInit,
   Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
+  OnInit, TemplateRef, ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -13,18 +9,15 @@ import { options } from './chart-options';
 import { IncidentTableData } from '../../@core/common/incident-table-data';
 import 'd3';
 import 'nvd3';
-import {Observable, Subject, timer} from 'rxjs';
+import { Observable, Subject, timer } from 'rxjs';
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
 import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbPopoverDirective } from '@nebular/theme';
 import * as moment from 'moment'
-import { Moment } from 'moment';
-import {start} from "repl";
-import {query} from "@angular/animations";
-import {retry, share, switchMap, takeUntil} from "rxjs/operators";
-import {DashboardService} from "../dashboard/dashboard.service";
+import { retry, share, switchMap, takeUntil } from 'rxjs/operators';
+import { DashboardService } from '../dashboard/dashboard.service';
 
 @Component({
   selector: 'incidents',
@@ -33,18 +26,12 @@ import {DashboardService} from "../dashboard/dashboard.service";
   encapsulation: ViewEncapsulation.None
 })
 export class IncidentsPage implements OnInit {
-  heatmapData$: Observable<any>;
   heatmapData = [];
-  relativeTimeChecked = true;
-  absoluteTimeChecked = false;
-
-  chartData = [];
-
   tableData: IncidentTableData;
   options = options.timelineChart()
-  absoluteDateTime: { startDateTime: Date, endDateTime: Date }
-  relativeDateTime: string = 'now-12h';
-  private stopPolling = new Subject();
+  @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+  openDatePicker = false;
 
   constructor(private route: ActivatedRoute,
               private incidentsService: IncidentsService,
@@ -53,17 +40,6 @@ export class IncidentsPage implements OnInit {
               private notificationService: NotificationsService,
               private dialogService: NbDialogService,
               private dashboardService: DashboardService) {
-
-    this.heatmapData$ = timer(1, 10000).pipe(
-      switchMap(() => this.loadHeatmapData()),
-      retry(),
-      share(),
-      takeUntil(this.stopPolling)
-    );
-  }
-
-  loadHeatmapData() {
-    return this.dashboardService.loadHeatmapData()
   }
 
   ngOnInit(): void {
@@ -74,25 +50,19 @@ export class IncidentsPage implements OnInit {
       if (dateTime && endTime) {
         const startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
         const endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss.sss');
-        this.loadIncidentsBarChart(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss')) // TODO heatmap with the times
-        this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
-      } else if(dateTime && !endTime){
-        var startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
-        this.loadIncidentsBarChart(dateTime,
-          startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss')) // TODO heatmap with the times
-        var startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
-        this.loadIncidentsTableData(dateTime,
-          startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
+        this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
+          endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
+        this.loadHeatmapData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
+          endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
+      } else if (dateTime && !endTime) {
+        let startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
+        this.loadIncidentsTableData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
+        this.loadHeatmapData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
       } else {
-        this.loadIncidentsBarChart(this.relativeDateTime, 'now')  // TODO heatmap with the times
-        this.loadIncidentsTableData(this.relativeDateTime, 'now')
+        this.loadIncidentsTableData('now-12h', 'now')  // TODO heatmap with the times
+        this.loadHeatmapData('now-12h', 'now')
       }
     });
-
-
-    this.heatmapData$.subscribe(data => {
-      this.heatmapData = data.data;
-    })
 
     this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
       if (true) { //if selectedApplication and change 1
@@ -112,50 +82,37 @@ export class IncidentsPage implements OnInit {
     })
   }
 
-  private loadIncidentsBarChart(startTime: string, endTime: string) {
-    this.incidentsService.loadIncidentsBarChart(startTime, endTime).subscribe(resp => {
-      this.chartData = resp
-    })
-  }
-
   private loadIncidentsTableData(startTime: string, endTime: string) {
     this.incidentsService.loadIncidentsTableData(startTime, endTime).subscribe(resp => {
-      console.log("RESP", resp)
       this.tableData = resp
     })
   }
 
-  onAbsoluteDateChange(dateRange: { startDateTime: Date, endDateTime: Date }) {
-    this.absoluteDateTime = dateRange
+  loadHeatmapData(startTime: string, endTime: string) {
+    return this.dashboardService.loadHeatmapData(startTime, endTime).subscribe(data => this.heatmapData = data.data)
   }
 
-  onRelativeDateChange(value) {
-    this.relativeDateTime = value;
-  }
-
-  onRelativeTimeChecked(checked) {
-    if (checked) {
-      this.absoluteTimeChecked = false;
-    }
-  }
-
-  onAbsoluteTimeChecked(checked) {
-    if (checked) {
-      this.relativeTimeChecked = false;
-    }
-  }
-
-  search() {
-    if (this.relativeTimeChecked) {
-      this.loadIncidentsBarChart(this.relativeDateTime, 'now')
-      this.loadIncidentsTableData(this.relativeDateTime, 'now')
-    } else if (this.absoluteDateTime) {
-      this.loadIncidentsBarChart(
-        this.absoluteDateTime.startDateTime.toISOString(),
-        this.absoluteDateTime.endDateTime.toISOString())
+  onDateTimeSearch(event) {
+    this.popover.hide();
+    this.openDatePicker = false;
+    if (event.relativeTimeChecked) {
+      this.loadHeatmapData(event.relativeDateTime, 'now')
+      this.loadIncidentsTableData(event.relativeDateTime, 'now')
+    } else if (event.absoluteTimeChecked) {
+      this.loadHeatmapData(
+        event.absoluteDateTime.startDateTime.toISOString(),
+        event.absoluteDateTime.endDateTime.toISOString())
       this.loadIncidentsTableData(
-        this.absoluteDateTime.startDateTime.toISOString(),
-        this.absoluteDateTime.endDateTime.toISOString())
+        event.absoluteDateTime.startDateTime.toISOString(),
+        event.absoluteDateTime.endDateTime.toISOString())
+    }
+  }
+
+  openPopover() {
+    this.popover.show();
+    this.openDatePicker = !this.openDatePicker
+    if (!this.openDatePicker) {
+      this.popover.hide();
     }
   }
 

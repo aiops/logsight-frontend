@@ -1,42 +1,14 @@
-<!--<nb-card>-->
-<div class="row p-4">
+<div class="row">
   <div class="col-md-12 text-right">
-    <div class="row mr-4" style="justify-content: flex-end">
-      <div class="mr-5 text-left">
-        <div class="form-check mb-2" style="margin-left: -28px;">
-          <input type="checkbox" [(ngModel)]="relativeTimeChecked"
-                 (change)="onRelativeTimeChecked(relativeTimeChecked)"
-                 class="form-check-input" id="relativeTime">
-          <label class="form-check-label" for="relativeTime">Relative Time</label>
-        </div>
-        <relative-time [disabled]="!relativeTimeChecked" class="mr-4"
-                       (onChange)="onRelativeDateChange($event)"></relative-time>
-      </div>
-      <div class="text-left">
-        <div class="form-check mb-2">
-          <input type="checkbox" [(ngModel)]="absoluteTimeChecked"
-                 (change)="onAbsoluteTimeChecked(absoluteTimeChecked)"
-                 class="form-check-input" id="absoluteTime">
-          <label class="form-check-label" for="absoluteTime">Absolute Time</label>
-        </div>
-        <range-date-time [disabled]="!absoluteTimeChecked" (change)="onAbsoluteDateChange($event)"></range-date-time>
-      </div>
-      <button [disabled]="!relativeDateTime && !absoluteDateTime" nbButton type="button" class="ml-3 search-button"
-              (click)="search()">
-        Search
-      </button>
+    <div style="width: 100%;" class="text-right">
+      <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
+              (click)="openPopover()"
+              nbPopoverTrigger="noop"><i class="fa fa-calendar"></i></button>
     </div>
   </div>
 </div>
-<!--</nb-card>-->
-
-<!--<nb-card>-->
-<!--  <nb-card-header>-->
 <h6>Incidents</h6>
-<!--  </nb-card-header>-->
 <chart-heatmap [data]="heatmapData"></chart-heatmap>
-<!--<nvd3 #chart [data]="chartData" [options]="options"></nvd3>-->
-<!--</nb-card>-->
 
 <nb-card *ngIf="tableData?.countAds">
   <nb-card-body>
@@ -141,3 +113,7 @@
     </div>
   </nb-card-body>
 </nb-card>
+
+<ng-template #dateTimePicker>
+  <elastic-custom-datepicker (search)="onDateTimeSearch($event)"></elastic-custom-datepicker>
+</ng-template>

@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NbDialogService, NbThemeService } from '@nebular/theme';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NbDialogService, NbPopoverDirective, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './dashboard.service';
 import { TopKIncident } from '../../@core/common/top-k-Incident';
 import { Router } from '@angular/router';
@@ -8,10 +8,10 @@ import { VariableAnalysisService } from '../../@core/service/variable-analysis.s
 import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
 import { AuthenticationService } from '../../auth/authentication.service';
-import { retry, share, switchMap, takeUntil } from 'rxjs/operators';
+import { retry, share, skip, switchMap, takeUntil, timeout } from 'rxjs/operators';
 import { Application } from '../../@core/common/application';
 import { IntegrationService } from '../../@core/service/integration.service';
-import { Observable, Subject, timer } from 'rxjs';
+import { Observable, Subject, timer, combineLatest } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 
@@ -28,12 +28,17 @@ export class DashboardPage implements OnInit, OnDestroy {
   topKIncidents: TopKIncident[] = [];
   applications: Application[] = [];
   private stopPolling = new Subject();
-
+  openDatePicker = false;
   heatmapData$: Observable<any>;
   pieChartData$: Observable<any>;
   stackedAreaChartData$: Observable<any>;
   topKIncidents$: Observable<any>;
   barData$: Observable<any>;
+  startDateTime = 'now-12h';
+  endDateTime = 'now'
+  reload$: Subject<boolean> = new Subject();
+  @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
 
   constructor(private dashboardService: DashboardService, private router: Router,
               private variableAnalysisService: VariableAnalysisService,
@@ -42,43 +47,35 @@ export class DashboardPage implements OnInit, OnDestroy {
               private dialogService: NbDialogService,
               private authService: AuthenticationService,
               private integrationService: IntegrationService) {
-
-    this.heatmapData$ = timer(1, 10000).pipe(
-      switchMap(() => this.loadHeatmapData()),
-      retry(),
+    this.heatmapData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadHeatmapData(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.pieChartData$ = timer(1, 10000).pipe(
-      switchMap(() => this.loadPieChartData()),
-      retry(),
+    this.pieChartData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadPieChartData(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.stackedAreaChartData$ = timer(1, 10000).pipe(
-      switchMap(() => this.loadStackedAreaChartData()),
-      retry(),
+    this.stackedAreaChartData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadStackedAreaChartData(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.topKIncidents$ = timer(1, 10000).pipe(
-      switchMap(() => this.loadTopKIncidents()),
-      retry(),
+    this.topKIncidents$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadTopKIncidents(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.barData$ = timer(1, 10000).pipe(
-      switchMap(() => this.loadBarData()),
-      retry(),
+    this.barData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)
     );
-
-
   }
 
   ngOnInit(): void {
@@ -100,7 +97,15 @@ export class DashboardPage implements OnInit, OnDestroy {
         const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
         const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
         const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
-        return { timestamp: it.timestamp, startTimestamp: it.startTimestamp, stopTimestamp: it.stopTimestamp, scAnomalies, newTemplates, semanticAD, countAD }
+        return {
+          timestamp: it.timestamp,
+          startTimestamp: it.startTimestamp,
+          stopTimestamp: it.stopTimestamp,
+          scAnomalies,
+          newTemplates,
+          semanticAD,
+          countAD
+        }
       });
     })
 
@@ -128,31 +133,31 @@ export class DashboardPage implements OnInit, OnDestroy {
           })
       }
     })
+    setTimeout(_ => this.reload$.next(), 1); //hack to start first refresh
   }
 
-  loadHeatmapData() {
-    return this.dashboardService.loadHeatmapData()
+  loadHeatmapData(startTime: string, endTime: string) {
+    return this.dashboardService.loadHeatmapData(startTime, endTime)
   }
 
-  loadBarData() {
-    return this.dashboardService.loadBarData();
+  loadBarData(startTime: string, endTime: string) {
+    return this.dashboardService.loadBarData(startTime, endTime);
   }
 
-  loadPieChartData() {
-    return this.dashboardService.loadPieChartData();
+  loadPieChartData(startTime: string, endTime: string) {
+    return this.dashboardService.loadPieChartData(startTime, endTime);
   }
 
-  loadStackedAreaChartData() {
-    return this.dashboardService.loadStackedChartData();
+  loadStackedAreaChartData(startTime: string, endTime: string) {
+    return this.dashboardService.loadStackedChartData(startTime, endTime);
   }
 
-  loadTopKIncidents() {
-    return this.dashboardService.loadTopKIncidentsData();
+  loadTopKIncidents(startTime: string, endTime: string) {
+    return this.dashboardService.loadTopKIncidentsData(startTime, endTime);
   }
 
   onHeatMapSelect(data: any) {
     const dateTime = data.series
-    console.log("TIME", dateTime)
     const date = dateTime.split(' ')[0].split('-');
     const time = dateTime.split(' ')[1].split(':');
     const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
@@ -179,11 +184,8 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   viewDetails(startTime: string, endTime: string) {
-    console.log("III", startTime, endTime)
     this.navigateToIncidentsPage(startTime, endTime)
   }
-
-
 
   ngOnDestroy() {
     this.stopPolling.next();
@@ -191,5 +193,26 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   private navigateToIncidentsPage(startTime: string, endTime: String, applicationId: number = 1) {
     this.router.navigate(['/pages', 'incidents'], { queryParams: { startTime, endTime, applicationId } })
+  }
+
+  onDateTimeSearch(event) {
+    this.popover.hide();
+    this.openDatePicker = false;
+    if (event.relativeTimeChecked) {
+      this.startDateTime = event.relativeDateTime
+      this.endDateTime = 'now'
+    } else if (event.absoluteTimeChecked) {
+      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
+      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+    }
+    this.reload$.next();
+  }
+
+  openPopover() {
+    this.popover.show();
+    this.openDatePicker = !this.openDatePicker
+    if (!this.openDatePicker) {
+      this.popover.hide();
+    }
   }
 }

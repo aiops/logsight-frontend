@@ -1,6 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IncidentsRoutingModule } from './incidents-routing.module';
-import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbTreeGridModule } from '@nebular/theme';
+import {
+  NbButtonModule,
+  NbCardModule,
+  NbIconModule,
+  NbInputModule,
+  NbPopoverModule, NbTooltipModule,
+  NbTreeGridModule
+} from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { IncidentsService } from './incidents.service';
@@ -12,20 +19,22 @@ import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.mod
 import {DashboardService} from "../dashboard/dashboard.service";
 
 @NgModule({
-    imports: [
-        IncidentsRoutingModule,
-        NbCardModule,
-        NbTreeGridModule,
-        NbIconModule,
-        NbInputModule,
-        ThemeModule,
-        Ng2SmartTableModule,
-        NvD3Module,
-        FormsModule,
-        NbButtonModule,
-        PagesModule,
-        ChartsWrapperModule
-    ],
+  imports: [
+    IncidentsRoutingModule,
+    NbCardModule,
+    NbTreeGridModule,
+    NbIconModule,
+    NbInputModule,
+    ThemeModule,
+    Ng2SmartTableModule,
+    NvD3Module,
+    FormsModule,
+    NbButtonModule,
+    PagesModule,
+    ChartsWrapperModule,
+    NbPopoverModule,
+    NbTooltipModule
+  ],
   declarations: [
     IncidentsPage,
   ],

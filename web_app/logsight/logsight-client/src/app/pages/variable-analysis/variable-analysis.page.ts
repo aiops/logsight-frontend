@@ -22,13 +22,6 @@ import { TopNTemplatesData } from '../../@core/common/top-n-templates-data';
 export class VariableAnalysisPage implements OnInit {
   applications: Application[] = [];
   selectedApplicationId: number | null;
-  // variableAnalysisHits: VariableAnalysisHit[] = [{
-  //   result: '',
-  //   message: '',
-  //   template: 'oslo_service.periodic_task <*> - - - - -] Running periodic task <*> run_periodic_tasks <*>',
-  //   params: [{ key: 'param_0', value: 'param0' }, { key: 'param_1', value: 'param1' },
-  //     { key: 'param_2', value: 'param2' }]
-  // }];
   variableAnalysisHits: VariableAnalysisHit[] = []
   logCountLineChart = []
   filterForm = new FormGroup({

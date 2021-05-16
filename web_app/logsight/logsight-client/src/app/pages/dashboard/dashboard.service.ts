@@ -6,27 +6,23 @@ export class DashboardService {
   constructor(private apiService: ApiService) {
   }
 
-  loadLineChartData(): any {
-    return this.apiService.get('/api/charts/line_chart');
+  loadHeatmapData(startTime: string, endTime: string) {
+    return this.apiService.get(`/api/charts/system_overview_heatmap?startTime=${startTime}&endTime=${endTime}`);
   }
 
-  loadHeatmapData() {
-    return this.apiService.get('/api/charts/system_overview_heatmap');
+  loadBarData(startTime: string, endTime: string) {
+    return this.apiService.get(`/api/charts/dashboard_bar_anomalies?startTime=${startTime}&endTime=${endTime}`);
   }
 
-  loadBarData() {
-    return this.apiService.get('/api/charts/dashboard_bar_anomalies');
+  loadPieChartData(startTime: string, endTime: string) {
+    return this.apiService.get(`/api/charts/log_level_advanced_pie_chart?startTime=${startTime}&endTime=${endTime}`);
   }
 
-  loadPieChartData() {
-    return this.apiService.get('/api/charts/log_level_advanced_pie_chart');
+  loadStackedChartData(startTime: string, endTime: string) {
+    return this.apiService.get(`/api/charts/log_level_stacked_line_chart?startTime=${startTime}&endTime=${endTime}`);
   }
 
-  loadStackedChartData() {
-    return this.apiService.get('/api/charts/log_level_stacked_line_chart');
-  }
-
-  loadTopKIncidentsData() {
-    return this.apiService.get('/api/incidents/top_k_incidents');
+  loadTopKIncidentsData(startTime: string, endTime: string) {
+    return this.apiService.get(`/api/incidents/top_k_incidents?startTime=${startTime}&endTime=${endTime}`);
   }
 }

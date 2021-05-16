@@ -25,6 +25,7 @@ import {start} from "repl";
 import {query} from "@angular/animations";
 import {retry, share, switchMap, takeUntil} from "rxjs/operators";
 import {DashboardService} from "../dashboard/dashboard.service";
+import {strict} from "assert";
 
 @Component({
   selector: 'incidents',
@@ -77,6 +78,7 @@ export class IncidentsPage implements OnInit {
         this.loadIncidentsBarChart(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss')) // TODO heatmap with the times
         this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
       } else if(dateTime && !endTime){
+
         var startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
         this.loadIncidentsBarChart(dateTime,
           startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss')) // TODO heatmap with the times

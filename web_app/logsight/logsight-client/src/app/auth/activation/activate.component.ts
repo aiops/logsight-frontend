@@ -14,14 +14,13 @@ import { LogsightUser } from '../../@core/common/logsight-user';
 export class ActivateComponent implements OnInit {
   user: LogsightUser;
   activationSuccess: boolean;
-  loading = true
-
+  loading = true;
+  email: string;
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
               private router: Router,
               private route: ActivatedRoute) {
   }
-
   ngOnInit(): void {
     //hack code to stop spinner
     const el = document.getElementById('nb-global-spinner');
@@ -36,11 +35,22 @@ export class ActivateComponent implements OnInit {
             this.user = user
             this.activationSuccess = true;
             this.loading = false
+            this.email = this.user.email
+
+            this.authService.login({email:this.email, password:'demo'}).subscribe(resp => {
+                this.router.navigate(['/pages/quickstart'])
+              }, err => {
+                console.log('login error', err)
+                this.notificationService.error('Error', 'Incorrect or not activated email')
+              }
+            )
           })
         }
       }, error => {
         this.activationSuccess = false;
         this.loading = false
       })
+
+
   }
 }

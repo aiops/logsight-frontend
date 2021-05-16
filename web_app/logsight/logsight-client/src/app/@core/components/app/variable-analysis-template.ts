@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
+import { Component, Input, OnInit } from '@angular/core';
 import { VariableAnalysisHit } from '../../common/variable-analysis-hit';
 import { MessagingService } from '../../service/messaging.service';
 import { HitParam } from '../../common/hit-param';
@@ -7,10 +6,10 @@ import { HitParam } from '../../common/hit-param';
 @Component({
   template: `
     <div style="float: left">
-    <span *ngFor="let pt of parsedTemplates">
+      <span *ngFor="let pt of parsedTemplates">
       <span style="color: white">{{pt.parsedTemplate}}</span>
       <span class="template" style="color: #ffca57"
-            (click)="selectTemplate(pt.template, pt.param, pt.paramValue)">{{pt.paramValue}}</span>
+            (click)="selectTemplate(pt.template, pt.param, pt.paramValue)">{{ pt.paramValue }}</span>
     </span>
     </div>
   `
@@ -20,7 +19,7 @@ export class VariableAnalysisTemplate implements OnInit {
   }
 
   ngOnInit(): void {
-    const result = this.getResult()
+    this.getResult();
   }
 
   @Input() data: VariableAnalysisHit;
@@ -34,7 +33,7 @@ export class VariableAnalysisTemplate implements OnInit {
   getResult() {
     let item = this.data;
     let templates = item.template.split('<*>')
-    for (let i = 0; i < item.params.length; i++) {
+    for (let i = 0; i < templates.length; i++) {
       if (templates[i] == '' && i == item.params.length - 1) {
       } else {
         const paramValue = this.getValueForParam(item.params, `param_${i}`)
@@ -45,7 +44,8 @@ export class VariableAnalysisTemplate implements OnInit {
   }
 
   getValueForParam(params: HitParam[], param) {
-    return params.find(it => it.key == param).value
+    const res = params.find(it => it.key == param)
+    return res ? res.value : ''
   }
 }
 

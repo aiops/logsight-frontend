@@ -8,6 +8,7 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 import { GroupedVerticalBarChartComponent } from './grouped-vertical-bar-chart/grouped-vertical-bar-chart.component';
 import { VerticalBarChartComponent } from './vertical-bar-chart/vertical-bar-chart.component';
 import {GroupedVerticalBarChart2dComponent} from "./grouped-vertical-bar-chart-2d/grouped-vertical-bar-chart2d.component";
+import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {GroupedVerticalBarChart2dComponent} from "./grouped-vertical-bar-chart-2
     LineChartComponent,
     GroupedVerticalBarChartComponent,
     VerticalBarChartComponent,
-    GroupedVerticalBarChart2dComponent
+    GroupedVerticalBarChart2dComponent,
+    HorizontalBarChartComponent
   ],
   declarations: [
     HeatmapComponent,
@@ -30,7 +32,8 @@ import {GroupedVerticalBarChart2dComponent} from "./grouped-vertical-bar-chart-2
     LineChartComponent,
     GroupedVerticalBarChartComponent,
     VerticalBarChartComponent,
-    GroupedVerticalBarChart2dComponent
+    GroupedVerticalBarChart2dComponent,
+    HorizontalBarChartComponent
   ]
 })
 export class ChartsWrapperModule {

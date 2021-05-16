@@ -18,13 +18,21 @@
         <table class="table table-striped table-borderless">
           <thead>
           <tr>
-            <th style="width: 5%" scope="col">#</th>
-            <th style="width: 95%" scope="col">Template</th>
+            <th style="width: 3%" scope="col">#</th>
+            <th style="width: 10%" scope="col">Date</th>
+            <th style="width: 5%" scope="col">Type</th>
+            <th style="width: 82%" scope="col">Template</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let row of tableData.countAds; let i = index">
             <td>{{i + 1}}</td>
+            <td>{{row.timestamp}}</td>
+            <td>
+                <span [class.error]="row.actualLevel == 'ERROR'"
+                      [class.info]="row.actualLevel == 'INFO'"
+                      class="mr-2">{{row.actualLevel}}</span>
+            </td>
             <td>
               <app-ad-banner [row]="row"></app-ad-banner>
             </td>
@@ -44,13 +52,21 @@
         <table class="table table-striped table-borderless">
           <thead>
           <tr>
-            <th style="width: 5%" scope="col">#</th>
-            <th style="width: 95%" scope="col">Template</th>
+            <th style="width: 3%" scope="col">#</th>
+            <th style="width: 10%" scope="col">Date</th>
+            <th style="width: 5%" scope="col">Type</th>
+            <th style="width: 82%" scope="col">Template</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let row of tableData.semanticCountAds; let i = index">
             <td>{{i + 1}}</td>
+            <td>{{row.timestamp}}</td>
+            <td>
+                <span [class.error]="row.actualLevel == 'ERROR'"
+                      [class.info]="row.actualLevel == 'INFO'"
+                      class="mr-2">{{row.actualLevel}}</span>
+            </td>
             <td>
               <app-ad-banner [row]="row"></app-ad-banner>
             </td>
@@ -70,13 +86,21 @@
         <table class="table table-striped table-borderless">
           <thead>
           <tr>
-            <th style="width: 5%" scope="col">#</th>
-            <th style="width: 95%" scope="col">Template</th>
+            <th style="width: 3%" scope="col">#</th>
+            <th style="width: 10%" scope="col">Date</th>
+            <th style="width: 5%" scope="col">Type</th>
+            <th style="width: 82%" scope="col">Template</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let row of tableData.newTemplates; let i = index">
             <td>{{i + 1}}</td>
+            <td>{{row.timestamp}}</td>
+            <td>
+                <span [class.error]="row.actualLevel == 'ERROR'"
+                      [class.info]="row.actualLevel == 'INFO'"
+                      class="mr-2">{{row.actualLevel}}</span>
+            </td>
             <td>
               <app-ad-banner [row]="row"></app-ad-banner>
             </td>
@@ -96,13 +120,21 @@
         <table class="table table-striped table-borderless">
           <thead>
           <tr>
-            <th style="width: 5%" scope="col">#</th>
-            <th style="width: 95%" scope="col">Template</th>
+            <th style="width: 3%" scope="col">#</th>
+            <th style="width: 10%" scope="col">Date</th>
+            <th style="width: 5%" scope="col">Type</th>
+            <th style="width: 82%" scope="col">Template</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let row of tableData.semanticAd; let i = index">
             <td>{{i + 1}}</td>
+            <td>{{row.timestamp}}</td>
+            <td>
+                <span [class.error]="row.actualLevel == 'ERROR'"
+                      [class.info]="row.actualLevel == 'INFO'"
+                      class="mr-2">{{row.actualLevel}}</span>
+            </td>
             <td>
               <app-ad-banner [row]="row"></app-ad-banner>
             </td>

@@ -48,16 +48,16 @@ export class IncidentsPage implements OnInit {
       const endTime = queryParams.get('endTime')
       const applicationId = queryParams.get('applicationId') //TODO send the applicationId
       if (dateTime && endTime) {
-        const startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
-        const endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss.sss');
-        this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
-          endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
-        this.loadHeatmapData(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
-          endDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'))
+        const startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss');
+        const endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss');
+        this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss'),
+          endDateTime.format('YYYY-MM-DDTHH:mm:ss'))
+        this.loadHeatmapData(startDateTime.format('YYYY-MM-DDTHH:mm:ss'),
+          endDateTime.format('YYYY-MM-DDTHH:mm:ss'))
       } else if (dateTime && !endTime) {
-        let startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss.sss');
-        this.loadIncidentsTableData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
-        this.loadHeatmapData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'))
+        let startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss');
+        this.loadIncidentsTableData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss'))
+        this.loadHeatmapData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss'))
       } else {
         this.loadIncidentsTableData('now-12h', 'now')  // TODO heatmap with the times
         this.loadHeatmapData('now-12h', 'now')

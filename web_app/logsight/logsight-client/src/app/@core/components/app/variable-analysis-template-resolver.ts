@@ -28,7 +28,6 @@ export class VariableAnalysisTemplateResolver implements OnInit, OnDestroy {
   }
 
   loadComponent() {
-
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(VariableAnalysisTemplate);
 
     const viewContainerRef = this.adHost.viewContainerRef;

@@ -6,8 +6,13 @@ export class DashboardService {
   constructor(private apiService: ApiService) {
   }
 
-  loadHeatmapData(startTime: string, endTime: string) {
-    return this.apiService.get(`/api/charts/system_overview_heatmap?startTime=${startTime}&endTime=${endTime}`);
+  loadHeatmapData(startTime: string, endTime: string, applicationId: number | null) {
+    let applicationParam = '';
+    if (applicationId) {
+      applicationParam = `&applicationId=${applicationId}`
+    }
+    return this.apiService.get(
+      `/api/charts/system_overview_heatmap?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
   }
 
   loadBarData(startTime: string, endTime: string) {

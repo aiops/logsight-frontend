@@ -105,7 +105,7 @@
               </div>
             </div>
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)"
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
                       _ngcontent-dfy-c356="" nbbutton="" matripple="" outline=""
                       class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition"
                       aria-disabled="false" tabindex="0"> View details
@@ -190,7 +190,7 @@
               </div>
             </div>
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)"
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
                       _ngcontent-dfy-c356="" nbbutton="" matripple="" outline=""
                       class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition"
                       aria-disabled="false" tabindex="0"> View details
@@ -203,7 +203,7 @@
           *ngIf="topKIncident.newTemplates.length > 0 && topKIncident?.scAnomalies.length == 0 && topKIncident?.semanticAD.length == 0">
           <div class="row">
             <div class="col-md-1 center">
-              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp)"
+              <button (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
                       _ngcontent-dfy-c356="" nbbutton="" matripple="" outline=""
                       class="mat-ripple appearance-outline size-medium shape-rectangle status-warning ng-star-inserted nb-transition"
                       aria-disabled="false" tabindex="0"> View details

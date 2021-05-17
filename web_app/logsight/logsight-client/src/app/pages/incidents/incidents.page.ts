@@ -32,6 +32,7 @@ export class IncidentsPage implements OnInit {
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   openDatePicker = false;
+  applicationId: number;
 
   constructor(private route: ActivatedRoute,
               private incidentsService: IncidentsService,
@@ -46,21 +47,24 @@ export class IncidentsPage implements OnInit {
     this.route.queryParamMap.subscribe(queryParams => {
       const dateTime = queryParams.get('startTime')
       const endTime = queryParams.get('endTime')
-      const applicationId = queryParams.get('applicationId') //TODO send the applicationId
+      const applicationParam = queryParams.get('applicationId') //TODO send the applicationId
+      this.applicationId = applicationParam ? +applicationParam : null
       if (dateTime && endTime) {
         const startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss');
         const endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss');
         this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss'),
-          endDateTime.format('YYYY-MM-DDTHH:mm:ss'))
+          endDateTime.format('YYYY-MM-DDTHH:mm:ss'), this.applicationId)
         this.loadHeatmapData(startDateTime.format('YYYY-MM-DDTHH:mm:ss'),
-          endDateTime.format('YYYY-MM-DDTHH:mm:ss'))
+          endDateTime.format('YYYY-MM-DDTHH:mm:ss'), this.applicationId)
       } else if (dateTime && !endTime) {
         let startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss');
-        this.loadIncidentsTableData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss'))
-        this.loadHeatmapData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss'))
+        this.loadIncidentsTableData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss'),
+          this.applicationId)
+        this.loadHeatmapData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss'),
+          this.applicationId)
       } else {
-        this.loadIncidentsTableData('now-12h', 'now')  // TODO heatmap with the times
-        this.loadHeatmapData('now-12h', 'now')
+        this.loadIncidentsTableData('now-12h', 'now', this.applicationId)  // TODO heatmap with the times
+        this.loadHeatmapData('now-12h', 'now', this.applicationId)
       }
     });
 
@@ -82,29 +86,30 @@ export class IncidentsPage implements OnInit {
     })
   }
 
-  private loadIncidentsTableData(startTime: string, endTime: string) {
-    this.incidentsService.loadIncidentsTableData(startTime, endTime).subscribe(resp => {
+  private loadIncidentsTableData(startTime: string, endTime: string, applicationId: number | null) {
+    this.incidentsService.loadIncidentsTableData(startTime, endTime, applicationId).subscribe(resp => {
       this.tableData = resp
     })
   }
 
-  loadHeatmapData(startTime: string, endTime: string) {
-    return this.dashboardService.loadHeatmapData(startTime, endTime).subscribe(data => this.heatmapData = data.data)
+  loadHeatmapData(startTime: string, endTime: string, applicationId: number | null) {
+    return this.dashboardService.loadHeatmapData(startTime, endTime, applicationId).subscribe(
+      data => this.heatmapData = data.data)
   }
 
   onDateTimeSearch(event) {
     this.popover.hide();
     this.openDatePicker = false;
     if (event.relativeTimeChecked) {
-      this.loadHeatmapData(event.relativeDateTime, 'now')
-      this.loadIncidentsTableData(event.relativeDateTime, 'now')
+      this.loadHeatmapData(event.relativeDateTime, 'now', this.applicationId)
+      this.loadIncidentsTableData(event.relativeDateTime, 'now', this.applicationId)
     } else if (event.absoluteTimeChecked) {
       this.loadHeatmapData(
         event.absoluteDateTime.startDateTime.toISOString(),
-        event.absoluteDateTime.endDateTime.toISOString())
+        event.absoluteDateTime.endDateTime.toISOString(), this.applicationId)
       this.loadIncidentsTableData(
         event.absoluteDateTime.startDateTime.toISOString(),
-        event.absoluteDateTime.endDateTime.toISOString())
+        event.absoluteDateTime.endDateTime.toISOString(), this.applicationId)
     }
   }
 

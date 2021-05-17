@@ -93,13 +93,13 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
 
     this.topKIncidents$.subscribe(data => {
-      console.log(data)
       this.topKIncidents = data.map(it => {
         const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
         const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
         const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
         const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
         return {
+          applicationId: it.applicationId,
           appName: it.indexName,
           timestamp: it.timestamp,
           startTimestamp: it.startTimestamp,
@@ -140,7 +140,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   loadHeatmapData(startTime: string, endTime: string) {
-    return this.dashboardService.loadHeatmapData(startTime, endTime)
+    return this.dashboardService.loadHeatmapData(startTime, endTime, null)
   }
 
   loadBarData(startTime: string, endTime: string) {
@@ -165,7 +165,8 @@ export class DashboardPage implements OnInit, OnDestroy {
     const time = dateTime.split(' ')[1].split(':');
     const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
       +time[1]);
-    this.navigateToIncidentsPage(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'), null)
+    this.navigateToIncidentsPage(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
+      startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'), data.id)
   }
 
   parseTemplates(data, incident) {
@@ -186,15 +187,15 @@ export class DashboardPage implements OnInit, OnDestroy {
     });
   }
 
-  viewDetails(startTime: string, endTime: string) {
-    this.navigateToIncidentsPage(startTime, endTime)
+  viewDetails(startTime: string, endTime: string, applicationId: number) {
+    this.navigateToIncidentsPage(startTime, endTime, applicationId)
   }
 
   ngOnDestroy() {
     this.stopPolling.next();
   }
 
-  private navigateToIncidentsPage(startTime: string, endTime: String, applicationId: number = 1) {
+  private navigateToIncidentsPage(startTime: string, endTime: String, applicationId: number) {
     this.router.navigate(['/pages', 'incidents'], { queryParams: { startTime, endTime, applicationId } })
   }
 

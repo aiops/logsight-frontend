@@ -41,9 +41,13 @@ export class VariableAnalysisPage implements OnInit {
   ngOnInit(): void {
     this.authService.getLoggedUser().pipe(
       switchMap(user => this.integrationService.loadApplications(user.key))
-    ).subscribe(resp => this.applications = resp)
-
-
+    ).subscribe(resp => {
+      this.applications = resp;
+      if (this.applications.length > 0) {
+        this.selectedApplicationId = this.applications[0].id;
+        this.applicationSelected(this.selectedApplicationId);
+      }
+    })
 
     this.filterForm.get('search').valueChanges
       .pipe(
@@ -52,14 +56,7 @@ export class VariableAnalysisPage implements OnInit {
       )
       .subscribe(search => {
         this.allTemplatesLoading = true
-        this.variableAnalysisService.loadData(this.selectedApplicationId, search).subscribe(
-          resp => {
-            this.variableAnalysisHits = resp;
-            this.allTemplatesLoading = false;
-          }, error => {
-            this.allTemplatesLoading = false;
-            this.notificationService.error('Error', 'Error loading templates')
-          })
+        this.loadVariableAnalysisData(search);
       });
 
     this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
@@ -80,11 +77,20 @@ export class VariableAnalysisPage implements OnInit {
     })
   }
 
+  loadVariableAnalysisData(search: string | null = null) {
+    this.variableAnalysisService.loadData(this.selectedApplicationId, search).subscribe(
+      resp => {
+        this.variableAnalysisHits = resp;
+        this.allTemplatesLoading = false;
+      }, error => {
+        this.allTemplatesLoading = false;
+        this.notificationService.error('Error', 'Error loading templates')
+      })
+  }
+
   applicationSelected(appId: number) {
     this.selectedApplicationId = appId
-    this.variableAnalysisService.loadData(this.selectedApplicationId).subscribe(resp => {
-      this.variableAnalysisHits = resp
-    });
+    this.loadVariableAnalysisData();
 
     this.variableAnalysisService.getLogCountLineChart(this.selectedApplicationId).subscribe(resp => {
       this.logCountLineChart = resp

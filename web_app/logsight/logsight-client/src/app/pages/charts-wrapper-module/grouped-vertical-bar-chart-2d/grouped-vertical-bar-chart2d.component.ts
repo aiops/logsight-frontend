@@ -13,10 +13,10 @@ export class GroupedVerticalBarChart2dComponent {
   showYAxis: boolean = true;
   gradient: boolean = true;
   showLegend: boolean = true;
-  showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Date';
-  showYAxisLabel: boolean = true;
-  yAxisLabel: string = 'Number';
+  showXAxisLabel: boolean = false;
+  xAxisLabel: string = '';
+  showYAxisLabel: boolean = false;
+  yAxisLabel: string = '';
   legendTitle: string = '';
 
   colorScheme = {

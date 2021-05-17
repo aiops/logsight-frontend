@@ -36,7 +36,6 @@ export class ActivateComponent implements OnInit {
             this.activationSuccess = true;
             this.loading = false
             this.email = this.user.email
-
             this.authService.login({email:this.email, password:'demo'}).subscribe(resp => {
                 this.router.navigate(['/pages/quickstart'])
               }, err => {

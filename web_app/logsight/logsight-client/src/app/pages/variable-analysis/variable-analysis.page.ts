@@ -43,6 +43,8 @@ export class VariableAnalysisPage implements OnInit {
       switchMap(user => this.integrationService.loadApplications(user.key))
     ).subscribe(resp => this.applications = resp)
 
+
+
     this.filterForm.get('search').valueChanges
       .pipe(
         debounceTime(300),
@@ -93,4 +95,5 @@ export class VariableAnalysisPage implements OnInit {
       this.topNTemplatesOlder = resp.older;
     });
   }
+  
 }

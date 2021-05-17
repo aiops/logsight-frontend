@@ -80,6 +80,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.heatmapData$.subscribe(data => {
+      console.log(data)
       this.heatmapData = data.data;
     })
 
@@ -92,12 +93,14 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
 
     this.topKIncidents$.subscribe(data => {
+      console.log(data)
       this.topKIncidents = data.map(it => {
         const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
         const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
         const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
         const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
         return {
+          appName: it.indexName,
           timestamp: it.timestamp,
           startTimestamp: it.startTimestamp,
           stopTimestamp: it.stopTimestamp,

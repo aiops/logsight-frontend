@@ -5,13 +5,12 @@
   <br>
   <br>
   <h6 *ngIf="user" class="text-center">Welcome {{user.email}}</h6>
-  <div *ngIf="activationSuccess" class="text-center"><h6>Your account has been successfully activated, please sign in
-    with your email</h6>
-    <a nbButton [routerLink]="['/auth', 'login']"
-       fullWidth
-       status="success">
-      SIGN IN
-    </a>
+  <div *ngIf="activationSuccess" class="text-center"><h6>Your account has been successfully activated. Explore your logs with the power of AI.</h6>
+<!--    <a nbButton [routerLink]="['/auth', 'login']"-->
+<!--       fullWidth-->
+<!--       status="success">-->
+<!--      SIGN IN-->
+<!--    </a>-->
   </div>
 
   <div *ngIf="!activationSuccess" class="text-center">

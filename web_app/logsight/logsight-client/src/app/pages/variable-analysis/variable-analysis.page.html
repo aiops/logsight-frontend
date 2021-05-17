@@ -18,7 +18,7 @@
     <stacked-area-chart [data]="logCountLineChart"></stacked-area-chart>
   </div>
 
-  <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">
+  <nb-card *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">
     <hr noshade="true">
     <div class="row">
       <!--      <div class="col-md-6">-->
@@ -71,13 +71,13 @@
         </table>
       </div>
     </div>
-  </div>
+  </nb-card>
 
-  <div class="p-3" style="width: 100%" *ngIf="selectedApplicationId">
+  <nb-card class="p-3" style="width: 100%" *ngIf="selectedApplicationId">
     <hr noshade="true">
     <div class="row">
       <div class="col-md-12">
-        <h6 class="mb-3">Data</h6>
+        <h6 class="mb-3">Logs </h6>
         <form [formGroup]="filterForm" class="filter-form">
           <div class="form-group col-md-3">
             <input class="form-control" type="text" id="search"
@@ -112,5 +112,5 @@
         <loading *ngIf="allTemplatesLoading" [height]="500"></loading>
       </div>
     </div>
-  </div>
+  </nb-card>
 </div>

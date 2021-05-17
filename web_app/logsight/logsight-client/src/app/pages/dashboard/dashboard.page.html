@@ -38,7 +38,7 @@
                 <div class="main-row">
                   <div class="row parent">
                     <div class="col-md-1">
-                 <span style="float: left; font-weight: bold; color: yellow;"
+                 <span style="float: left; color: yellow;"
                        [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
                        class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}</span>
@@ -49,7 +49,7 @@
                   </div>
                   <div class="row parent">
                     <div class="col-md-1">
-                   <span style="float: left; font-weight: bold; color: yellow;"
+                   <span style="float: left; color: yellow;"
                          [class.error]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'ERROR'"
                          [class.info]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'INFO'"
                          class="mr-2">
@@ -61,7 +61,7 @@
                     </div>
                   </div>
                   <div class="row offset-md-1 details">
-                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
+                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length -1).join(' ')}}</span>
                     <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
                       {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
@@ -79,7 +79,7 @@
               <div *ngIf="topKIncident.scAnomalies.length <= 1">
                 <div class="row main-row">
                   <div class="col-md-1">
-                <span style="float: left; font-weight: bold; color: yellow;"
+                <span style="float: left; color: yellow;"
                       [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
                       [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
                       class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}
@@ -89,7 +89,7 @@
                     <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
                   </div>
                   <div class="row offset-md-1 details">
-                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
+                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length -1).join(' ')}}</span>
                     <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
                       {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
@@ -124,7 +124,7 @@
                 <div class="main-row">
                   <div class="row parent">
                     <div class="col-md-1">
-                 <span style="float: left; font-weight: bold; color: yellow;"
+                 <span style="float: left; color: yellow;"
                        [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
                        class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}</span>
@@ -135,7 +135,7 @@
                   </div>
                   <div class="row parent">
                     <div class="col-md-1">
-                   <span style="float: left; font-weight: bold; color: yellow;"
+                   <span style="float: left; color: yellow;"
                          [class.error]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'ERROR'"
                          [class.info]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'INFO'"
                          class="mr-2">
@@ -147,7 +147,7 @@
                     </div>
                   </div>
                   <div class="row offset-md-1 details">
-                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
+                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length -1).join(' ')}}</span>
                     <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
                       {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
@@ -164,7 +164,7 @@
               <div *ngIf="topKIncident.semanticAD.length <= 1">
                 <div class="row main-row">
                   <div class="col-md-1">
-                <span style="float: left; font-weight: bold; color: yellow;"
+                <span style="float: left; color: yellow;"
                       [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
                       [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
                       class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}
@@ -174,7 +174,7 @@
                     <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
                   </div>
                   <div class="row offset-md-1 details">
-                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
+                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length -1).join(' ')}}</span>
                     <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
                       {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
@@ -214,7 +214,7 @@
                 <div class="main-row">
                   <div class="row parent">
                     <div class="col-md-1">
-                 <span style="float: left; font-weight: bold; color: yellow;"
+                 <span style="float: left; color: yellow;"
                        [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
                        class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}</span>
@@ -225,7 +225,7 @@
                   </div>
                   <div class="row parent">
                     <div class="col-md-1">
-                   <span style="float: left; font-weight: bold; color: yellow;"
+                   <span style="float: left; color: yellow;"
                          [class.error]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'ERROR'"
                          [class.info]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'INFO'"
                          class="mr-2">
@@ -237,7 +237,7 @@
                     </div>
                   </div>
                   <div class="row offset-md-1 details">
-                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
+                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length -1).join(' ')}}</span>
                     <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
                       {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>
@@ -255,7 +255,7 @@
               <div *ngIf="topKIncident.newTemplates.length <= 1">
                 <div class="row main-row">
                   <div class="col-md-1">
-                <span style="float: left; font-weight: bold; color: yellow;"
+                <span style="float: left;  color: yellow;"
                       [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
                       [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
                       class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}
@@ -265,7 +265,7 @@
                     <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
                   </div>
                   <div class="row offset-md-1 details">
-                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> Sample app</span>
+                    <span class="pr-2"><nb-icon icon="cube"></nb-icon> {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length -1).join(' ')}}</span>
                     <span class="pr-2"> <nb-icon icon="alert-triangle"></nb-icon>
                       {{topKIncident?.scAnomalies?.length}} critical event(s)</span>
                     <span class="pr-2"><nb-icon icon="alert-circle"></nb-icon>

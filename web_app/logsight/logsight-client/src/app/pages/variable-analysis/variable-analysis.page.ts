@@ -95,5 +95,5 @@ export class VariableAnalysisPage implements OnInit {
       this.topNTemplatesOlder = resp.older;
     });
   }
-  
+
 }

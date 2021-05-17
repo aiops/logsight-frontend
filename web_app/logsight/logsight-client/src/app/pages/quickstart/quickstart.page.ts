@@ -57,13 +57,13 @@ export class QuickstartPage implements OnInit {
 
       this.integrationService.createApplication({ name: "sample_app1", key: this.key }).subscribe(
         resp => {
-          this.notificationService.success('Success', 'Please wait couple of minutes... sample data is streaming into logsight.ai.')
+          // this.notificationService.success('Success', 'Please wait couple of minutes... sample data is streaming into logsight.ai.')
           this.router.navigate(['/pages/dashboard'])
         }, error => this.notificationService.error('Error', 'Sorry, a problem happened'))
 
-      this.integrationService.createApplication({ name: "sample_app1", key: this.key }).subscribe(
+      this.integrationService.createApplication({ name: "sample_app2", key: this.key }).subscribe(
         resp => {
-          this.notificationService.success('Success', 'Please wait couple of minutes... sample data is streaming into logsight.ai.')
+          // this.notificationService.success('Success', 'Please wait couple of minutes... sample data is streaming into logsight.ai.')
           this.router.navigate(['/pages/dashboard'])
         }, error => this.notificationService.error('Error', 'Sorry, a problem happened'))
     } else {

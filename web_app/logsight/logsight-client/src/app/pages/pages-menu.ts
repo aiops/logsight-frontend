@@ -28,6 +28,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/integration',
   },
   {
+    title: 'Kibana',
+    icon: 'link-outline',
+    link: '/pages/kibana',
+  },
+  {
     title: 'Profile',
     icon: '',
     link: '/pages/profile',

@@ -44,6 +44,11 @@ const routes: Routes = [{
         .then(m => m.ProfileModule),
     },
     {
+      path: 'kibana',
+      loadChildren: () => import('./kibana/kibana.module')
+        .then(m => m.KibanaModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

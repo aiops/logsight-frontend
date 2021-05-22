@@ -125,7 +125,7 @@ body {
 }
 
 .container-m {
-	max-width: 1024px;
+	max-width: border-box;
 	margin: 0 auto !important;
 	padding-left: 20px;
 	padding-right: 20px;
@@ -269,13 +269,12 @@ header {
 }
 .sticky .navbar-nav .nav-item .nav-link{
   color: #ffffff;
-  font-weight: 500;
-  font-size: 18px;
+  font-weight: 600;
 }
 
 .navbar-nav .nav-item .nav-link {
   color: #ffffff;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 .nav-white .nav-item .nav-link {
@@ -285,7 +284,7 @@ header {
 }
 
 .nav-white .nav-item .nav-link:hover {
-  color: #00eaff;
+  color: #135a63;
 	-webkit-transition: 0.5s;
 	transition: 0.5s;
 }
@@ -502,7 +501,7 @@ header {
   /*display: inline-block;*/
   text-align: center;
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.3px;
   text-transform: capitalize;
   text-decoration: none !important;
@@ -528,7 +527,7 @@ header {
   padding: 0 0px;
   text-align: center;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 20px;
   letter-spacing: 0.3px;
 	text-transform: capitalize;
@@ -1391,9 +1390,9 @@ header {
 
 .cta-sm {
 	padding: 100px 0 100px 0;
-	background: rgba(30, 166, 154, 0.1);
-	background: #f8faff;
-	background: #f6f6fd;
+	background: rgba(255, 255, 255, 0.1);
+	background: #ffffff;
+	background: #ffffff;
 }
 
 .cta-sm .cta-content {
@@ -1402,16 +1401,16 @@ header {
 }
 
 .cta-sm h1 {
-	font-size: 40px;
+	font-size: 50px;
 	font-weight: 900;
 	color: #364655;
 	line-height: 1.2;
 }
 
 .cta-sm h2 {
-  font-size: 18px;
-  font-weight: 200;
-  color: #576d84;
+  font-size: 22px;
+  font-weight: 400;
+  color: #364655;
   line-height: 1.2;
 }
 

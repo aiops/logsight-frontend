@@ -1198,6 +1198,31 @@ header {
 		margin-top: 0;
 	}
 
+  .pricingTbl{
+    padding: 20px 20px 50px 20px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 60px 0px rgba(0,0,0,.1);
+    border: transparent;
+    border-radius: 10px;
+  }
+  .pricingTbl td {
+    border: 1px solid #999;
+    padding: 0.5rem;
+    font-size: 18px;
+    font-family: 'Montserrat';
+  }
+
+  .pricingTbl th {
+    padding: 0.8rem;
+    background: #222b45;
+    color: white;
+    font-size: 20px;
+    border: 1px solid #999;
+    font-family: 'Montserrat';
+  }
+
 /*------------------------------------------------
 ---------- Ar Review Section Styling -------------
 ------------------------------------------------*/
@@ -1553,6 +1578,24 @@ header {
 
 .footer-sm .col-md-4:nth-child(even) {
 	text-align: center;
+}
+.footer-follow {
+  color: #222b45;
+  font-family: 'Montserrat';
+  font-size: 18px;
+  font-weight: 600;
+}
+.footer-follow td{
+  padding: 0.5rem;
+  font-size: 18px;
+  font-family: 'Montserrat';
+}
+
+.footer-follow th {
+  padding: 0.8rem;
+  color: #222b45;
+  font-size: 30px;
+  font-family: 'Montserrat';
 }
 
 .footer-sm .footer-logo {

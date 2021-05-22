@@ -106,7 +106,7 @@
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
           <a class="nav-link" routerLink="/pages/kibana">
-            <nb-icon icon="link-outline"></nb-icon>
+            <span class="iconify" data-icon="logos-kibana" data-inline="false"></span>
             Kibana
           </a>
         </li>
@@ -185,9 +185,7 @@
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user [nbContextMenu]="userMenu"
                nbContextMenuTag="context-menu"
-               [onlyPicture]="userPictureOnly"
-               [name]="user?.name"
-               [picture]="user?.picture">
+               [name]="email.split('@')[0]">
       </nb-user>
     </nb-action>
   </nb-actions>

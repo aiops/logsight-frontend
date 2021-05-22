@@ -4,6 +4,7 @@ import { NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService,
 import {filter, map, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../../auth/authentication.service";
 
 @Component({
   selector: "'ngx-header','ngx-pages'",
@@ -16,6 +17,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly: boolean = false;
   menu = MENU_ITEMS;
   user: any;
+  key: string;
+  email: string;
   horizontal: boolean = true;
   themes = [
     {
@@ -44,10 +47,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private menuService: NbMenuService,
               private themeService: NbThemeService,
               private router: Router,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private authService: AuthenticationService) {
   }
 
   ngOnInit() {
+
+    this.authService.getLoggedUser().subscribe(user => {
+      this.key = user.key
+      this.email = user.email
+    })
 
     this.currentTheme = this.themeService.currentTheme;
     this.sidebarService.collapse('menu-sidebar')

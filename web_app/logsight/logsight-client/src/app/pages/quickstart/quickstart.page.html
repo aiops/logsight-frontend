@@ -12,6 +12,11 @@
       <br>
       <button nbButton size="giant" type="button" (click)="createApplication()"> Try now
       </button>
+
+      <div *ngIf="!progressIsHidden" style="margin-top: 50px">
+        <h6>Please wait until we load the sample data...</h6>
+      <nb-progress-bar [displayValue]="true" status="warning" [hidden]="progressIsHidden" [value]="progressValue"></nb-progress-bar>
+      </div>
     </nb-card-body>
   </nb-card>
 

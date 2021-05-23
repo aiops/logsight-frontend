@@ -77,6 +77,12 @@ p {
 	font-size: 14px;
 }
 
+
+
+
+
+
+
 /*----- Helper Classes -----*/
 
 html * {
@@ -125,7 +131,7 @@ body {
 }
 
 .container-m {
-	max-width: border-box;
+	max-width: 1200px;
 	margin: 0 auto !important;
 	padding-left: 20px;
 	padding-right: 20px;
@@ -688,6 +694,7 @@ header {
 
 .flex-split {
 	padding: 100px 0;
+  background: #f6f6fd;
 }
 
 .flex-intro {
@@ -795,7 +802,7 @@ header {
 ---------------------------------------------*/
 
 .features {
-	padding: 100px 0;
+	padding: 60px 0;
 	background: #f6f6fd;
 }
 
@@ -830,6 +837,7 @@ header {
 
 .card-icon {
 	width: 65px;
+	width: 65px;
   height: 65px;
   border-radius: 50%;
 	margin: 0 auto;
@@ -854,8 +862,8 @@ header {
 }
 
 .card-text h3 {
-	font-size: 21px;
-	font-weight: 500;
+	font-size: 24px;
+	font-weight: 600;
 	color: #364655;
 	margin-bottom: 15px;
 }
@@ -1008,6 +1016,32 @@ header {
 	margin: 0 auto;
 }
 
+
+
+.pricingTbl{
+  padding: 20px 20px 50px 20px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,.1);
+  border: transparent;
+  border-radius: 10px;
+}
+.pricingTbl td {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  font-size: 18px;
+  font-family: 'Montserrat';
+}
+
+.pricingTbl th {
+  padding: 0.0rem;
+  background: #222b45;
+  color: white;
+  font-size: 20px;
+  border: 1px solid #999;
+  font-family: 'Montserrat';
+}
 /*---------------------------------------------------
 -------------- Ar Feature Item Styling --------------
 ---------------------------------------------------*/
@@ -1094,7 +1128,7 @@ header {
 	}
 
 	.pricing-intro {
-		padding-bottom: 30px;
+		padding-bottom: 0px;
 	}
 
 	.pricing-intro h1 {
@@ -1118,6 +1152,7 @@ header {
 
 	.pricing-details {
 		padding: 50px 0 0 0;
+    height: 500px;
 	}
 
 	.pricing-section .table-left, .pricing-section .table-right {
@@ -1169,7 +1204,7 @@ header {
 	.table-left .pricing-details ul, .table-right .pricing-details ul {
 		margin-top: 30px;
 		margin-bottom: 50px;
-		padding: 0;
+		padding: 0;;
 	}
 
 	.table-left .pricing-details li, .table-right .pricing-details li {
@@ -1198,30 +1233,7 @@ header {
 		margin-top: 0;
 	}
 
-  .pricingTbl{
-    padding: 20px 20px 50px 20px;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 0px 60px 0px rgba(0,0,0,.1);
-    border: transparent;
-    border-radius: 10px;
-  }
-  .pricingTbl td {
-    border: 1px solid #999;
-    padding: 0.5rem;
-    font-size: 18px;
-    font-family: 'Montserrat';
-  }
 
-  .pricingTbl th {
-    padding: 0.8rem;
-    background: #222b45;
-    color: white;
-    font-size: 20px;
-    border: 1px solid #999;
-    font-family: 'Montserrat';
-  }
 
 /*------------------------------------------------
 ---------- Ar Review Section Styling -------------
@@ -1414,7 +1426,7 @@ header {
 
 
 .cta-sm {
-	padding: 100px 0 100px 0;
+	padding: 120px 0 50px 0;
 	background: rgba(255, 255, 255, 0.1);
 	background: #ffffff;
 	background: #ffffff;
@@ -1449,7 +1461,7 @@ header {
 
 .form {
 	position: relative;
-	max-width: 420px;
+	max-width: 400px;
 	margin: 0 auto;
 	margin-top: 30px;
 }
@@ -1759,6 +1771,8 @@ header {
     align-items: center;
 		margin: 75px 0;
 	}
+
+
 
 	.flex-inner .f-image {
 	    -webkit-box-flex: 0;

@@ -125,13 +125,13 @@ body {
 
 .container-l {
   margin: 0 auto !important;
-  padding-left: 200px;
-  padding-right: 200px;
+  padding-left: 250px;
+  padding-right: 250px;
   position: relative;
 }
 
 .container-m {
-	max-width: 1200px;
+	max-width: 1300px;
 	margin: 0 auto !important;
 	padding-left: 20px;
 	padding-right: 20px;
@@ -693,12 +693,12 @@ header {
 /*----------- Flex Features ------------*/
 
 .flex-split {
-	padding: 100px 0;
-  background: #f6f6fd;
+	padding: 30px 0;
+  background: #ffffff;
 }
 
 .flex-intro {
-	margin-bottom: 50px;
+	margin-bottom: 0px;
 	text-align: center;
 }
 
@@ -802,7 +802,7 @@ header {
 ---------------------------------------------*/
 
 .features {
-	padding: 60px 0;
+	padding: 0px 0;
 	background: #f6f6fd;
 }
 
@@ -1152,9 +1152,9 @@ header {
 	.pricing-section {
 		width: 100%;
 		height: 100%;
-		padding-top: 100px;
+		padding-top: 30px;
 		padding-bottom: 100px;
-		background: #FFFFFF;
+		background: #f6f6fd;
 	}
 
 	.pricing-intro {
@@ -1182,7 +1182,7 @@ header {
 
 	.pricing-details {
 		padding: 50px 0 0 0;
-    height: 500px;
+    height: 350px;
 	}
 
 	.pricing-section .table-left, .pricing-section .table-right {
@@ -1262,6 +1262,123 @@ header {
 	.pricing-section .table-center {
 		margin-top: 0;
 	}
+
+
+  /* ----- Pricing Tables Styling Starts ----- */
+
+  .tech-section {
+    width: 100%;
+    height: 100%;
+    padding-top: 30px;
+    padding-bottom: 100px;
+    background: #f6f6fd;
+  }
+
+  .tech-intro {
+    padding-bottom: 0px;
+  }
+
+  .tech-intro h1 {
+    font-size: 32px;
+    color: #364655;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+
+
+  .tech-intro p {
+    font-size: 16px;
+    color: #97a6b5;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0;
+    margin-top: 10px;
+    margin-bottom: 50px;
+  }
+
+  .tech-details {
+    padding: 50px 0 0 0;
+    height: 350px;
+  }
+
+  .tech-section .table-left, .tech-section .table-right {
+    padding: 20px 20px 50px 20px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 60px 0px rgba(0,0,0,.1);
+    border: transparent;
+    border-radius: 10px;
+    max-width: 400px;
+  }
+
+  .table-left .icon, .table-right .icon {
+    padding: 50px 50px 40px 50px;
+  }
+
+  .table-left .icon img, .table-right .icon img {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+  }
+
+  .table-left .tech-details span, .table-right .tech-details span {
+    display: block;
+    font-family: 'Montserrat';
+    font-size: 32px;
+    font-weight: 600;
+    color: #364655;
+    opacity: 0.7;
+    margin: 20px 0;
+  }
+
+
+  .table-left .tech-details h2, .table-right .tech-details h2 {
+    font-size: 21px;
+    font-weight: 600;
+    color: #6d48e5;
+    margin-bottom: 30px;
+  }
+
+  .table-left .tech-details p, .table-right tech-details p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #364655;
+    line-height: 1.4;
+  }
+
+  .table-left .tech-details ul, .table-right tech-details ul {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    padding: 0;;
+  }
+
+  .table-left .ptech-details li, .table-right tech-details li {
+    font-family: 'Montserrat';
+    font-size: 16px;
+    font-weight: 500;
+    color: #97a6b5;
+    line-height: 1.4;
+    letter-spacing: 0;
+    margin-bottom: 10px;
+  }
+
+  .tech-section .table-left:hover, .tech-section .table-right:hover {
+    box-shadow: 0 0 80px 0 rgba(0, 0, 0, 0.1);
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+  }
+
+  .tech-section .table-left, .tech-section .table-right {
+    margin-top: 20px;
+  }
+
+  .tech-section .table-center {
+    margin-top: 0;
+  }
 
 
 
@@ -1489,12 +1606,19 @@ header {
 	margin-bottom: 15px;
 }
 
+
+input, label {
+  float:left;
+  margin:5px;
+}
+
 .form {
 	position: relative;
 	max-width: 400px;
 	margin: 0 auto;
 	margin-top: 30px;
 }
+
 
 .chimp-form .mail {
 	position: relative;
@@ -1536,7 +1660,7 @@ header {
   border: 0;
   border-radius: 4px;
   margin: 0 auto;
-	margin: 15px 0;
+	margin: 0px 0;
   padding: 0 25px 0 25px;
 	background: #222b45;
 	font-family: 'Montserrat';
@@ -1548,9 +1672,9 @@ header {
 	cursor: pointer;
   outline: none;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 100,.2);
-	-webkit-transition: 300ms;
-	-moz-transition: 300ms;
-	transition: 300ms;
+	-webkit-transition: 100ms;
+	-moz-transition: 100ms;
+	transition: 100ms;
 }
 
 .form .submit-button:hover {
@@ -1614,7 +1738,7 @@ header {
 .footer-sm {
 	padding: 30px 0;
 	background: rgba(30, 166, 154, 0.1);
-	background: #f6f6fd;
+	background: #222b45;
 	text-align: center;
 }
 
@@ -1622,7 +1746,7 @@ header {
 	text-align: center;
 }
 .footer-follow {
-  color: #222b45;
+  color: #ffffff;
   font-family: 'Montserrat';
   font-size: 18px;
   font-weight: 600;
@@ -1635,7 +1759,7 @@ header {
 
 .footer-follow th {
   padding: 0.8rem;
-  color: #222b45;
+  color: #ffffff;
   font-size: 30px;
   font-family: 'Montserrat';
 }
@@ -1799,15 +1923,15 @@ header {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-		margin: 75px 0;
+		margin: 0px 0;
 	}
 
 
 
 	.flex-inner .f-image {
 	    -webkit-box-flex: 0;
-	    -ms-flex: 0 0 500px;
-	    flex: 0 0 500px;
+	    -ms-flex: 0 0 300px;
+	    flex: 0 0 400px;
 	}
 
 	.flex-inner .f-text h2 {

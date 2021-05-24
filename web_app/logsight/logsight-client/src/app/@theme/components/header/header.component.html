@@ -1,3 +1,23 @@
+<tour-step-template>
+  <ng-template let-step="step">
+    <br>
+    <mat-card (click)="$event.stopPropagation()"  [style.backgroundColor]="'white'">
+      <mat-card-title>
+        {{step?.title}}
+      </mat-card-title>
+      <mat-card-content>
+        {{step?.content}}
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button [disabled]="!tourService.hasNext(step)" (click)="tourService.next()">
+          Next
+        </button>
+        <button mat-button (click)="tourService.end()">{{step?.endBtnTitle}}</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-template>
+</tour-step-template>
+
 <div class="header-container">
   <div class="logo-container">
     <!--    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">-->
@@ -62,7 +82,7 @@
   <!--  <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">-->
   <!--    <div class="container">-->
   <div class="row justify-content-end" style="margin-right: 4rem">
-    <div style="white-space: nowrap; margin-right: 2rem">
+    <div tourAnchor="anchorDashboard" style="white-space: nowrap; margin-right: 2rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
           <a class="nav-link" routerLink="/pages/dashboard">
@@ -72,7 +92,7 @@
         </li>
       </ul>
     </div>
-    <div style="white-space: nowrap; margin-right: 2rem">
+    <div tourAnchor="anchorIncidents" style="white-space: nowrap; margin-right: 2rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
           <a class="nav-link" routerLink="/pages/incidents">
@@ -82,7 +102,7 @@
         </li>
       </ul>
     </div>
-    <div style="white-space: nowrap; margin-right: 4rem">
+    <div tourAnchor="anchorVanalysis"style="white-space: nowrap; margin-right: 4rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
           <a class="nav-link" routerLink="/pages/variable-analysis">
@@ -92,7 +112,7 @@
         </li>
       </ul>
     </div>
-    <div style="white-space: nowrap; margin-right: 2rem">
+    <div tourAnchor="anchorIntegration" style="white-space: nowrap; margin-right: 2rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
           <a class="nav-link" routerLink="/pages/integration">
@@ -102,7 +122,7 @@
         </li>
       </ul>
     </div>
-    <div style="white-space: nowrap; margin-right: 2rem">
+    <div tourAnchor="anchorKibana" style="white-space: nowrap; margin-right: 2rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
           <a class="nav-link" routerLink="/pages/kibana">

@@ -30,7 +30,8 @@ import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
 import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
 import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
-
+import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
+import {MatCardModule} from "@angular/material/card";
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent],
   imports: [
@@ -45,6 +46,7 @@ import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
+    TourMatMenuModule.forRoot(),
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
@@ -56,7 +58,8 @@ import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
     ReactiveFormsModule,
     NbButtonModule,
     SimpleNotificationsModule.forRoot(),
-    HighlightModule
+    HighlightModule,
+    MatCardModule
   ],
   bootstrap: [AppComponent],
   providers: [LoginService, {
@@ -69,7 +72,7 @@ import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
       useValue: {
         fullLibraryLoader: () => import('highlight.js'),
       }
-    }
+    },
   ]
 })
 export class AppModule {

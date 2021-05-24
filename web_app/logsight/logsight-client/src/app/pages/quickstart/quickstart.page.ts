@@ -6,6 +6,7 @@ import {NotificationsService} from "angular2-notifications";
 import {Application} from "../../@core/common/application";
 import {Router} from "@angular/router";
 import {interval} from "rxjs";
+import {TourService} from "ngx-ui-tour-md-menu";
 
 @Component({
   selector: 'quickstart',
@@ -24,8 +25,14 @@ export class QuickstartPage implements OnInit {
   applications: Application[] = [];
 
 
-  constructor(private fb: FormBuilder, private integrationService: IntegrationService, private authService: AuthenticationService,
-              private notificationService: NotificationsService, private router: Router) {
+  constructor(private fb: FormBuilder,
+              private integrationService: IntegrationService,
+              private authService: AuthenticationService,
+              private notificationService: NotificationsService,
+              private router: Router,
+              private tourService: TourService) {
+
+    tourService.start()
   }
 
 
@@ -38,6 +45,7 @@ export class QuickstartPage implements OnInit {
       this.email = user.email
     });
   }
+
 
   onFirstSubmit() {
     this.firstForm.markAsDirty();

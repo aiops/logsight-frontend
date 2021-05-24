@@ -136,7 +136,7 @@ export class DashboardPage implements OnInit, OnDestroy {
           })
       }
     })
-    setTimeout(_ => this.reload$.next(), 1); //hack to start first refresh
+    setTimeout(_ => this.reload$.next(), 2000); //hack to start first refresh
   }
 
   loadHeatmapData(startTime: string, endTime: string) {

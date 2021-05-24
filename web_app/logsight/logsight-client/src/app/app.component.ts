@@ -8,7 +8,7 @@ import { NbMenuService } from '@nebular/theme';
 import { Router } from '@angular/router';
 @Component({
   selector: 'ngx-app',
-  template: '<router-outlet></router-outlet> <simple-notifications [options]="notificationOptions"></simple-notifications>',
+  template: '<router-outlet></router-outlet><simple-notifications [options]="notificationOptions"></simple-notifications>',
 })
 export class AppComponent implements OnInit {
 

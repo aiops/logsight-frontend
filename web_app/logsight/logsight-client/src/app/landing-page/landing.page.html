@@ -18,542 +18,548 @@
 <body>
 <header class="animated fadeInDown" id="navbar">
   <section class="web_homePage" (scroll)="onWindowScroll($event);">
-      <!-- Navbar Section -->
+    <!-- Navbar Section -->
 
     <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
       <div class="container-fluid container-new">
         <div class="navbar-header">
-<!--        <div class="container container-l">-->
-<!--          <div class="navbar navbar-title">-->
-            <a class="navbar-brand" href="#"><img alt="logo" src="../../../../assets/images/logsight_logo.png" height="60" /></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          <!--        <div class="container container-l">-->
+          <!--          <div class="navbar navbar-title">-->
+          <a class="navbar-brand" href="#"><img alt="logo" src="../../../../assets/images/logsight_logo.png" height="60" /></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                   aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto navbar-right">
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Features</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#partners">Partners</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#research">Platform</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#partners">Pricing</a></li>
+            <li class="nav-item" (click)="redirectToLogin()"><a class="btn-login nav-link js-scroll-trigger">Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav> <!-- Navbar End -->
+  </section>
+</header>
+<section class = "banner"></section>
+
+<div id="main" class="main">
+  <div id="signup" class="cta-sm">
+    <div class="container-s text-center">
+      <br>
+      <h1>Deep learning log analytics for proactive troubleshooting</h1>
+      <br>
+      <!--        <h2>Elevate your software reliability trough the power of deep learning models with accumulated knowledge from millions of log files.</h2>-->
+      <div class="cta-content">
+        <div class="form wow fadeIn" data-wow-delay="0.1s">
+          <form id="chimp-form" [formGroup]="form" (submit)="onSignUp()" class="subscribe-form wow zoomIn" accept-charset="UTF-8"
+                enctype="application/x-www-form-urlencoded" autocomplete="off" novalidate>
+            <input formControlName="email" class="mail" id="chimp-email" type="email" name="email" placeholder="Enter your email address"
+                   autocomplete="off">
+            <input class="submit-button" type="submit" value="Sign up now">
+          </form>
+          <div id="response"></div>
+        </div>
+        <div class="form-note">
+          <p>Free up to 10 GB, no credit card required.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="products" class="features wow fadeInDown">
+    <div class="container-l">
+      <div class="row text-center">
+
+        <div class="col-sm">
+          <div class="feature-list">
+            <div class="card-icon">
+              <div class="card-img">
+                <img src="../../assets/images/realtimeanalytics.png" width="200" alt="Feature">
+              </div>
+            </div>
+            <div class="card-text">
+              <h3>24/7 real-time troubleshooting</h3>
+              <br>
+              <!--                <p>24/7 troubleshooting, incident reporting, log visualisations, and quality improvement.</p>-->
+            </div>
           </div>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto navbar-right">
-              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Features</a></li>
-              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#partners">Partners</a></li>
-              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#research">Platform</a></li>
-              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#pricingPlans">Pricing</a></li>
-              <li class="nav-item" (click)="redirectToLogin()"><a class="btn-login nav-link js-scroll-trigger">Login</a></li>
+        </div>
+
+        <div class="col-sm">
+          <div class="feature-list">
+            <div class="card-icon">
+              <div class="card-img">
+                <img src="../../assets/images/brain.png" width="200" alt="Feature">
+              </div>
+            </div>
+            <div class="card-text">
+              <h3>AI trained on thousands of projects</h3>
+              <!--                <p>Logsight's deep learning system trains models on millions of log files and enables to reliably detect and troubleshooting software problems.</p>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <div class="feature-list">
+            <div class="card-icon">
+              <div class="card-img">
+                <img src="../../assets/images/variableanalysis.png" width="200" alt="Feature">
+              </div>
+            </div>
+            <div class="card-text">
+              <h3>Log parameter analysis</h3>
+              <br>
+              <!--                <p>With the automated log parsing, get insights from the log parameters.</p>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <div class="feature-list">
+            <div class="card-icon">
+              <div class="card-img">
+                <img src="../../assets/images/brain_costumized.png" width="200" alt="Feature">
+              </div>
+            </div>
+            <div class="card-text">
+              <h3>Costumized to your data</h3>
+              <br>
+              <!--                <p>We automatically costumize the model to fit your data for increased performance.</p>-->
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="feature-list">
+            <div class="card-icon">
+              <div class="card-img">
+                <img src="../../assets/images/easyintegration.png" width="200" alt="Feature">
+              </div>
+            </div>
+            <div class="card-text">
+              <h3>Lightweight integration</h3>
+              <br>
+              <!--                <p>No operational headaches. Our endpoint-based solutions enable easy integration. </p>-->
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <div id="partners" class="yd-stats wow fadeIn">
+    <div class="container-s">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          <div class="intro">
+            <h2>Deployments</h2>
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <div class="feature-list">
+            <div class="card-img">
+              <img src="../../assets/images/partners/TU-Berlin-Logo.svg.png" width="200" alt="Feature">
+            </div>
+          </div>
+        </div>
+
+        <!--          <div class="col-sm">-->
+        <!--            <div class="feature-list">-->
+        <!--              <div class="card-img">-->
+        <!--                <img src="../../assets/images/partners/atos-logo-blue.png" width="300" alt="Feature">-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <div id="research" class="pricing-section text-center">
+    <div class="container-m">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="pricing-intro wow fadeInDown">
+            <h1>Leading deep learning technology</h1>
+            <p>
+            </p>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="table-left wow fadeInDown">
+                <div class="pricing-details">
+                  <img src="../../assets/images/fundamentalai.jpg" width="200" alt="Icon">
+                  <h2>Advanced form of troubleshooting</h2>
+                  <ul>
+                    <li>End-to-end deep learning models on raw software logs, no conversion.
+                      <!--                      <li>The company trains its models by feeding millions of log lines.</li>-->
+                      <!--                      <li>The technology can be deployed to an organization, where it starts troubleshooting every connected service.</li>-->
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="table-right wow fadeInDown">
+                <div class="pricing-details">
+                  <img src="../../assets/images/research.png" width="200" alt="Icon">
+                  <h2>7 years of research in AI <br> for software systems</h2>
+                  <ul>
+                    <!--                      <li>7 years of research in AI for software systems.</li>-->
+                    <li>Team of experts with over 50 publications.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="table-right wow fadeInDown">
+                <div class="pricing-details">
+                  <img src="../../assets/images/industryintegration.jpg" width="200" alt="Icon">
+                  <h2>Industry ready <br> methods</h2>
+                  <ul>
+                    <li>Deployed and continiously improved in collaboration.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Counter Section Ends -->
+
+
+  <div id="features" class="flex-split wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+    <div class="container-s">
+      <div class="flex-intro align-center">
+        <h2>Inside Logsight.ai</h2>
+      </div>
+      <div class="flex-inner align-center">
+        <div class="f-image">
+          <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;">
+            <iframe src="https://streamable.com/e/w2b3ug" frameborder="0" width="100%" height="100%" allowfullscreen
+                    style="width: 100%; height: 100%; position: absolute;"></iframe></div>
+        </div>
+        <div class="f-text">
+          <div class="left-content">
+            <h2>5 minute introduction to logsight</h2>
+            <p>Get familiar with our motivation and technology.</p>
+            <br>
+            <a href="#">Know more</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-inner flex-inverted align-center">
+        <div class="f-image f-image-inverted">
+          <img class="img-fluid" src="../../assets/images/faster-icon-png-17752.png" alt="Feature">
+        </div>
+        <div class="f-text">
+          <div class="left-content">
+            <h2>60x faster troubleshooting and reduced false predictions</h2>
+            <p>Developers and operators spent 50% of their time in debugging. Boost productivity and development to a blazing fast level with logsight.ai.</p>
+            <br>
+            <a href="#">Know more</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-inner align-center">
+        <div class="f-image">
+          <img class="img-fluid" src="../../assets/images/documentation.png" alt="Feature">
+        </div>
+        <div class="f-text">
+          <div class="left-content">
+            <h2>The Science behind logsight.ai</h2>
+            <!--              <p>Algorithms are the heart of intelligent log analytics. Read all about how the Logsight Research.</p>-->
+            <br>
+            <a href="#">Know more</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!--    &lt;!&ndash; Counter Section &ndash;&gt;-->
+  <!--    <div class="yd-stats wow fadeIn">-->
+  <!--      <div class="container-s">-->
+  <!--        <div class="row text-center">-->
+  <!--          <div class="col-sm-12">-->
+  <!--            <div class="intro">-->
+  <!--              <h2>Deployments</h2>-->
+  <!--              <p>Organized workflow and predictive patterns to boost your revenue.</p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          -->
+  <!--          <div class="col-sm-4">-->
+  <!--            <div class="counter-up">-->
+  <!--              <h3><span class="counter">47</span>%</h3>-->
+  <!--              <div class="counter-text">-->
+  <!--                <h2>Lesser backlogs</h2>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          <div class="col-sm-4">-->
+  <!--            <div class="counter-up">-->
+  <!--              <h3><span class="counter">33</span>%</h3>-->
+  <!--              <div class="counter-text">-->
+  <!--                <h2>Higher Profits</h2>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          <div class="col-sm-4">-->
+  <!--            <div class="counter-up">-->
+  <!--              <h3><span class="counter">33</span>%</h3>-->
+  <!--              <div class="counter-text">-->
+  <!--                <h2>Higher Profits</h2>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--          <div class="col-md-12">-->
+  <!--            <div class="yd-link">-->
+  <!--              <a href="#">Know more about the template</a>-->
+  <!--            </div>-->
+  <!--          </div>-->
+
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>&lt;!&ndash; Counter Section Ends &ndash;&gt;-->
+
+  <!--    <div class="ar-ft-single wow fadeIn">-->
+  <!--      <div class="container-l">-->
+  <!--        <div class="ar-feature">-->
+  <!--          <div class="ar-list text-center">-->
+  <!--            <ul>-->
+  <!--              <li>-->
+  <!--                <div class="ar-icon">-->
+  <!--                  <img src="assets/icons/f1.png" width="30" alt="Icon">-->
+  <!--                </div>-->
+  <!--                <div class="ar-text">-->
+  <!--                  <h3>Client Support</h3>-->
+  <!--                  <p>Team hangouts and instant text messaging right from the dashboard.</p>-->
+  <!--                </div>-->
+  <!--              </li>-->
+  <!--              <li>-->
+  <!--                <div class="ar-icon">-->
+  <!--                  <img src="assets/icons/f4.png" width="30" alt="Icon">-->
+  <!--                </div>-->
+  <!--                <div class="ar-text">-->
+  <!--                  <h3>Secure Servers</h3>-->
+  <!--                  <p>Team hangouts and instant text messaging right from the dashboard.</p>-->
+  <!--                </div>-->
+  <!--              </li>-->
+  <!--              <li>-->
+  <!--                <div class="ar-icon">-->
+  <!--                  <img src="assets/icons/f11.png" width="30" alt="Icon">-->
+  <!--                </div>-->
+  <!--                <div class="ar-text">-->
+  <!--                  <h3>Product Feedback</h3>-->
+  <!--                  <p>Team hangouts and instant text messaging right from the dashboard.</p>-->
+  <!--                </div>-->
+  <!--              </li>-->
+  <!--            </ul>-->
+  <!--          </div>-->
+  <!--          <div class="ar-image">-->
+  <!--            <img class="ar-img img-fluid" src="assets/images/feature-2.png" alt="Hero Image">-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+
+
+  <!--    <div id="reviews" class="yd-reviews">&lt;!&ndash; Array Reviews &ndash;&gt;-->
+  <!--      <div class="container">-->
+  <!--        <div class="row text-center">-->
+  <!--          <div class="col-sm-12 col-lg-8 offset-lg-2">-->
+  <!--            <div class="intro wow fadeIn" data-wow-delay="0.1s">-->
+  <!--              <h1>Customers say nice things</h1>-->
+  <!--              <p>We have very fair pricing policy that would benefit you and us at the same time.-->
+  <!--                Get the free plan &amp; if you need more - pay.-->
+  <!--              </p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+
+  <!--          <div class="col-sm-12 col-lg-8 offset-lg-2 text-center">-->
+  <!--            <div class="review-cards owl-carousel owl-theme wow fadeInDown" data-wow-delay="0.2s">-->
+  <!--              <div class="card-single">-->
+  <!--                <div class="review-text">-->
+  <!--                  <h1>"We have very fair pricing policy that would benefit you and us at the same time.-->
+  <!--                    Choose what price you're willing to pay. Get the free plan & if you need more - pay."-->
+  <!--                  </h1>-->
+  <!--                </div>-->
+  <!--                <div class="review-attribution">-->
+  <!--                  <div class="review-img">-->
+  <!--                    <img class="img-fluid rounded-circle" src="assets/icons/review-1.png" alt="Review">-->
+  <!--                  </div>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-ios-star-half"></i>-->
+  <!--                  <h2> Albert Rossi</h2>-->
+  <!--                  <h6>Stack Developer</h6>-->
+  <!--                  <a href="#">Dropboxes Inc</a>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--              <div class="card-single">-->
+  <!--                <div class="review-text">-->
+  <!--                  <h1>"We have very fair pricing policy that would benefit you and us at the same time.-->
+  <!--                    Choose what price you're willing to pay. Get the free plan & if you need more - pay."-->
+  <!--                  </h1>-->
+  <!--                </div>-->
+  <!--                <div class="review-attribution">-->
+  <!--                  <div class="review-img">-->
+  <!--                    <img class="img-fluid rounded-circle" src="assets/icons/review-2.png" alt="Review">-->
+  <!--                  </div>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-ios-star-half"></i>-->
+  <!--                  <h2> Melissa Vanbergh</h2>-->
+  <!--                  <h6>Vice President</h6>-->
+  <!--                  <a href="#">Vestor Corp</a>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--              <div class="card-single">-->
+  <!--                <div class="review-text">-->
+  <!--                  <h1>"We have very fair pricing policy that would benefit you and us at the same time.-->
+  <!--                    Choose what price you're willing to pay. Get the free plan & if you need more - pay."-->
+  <!--                  </h1>-->
+  <!--                </div>-->
+  <!--                <div class="review-attribution">-->
+  <!--                  <div class="review-img">-->
+  <!--                    <img class="img-fluid rounded-circle" src="assets/icons/review-3.png" alt="Review">-->
+  <!--                  </div>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <i class="ion ion-star"></i>-->
+  <!--                  <h2> Joshua Peterson</h2>-->
+  <!--                  <h6>Product Developer</h6>-->
+  <!--                  <a href="#">Betabet Inc</a>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!-- Array Reviews Ends -->
+
+
+  <!-- Array Pricing Section -->
+
+  <!-- Array Pricing Ends -->
+
+  <!-- CTA Signup Section -->
+
+  <!-- NEW -->
+  <div id="pricingPlans" class="pricing-section text-center">
+    <div class="container-s">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          <div class="pricing-intro wow fadeInDown">
+            <h1>Pricing logsight.ai</h1>
+          </div>
+        </div>
+        <div class="col-sm-12">
+
+
+          <div class="columns">
+            <ul class="price">
+              <li class="header">Free</li>
+              <li class="grey">Up to 10 GB</li>
+              <li>All features available</li>
+              <li>Reporting</li>
+              <li>Connectors</li>
+              <li>-</li>
+              <li>-</li>
+              <li>-</li>
             </ul>
           </div>
-        </div>
-      </nav> <!-- Navbar End -->
-    </section>
-</header>
-  <section class = "banner"></section>
-
-  <div id="main" class="main">
-    <div id="signup" class="cta-sm">
-      <div class="container-s text-center">
-        <br>
-        <h1>Deep learning log analytics for proactive troubleshooting</h1>
-        <br>
-        <h2>Elevate your software reliability trough the power of deep learning models with accumulated knowledge from millions of log files.</h2>
-        <div class="cta-content">
-          <div class="form wow fadeIn" data-wow-delay="0.1s">
-            <form id="chimp-form" [formGroup]="form" (submit)="onSignUp()" class="subscribe-form wow zoomIn" accept-charset="UTF-8"
-                  enctype="application/x-www-form-urlencoded" autocomplete="off" novalidate>
-              <input formControlName="email" class="mail" id="chimp-email" type="email" name="email" placeholder="Enter your email address"
-                     autocomplete="off">
-              <input class="submit-button" type="submit" value="Sign up now">
-            </form>
-            <div id="response"></div>
+          <div class="columns">
+            <ul class="price">
+              <li class="header">Enterprise</li>
+              <li class="grey">$ 2.0 / GB</li>
+              <li>All features available</li>
+              <li>Reporting</li>
+              <li>Connectors</li>
+              <li>ELK integration</li>
+              <li>Costumized models</li>
+              <li>Support</li>
+            </ul>
           </div>
-          <div class="form-note">
-            <p>Free trial and no credit card required.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div id="products" class="features wow fadeInDown">
-      <div class="container-l">
-        <div class="row text-center">
-          <div class="col-sm">
-            <div class="feature-list">
-              <div class="card-icon">
-                <div class="card-img">
-                  <img src="../../assets/images/brain.png" width="300" height="300" alt="Feature">
-                </div>
-              </div>
-              <div class="card-text">
-                <h3>AI trained on thousands of projects</h3>
-                <p>Logsight's deep learning system trains models on millions of log files and enables to reliably detect and troubleshooting software problems.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="feature-list">
-              <div class="card-icon">
-                <div class="card-img">
-                  <img src="../../assets/images/brain_costumized.png" width="300" alt="Feature">
-                </div>
-              </div>
-              <div class="card-text">
-                <h3>Costumized to your data</h3>
-                <br>
-                <p>We automatically costumize the model to fit your data for increased performance.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="feature-list">
-              <div class="card-icon">
-                <div class="card-img">
-                  <img src="../../assets/images/easyintegration.png" width="300" alt="Feature">
-                </div>
-              </div>
-              <div class="card-text">
-                <h3>Lightweight integration</h3>
-                <br>
-                <p>No operational headaches. Our endpoint-based solutions enable easy integration. </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="feature-list">
-              <div class="card-icon">
-                <div class="card-img">
-                  <img src="../../assets/images/realtimeanalytics.png" width="300" alt="Feature">
-                </div>
-              </div>
-              <div class="card-text">
-                <h3>Real-time troubleshooting</h3>
-                <br>
-                <p>24/7 troubleshooting, incident reporting, log visualisations, and quality improvement.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm">
-            <div class="feature-list">
-              <div class="card-icon">
-                <div class="card-img">
-                  <img src="../../assets/images/variableanalysis.png" width="300" alt="Feature">
-                </div>
-              </div>
-              <div class="card-text">
-                <h3>Log parameter analysis</h3>
-                <br>
-                <p>With the automated log parsing, get insights from the log parameters.</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div id="partners" class="yd-stats wow fadeIn">
-      <div class="container-s">
-        <div class="row text-center">
-          <div class="col-sm-12">
-            <div class="intro">
-              <h2>Deployments</h2>
-            </div>
-          </div>
-
-          <div class="col-sm">
-            <div class="feature-list">
-              <div class="card-img">
-                <img src="../../assets/images/partners/TU-Berlin-Logo.svg.png" width="300" alt="Feature">
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm">
-            <div class="feature-list">
-              <div class="card-img">
-                <img src="../../assets/images/partners/atos-logo-blue.png" width="300" alt="Feature">
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-
-
-    <div id="research" class="pricing-section text-center">
-      <div class="container-m">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="pricing-intro wow fadeInDown">
-              <h1>Leading deep learning technology, not just any AI</h1>
-              <p>
-              </p>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="table-left wow fadeInDown">
-                  <div class="pricing-details">
-                    <img src="../../assets/images/fundamentalai.jpg" width="200" alt="Icon">
-                    <h2>Advanced form of troubleshooting</h2>
-                    <ul>
-                      <li>End-to-end deep learning models on raw software logs, no conversion.
-                      <li>The company trains its models by feeding millions of log lines.</li>
-                      <li>The technology can be deployed to an organization, where it starts troubleshooting every connected service.</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="table-right wow fadeInDown">
-                  <div class="pricing-details">
-                    <img src="../../assets/images/research.png" width="200" alt="Icon">
-                    <h2>Continuous long-term <br> research</h2>
-                    <ul>
-                      <li>7 years of research in AI for software systems.</li>
-                      <li>Team of experts with over 50 publications.</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="table-right wow fadeInDown">
-                  <div class="pricing-details">
-                    <img src="../../assets/images/industryintegration.jpg" width="200" alt="Icon">
-                    <h2>Industry ready <br> methods</h2>
-                    <ul>
-                      <li>Deployed and continiously improved in collaboration.</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Counter Section Ends -->
-
-
-    <div id="features" class="flex-split wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
-      <div class="container-s">
-        <div class="flex-intro align-center">
-          <h2>Inside Logsight.ai</h2>
-        </div>
-        <div class="flex-inner align-center">
-          <div class="f-image">
-            <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;">
-              <iframe src="https://streamable.com/e/w2b3ug" frameborder="0" width="100%" height="100%" allowfullscreen
-                      style="width: 100%; height: 100%; position: absolute;"></iframe></div>
-          </div>
-          <div class="f-text">
-            <div class="left-content">
-              <h2>5 minute introduction to logsight</h2>
-              <p>Get familiar with our motivation and technology.</p>
-              <br>
-              <a href="#">Know more</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex-inner flex-inverted align-center">
-          <div class="f-image f-image-inverted">
-            <img class="img-fluid" src="../../assets/images/faster-icon-png-17752.png" alt="Feature">
-          </div>
-          <div class="f-text">
-            <div class="left-content">
-              <h2>60x faster troubleshooting and dramatically reduced false predictions</h2>
-              <p>Developers and operators spent 50% of their time in debugging. Boost productivity and development to a blazing fast level with logsight.ai.</p>
-              <br>
-              <a href="#">Know more</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex-inner align-center">
-          <div class="f-image">
-            <img class="img-fluid" src="../../assets/images/documentation.png" alt="Feature">
-          </div>
-          <div class="f-text">
-            <div class="left-content">
-              <h2>The Science behind logsight.ai</h2>
-              <p>Algorithms are the heart of intelligent log analytics. Read all about how the Logsight Research.</p>
-              <br>
-              <a href="#">Know more</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-<!--    &lt;!&ndash; Counter Section &ndash;&gt;-->
-<!--    <div class="yd-stats wow fadeIn">-->
-<!--      <div class="container-s">-->
-<!--        <div class="row text-center">-->
-<!--          <div class="col-sm-12">-->
-<!--            <div class="intro">-->
-<!--              <h2>Deployments</h2>-->
-<!--              <p>Organized workflow and predictive patterns to boost your revenue.</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          -->
-<!--          <div class="col-sm-4">-->
-<!--            <div class="counter-up">-->
-<!--              <h3><span class="counter">47</span>%</h3>-->
-<!--              <div class="counter-text">-->
-<!--                <h2>Lesser backlogs</h2>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="col-sm-4">-->
-<!--            <div class="counter-up">-->
-<!--              <h3><span class="counter">33</span>%</h3>-->
-<!--              <div class="counter-text">-->
-<!--                <h2>Higher Profits</h2>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="col-sm-4">-->
-<!--            <div class="counter-up">-->
-<!--              <h3><span class="counter">33</span>%</h3>-->
-<!--              <div class="counter-text">-->
-<!--                <h2>Higher Profits</h2>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="col-md-12">-->
-<!--            <div class="yd-link">-->
-<!--              <a href="#">Know more about the template</a>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>&lt;!&ndash; Counter Section Ends &ndash;&gt;-->
-
-<!--    <div class="ar-ft-single wow fadeIn">-->
-<!--      <div class="container-l">-->
-<!--        <div class="ar-feature">-->
-<!--          <div class="ar-list text-center">-->
-<!--            <ul>-->
-<!--              <li>-->
-<!--                <div class="ar-icon">-->
-<!--                  <img src="assets/icons/f1.png" width="30" alt="Icon">-->
-<!--                </div>-->
-<!--                <div class="ar-text">-->
-<!--                  <h3>Client Support</h3>-->
-<!--                  <p>Team hangouts and instant text messaging right from the dashboard.</p>-->
-<!--                </div>-->
-<!--              </li>-->
-<!--              <li>-->
-<!--                <div class="ar-icon">-->
-<!--                  <img src="assets/icons/f4.png" width="30" alt="Icon">-->
-<!--                </div>-->
-<!--                <div class="ar-text">-->
-<!--                  <h3>Secure Servers</h3>-->
-<!--                  <p>Team hangouts and instant text messaging right from the dashboard.</p>-->
-<!--                </div>-->
-<!--              </li>-->
-<!--              <li>-->
-<!--                <div class="ar-icon">-->
-<!--                  <img src="assets/icons/f11.png" width="30" alt="Icon">-->
-<!--                </div>-->
-<!--                <div class="ar-text">-->
-<!--                  <h3>Product Feedback</h3>-->
-<!--                  <p>Team hangouts and instant text messaging right from the dashboard.</p>-->
-<!--                </div>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--          <div class="ar-image">-->
-<!--            <img class="ar-img img-fluid" src="assets/images/feature-2.png" alt="Hero Image">-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
-
-<!--    <div id="reviews" class="yd-reviews">&lt;!&ndash; Array Reviews &ndash;&gt;-->
-<!--      <div class="container">-->
-<!--        <div class="row text-center">-->
-<!--          <div class="col-sm-12 col-lg-8 offset-lg-2">-->
-<!--            <div class="intro wow fadeIn" data-wow-delay="0.1s">-->
-<!--              <h1>Customers say nice things</h1>-->
-<!--              <p>We have very fair pricing policy that would benefit you and us at the same time.-->
-<!--                Get the free plan &amp; if you need more - pay.-->
-<!--              </p>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          <div class="col-sm-12 col-lg-8 offset-lg-2 text-center">-->
-<!--            <div class="review-cards owl-carousel owl-theme wow fadeInDown" data-wow-delay="0.2s">-->
-<!--              <div class="card-single">-->
-<!--                <div class="review-text">-->
-<!--                  <h1>"We have very fair pricing policy that would benefit you and us at the same time.-->
-<!--                    Choose what price you're willing to pay. Get the free plan & if you need more - pay."-->
-<!--                  </h1>-->
-<!--                </div>-->
-<!--                <div class="review-attribution">-->
-<!--                  <div class="review-img">-->
-<!--                    <img class="img-fluid rounded-circle" src="assets/icons/review-1.png" alt="Review">-->
-<!--                  </div>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-ios-star-half"></i>-->
-<!--                  <h2> Albert Rossi</h2>-->
-<!--                  <h6>Stack Developer</h6>-->
-<!--                  <a href="#">Dropboxes Inc</a>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="card-single">-->
-<!--                <div class="review-text">-->
-<!--                  <h1>"We have very fair pricing policy that would benefit you and us at the same time.-->
-<!--                    Choose what price you're willing to pay. Get the free plan & if you need more - pay."-->
-<!--                  </h1>-->
-<!--                </div>-->
-<!--                <div class="review-attribution">-->
-<!--                  <div class="review-img">-->
-<!--                    <img class="img-fluid rounded-circle" src="assets/icons/review-2.png" alt="Review">-->
-<!--                  </div>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-ios-star-half"></i>-->
-<!--                  <h2> Melissa Vanbergh</h2>-->
-<!--                  <h6>Vice President</h6>-->
-<!--                  <a href="#">Vestor Corp</a>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="card-single">-->
-<!--                <div class="review-text">-->
-<!--                  <h1>"We have very fair pricing policy that would benefit you and us at the same time.-->
-<!--                    Choose what price you're willing to pay. Get the free plan & if you need more - pay."-->
-<!--                  </h1>-->
-<!--                </div>-->
-<!--                <div class="review-attribution">-->
-<!--                  <div class="review-img">-->
-<!--                    <img class="img-fluid rounded-circle" src="assets/icons/review-3.png" alt="Review">-->
-<!--                  </div>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <i class="ion ion-star"></i>-->
-<!--                  <h2> Joshua Peterson</h2>-->
-<!--                  <h6>Product Developer</h6>-->
-<!--                  <a href="#">Betabet Inc</a>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-    <!-- Array Reviews Ends -->
-
-
-    <!-- Array Pricing Section -->
-
-    <!-- Array Pricing Ends -->
-
-    <!-- CTA Signup Section -->
-
-    <!-- NEW -->
-    <div id="pricingPlans" class="pricing-section text-center">
-      <div class="container-s">
-        <div class="row text-center">
-          <div class="col-sm-12">
-            <div class="pricing-intro wow fadeInDown">
-              <h1>Pricing logsight.ai</h1>
-            </div>
-          </div>
-          <div class="col-sm-12">
-
-
-            <div class="columns">
-              <ul class="price">
-                <li class="header">Free</li>
-                <li class="grey">Up to 10 GB</li>
-                <li>All features available</li>
-                <li>Reporting</li>
-                <li>Connectors</li>
-                <li>-</li>
-                <li>-</li>
-                <li>-</li>
-              </ul>
-            </div>
-            <div class="columns">
-              <ul class="price">
-                <li class="header">Enterprise</li>
-                <li class="grey">$ 2.0 / GB</li>
-                <li>All features available</li>
-                <li>Reporting</li>
-                <li>Connectors</li>
-                <li>ELK integration</li>
-                <li>Costumized models</li>
-                <li>Support</li>
-              </ul>
-            </div>
-
-
-
-          </div>
-
 
 
 
         </div>
-      </div>
-    </div>
-    <!-- End of NEW   -->
 
-    <!-- Array Footer Section -->
-    <div class="footer-sm">
-      <div class="container-l">
-        <div class="row text-center align-items-center justify-content-center">
-          <div class="col-4">
-            <table class="footer-follow">
-              <tr>
-                <th colspan="3"><p>© logsight.ai 2021</p></th>
-              </tr>
-            </table>
-          </div>
-          <div class="col-3">
-            <table class="footer-follow">
-              <tr>
-                <th  colspan="4">Follow us</th>
-              </tr>
-              <tr>
-                <td><a href="www.twitter.com"><img src="assets/icons/twitter.png" width="45" height="40" alt="Icon"></a></td>
-                <td><a href="www.linkedin.com"><img src="assets/icons/linkedin.png" width="40" height="40" alt="Icon"></a></td>
-                <td><a href="www.facebook.com"><img src="assets/icons/fb.png" width="40" height="40"alt="Icon"></a></td>
-                <td><a href="www.youtube.com"><img src="assets/icons/youtube.png" width="40" height="40" alt="Icon"></a></td>
-            </table>
-          </div>
-          <div class="col-2">
-            <table class="footer-follow">
-              <tr>
-                <th  colspan="2">Contact</th>
-              </tr>
-              <tr>
-                <td>info@logsight.ai</td>
-              </tr>
-            </table>
-          </div>
 
-        </div>
 
 
       </div>
     </div>
+  </div>
+  <!-- End of NEW   -->
 
-  </div> <!-- Main -->
+  <!-- Array Footer Section -->
+  <div class="footer-sm">
+    <div class="container-l">
+      <div class="row text-center align-items-center justify-content-center">
+        <div class="col-4">
+          <table class="footer-follow">
+            <tr>
+              <th colspan="3">© logsight.ai 2021</th>
+            </tr>
+          </table>
+        </div>
+        <div class="col-3">
+          <table class="footer-follow">
+            <tr>
+              <th  colspan="4">Follow us</th>
+            </tr>
+            <tr>
+              <td><a href="www.twitter.com"><img src="assets/icons/twitter.png" width="45" height="40" alt="Icon"></a></td>
+              <td><a href="www.linkedin.com"><img src="assets/icons/linkedin.png" width="40" height="40" alt="Icon"></a></td>
+              <td><a href="www.facebook.com"><img src="assets/icons/fb.png" width="40" height="40"alt="Icon"></a></td>
+              <td><a href="www.youtube.com"><img src="assets/icons/youtube.png" width="40" height="40" alt="Icon"></a></td>
+          </table>
+        </div>
+        <div class="col-2">
+          <table class="footer-follow">
+            <tr>
+              <th  colspan="2">Contact</th>
+            </tr>
+            <tr>
+              <td>info@logsight.ai</td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+
+</div> <!-- Main -->
 </body>
 </html>

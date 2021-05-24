@@ -5,6 +5,7 @@ import {filter, map, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../auth/authentication.service";
+import {TourService} from "ngx-ui-tour-md-menu";
 
 @Component({
   selector: "'ngx-header','ngx-pages'",
@@ -48,9 +49,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private router: Router,
               private breakpointService: NbMediaBreakpointsService,
-              private authService: AuthenticationService) {
-  }
+              private authService: AuthenticationService, private tourService: TourService) {
 
+              this.tourService.initialize([{
+                anchorId: 'anchorDashboard',
+                content: 'Get an overview of your system at the Dashboard. This includes the statistics of your log data, as well as top incidents within a period of time',
+                enableBackdrop: true
+              },
+                {
+                  anchorId: 'anchorIncidents',
+                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
+                  enableBackdrop: true
+                },
+                {
+                  anchorId: 'anchorVanalysis',
+                  content: 'Explore the power of automated log parsing. Visualize log parameters and detect deviations.',
+                  enableBackdrop: true
+                },
+                {
+                  anchorId: 'anchorIntegration',
+                  content: 'Send logs via many possible connectors.',
+                  enableBackdrop: true
+                },
+                {
+                  anchorId: 'anchorKibana',
+                  content: 'Get fully dedicated Kibana and explore the countless possibilities for visualisations.',
+                  enableBackdrop: true
+                }]);
+
+            }
   ngOnInit() {
 
     this.authService.getLoggedUser().subscribe(user => {

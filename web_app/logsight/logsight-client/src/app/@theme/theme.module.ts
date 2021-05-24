@@ -37,6 +37,14 @@ import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
 import {RouterModule} from "@angular/router";
+import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
+import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatDialogModule} from "@angular/material/dialog";
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -68,7 +76,13 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, ...NB_MODULES, RouterModule, NbTabsetModule],
+  imports: [CommonModule, ...NB_MODULES, RouterModule, NbTabsetModule, TourMatMenuModule, MatCardModule,     MatIconModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    MatCardModule],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

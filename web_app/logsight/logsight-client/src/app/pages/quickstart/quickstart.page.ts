@@ -32,7 +32,7 @@ export class QuickstartPage implements OnInit {
               private router: Router,
               private tourService: TourService) {
 
-    tourService.start()
+    // tourService.start()
   }
 
 

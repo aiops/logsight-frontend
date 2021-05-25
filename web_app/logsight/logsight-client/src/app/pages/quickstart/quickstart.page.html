@@ -1,34 +1,37 @@
 <div align="center">
 
-  <h3>Choose a way to connect and explore your logs through the lenses of AI</h3>
+  <h3>Choose a way to connect</h3>
+  <p style="font-size: 18px">Now, let’s get your logs to your logsight.ai models. <br>
+    Please choose one of the source types below.</p>
 </div>
 <br>
-<br>
-<div class="col-md-12 col-lg-12 col-xxxl-12">
+<div class="row justify-content-md-center" style="max-width: 100%">
+<div class="col-md-12 col-lg-12 col-xxxl-12" style="padding-left: 20%; padding-right: 20%">
   <nb-card>
     <nb-card-body align="center">
-      <h1>Without setup</h1>
-      <h5>Use our sample log data to explore logsight AI features, no production data required.</h5>
+      <h1 style="color: #ff247c">Explore logsight.ai without setup</h1>
+      <p style="font-size: 18px">Use our sample log data to explore logsight AI features, no production data required.</p>
       <br>
 
       <button tourAnchor="anchorid" nbButton size="giant" type="button" (click)="createApplication()"> Try now
       </button>
 <!--      <div ></div>-->
-      <div *ngIf="!progressIsHidden" style="margin-top: 50px">
-        <h6>Please wait until we load the sample data...</h6>
-      <nb-progress-bar [displayValue]="true" status="warning" [hidden]="progressIsHidden" [value]="progressValue"></nb-progress-bar>
+      <div *ngIf="!progressIsHidden" style="margin-top: 30px">
+        <p style="font-size: 18px">Please wait while we send sample logs to your account.
+          <br>It may take a minute or two.</p>
+      <nb-progress-bar [displayValue]="true" status="danger" [hidden]="progressIsHidden" [value]="progressValue"></nb-progress-bar>
       </div>
     </nb-card-body>
   </nb-card>
 
 <div align="center">
-  <h1>OR</h1>
-  <h5>Send us logs</h5>
+  <h5>OR</h5>
+  <p style="font-size: 18px">Send us logs ...</p>
 </div>
   <nb-card>
     <nb-card-body align="center">
-      <h1>Via plugins</h1>
-      <h5>We provide integrations for various platforms</h5>
+      <h1 style="color: #ff247c">Via plugins</h1>
+      <p style="font-size: 18px">We provide integrations for various platforms</p >
       <div class="row" align="center">
         <div class="text-white col-md-3 p-3 border-0">
           <div class="card">
@@ -74,6 +77,6 @@
     </nb-card-body>
   </nb-card>
 
-
+</div>
 
 </div>

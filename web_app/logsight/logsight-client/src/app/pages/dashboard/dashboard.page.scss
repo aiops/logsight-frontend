@@ -3,11 +3,14 @@ th, td {
 }
 
 .error {
-  color: red !important;
+  color: #fd4747 !important;
+  font-weight: 600;
+  padding-top: 10%;
 }
 
 .info {
   color: #00b0e8 !important;
+  font-weight: 600;
 }
 
 /deep/ .template:hover {
@@ -38,3 +41,4 @@ p {
   justify-content: center;
   align-items: center
 }
+

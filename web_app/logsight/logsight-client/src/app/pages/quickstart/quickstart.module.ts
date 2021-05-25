@@ -6,7 +6,7 @@ import {
   NbTabsetModule,
   NbUserModule,
   NbListModule,
-  NbRouteTabsetModule, NbStepperModule, NbAccordionModule, NbProgressBarModule, NbSpinnerModule,
+  NbRouteTabsetModule, NbStepperModule, NbAccordionModule, NbProgressBarModule, NbSpinnerModule, NbLayoutModule,
 } from '@nebular/theme';
 import { QuickstartRoutingModule } from './quickstart-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -47,7 +47,8 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
     MatInputModule,
     MatDialogModule,
     TourMatMenuModule,
-    MatCardModule
+    MatCardModule,
+    NbLayoutModule
   ],
   providers: [
     ],

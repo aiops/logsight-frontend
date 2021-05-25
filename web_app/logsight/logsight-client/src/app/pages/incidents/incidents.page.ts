@@ -16,8 +16,11 @@ import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
 import { NbDialogService, NbPopoverDirective } from '@nebular/theme';
 import * as moment from 'moment'
-import { retry, share, switchMap, takeUntil } from 'rxjs/operators';
+import { map, retry, share, switchMap, takeUntil } from 'rxjs/operators';
 import { DashboardService } from '../dashboard/dashboard.service';
+import { Application } from '../../@core/common/application';
+import { AuthenticationService } from '../../auth/authentication.service';
+import { IntegrationService } from '../../@core/service/integration.service';
 
 @Component({
   selector: 'incidents',
@@ -33,6 +36,9 @@ export class IncidentsPage implements OnInit {
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   openDatePicker = false;
   applicationId: number;
+  applications: Application[] = [];
+  startDateTime = 'now-12h';
+  endDateTime = 'now'
 
   constructor(private route: ActivatedRoute,
               private incidentsService: IncidentsService,
@@ -40,7 +46,9 @@ export class IncidentsPage implements OnInit {
               private messagingService: MessagingService,
               private notificationService: NotificationsService,
               private dialogService: NbDialogService,
-              private dashboardService: DashboardService) {
+              private dashboardService: DashboardService,
+              private authService: AuthenticationService,
+              private integrationService: IntegrationService) {
   }
 
   ngOnInit(): void {
@@ -50,38 +58,44 @@ export class IncidentsPage implements OnInit {
       const applicationParam = queryParams.get('applicationId') //TODO send the applicationId
       this.applicationId = applicationParam ? +applicationParam : null
       if (dateTime && endTime) {
-        const startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss');
-        const endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss');
-        this.loadIncidentsTableData(startDateTime.format('YYYY-MM-DDTHH:mm:ss'),
-          endDateTime.format('YYYY-MM-DDTHH:mm:ss'), this.applicationId)
-        this.loadHeatmapData(startDateTime.format('YYYY-MM-DDTHH:mm:ss'),
-          endDateTime.format('YYYY-MM-DDTHH:mm:ss'), this.applicationId)
-      } else if (dateTime && !endTime) {
-        let startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss');
-        this.loadIncidentsTableData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss'),
-          this.applicationId)
-        this.loadHeatmapData(dateTime, startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss'),
-          this.applicationId)
+        this.startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+        this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+
+        this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
+        this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
       } else {
-        this.loadIncidentsTableData('now-12h', 'now', this.applicationId)  // TODO heatmap with the times
-        this.loadHeatmapData('now-12h', 'now', this.applicationId)
+        this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
+        this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
       }
     });
 
-    this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
-      if (true) { //if selectedApplication and change 1
-        this.variableAnalysisService.loadSpecificTemplate(1, selected['item']).subscribe(
-          resp => {
-            this.dialogService.open(SpecificTemplateModalComponent, {
-              context: {
-                data: resp.second,
-                type: resp.first
-              }, dialogClass: 'model-full'
-            });
-          }, err => {
-            console.log(err)
-            this.notificationService.error('Error', 'Error fetching data')
-          })
+    this.messagingService.getVariableAnalysisTemplate()
+      .pipe(map(it => it['item']))
+      .subscribe(selected => {
+        if (selected.applicationId) {
+          this.variableAnalysisService.loadSpecificTemplate(selected.applicationId, this.startDateTime,
+            this.endDateTime, selected).subscribe(
+            resp => {
+              this.dialogService.open(SpecificTemplateModalComponent, {
+                context: {
+                  data: resp.second,
+                  type: resp.first
+                }, dialogClass: 'model-full'
+              });
+            }, err => {
+              console.log(err)
+              this.notificationService.error('Error', 'Error fetching data')
+            })
+        }
+      })
+
+    this.authService.getLoggedUser().pipe(
+      switchMap(user => this.integrationService.loadApplications(user.key))
+    ).subscribe(resp => {
+      this.applications = resp;
+      if (this.applications.length > 0) {
+        // this.applicationId = this.applications[0].id;
+        this.applicationSelected(this.applicationId);
       }
     })
   }
@@ -101,15 +115,15 @@ export class IncidentsPage implements OnInit {
     this.popover.hide();
     this.openDatePicker = false;
     if (event.relativeTimeChecked) {
-      this.loadHeatmapData(event.relativeDateTime, 'now', this.applicationId)
-      this.loadIncidentsTableData(event.relativeDateTime, 'now', this.applicationId)
+      this.startDateTime = event.relativeDateTime
+      this.endDateTime = 'now'
+      this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     } else if (event.absoluteTimeChecked) {
-      this.loadHeatmapData(
-        event.absoluteDateTime.startDateTime.toISOString(),
-        event.absoluteDateTime.endDateTime.toISOString(), this.applicationId)
-      this.loadIncidentsTableData(
-        event.absoluteDateTime.startDateTime.toISOString(),
-        event.absoluteDateTime.endDateTime.toISOString(), this.applicationId)
+      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
+      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     }
   }
 
@@ -119,6 +133,12 @@ export class IncidentsPage implements OnInit {
     if (!this.openDatePicker) {
       this.popover.hide();
     }
+  }
+
+  applicationSelected(appId: number) {
+    appId === 0 ? this.applicationId = null : this.applicationId = appId;
+    this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
+    this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
   }
 
 }

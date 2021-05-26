@@ -1167,7 +1167,7 @@ header {
   border: transparent;
   border-radius: 10px;
   max-width: 600px;
-  min-width: 400px;
+  min-width: 300px;
 }
 
 .plan-table-left .plan-pricing-details span, .plan-table-right .plan-pricing-details span {

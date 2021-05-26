@@ -7,11 +7,11 @@ export class MessagingService {
 
   private variableAnalysisTemplateSelected = new Subject<any>();
 
-  sendVariableAnalysisTemplate(item: { template: string, param: string, paramValue: string }) {
+  sendVariableAnalysisTemplate(item: { template: string, param: string, paramValue: string, applicationId: number }) {
     this.variableAnalysisTemplateSelected.next({ item });
   }
 
-  getVariableAnalysisTemplate(): Observable<{ template: string, param: string, paramValue: string }> {
+  getVariableAnalysisTemplate(): Observable<{ template: string, param: string, paramValue: string, applicationId: number }> {
     return this.variableAnalysisTemplateSelected.asObservable();
   }
 }

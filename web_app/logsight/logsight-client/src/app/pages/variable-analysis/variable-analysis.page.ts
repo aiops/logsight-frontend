@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Application } from '../../@core/common/application';
@@ -8,7 +8,7 @@ import { VariableAnalysisService } from '../../@core/service/variable-analysis.s
 import { FormControl, FormGroup } from '@angular/forms';
 import { VariableAnalysisHit } from '../../@core/common/variable-analysis-hit';
 import { MessagingService } from '../../@core/service/messaging.service';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbPopoverDirective } from '@nebular/theme';
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 import { TopNTemplatesData } from '../../@core/common/top-n-templates-data';
 
@@ -30,8 +30,14 @@ export class VariableAnalysisPage implements OnInit {
   topNTemplatesNow: TopNTemplatesData[];
   topNTemplatesOlder: TopNTemplatesData[];
   allTemplatesLoading: boolean;
+  @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+  openDatePicker = false;
+  startDateTime = 'now-12h';
+  endDateTime = 'now'
 
-  constructor(private variableAnalysisService: VariableAnalysisService, private integrationService: IntegrationService,
+  constructor(private variableAnalysisService: VariableAnalysisService,
+              private integrationService: IntegrationService,
               private authService: AuthenticationService,
               private notificationService: NotificationsService,
               private messagingService: MessagingService,
@@ -61,7 +67,8 @@ export class VariableAnalysisPage implements OnInit {
 
     this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
       if (this.selectedApplicationId) {
-        this.variableAnalysisService.loadSpecificTemplate(this.selectedApplicationId, selected['item']).subscribe(
+        this.variableAnalysisService.loadSpecificTemplate(this.selectedApplicationId, this.startDateTime,
+          this.endDateTime, selected['item']).subscribe(
           resp => {
             this.dialogService.open(SpecificTemplateModalComponent, {
               context: {
@@ -78,7 +85,8 @@ export class VariableAnalysisPage implements OnInit {
   }
 
   loadVariableAnalysisData(search: string | null = null) {
-    this.variableAnalysisService.loadData(this.selectedApplicationId, search).subscribe(
+    this.variableAnalysisService.loadData(this.selectedApplicationId, this.startDateTime, this.endDateTime,
+      search).subscribe(
       resp => {
         this.variableAnalysisHits = resp;
         this.allTemplatesLoading = false;
@@ -92,14 +100,36 @@ export class VariableAnalysisPage implements OnInit {
     this.selectedApplicationId = appId
     this.loadVariableAnalysisData();
 
-    this.variableAnalysisService.getLogCountLineChart(this.selectedApplicationId).subscribe(resp => {
+    this.variableAnalysisService.getLogCountLineChart(this.selectedApplicationId, this.startDateTime,
+      this.endDateTime).subscribe(resp => {
       this.logCountLineChart = resp
     });
 
-    this.variableAnalysisService.getTopNTemplates(this.selectedApplicationId).subscribe(resp => {
+    this.variableAnalysisService.getTopNTemplates(this.selectedApplicationId, this.startDateTime,
+      this.endDateTime).subscribe(resp => {
       this.topNTemplatesNow = resp.now;
       this.topNTemplatesOlder = resp.older;
     });
   }
 
+  onDateTimeSearch(event) {
+    this.popover.hide();
+    this.openDatePicker = false;
+    if (event.relativeTimeChecked) {
+      this.startDateTime = event.relativeDateTime
+      this.endDateTime = 'now'
+    } else if (event.absoluteTimeChecked) {
+      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
+      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+    }
+    this.applicationSelected(this.selectedApplicationId)
+  }
+
+  openPopover() {
+    this.popover.show();
+    this.openDatePicker = !this.openDatePicker
+    if (!this.openDatePicker) {
+      this.popover.hide();
+    }
+  }
 }

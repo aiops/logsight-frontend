@@ -6,5 +6,6 @@ export interface VariableAnalysisHit {
   params: HitParam[],
   result: string,
   actualLevel: string,
-  timestamp: Date | string
+  timestamp: Date | string,
+  applicationId: number
 }

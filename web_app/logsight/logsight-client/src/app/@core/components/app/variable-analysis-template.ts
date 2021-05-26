@@ -9,7 +9,7 @@ import { HitParam } from '../../common/hit-param';
       <span *ngFor="let pt of parsedTemplates">
       <span style="color: white">{{pt.parsedTemplate}}</span>
       <span class="template" style="color: #ff247c"
-            (click)="selectTemplate(pt.template, pt.param, pt.paramValue)">{{ pt.paramValue }}</span>
+            (click)="selectTemplate(pt.template, pt.param, pt.paramValue, pt.applicationId)">{{ pt.paramValue }}</span>
     </span>
     </div>
   `
@@ -23,10 +23,10 @@ export class VariableAnalysisTemplate implements OnInit {
   }
 
   @Input() data: VariableAnalysisHit;
-  parsedTemplates: { template: string, parsedTemplate: string, param: string, paramValue: string }[] = []
+  parsedTemplates: { template: string, parsedTemplate: string, param: string, paramValue: string, applicationId: number }[] = []
 
-  selectTemplate(template: string, param: string, paramValue: string) {
-    const item = { template: template, param, paramValue }
+  selectTemplate(template: string, param: string, paramValue: string, applicationId: number) {
+    const item = { template: template, param, paramValue, applicationId }
     this.messagingService.sendVariableAnalysisTemplate(item)
   }
 
@@ -38,7 +38,13 @@ export class VariableAnalysisTemplate implements OnInit {
       } else {
         const paramValue = this.getValueForParam(item.params, `param_${i}`)
         this.parsedTemplates.push(
-          { template: item.template, parsedTemplate: templates[i], param: `param_${i}`, paramValue: paramValue });
+          {
+            template: item.template,
+            parsedTemplate: templates[i],
+            param: `param_${i}`,
+            paramValue: paramValue,
+            applicationId: item.applicationId
+          });
       }
     }
   }

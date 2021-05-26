@@ -80,7 +80,6 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.heatmapData$.subscribe(data => {
-      console.log(data)
       this.heatmapData = data.data;
     })
 
@@ -122,7 +121,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
     this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
       if (true) {
-        this.variableAnalysisService.loadSpecificTemplate(this.applications[0].id, selected['item']).subscribe(
+        this.variableAnalysisService.loadSpecificTemplate(this.applications[0].id, this.startDateTime, this.endDateTime, selected['item']).subscribe(
           resp => {
             this.dialogService.open(SpecificTemplateModalComponent, {
               context: {

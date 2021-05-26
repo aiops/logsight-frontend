@@ -103,6 +103,7 @@ export class IncidentsPage implements OnInit {
   private loadIncidentsTableData(startTime: string, endTime: string, applicationId: number | null) {
     this.incidentsService.loadIncidentsTableData(startTime, endTime, applicationId).subscribe(resp => {
       this.tableData = resp
+      console.log(this.tableData)
     })
   }
 

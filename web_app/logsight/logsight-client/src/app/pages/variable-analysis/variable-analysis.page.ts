@@ -11,6 +11,7 @@ import { MessagingService } from '../../@core/service/messaging.service';
 import { NbDialogService, NbPopoverDirective } from '@nebular/theme';
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 import { TopNTemplatesData } from '../../@core/common/top-n-templates-data';
+import {TopNTemplatesDataMerged} from "../../@core/common/top-n-templates-data-merged";
 
 @Component({
   selector: 'variable-analysis',
@@ -29,12 +30,14 @@ export class VariableAnalysisPage implements OnInit {
   });
   topNTemplatesNow: TopNTemplatesData[];
   topNTemplatesOlder: TopNTemplatesData[];
+  templatesRowMerged: TopNTemplatesDataMerged[];
   allTemplatesLoading: boolean;
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   openDatePicker = false;
   startDateTime = 'now-12h';
   endDateTime = 'now'
+
 
   constructor(private variableAnalysisService: VariableAnalysisService,
               private integrationService: IntegrationService,
@@ -109,6 +112,14 @@ export class VariableAnalysisPage implements OnInit {
       this.endDateTime).subscribe(resp => {
       this.topNTemplatesNow = resp.now;
       this.topNTemplatesOlder = resp.older;
+      this.templatesRowMerged = [ ];
+      for (var _i = 0; _i < this.topNTemplatesNow.length; _i++) {
+        this.templatesRowMerged.push({
+          new: this.topNTemplatesNow[_i],
+          old: this.topNTemplatesOlder[_i]
+        });
+        console.log(this.templatesRowMerged)
+      }
     });
   }
 

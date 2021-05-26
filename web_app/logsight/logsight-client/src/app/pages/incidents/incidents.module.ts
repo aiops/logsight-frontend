@@ -17,6 +17,7 @@ import { PagesModule } from '../pages.module';
 import { FormsModule } from '@angular/forms';
 import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.module';
 import {DashboardService} from "../dashboard/dashboard.service";
+import {BarChartModule} from "@swimlane/ngx-charts";
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import {DashboardService} from "../dashboard/dashboard.service";
         ChartsWrapperModule,
         NbPopoverModule,
         NbTooltipModule,
-        NbSelectModule
+        NbSelectModule,
+        BarChartModule
     ],
   declarations: [
     IncidentsPage,

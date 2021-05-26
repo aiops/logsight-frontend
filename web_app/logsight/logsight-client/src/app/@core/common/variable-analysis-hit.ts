@@ -7,5 +7,7 @@ export interface VariableAnalysisHit {
   result: string,
   actualLevel: string,
   timestamp: Date | string,
-  applicationId: number
+  applicationId: number,
+  smr: number,
+  rate_now: number,
 }

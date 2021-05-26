@@ -40,24 +40,24 @@
                 <div class="main-row">
                   <div class="row parent">
                     <div class="col-md-1">
-                 <span style="float: left; color: yellow; font-weight: 600;"
+                 <span style="float: left; color: yellow; font-weight: 600; font-size: 18px"
                        [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
                        class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}</span>
                     </div>
-                    <div class="col-md-11">
+                    <div class="col-md-11" style="font-weight: 600; font-size: 18px">
                       <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
                     </div>
                   </div>
                   <div class="row parent">
                     <div class="col-md-1">
-                   <span style="float: left; color: yellow; font-weight: 600;"
+                   <span style="float: left; color: yellow; font-weight: 600; font-size: 18px"
                          [class.error]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'ERROR'"
                          [class.info]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'INFO'"
                          class="mr-2">
                 {{topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]?.actualLevel}}</span>
                     </div>
-                    <div class="col-md-11">
+                    <div class="col-md-11" style="font-weight: 600; font-size: 18px">
                       <app-ad-banner
                         [row]="topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]"></app-ad-banner>
                     </div>
@@ -81,13 +81,13 @@
               <div *ngIf="topKIncident.scAnomalies.length <= 1">
                 <div class="row main-row">
                   <div class="col-md-1">
-                <span style="float: left; color: yellow;font-weight: 600;"
+                <span style="float: left; color: yellow; font-weight: 600; font-size: 18px"
                       [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
                       [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
                       class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}
              </span>
                   </div>
-                  <div class="offset-md-1 col-md-11">
+                  <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 18px">
                     <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
                   </div>
                   <div class="row offset-md-1 details">
@@ -124,24 +124,24 @@
                 <div class="main-row">
                   <div class="row parent">
                     <div class="col-md-1">
-                 <span style="float: left; color: yellow;font-weight: 600;"
+                 <span style="float: left; color: yellow;font-weight: 600; font-size: 18px"
                        [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
                        class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}</span>
                     </div>
-                    <div class="col-md-11">
+                    <div class="col-md-11" style="font-weight: 600; font-size: 18px">
                       <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
                     </div>
                   </div>
                   <div class="row parent">
                     <div class="col-md-1">
-                   <span style="float: left; color: yellow;"
+                   <span style="float: left; color: yellow;font-size: 18px"
                          [class.error]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'ERROR'"
                          [class.info]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'INFO'"
                          class="mr-2">
                 {{topKIncident.semanticAD[topKIncident.semanticAD.length - 1]?.actualLevel}}</span>
                     </div>
-                    <div class="col-md-11">
+                    <div class="col-md-11" style="font-weight: 600; font-size: 18px">
                       <app-ad-banner
                         [row]="topKIncident.semanticAD[topKIncident.semanticAD.length - 1]"></app-ad-banner>
                     </div>
@@ -164,13 +164,13 @@
               <div *ngIf="topKIncident.semanticAD.length <= 1">
                 <div class="row main-row">
                   <div class="col-md-1">
-                <span style="float: left; color: yellow;font-weight: 600;"
+                <span style="float: left; color: yellow;font-weight: 600; font-size: 18px"
                       [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
                       [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
                       class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}
              </span>
                   </div>
-                  <div class="offset-md-1 col-md-11">
+                  <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 18px">
                     <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
                   </div>
                   <div class="row offset-md-1 details">
@@ -210,24 +210,24 @@
                 <div class="main-row">
                   <div class="row parent">
                     <div class="col-md-1">
-                 <span style="float: left; color: yellow;font-weight: 600;"
+                 <span style="float: left; color: yellow;font-weight: 600; font-size: 18px"
                        [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
                        class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}</span>
                     </div>
-                    <div class="col-md-11">
+                    <div class="col-md-11" style="font-weight: 600; font-size: 18px">
                       <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
                     </div>
                   </div>
                   <div class="row parent">
                     <div class="col-md-1">
-                   <span style="float: left; color: yellow;font-weight: 600;"
+                   <span style="float: left; color: yellow;font-weight: 600; font-size: 18px"
                          [class.error]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'ERROR'"
                          [class.info]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'INFO'"
                          class="mr-2">
                 {{topKIncident.newTemplates[topKIncident.newTemplates.length - 1]?.actualLevel}}</span>
                     </div>
-                    <div class="col-md-11">
+                    <div class="col-md-11" style="font-weight: 600; font-size: 18px">
                       <app-ad-banner
                         [row]="topKIncident.newTemplates[topKIncident.newTemplates.length - 1]"></app-ad-banner>
                     </div>
@@ -251,13 +251,13 @@
               <div *ngIf="topKIncident.newTemplates.length <= 1">
                 <div class="row main-row">
                   <div class="col-md-1">
-                <span style="float: left;  color: yellow;font-weight: 600;"
+                <span style="float: left;  color: yellow;font-weight: 600; font-size: 18px"
                       [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
                       [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
                       class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}
              </span>
                   </div>
-                  <div class="offset-md-1 col-md-11">
+                  <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 18px">
                     <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
                   </div>
                   <div class="row offset-md-1 details">

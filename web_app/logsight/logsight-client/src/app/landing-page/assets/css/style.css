@@ -1144,7 +1144,110 @@ header {
 	  color: #97a6b5;
 	}
 
+  /*Plans for Pricing*/
 
+.plan-pricing-intro {
+  padding-bottom: 0px;
+  margin: 30px 0 20px 0;
+}
+
+.plan-pricing-intro h1 {
+  font-size: 32px;
+  color: #364655;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.plan-pricing-section .plan-table-left, .plan-pricing-section .plan-table-right {
+  padding: 5px 20px 5px 20px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px 60px 0px rgba(0,0,0,.1);
+  border: transparent;
+  border-radius: 10px;
+  max-width: 600px;
+  min-width: 400px;
+}
+
+.plan-table-left .plan-pricing-details span, .plan-table-right .plan-pricing-details span {
+  display: block;
+  font-family: 'Montserrat';
+  font-size: 32px;
+  font-weight: 600;
+  color: #364655;
+  opacity: 0.7;
+  margin: 5px 0;
+}
+
+.plan-table-left .plan-pricing-details p, .plan-table-right .plan-pricing-details p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #364655;
+  line-height: 1.4;
+}
+
+.plan-table-left .plan-pricing-details ul, .plan-table-right .plan-pricing-details ul {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0;;
+}
+
+.plan-table-left .plan-pricing-details li, .plan-table-right .plan-pricing-details li {
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-weight: 500;
+  color: #97a6b5;
+  line-height: 1.4;
+  letter-spacing: 0;
+  margin-bottom: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.plan-pricing-section .plan-table-left:hover, .plan-pricing-section .plan-table-right:hover {
+  box-shadow: 0 0 80px 0 rgba(0, 0, 0, 0.1);
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.plan-pricing-section .plan-table-left, .plan-pricing-section .plan-table-right {
+  margin-top: 20px;
+}
+
+.plan-pricing-section .plan-table-center {
+  margin-top: 0;
+}
+
+.plan-price {
+  list-style-type: none;
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.plan-price:hover {
+  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+}
+
+.plan-price .header {
+  background-color: #222b45;
+  color: white;
+  font-size: 25px;
+}
+
+.plan-price .grey {
+  background-color: #eee;
+  font-size: 20px;
+}
+
+.plan-pricing-section .col-sm-auto{
+  margin: 10px;
+}
 
 
 	/* ----- Pricing Tables Styling Starts ----- */
@@ -1220,7 +1323,7 @@ header {
 	.table-left .pricing-details h2, .table-right .pricing-details h2 {
 		font-size: 21px;
 		font-weight: 600;
-		color: #6d48e5;
+		color: #364655;
 		margin-bottom: 30px;
 	}
 
@@ -1827,6 +1930,10 @@ input, label {
   visibility: visible;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
+}
+
+.footer-sm .col-auto{
+  margin: 10px;
 }
 
 .no-touch .footer-sm ul li a:hover {

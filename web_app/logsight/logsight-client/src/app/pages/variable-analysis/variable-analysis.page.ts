@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@a
 import { AuthenticationService } from '../../auth/authentication.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Application } from '../../@core/common/application';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 import { IntegrationService } from '../../@core/service/integration.service';
 import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -11,7 +11,10 @@ import { MessagingService } from '../../@core/service/messaging.service';
 import { NbDialogService, NbPopoverDirective } from '@nebular/theme';
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 import { TopNTemplatesData } from '../../@core/common/top-n-templates-data';
-import {TopNTemplatesDataMerged} from "../../@core/common/top-n-templates-data-merged";
+import { TopNTemplatesDataMerged } from '../../@core/common/top-n-templates-data-merged';
+import { Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'variable-analysis',
@@ -37,14 +40,16 @@ export class VariableAnalysisPage implements OnInit {
   openDatePicker = false;
   startDateTime = 'now-12h';
   endDateTime = 'now'
-
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private variableAnalysisService: VariableAnalysisService,
               private integrationService: IntegrationService,
               private authService: AuthenticationService,
               private notificationService: NotificationsService,
               private messagingService: MessagingService,
-              private dialogService: NbDialogService) {
+              private dialogService: NbDialogService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -54,7 +59,7 @@ export class VariableAnalysisPage implements OnInit {
       this.applications = resp;
       if (this.applications.length > 0) {
         this.selectedApplicationId = this.applications[0].id;
-        this.applicationSelected(this.selectedApplicationId);
+        this.subscribeQueryParams();
       }
     })
 
@@ -68,7 +73,7 @@ export class VariableAnalysisPage implements OnInit {
         this.loadVariableAnalysisData(search);
       });
 
-    this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
+    this.messagingService.getVariableAnalysisTemplate().pipe(takeUntil(this.destroy$)).subscribe(selected => {
       if (this.selectedApplicationId) {
         this.variableAnalysisService.loadSpecificTemplate(this.selectedApplicationId, this.startDateTime,
           this.endDateTime, selected['item']).subscribe(
@@ -87,7 +92,29 @@ export class VariableAnalysisPage implements OnInit {
     })
   }
 
+  subscribeQueryParams() {
+    this.route.queryParamMap.subscribe(queryParams => {
+      const startTime = queryParams.get('startTime');
+      const endTime = queryParams.get('endTime');
+      const dateTimeType = queryParams.get('dateTimeType');
+      if (startTime && endTime) {
+        if (dateTimeType == 'absolute') {
+          this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+          this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+        } else {
+          this.startDateTime = startTime;
+          this.endDateTime = endTime;
+        }
+      } else {
+        this.startDateTime = 'now-12h'
+        this.endDateTime = 'now'
+      }
+      this.applicationSelected(this.selectedApplicationId);
+    })
+  }
+
   loadVariableAnalysisData(search: string | null = null) {
+    console.log('asd', this.startDateTime, this.endDateTime)
     this.variableAnalysisService.loadData(this.selectedApplicationId, this.startDateTime, this.endDateTime,
       search).subscribe(
       resp => {
@@ -112,13 +139,12 @@ export class VariableAnalysisPage implements OnInit {
       this.endDateTime).subscribe(resp => {
       this.topNTemplatesNow = resp.now;
       this.topNTemplatesOlder = resp.older;
-      this.templatesRowMerged = [ ];
+      this.templatesRowMerged = [];
       for (var _i = 0; _i < this.topNTemplatesNow.length; _i++) {
         this.templatesRowMerged.push({
           new: this.topNTemplatesNow[_i],
           old: this.topNTemplatesOlder[_i]
         });
-        console.log(this.templatesRowMerged)
       }
     });
   }
@@ -126,14 +152,18 @@ export class VariableAnalysisPage implements OnInit {
   onDateTimeSearch(event) {
     this.popover.hide();
     this.openDatePicker = false;
+    let dateTimeType = 'absolute';
     if (event.relativeTimeChecked) {
       this.startDateTime = event.relativeDateTime
       this.endDateTime = 'now'
+      dateTimeType = 'relative';
     } else if (event.absoluteTimeChecked) {
       this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
       this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
     }
     this.applicationSelected(this.selectedApplicationId)
+    this.router.navigate([],
+      { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
   }
 
   openPopover() {
@@ -142,5 +172,10 @@ export class VariableAnalysisPage implements OnInit {
     if (!this.openDatePicker) {
       this.popover.hide();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 }

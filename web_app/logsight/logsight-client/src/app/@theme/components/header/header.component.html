@@ -65,7 +65,7 @@
     <div tourAnchor="anchorDashboard" style="white-space: nowrap; margin-right: 2rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/pages/dashboard">
+          <a class="nav-link" [routerLink]="['/pages', 'dashboard']">
             <nb-icon icon="grid-outline"></nb-icon>
             Dashboard
           </a>
@@ -75,17 +75,17 @@
     <div tourAnchor="anchorIncidents" style="white-space: nowrap; margin-right: 2rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/pages/incidents">
+          <a class="nav-link" [routerLink]="['/pages', 'incidents']">
             <nb-icon icon="radio-button-on-outline"></nb-icon>
             Incidents
           </a>
         </li>
       </ul>
     </div>
-    <div tourAnchor="anchorVanalysis"style="white-space: nowrap; margin-right: 4rem">
+    <div tourAnchor="anchorVanalysis" style="white-space: nowrap; margin-right: 4rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/pages/variable-analysis">
+          <a class="nav-link" [routerLink]="['/pages', 'variable-analysis']">
             <nb-icon icon="bar-chart"></nb-icon>
             Variable Analysis
           </a>
@@ -95,7 +95,7 @@
     <div tourAnchor="anchorIntegration" style="white-space: nowrap; margin-right: 2rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/pages/integration">
+          <a class="nav-link" [routerLink]="['/pages', 'integration']">
             <nb-icon icon="link-outline"></nb-icon>
             Integration
           </a>
@@ -213,7 +213,7 @@
 <tour-step-template hidden>
   <ng-template let-step="step">
     <br>
-    <mat-card (click)="$event.stopPropagation()"  [style.backgroundColor]="'white'">
+    <mat-card (click)="$event.stopPropagation()" [style.backgroundColor]="'white'">
       <mat-card-title>
         {{step?.title}}
       </mat-card-title>

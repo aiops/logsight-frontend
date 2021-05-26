@@ -1,9 +1,9 @@
 import {
-  Component,
+  Component, OnDestroy,
   OnInit, TemplateRef, ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { IncidentsService } from './incidents.service';
 import { options } from './chart-options';
 import { IncidentTableData } from '../../@core/common/incident-table-data';
@@ -28,7 +28,7 @@ import { IntegrationService } from '../../@core/service/integration.service';
   templateUrl: './incidents.page.html',
   encapsulation: ViewEncapsulation.None
 })
-export class IncidentsPage implements OnInit {
+export class IncidentsPage implements OnInit, OnDestroy {
   heatmapData = [];
   tableData: IncidentTableData;
   options = options.timelineChart()
@@ -39,6 +39,7 @@ export class IncidentsPage implements OnInit {
   applications: Application[] = [];
   startDateTime = 'now-12h';
   endDateTime = 'now'
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private route: ActivatedRoute,
               private incidentsService: IncidentsService,
@@ -48,29 +49,32 @@ export class IncidentsPage implements OnInit {
               private dialogService: NbDialogService,
               private dashboardService: DashboardService,
               private authService: AuthenticationService,
-              private integrationService: IntegrationService) {
+              private integrationService: IntegrationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParams => {
-      const dateTime = queryParams.get('startTime')
+      const startTime = queryParams.get('startTime')
       const endTime = queryParams.get('endTime')
-      const applicationParam = queryParams.get('applicationId') //TODO send the applicationId
+      const applicationParam = queryParams.get('applicationId')
+      const dateTimeType = queryParams.get('dateTimeType');
       this.applicationId = applicationParam ? +applicationParam : null
-      if (dateTime && endTime) {
-        this.startDateTime = moment(dateTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
-        this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
-
-        this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
-        this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
-      } else {
-        this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
-        this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+      if (startTime && endTime) {
+        if (dateTimeType == 'absolute') {
+          this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+          this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+        } else {
+          this.startDateTime = startTime;
+          this.endDateTime = endTime;
+        }
       }
+      this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
     });
 
     this.messagingService.getVariableAnalysisTemplate()
-      .pipe(map(it => it['item']))
+      .pipe(takeUntil(this.destroy$), map(it => it['item']))
       .subscribe(selected => {
         if (selected.applicationId) {
           this.variableAnalysisService.loadSpecificTemplate(selected.applicationId, this.startDateTime,
@@ -103,7 +107,6 @@ export class IncidentsPage implements OnInit {
   private loadIncidentsTableData(startTime: string, endTime: string, applicationId: number | null) {
     this.incidentsService.loadIncidentsTableData(startTime, endTime, applicationId).subscribe(resp => {
       this.tableData = resp
-      console.log(this.tableData)
     })
   }
 
@@ -115,7 +118,9 @@ export class IncidentsPage implements OnInit {
   onDateTimeSearch(event) {
     this.popover.hide();
     this.openDatePicker = false;
+    let dateTimeType = 'absolute';
     if (event.relativeTimeChecked) {
+      dateTimeType = 'relative'
       this.startDateTime = event.relativeDateTime
       this.endDateTime = 'now'
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
@@ -126,6 +131,8 @@ export class IncidentsPage implements OnInit {
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     }
+    this.router.navigate([],
+      { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
   }
 
   openPopover() {
@@ -142,4 +149,8 @@ export class IncidentsPage implements OnInit {
     this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
+  }
 }

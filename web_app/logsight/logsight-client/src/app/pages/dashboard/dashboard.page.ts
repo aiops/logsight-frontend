@@ -2,13 +2,13 @@ import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/c
 import { NbDialogService, NbPopoverDirective, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './dashboard.service';
 import { TopKIncident } from '../../@core/common/top-k-Incident';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
 import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
 import { AuthenticationService } from '../../auth/authentication.service';
-import { retry, share, skip, switchMap, takeUntil, timeout } from 'rxjs/operators';
+import { map, retry, share, skip, switchMap, takeUntil, timeout } from 'rxjs/operators';
 import { Application } from '../../@core/common/application';
 import { IntegrationService } from '../../@core/service/integration.service';
 import { Observable, Subject, timer, combineLatest } from 'rxjs';
@@ -39,8 +39,9 @@ export class DashboardPage implements OnInit, OnDestroy {
   reload$: Subject<boolean> = new Subject();
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+  private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private dashboardService: DashboardService, private router: Router,
+  constructor(private dashboardService: DashboardService, private router: Router, private route: ActivatedRoute,
               private variableAnalysisService: VariableAnalysisService,
               private messagingService: MessagingService,
               private notificationService: NotificationsService,
@@ -119,23 +120,45 @@ export class DashboardPage implements OnInit, OnDestroy {
       switchMap(user => this.integrationService.loadApplications(user.key))
     ).subscribe(resp => this.applications = resp)
 
-    this.messagingService.getVariableAnalysisTemplate().subscribe(selected => {
-      if (true) {
-        this.variableAnalysisService.loadSpecificTemplate(this.applications[0].id, this.startDateTime, this.endDateTime, selected['item']).subscribe(
-          resp => {
-            this.dialogService.open(SpecificTemplateModalComponent, {
-              context: {
-                data: resp.second,
-                type: resp.first
-              }, dialogClass: 'model-full'
-            });
-          }, err => {
-            console.log(err)
-            this.notificationService.error('Error', 'Error fetching data')
-          })
+    this.messagingService.getVariableAnalysisTemplate()
+      .pipe(takeUntil(this.destroy$), map(it => it['item']))
+      .subscribe(selected => {
+        this.variableAnalysisService.loadSpecificTemplate(selected.applicationId, this.startDateTime,
+          this.endDateTime, selected)
+          .subscribe(
+            resp => {
+              this.dialogService.open(SpecificTemplateModalComponent, {
+                context: {
+                  data: resp.second,
+                  type: resp.first
+                }, dialogClass: 'model-full'
+              });
+            }, err => {
+              console.log(err)
+              this.notificationService.error('Error', 'Error fetching data')
+            })
+      })
+    setTimeout(_ => this.reload$.next(), 2000); //hack to start first refresh
+
+    this.route.queryParamMap.subscribe(queryParams => {
+      const startTime = queryParams.get('startTime');
+      const endTime = queryParams.get('endTime');
+      const dateTimeType = queryParams.get('dateTimeType');
+      if (startTime && endTime) {
+        if (dateTimeType == 'absolute') {
+          this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+          this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+        } else {
+          this.startDateTime = startTime;
+          this.endDateTime = endTime;
+        }
+        this.reload$.next()
+      } else {
+        this.startDateTime = 'now-12h'
+        this.endDateTime = 'now'
+        this.reload$.next()
       }
     })
-    setTimeout(_ => this.reload$.next(), 2000); //hack to start first refresh
   }
 
   loadHeatmapData(startTime: string, endTime: string) {
@@ -181,7 +204,8 @@ export class DashboardPage implements OnInit, OnDestroy {
         template: it2[0].template,
         params: params,
         actualLevel: it2[0].actual_level,
-        timeStamp: new Date(it2[0]['@timestamp'])
+        timeStamp: new Date(it2[0]['@timestamp']),
+        applicationId: data.applicationId //this should be checked
       }
     });
   }
@@ -192,6 +216,8 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.stopPolling.next();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   private navigateToIncidentsPage(startTime: string, endTime: String, applicationId: number) {
@@ -201,13 +227,17 @@ export class DashboardPage implements OnInit, OnDestroy {
   onDateTimeSearch(event) {
     this.popover.hide();
     this.openDatePicker = false;
+    let dateTimeType = 'absolute';
     if (event.relativeTimeChecked) {
       this.startDateTime = event.relativeDateTime
       this.endDateTime = 'now'
+      dateTimeType = 'relative';
     } else if (event.absoluteTimeChecked) {
       this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
       this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
     }
+    this.router.navigate([],
+      { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
     this.reload$.next();
   }
 

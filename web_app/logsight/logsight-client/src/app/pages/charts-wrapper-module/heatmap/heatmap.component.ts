@@ -24,11 +24,11 @@ export class HeatmapComponent {
 
   colorScheme = {
     domain: [
-      '#f0ff00',
-      '#ffba08',
-      '#faa307',
-      '#f48c06',
-      '#e85d04',
+      'rgb(0,255,0)',
+      '#ffb908',
+      '#fa8507',
+      '#f47506',
+      '#e86704',
       '#dc2f02',
       '#D00000',
     ]

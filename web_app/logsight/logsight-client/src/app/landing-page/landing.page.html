@@ -10,12 +10,11 @@
   <meta name="description" content="Array Multipurpose Startup Business Template">
   <meta name="keywords" content="Array HTML Template, Array Startup Business Template, Startup Template">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
-  <script>hljs.highlightAll();</script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js" integrity="sha512-s+tOYYcC3Jybgr9mVsdAxsRYlGNq4mlAurOrfNuGMQ/SCofNPu92tjE7YRZCsdEtWL1yGkqk15fU/ark206YTg==" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/a11y-light.min.css" integrity="sha512-PW96n2amVglidqEDLPUdjJ0zByhT20poSqWJYZRutR6CP2QH58k96WmorqNnC4QXnosNeqMJM8FR/93isIifDQ==" crossorigin="anonymous" />
 </head>
 
 <body>
+
 <header class="animated fadeInDown" id="navbar">
   <section class="web_homePage" (scroll)="onWindowScroll($event);">
     <!-- Navbar Section -->
@@ -27,14 +26,14 @@
           <!--          <div class="navbar navbar-title">-->
           <a class="navbar-brand" href="#"><img alt="logo" src="../../../../assets/images/logsight_logo.png" height="60" /></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto navbar-right">
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Features</a></li>
-<!--            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#partners">Partners</a></li>-->
+            <!--            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#partners">Partners</a></li>-->
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#research">Platform</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#pricingPlans">Pricing</a></li>
             <li class="nav-item" (click)="redirectToLogin()"><a class="btn-login nav-link js-scroll-trigger">Login</a></li>
@@ -171,7 +170,7 @@
         <div class="f-text">
           <div class="left-content">
             <h2>5 minute introduction to logsight.ai</h2>
-<!--            <p>Get familiar with our motivation and technology.</p>-->
+            <!--            <p>Get familiar with our motivation and technology.</p>-->
             <br>
           </div>
         </div>
@@ -189,8 +188,11 @@
             <a href="https://arxiv.org/pdf/2008.09340.pdf">Know more</a>
           </div>
         </div>
-        <div class="f-image" style="max-width: 300px">
-          <img class="img-fluid" src="../../assets/images/documentation.png" alt="Feature">
+        <div class="f-image" style="max-width: 400px">
+          <img class="img-fluid" src="../../assets/images/paper_logsy.png" alt="Feature">
+          <!--          <embed src="https://drive.google.com/viewerng/-->
+          <!--viewer?embedded=true&url=https://arxiv.org/pdf/2008.09340.pdf"-->
+          <!--                 type="application/pdf">-->
         </div>
       </div>
 
@@ -219,12 +221,11 @@
   <div id="products" class="features wow fadeInDown">
     <div class="container-m">
       <div class="row text-center">
-
         <div class="col-sm">
           <div class="feature-list">
             <div class="card-icon">
               <div class="card-img">
-                <img src="../../assets/images/fundamentalai.jpg" width="150" alt="Feature">
+                <img src="../../assets/images/fundamentalai.jpg" width="100" alt="Feature">
               </div>
             </div>
             <div class="card-text">
@@ -240,7 +241,7 @@
           <div class="feature-list">
             <div class="card-icon">
               <div class="card-img">
-                <img src="../../assets/images/research.png" width="150" alt="Feature">
+                <img src="../../assets/images/research.png" width="100" alt="Feature">
               </div>
             </div>
             <div class="card-text">
@@ -255,7 +256,7 @@
           <div class="feature-list">
             <div class="card-icon">
               <div class="card-img">
-                <img src="../../assets/images/industryintegration.jpg" width="150" alt="Feature">
+                <img src="../../assets/images/industryintegration.jpg" width="100" alt="Feature">
               </div>
             </div>
             <div class="card-text">
@@ -273,56 +274,56 @@
 
 
 
-<!--  <div class="pricing-section text-center">-->
-<!--    <div class="container-m">-->
-<!--      <div class="row">-->
-<!--        <div class="col-sm-12">-->
-<!--&lt;!&ndash;          <div class="pricing-intro wow fadeInDown">&ndash;&gt;-->
-<!--&lt;!&ndash;            &ndash;&gt;-->
-<!--&lt;!&ndash;          </div>&ndash;&gt;-->
-<!--          <div class="row">-->
-<!--            <div class="col-md-4">-->
-<!--              <div class="table-left wow fadeInDown">-->
-<!--                <div class="pricing-details">-->
-<!--                  <img src="../../assets/images/fundamentalai.jpg" width="200" alt="Icon">-->
-<!--                  <h2>60x faster <br>troubleshooting</h2>-->
-<!--                  <ul>-->
-<!--                    <li>End-to-end deep learning models on raw software logs, no conversion.-->
-<!--                      &lt;!&ndash;                      <li>The company trains its models by feeding millions of log lines.</li>&ndash;&gt;-->
-<!--                      &lt;!&ndash;                      <li>The technology can be deployed to an organization, where it starts troubleshooting every connected service.</li>&ndash;&gt;-->
-<!--                  </ul>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="col-md-4">-->
-<!--              <div class="table-right wow fadeInDown">-->
-<!--                <div class="pricing-details">-->
-<!--                  <img src="../../assets/images/research.png" width="200" alt="Icon">-->
-<!--                  <h2>7 years of research in AI <br> for software systems</h2>-->
-<!--                  <ul>-->
-<!--                    &lt;!&ndash;                      <li>7 years of research in AI for software systems.</li>&ndash;&gt;-->
-<!--                    <li>Team of experts with over 50 publications.</li>-->
-<!--                  </ul>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+  <!--  <div class="pricing-section text-center">-->
+  <!--    <div class="container-m">-->
+  <!--      <div class="row">-->
+  <!--        <div class="col-sm-12">-->
+  <!--&lt;!&ndash;          <div class="pricing-intro wow fadeInDown">&ndash;&gt;-->
+  <!--&lt;!&ndash;            &ndash;&gt;-->
+  <!--&lt;!&ndash;          </div>&ndash;&gt;-->
+  <!--          <div class="row">-->
+  <!--            <div class="col-md-4">-->
+  <!--              <div class="table-left wow fadeInDown">-->
+  <!--                <div class="pricing-details">-->
+  <!--                  <img src="../../assets/images/fundamentalai.jpg" width="200" alt="Icon">-->
+  <!--                  <h2>60x faster <br>troubleshooting</h2>-->
+  <!--                  <ul>-->
+  <!--                    <li>End-to-end deep learning models on raw software logs, no conversion.-->
+  <!--                      &lt;!&ndash;                      <li>The company trains its models by feeding millions of log lines.</li>&ndash;&gt;-->
+  <!--                      &lt;!&ndash;                      <li>The technology can be deployed to an organization, where it starts troubleshooting every connected service.</li>&ndash;&gt;-->
+  <!--                  </ul>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--            <div class="col-md-4">-->
+  <!--              <div class="table-right wow fadeInDown">-->
+  <!--                <div class="pricing-details">-->
+  <!--                  <img src="../../assets/images/research.png" width="200" alt="Icon">-->
+  <!--                  <h2>7 years of research in AI <br> for software systems</h2>-->
+  <!--                  <ul>-->
+  <!--                    &lt;!&ndash;                      <li>7 years of research in AI for software systems.</li>&ndash;&gt;-->
+  <!--                    <li>Team of experts with over 50 publications.</li>-->
+  <!--                  </ul>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
 
-<!--            <div class="col-md-4">-->
-<!--              <div class="table-right wow fadeInDown">-->
-<!--                <div class="pricing-details">-->
-<!--                  <img src="../../assets/images/industryintegration.jpg" width="200" alt="Icon">-->
-<!--                  <h2>Industry ready <br> methods</h2>-->
-<!--                  <ul>-->
-<!--                    <li>Deployed and continiously improved in collaboration.</li>-->
-<!--                  </ul>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
+  <!--            <div class="col-md-4">-->
+  <!--              <div class="table-right wow fadeInDown">-->
+  <!--                <div class="pricing-details">-->
+  <!--                  <img src="../../assets/images/industryintegration.jpg" width="200" alt="Icon">-->
+  <!--                  <h2>Industry ready <br> methods</h2>-->
+  <!--                  <ul>-->
+  <!--                    <li>Deployed and continiously improved in collaboration.</li>-->
+  <!--                  </ul>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
 
   <!-- Counter Section Ends -->
@@ -507,35 +508,35 @@
 
   <!-- NEW -->
 
-<!--  <div id="partners" class="yd-stats wow fadeIn">-->
-<!--    <div class="container-s">-->
-<!--      <div class="row text-center">-->
-<!--        <div class="col-sm-12">-->
-<!--          <div class="intro">-->
-<!--            <h2>Deployments</h2>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--  <div id="partners" class="yd-stats wow fadeIn">-->
+  <!--    <div class="container-s">-->
+  <!--      <div class="row text-center">-->
+  <!--        <div class="col-sm-12">-->
+  <!--          <div class="intro">-->
+  <!--            <h2>Deployments</h2>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-sm">-->
-<!--          <div class="feature-list">-->
-<!--            <div class="card-img">-->
-<!--              <img src="../../assets/images/partners/TU-Berlin-Logo.svg.png" width="200" alt="Feature">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-sm">-->
+  <!--          <div class="feature-list">-->
+  <!--            <div class="card-img">-->
+  <!--              <img src="../../assets/images/partners/TU-Berlin-Logo.svg.png" width="200" alt="Feature">-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        &lt;!&ndash;          <div class="col-sm">&ndash;&gt;-->
-<!--        &lt;!&ndash;            <div class="feature-list">&ndash;&gt;-->
-<!--        &lt;!&ndash;              <div class="card-img">&ndash;&gt;-->
-<!--        &lt;!&ndash;                <img src="../../assets/images/partners/atos-logo-blue.png" width="300" alt="Feature">&ndash;&gt;-->
-<!--        &lt;!&ndash;              </div>&ndash;&gt;-->
-<!--        &lt;!&ndash;            </div>&ndash;&gt;-->
-<!--        &lt;!&ndash;          </div>&ndash;&gt;-->
+  <!--        &lt;!&ndash;          <div class="col-sm">&ndash;&gt;-->
+  <!--        &lt;!&ndash;            <div class="feature-list">&ndash;&gt;-->
+  <!--        &lt;!&ndash;              <div class="card-img">&ndash;&gt;-->
+  <!--        &lt;!&ndash;                <img src="../../assets/images/partners/atos-logo-blue.png" width="300" alt="Feature">&ndash;&gt;-->
+  <!--        &lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--        &lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--        &lt;!&ndash;          </div>&ndash;&gt;-->
 
 
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
 
   <div id="pricingPlans" style="background-color: white" class="plan-pricing-section text-center">
@@ -548,20 +549,20 @@
         </div>
         <div class="row" style="padding-left:10%">
           <div class="col-sm-auto">
-          <div class="plan-table-left wow fadeInDown">
-            <div class="plan-pricing-details">
-              <ul class="plan-price">
-                <li class="header">Free</li>
-                <li class="grey">Up to 10 GB</li>
-                <li>All features available</li>
-                <li>Reporting</li>
-                <li>Connectors</li>
-                <li>-</li>
-                <li>-</li>
-                <li>-</li>
-              </ul>
+            <div class="plan-table-left wow fadeInDown">
+              <div class="plan-pricing-details">
+                <ul class="plan-price">
+                  <li class="header">Free</li>
+                  <li class="grey">Up to 10 GB</li>
+                  <li>All features available</li>
+                  <li>Reporting</li>
+                  <li>Connectors</li>
+                  <li>-</li>
+                  <li>-</li>
+                  <li>-</li>
+                </ul>
+              </div>
             </div>
-          </div>
           </div>
           <div class="col-sm-auto ">
             <div class="plan-table-right wow fadeInDown">
@@ -578,31 +579,31 @@
                 </ul>
               </div>
             </div>
-        </div>
-<!--          <div class="columns">-->
-<!--            <ul class="price">-->
-<!--              <li class="header">Free</li>-->
-<!--              <li class="grey">Up to 10 GB</li>-->
-<!--              <li>All features available</li>-->
-<!--              <li>Reporting</li>-->
-<!--              <li>Connectors</li>-->
-<!--              <li>-</li>-->
-<!--              <li>-</li>-->
-<!--              <li>-</li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--          <div class="columns">-->
-<!--            <ul class="price">-->
-<!--              <li class="header">Enterprise</li>-->
-<!--              <li class="grey">$ 2 / GB</li>-->
-<!--              <li>All features available</li>-->
-<!--              <li>Reporting</li>-->
-<!--              <li>Connectors</li>-->
-<!--              <li>ELK integration</li>-->
-<!--              <li>Costumized models</li>-->
-<!--              <li>Support</li>-->
-<!--            </ul>-->
-<!--          </div>-->
+          </div>
+          <!--          <div class="columns">-->
+          <!--            <ul class="price">-->
+          <!--              <li class="header">Free</li>-->
+          <!--              <li class="grey">Up to 10 GB</li>-->
+          <!--              <li>All features available</li>-->
+          <!--              <li>Reporting</li>-->
+          <!--              <li>Connectors</li>-->
+          <!--              <li>-</li>-->
+          <!--              <li>-</li>-->
+          <!--              <li>-</li>-->
+          <!--            </ul>-->
+          <!--          </div>-->
+          <!--          <div class="columns">-->
+          <!--            <ul class="price">-->
+          <!--              <li class="header">Enterprise</li>-->
+          <!--              <li class="grey">$ 2 / GB</li>-->
+          <!--              <li>All features available</li>-->
+          <!--              <li>Reporting</li>-->
+          <!--              <li>Connectors</li>-->
+          <!--              <li>ELK integration</li>-->
+          <!--              <li>Costumized models</li>-->
+          <!--              <li>Support</li>-->
+          <!--            </ul>-->
+          <!--          </div>-->
         </div>
       </div>
     </div>
@@ -611,9 +612,9 @@
 
   <div id="features" class="flex-split wow fadeIn" style="visibility: visible; animation-name: fadeIn; background-color: #f6f6fd">
     <div class="container-m">
-<!--      <div class="flex-intro align-center">-->
-<!--        <h2>Integration </h2>-->
-<!--      </div>-->
+      <!--      <div class="flex-intro align-center">-->
+      <!--        <h2>Integration </h2>-->
+      <!--      </div>-->
       <div class="flex-inner align-center">
         <div class="f-text">
           <div class="left-content">
@@ -626,17 +627,17 @@
           <img style="max-width: 100%" class="img-fluid" src="../../assets/images/integration_connectors.png" alt="Feature">
         </div>
 
-<!--        <div class="f-text">-->
-<!--          <div class="left-content">-->
-<!--            <h2>The Science behind logsight.ai</h2>-->
-<!--            &lt;!&ndash;              <p>Algorithms are the heart of intelligent log analytics. Read all about how the Logsight Research.</p>&ndash;&gt;-->
-<!--            <br>-->
-<!--            <a href="#">Know more</a>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="f-image">-->
-<!--          <img class="img-fluid" src="../../assets/images/integration-right.png" alt="Feature">-->
-<!--        </div>-->
+        <!--        <div class="f-text">-->
+        <!--          <div class="left-content">-->
+        <!--            <h2>The Science behind logsight.ai</h2>-->
+        <!--            &lt;!&ndash;              <p>Algorithms are the heart of intelligent log analytics. Read all about how the Logsight Research.</p>&ndash;&gt;-->
+        <!--            <br>-->
+        <!--            <a href="#">Know more</a>-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--        <div class="f-image">-->
+        <!--          <img class="img-fluid" src="../../assets/images/integration-right.png" alt="Feature">-->
+        <!--        </div>-->
       </div>
 
 
@@ -670,9 +671,9 @@
         </div>
         <div class="col-auto">
           <table class="footer-follow">
-<!--            <tr>-->
-<!--              <th  colspan="4">Follow us</th>-->
-<!--            </tr>-->
+            <!--            <tr>-->
+            <!--              <th  colspan="4">Follow us</th>-->
+            <!--            </tr>-->
             <tr>
               <td><a href="www.twitter.com"><img src="assets/icons/twitter.png" width="40" height="40" alt="Icon"></a></td>
               <td><a href="www.linkedin.com"><img src="assets/icons/linkedin.png" width="40" height="40" alt="Icon"></a></td>
@@ -682,9 +683,9 @@
         </div>
         <div class="col-auto">
           <table class="footer-follow">
-<!--            <tr>-->
-<!--              <th  colspan="2">Contact</th>-->
-<!--            </tr>-->
+            <!--            <tr>-->
+            <!--              <th  colspan="2">Contact</th>-->
+            <!--            </tr>-->
             <tr>
               <td>info@logsight.ai</td>
             </tr>
@@ -698,5 +699,6 @@
   </div>
 
 </div> <!-- Main -->
+
 </body>
 </html>

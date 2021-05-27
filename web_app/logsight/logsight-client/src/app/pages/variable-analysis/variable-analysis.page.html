@@ -59,14 +59,14 @@
           <table class="table table-striped table-borderless">
             <thead>
             <tr>
-              <th style="width: 20%"></th>
+              <th style="width: 20%">Ratio</th>
               <th style="width: 80%">Log type</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let row of templatesRowMerged">
               <td style="padding-right: 0px">
-                <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [yAxis]="true" [roundEdges]="false" [view]="[300,80]" [results]="[{'name':'Current', 'value':row.new.count}, {'name':'Previous', 'value':row.old.count}]"></ngx-charts-bar-horizontal>
+                <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [yAxis]="true" [roundEdges]="false" [view]="[300,100]" [results]="[{'name':'Current', 'value':row.new.count}, {'name':'Previous', 'value':row.old.count}]"></ngx-charts-bar-horizontal>
               </td>
               <td style="padding-right: 10%; padding-top: 20px">
                 {{row.new.template}}

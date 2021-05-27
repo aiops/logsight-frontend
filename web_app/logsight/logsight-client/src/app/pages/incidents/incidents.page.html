@@ -39,16 +39,16 @@
               <tr>
                 <th style="width: 2%" scope="col"></th>
                 <th style="width: 15%" scope="col">Timestamp</th>
-                <th style="width: 8%" scope="col">Ratio</th>
+                <th style="width: 12%" scope="col">Ratio</th>
                 <th style="width: 5%" scope="col">Level</th>
-                <th style="width: 70%" scope="col">Log message</th>
+                <th style="width: 66%" scope="col">Log message</th>
               </tr>
               </thead>
               <tbody>
               <tr *ngFor="let row of tableData.semanticCountAds; let i = index">
                 <td>{{i + 1}}</td>
                 <td>{{row.timestamp}}</td>
-                <td><ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [noBarWhenZero]="true" [yAxis]="false" [roundEdges]="false" [view]="[150,80]" [results]="[{'name':'Current', 'value':row.rate_now}, {'name':'Previous', 'value':row.smr}]"></ngx-charts-bar-horizontal>
+                <td><ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [noBarWhenZero]="true" [yAxis]="false" [roundEdges]="false" [view]="[180,80]" [results]="[{'name':'Current', 'value':row.rate_now}, {'name':'Previous', 'value':row.smr}]"></ngx-charts-bar-horizontal>
                 </td>
                 <td>
                 <span style="float: left; color: yellow; font-weight: 600;"

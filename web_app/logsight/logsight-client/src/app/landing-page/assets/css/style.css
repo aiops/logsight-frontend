@@ -69,7 +69,7 @@ table {
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Montserrat';
-  font-size: 36px;
+  font-size: 30px;
 }
 
 p {
@@ -693,7 +693,7 @@ header {
 /*----------- Flex Features ------------*/
 
 .flex-split {
-	padding: 30px 0;
+	padding: 50px 0;
   background: #ffffff;
 }
 
@@ -803,7 +803,7 @@ header {
 
 .features {
 	padding: 0px 0;
-	background: #f6f6fd;
+	background: #ffffff;
 }
 
 .features-intro {
@@ -862,7 +862,7 @@ header {
 }
 
 .card-text h3 {
-	font-size: 18px;
+	font-size: 22px;
 	font-weight: 600;
 	color: #364655;
 	margin-bottom: 15px;
@@ -1201,7 +1201,7 @@ header {
   line-height: 1.4;
   letter-spacing: 0;
   margin-bottom: 10px;
-  padding: 20px;
+  padding: 7px;
   text-align: center;
 }
 

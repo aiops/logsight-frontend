@@ -1,15 +1,16 @@
-  <ngx-charts-line-chart
-    [scheme]="colorScheme"
-    [legend]="legend"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxis]="xAxis"
-    [yAxis]="yAxis"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [timeline]="timeline"
-    [autoScale]="true"
-    [results]="data"
-    [showGridLines]="false"
-    style="fill: white">
-  </ngx-charts-line-chart>
+<ngx-charts-line-chart
+  [scheme]="colorScheme"
+  [legend]="legend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [timeline]="timeline"
+  [autoScale]="true"
+  [results]="data"
+  [showGridLines]="false"
+  [xAxisTickFormatting]="xAxisTickFormattingFn"
+  style="fill: white">
+</ngx-charts-line-chart>

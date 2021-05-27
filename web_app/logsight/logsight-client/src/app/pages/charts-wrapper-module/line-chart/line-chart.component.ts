@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+
 @Component({
   selector: 'line-chart',
   styleUrls: ['./line-chart.component.scss'],
@@ -17,12 +18,33 @@ export class LineChartComponent {
   xAxisLabel: string = 'Year';
   yAxisLabel: string = 'Population';
   timeline: boolean = true;
+  counter = 0;
 
   colorScheme = {
     domain: ['#f0ff00', '#d94800', '#ff006e', '#8338ec', '#3a86ff']
   };
 
   constructor() {
+  }
+
+  xAxisTickFormattingFn = (e) => {
+    // const length = this.data[0].series.length
+    // console.log(e)
+    // if (this.data[0].series[0].name == e ||
+    //   this.data[0].series[1].name == e ||
+    //   this.data[0].series[2].name == e) {
+    //
+    //   return e
+    // } else {
+    //   return '';
+    // }
+    // this.counter = this.counter + 1;
+    // if (this.data[0].series.length > 30 && this.counter % 2 == 0) {
+    //   return e
+    // } else {
+    //   return ''
+    // }
+    return e;
   }
 
 }

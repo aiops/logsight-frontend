@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { data } from './data';
 import {DatePipe} from "@angular/common";
 @Component({
@@ -6,7 +6,7 @@ import {DatePipe} from "@angular/common";
   styleUrls: ['./grouped-vertical-bar-chart.component.scss'],
   templateUrl: './grouped-vertical-bar-chart.component.html',
 })
-export class GroupedVerticalBarChartComponent {
+export class GroupedVerticalBarChartComponent{
   @Input() data = [];
 
   showXAxis: boolean = true;
@@ -18,7 +18,7 @@ export class GroupedVerticalBarChartComponent {
   showYAxisLabel: boolean = false;
   yAxisLabel: string = '';
   legendTitle: string = '';
-
+  xTicks = []
   colorScheme = {
     domain: ['#ffe700', '#7fd900', '#03ffa6', '#37bdfc',
       '#3a86ff', '#035eff', '#1900ff', '#8900ff',
@@ -30,10 +30,28 @@ export class GroupedVerticalBarChartComponent {
     this.data = data
   }
 
-  dateTickFormatting(val: any) {
-    const datepipe: DatePipe = new DatePipe('en-US');
-    let yourDate: Date = new Date(val + ' UTC-1');
-    return (datepipe.transform(yourDate, 'shortTime').toString())
-  }
+  // ngOnInit(): void {
+  //   var xTicksLen = this.data.length
+  //   var step = xTicksLen / 5
+  //   console.log(step)
+  //   for (let i = 0; i < xTicksLen; i++) {
+  //     if (i % step != 0){
+  //       this.xTicks.push('')
+  //     }else {
+  //       var pointName = this.data[i]
+  //       console.log("Pointname", pointName)
+  //       this.xTicks.push(pointName.name)
+  //     }
+  //   }
+  // }
+
+
+  // dateTickFormatting(val: any) {
+  //   console.log("VAL:", val)
+  //   const datepipe: DatePipe = new DatePipe('en-US');
+  //   let yourDate: Date = new Date(val + ' UTC-1');
+  //   return (datepipe.transform(yourDate, 'mediumTime').toString())
+  // }
+
 
 }

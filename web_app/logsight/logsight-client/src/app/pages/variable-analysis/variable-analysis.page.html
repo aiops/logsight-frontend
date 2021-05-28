@@ -26,7 +26,7 @@
   </div>
 
   <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">
-    <h5 style="font-weight: 600">Top 5 log types 1h</h5>
+    <h5 style="font-weight: 600">Top reoccuring log types</h5>
     <nb-card>
       <hr noshade="true">
       <div class="row">
@@ -60,7 +60,8 @@
             <thead>
             <tr>
               <th style="width: 20%">Ratio</th>
-              <th style="width: 80%">Log type</th>
+              <th style="width: 60%">Log type</th>
+              <th style="width: 20%">Description</th>
             </tr>
             </thead>
             <tbody>
@@ -70,6 +71,18 @@
               </td>
               <td style="padding-right: 10%; padding-top: 20px">
                 {{row.new.template}}
+              </td>
+
+              <td *ngIf="row.new.percentage < 10 " style="padding-right: 10%; padding-top: 20px">
+              Stable behaviour
+              </td>
+
+              <td *ngIf="row.new.percentage > 10 && row.new.count > row.old.count" style="padding-right: 10%; padding-top: 20px">
+                {{row.new.percentage}}% above normal
+              </td>
+
+              <td *ngIf="row.new.percentage > 10 && row.new.count < row.old.count" style="padding-right: 10%; padding-top: 20px">
+                {{row.new.percentage}}% below normal
               </td>
 
             </tr>

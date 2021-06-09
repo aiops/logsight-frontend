@@ -3,24 +3,24 @@
   <div class="col-md-3">
 
     <div class="row user_info">
-<!--      <nb-card class="p-3 row-one">-->
+      <!--      <nb-card class="p-3 row-one">-->
       <div class="col">
         <h5><b>User info</b></h5>
       </div>
-        <div class="row no-gutters p-3 row-one">
-          <div class="col" align="center">
-            <p class="mb-3">Username:</p>
-            <p class="mb-3"><b>{{email}}</b></p>
-            <p class="mb-3">PRIVATE_KEY:</p>
-            <p class="mb-3"><b>{{key}}</b></p>
-          </div>
+      <div class="row no-gutters p-3 row-one">
+        <div class="col" align="center">
+          <p class="mb-3">Username:</p>
+          <p class="mb-3"><b>{{email}}</b></p>
+          <p class="mb-3">PRIVATE_KEY:</p>
+          <p class="mb-3"><b>{{key}}</b></p>
         </div>
-        <!--        <div class="row">-->
-        <!--          <div class="col" style="margin-left: 20px">-->
-        <!--            <p class="key_text"><b>{{key}}</b></p>-->
-        <!--          </div>-->
-        <!--        </div>-->
-<!--      </nb-card>-->
+      </div>
+      <!--        <div class="row">-->
+      <!--          <div class="col" style="margin-left: 20px">-->
+      <!--            <p class="key_text"><b>{{key}}</b></p>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </nb-card>-->
     </div>
     <div class="row integration_types">
       <nb-card class="p-3 row-one">
@@ -56,68 +56,54 @@
             <h5 class="mb-3">Create application</h5>
           </div>
         </div>
-        <div class="row justify-content-between">
+        <div class="row p-3">
           <div class="col" style="margin-bottom: 3px">
             <form [formGroup]="form" (submit)="createApplication()" aria-labelledby="title">
-              <div class="form-control-group">
-                <div class="col-md-12" style="margin-bottom: 3px">
-                  <!--                  <label class="label" style="margin: 3px" for="name">Application name:</label>-->
-
+              <div class="row">
+                <div class="col-lg-12 col-xl-8" style="margin-top: 3px">
                   <input nbInput class="mr-2" type="text" formControlName="name" id="name"
                          placeholder="Application name" [required]="true"
                          [attr.aria-invalid]="form.invalid && form.touched ? true : null">
-                  <button nbButton class="create-app-btn" status="success" [disabled]="!form.valid">Create</button>
                   <ng-container *ngIf="form.controls['name'].invalid && form.touched">
                     <p class="error-message" *ngIf="form.controls['email'].errors?.required">
                       Application name is required!
                     </p>
                   </ng-container>
                 </div>
+                <div class="col-lg-12 col-xl-4">
+                  <button nbButton class="create-app-btn" status="success" [disabled]="!form.valid">Create</button>
+                </div>
               </div>
             </form>
           </div>
+          <table class="mt-3 table table-striped" *ngIf="applications.length > 0">
+            <thead>
+            <tr>
+              <th style="width: 15%">Id</th>
+              <th style="width: 80%">Name</th>
+              <th style="width: 10%">Delete</th>
+              <!--              <th scope="col">Status</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let row of applications">
+              <td>{{row.id}}</td>
+              <td>{{row.name}}</td>
+              <td><i (click)="removeApplication(row.id)" [title]='"Delete application"' class="ml-3 fas fa-trash pointer"></i></td>
+
+              <!--              <td>-->
+              <!--                <i [title]="row.status" *ngIf="row.status == 'IN_PROGRESS'" class="ml-3 fas fa-spinner fa-spin"></i>-->
+              <!--                <i [title]="row.status" *ngIf="row.status == 'ACTIVE'" class="ml-3 fas fa-check-circle"></i>-->
+              <!--              </td>-->
+            </tr>
+            </tbody>
+          </table>
+          <div class="text-center">
+            <p class="mt-3" *ngIf="applications.length == 0"><i>No current applications</i></p>
+          </div>
         </div>
       </nb-card>
     </div>
-    <div class="row applications">
-      <nb-card class="p-3 row-one">
-        <div class="row justify-content-end">
-          <div class="col-md-4">
-            <h5 class="mb-3">Active applications</h5>
-          </div>
-          <div class="col-md-4 ml-auto" style="margin-bottom: 3px">
-            <button nbButton class="btn btn-link show-app-btn" type="button" (click)="onBtnShowApp()" id="bt">
-              {{showHideAppBtn}}
-            </button>
-          </div>
-        </div>
-        <ng-container *ngIf="show">
-          <div class="row" style="margin-top: 10px">
-            <table class="table table-striped">
-              <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Status</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let row of applications">
-                <td>{{row.id}}</td>
-                <td>{{row.name}}</td>
-                <td>
-                  <i [title]="row.status" *ngIf="row.status == 'IN_PROGRESS'" class="ml-3 fas fa-spinner fa-spin"></i>
-                  <i [title]="row.status" *ngIf="row.status == 'ACTIVE'" class="ml-3 fas fa-check-circle"></i>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </ng-container>
-      </nb-card>
-    </div>
-
-
   </div>
 
   <div class="col-5 px-4">
@@ -130,7 +116,8 @@
           </div>
           <div class="row">
             <p class="dscr">To start sending logs from a Python script you need to install the Logsight Python-SDK:</p>
-            <pre><code style="color: white">pip install git+ssh://git@github.com/aiops/logsight-python-sdk.git</code></pre>
+            <pre><code
+              style="color: white">pip install git+ssh://git@github.com/aiops/logsight-python-sdk.git</code></pre>
           </div>
         </div>
         <!--        </nb-card>-->
@@ -213,7 +200,9 @@
 
           <div class="row">
             <h5>Prerequisites</h5>
-            <p>Have Filebeat installed, for more information on how to install: <a href="Have Filebeat installed, for more information on how to install: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html">https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html</a></p>
+            <p>Have Filebeat installed, for more information on how to install: <a
+              href="Have Filebeat installed, for more information on how to install: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html">https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html</a>
+            </p>
           </div>
 
           <div class="row">
@@ -221,14 +210,15 @@
             <div class="row">
               <table class="table table-borderless">
                 <tr>
-                <td>
-                  Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable Elastic output).
-                </td>
+                  <td>
+                    Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable
+                    Elastic output).
+                  </td>
                 </tr>
                 <tr>
-                <td>
-                  For more information about configuring Filebeat to use Logstash please refer to:
-                </td>
+                  <td>
+                    For more information about configuring Filebeat to use Logstash please refer to:
+                  </td>
                 </tr>
                 <tr>
                   <td>
@@ -291,7 +281,7 @@
                 <td>https://logsight.ai/api_v1/data</td>
               </tr>
               <tr>
-                <th>HTTP method	</th>
+                <th>HTTP method</th>
                 <td>POST</td>
               </tr>
               <tr>
@@ -349,7 +339,8 @@
     <div class="col-4 px-3">
       <h5>Example code</h5>
       <div>
-        <pre><code style="background-color: transparent" [highlight]="code_python" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
+        <pre><code style="background-color: transparent" [highlight]="code_python" (highlighted)="onHighlight($event)"
+                   [lineNumbers]="true"></code></pre>
       </div>
     </div>
   </ng-container>
@@ -358,7 +349,8 @@
     <div class="col-4 px-3 ">
       <h5>Example code</h5>
       <div>
-        <pre><code style="background-color: transparent" [highlight]="code_filebeats" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
+        <pre><code style="background-color: transparent" [highlight]="code_filebeats"
+                   (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
       </div>
     </div>
   </ng-container>
@@ -367,7 +359,8 @@
     <div class="col-4 px-3 ">
       <h5>Example code</h5>
       <div>
-        <pre><code style="background-color: transparent" [highlight]="code_rest" (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
+        <pre><code style="background-color: transparent" [highlight]="code_rest" (highlighted)="onHighlight($event)"
+                   [lineNumbers]="true"></code></pre>
       </div>
     </div>
   </ng-container>

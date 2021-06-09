@@ -6,42 +6,55 @@ html, body {
   height: 100%;
   margin: 0em;
 }
+
 // Div
-.filebeat{
+.filebeat {
   margin-right: 5px;
 }
 
 // Columns and rows
 
-.row-one{
+.row-one {
   width: 100%;
-  margin-right:10px
+  margin-right: 10px
 }
+
 // Label
-.label dscr{
+.label dscr {
   margin: 3px;
   font-size: large;
 }
 
 // Buttons
 
-.create-app-btn{
-  margin: 3px
+.create-app-btn {
+  margin: 3px;
 }
-.show-app-btn{
 
+.show-app-btn {
+
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.pointer:hover {
+  opacity: .7;
 }
 
 .python-btn {
- // background-image: url('../../../assets/icons/03a.svg') !important;
+  // background-image: url('../../../assets/icons/03a.svg') !important;
   border-radius: 50%;
   margin-right: 5px;
 }
+
 .filebeat-btn {
   // background-image: url('../../../assets/icons/03a.svg') !important;
   border-radius: 50%;
   margin-right: 5px;
 }
+
 .rest-btn {
   // background-image: url('../../../assets/icons/03a.svg') !important;
   border-radius: 50%;
@@ -50,13 +63,13 @@ html, body {
 
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   width: 100%;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .container {

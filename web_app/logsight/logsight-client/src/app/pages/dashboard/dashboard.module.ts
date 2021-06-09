@@ -9,22 +9,24 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.module';
 import { PagesModule } from '../pages.module';
+import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
-  imports: [
-    DashboardRoutingModule,
-    ThemeModule,
-    NgxChartsModule,
-    ChartModule,
-    NbCardModule,
-    Ng2SmartTableModule,
-    NgxDatatableModule,
-    ChartsWrapperModule,
-    PagesModule,
-    NbButtonModule,
-    NbIconModule,
-    NbPopoverModule
-  ],
+    imports: [
+        DashboardRoutingModule,
+        ThemeModule,
+        NgxChartsModule,
+        ChartModule,
+        NbCardModule,
+        Ng2SmartTableModule,
+        NgxDatatableModule,
+        ChartsWrapperModule,
+        PagesModule,
+        NbButtonModule,
+        NbIconModule,
+        NbPopoverModule,
+        TourMatMenuModule
+    ],
   declarations: [
     DashboardPage,
   ],

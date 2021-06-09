@@ -102,6 +102,18 @@
         </li>
       </ul>
     </div>
+
+<!--    <div tourAnchor="anchorQuickstart" style="white-space: nowrap; margin-right: 2rem">-->
+<!--      <ul class="nav navbar-nav" routerLinkActive="active">-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" [routerLink]="['/pages', 'quickstart']">-->
+<!--            <nb-icon icon="flash-outline"></nb-icon>-->
+<!--            Quickstart-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+
     <div tourAnchor="anchorKibana" style="white-space: nowrap; margin-right: 2rem">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item">
@@ -112,6 +124,9 @@
         </li>
       </ul>
     </div>
+
+
+
   </div>
   <!--    </div>-->
   <!--  </nav>-->
@@ -221,10 +236,15 @@
         {{step?.content}}
       </mat-card-content>
       <mat-card-actions>
+        <div class="row">
+        <div class="col-sm">
         <button mat-icon-button [disabled]="!tourService.hasNext(step)" (click)="tourService.next()">
           Next
-        </button>
+        </button></div>
+        <div class="col-sm" align="right">
         <button mat-button (click)="tourService.end()">{{step?.endBtnTitle}}</button>
+        </div>
+        </div>
       </mat-card-actions>
     </mat-card>
   </ng-template>

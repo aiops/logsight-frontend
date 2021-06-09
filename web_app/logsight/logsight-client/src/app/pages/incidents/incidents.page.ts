@@ -65,8 +65,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
           this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
           this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
         } else {
-          this.startDateTime = startTime;
-          this.endDateTime = endTime;
+          this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+          this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
         }
       }
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)

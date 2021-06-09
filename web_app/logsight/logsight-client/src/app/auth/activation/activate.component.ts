@@ -5,6 +5,7 @@ import { LoginService } from '../login.service';
 import { NotificationsService } from 'angular2-notifications';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LogsightUser } from '../../@core/common/logsight-user';
+import {interval} from "rxjs";
 
 @Component({
   selector: 'activate',
@@ -16,17 +17,23 @@ export class ActivateComponent implements OnInit {
   activationSuccess: boolean;
   loading = true;
   email: string;
+  progressValue: number;
+  curSec: number;
+
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
               private router: Router,
               private route: ActivatedRoute) {
   }
+
+
   ngOnInit(): void {
     //hack code to stop spinner
     const el = document.getElementById('nb-global-spinner');
     if (el) {
       el.style['display'] = 'none';
     }
+
     this.route.params
       .subscribe(params => {
 
@@ -37,7 +44,7 @@ export class ActivateComponent implements OnInit {
             this.loading = false
             this.email = this.user.email
             this.authService.login({email:this.email, password:'demo'}).subscribe(resp => {
-                this.router.navigate(['/pages/quickstart'])
+                this.router.navigate(['/pages/dashboard'])
               }, err => {
                 console.log('login error', err)
                 this.notificationService.error('Error', 'Incorrect or not activated email')

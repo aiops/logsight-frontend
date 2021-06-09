@@ -14,6 +14,7 @@ import { IntegrationService } from '../../@core/service/integration.service';
 import { Observable, Subject, timer, combineLatest } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment';
+import {TourService} from "ngx-ui-tour-md-menu";
 
 @Component({
   selector: 'dashboard',
@@ -47,7 +48,9 @@ export class DashboardPage implements OnInit, OnDestroy {
               private notificationService: NotificationsService,
               private dialogService: NbDialogService,
               private authService: AuthenticationService,
-              private integrationService: IntegrationService) {
+              private integrationService: IntegrationService,
+              private tourService: TourService) {
+
     this.heatmapData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
       switchMap(() => this.loadHeatmapData(this.startDateTime, this.endDateTime)),
       share(),
@@ -80,6 +83,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.heatmapData$.subscribe(data => {
       this.heatmapData = data.data;
     })
@@ -161,6 +165,9 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
   }
 
+  startTour(){
+    this.tourService.start()
+  }
   loadHeatmapData(startTime: string, endTime: string) {
     return this.dashboardService.loadHeatmapData(startTime, endTime, null)
   }
@@ -187,7 +194,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     const time = dateTime.split(' ')[1].split(':');
     const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
       +time[1]);
-    this.navigateToIncidentsPage(startDateTime.format('YYYY-MM-DDTHH:mm:ss.sss'),
+    this.navigateToIncidentsPage(startDateTime.subtract(1, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'),
       startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'), data.id)
   }
 

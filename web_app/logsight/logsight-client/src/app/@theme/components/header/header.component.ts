@@ -51,31 +51,38 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private breakpointService: NbMediaBreakpointsService,
               private authService: AuthenticationService, private tourService: TourService) {
 
-              this.tourService.initialize([{
+              this.tourService.initialize([
+                {
                 anchorId: 'anchorDashboard',
                 content: 'Get an overview of your system at the Dashboard. This includes the statistics of your log data, as well as top incidents within a period of time',
                 enableBackdrop: true
-              },
+                },
                 {
-                  anchorId: 'anchorIncidents',
+                  anchorId: 'anchorLogLevels',
                   content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
                   enableBackdrop: true
                 },
                 {
-                  anchorId: 'anchorVanalysis',
-                  content: 'Explore the power of automated log parsing. Visualize log parameters and detect deviations.',
+                  anchorId: 'anchorLogLevelDistribution',
+                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
                   enableBackdrop: true
                 },
                 {
-                  anchorId: 'anchorIntegration',
-                  content: 'Send logs via many possible connectors.',
+                  anchorId: 'anchorCognitiveAnomalies',
+                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
                   enableBackdrop: true
                 },
                 {
-                  anchorId: 'anchorKibana',
-                  content: 'Get fully dedicated Kibana and explore the countless possibilities for visualisations.',
+                  anchorId: 'anchorSystemOverview',
+                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
                   enableBackdrop: true
-                }]);
+                },
+                {
+                  anchorId: 'anchorTopIncidents',
+                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
+                  enableBackdrop: true
+                },
+                ]);
 
             }
   ngOnInit() {

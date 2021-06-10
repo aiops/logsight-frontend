@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.module';
 import {DashboardService} from "../dashboard/dashboard.service";
 import {BarChartModule} from "@swimlane/ngx-charts";
+import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import {BarChartModule} from "@swimlane/ngx-charts";
         NbPopoverModule,
         NbTooltipModule,
         NbSelectModule,
-        BarChartModule
+        BarChartModule,
+        TourMatMenuModule
     ],
   declarations: [
     IncidentsPage,

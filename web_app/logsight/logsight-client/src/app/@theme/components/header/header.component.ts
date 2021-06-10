@@ -55,33 +55,86 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 {
                 anchorId: 'anchorDashboard',
                 content: 'Get an overview of your system at the Dashboard. This includes the statistics of your log data, as well as top incidents within a period of time',
-                enableBackdrop: true
+                enableBackdrop: true,
+                  route: '/pages/dashboard'
                 },
                 {
                   anchorId: 'anchorLogLevels',
-                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
+                  content: 'Observe the ratio between error and normal logs.',
                   enableBackdrop: true
                 },
                 {
                   anchorId: 'anchorLogLevelDistribution',
-                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
+                  content: 'Here you see it through time. If you notice any strange changes, it might be an indication of anomaly!',
                   enableBackdrop: true
                 },
                 {
                   anchorId: 'anchorCognitiveAnomalies',
-                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
+                  content: 'This summarizes one of our deep learning anomaly detection methods. High number of anomalous messages may indicate a failure!',
                   enableBackdrop: true
                 },
                 {
                   anchorId: 'anchorSystemOverview',
-                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
+                  content: 'Get an overview of the system! Clicking on a red box will redirect you to a detailed view of the period!',
                   enableBackdrop: true
                 },
                 {
                   anchorId: 'anchorTopIncidents',
-                  content: 'Explore the incidents happened in your system, and speed up troublehsooting!',
+                  content: 'Here you can see the top 5 most severe incidents in the last 24 hours. Clicking on ' +
+                    'View Details will show you details of the incident!',
                   enableBackdrop: true
                 },
+                {
+                  anchorId: 'anchorIncidentsTab',
+                  content: 'In this tab, all of the incidents are shown with their description!',
+                  enableBackdrop: true,
+                  route: '/pages/incidents'
+                },
+                {
+                  anchorId: 'anchorCriticalAnomalies',
+                  content: 'Critical anomalies are most severe. It means that they are deviating from the normal ratio ' +
+                    '(or new log messages) and are recognized as cognitive anomalies by our deep network.',
+                  enableBackdrop: true
+                },
+                {
+                  anchorId: 'anchorFlowAnomalies',
+                  content: 'Flow anomalies are those logs that deviate from the normal flow of the system. For example, ' +
+                    'consider that log statements A and B are always appearing together in a time interval. ' +
+                    'If this ratio is broken then we report a flow anomaly.',
+                  enableBackdrop: true
+                },
+                {
+                  anchorId: 'anchorCogAnomalies',
+                  content: 'Cognitive anomalies are those that have negative semantic meaning. It is very similar to what an experienced developer would detect.',
+                  enableBackdrop: true
+                },
+                {
+                  anchorId: 'anchorNewAnomalies',
+                  content: 'These log types are detected as novel and not seen before. This might happen when there is abnormal system behavior, or simply a new update of the application.',
+                  enableBackdrop: true
+                },
+                {
+                  anchorId: 'anchorParsing',
+                  content: 'We not only analyze the log messages as log types, logsight.ai automatically structures the logs extracting useful information in terms of log variables.',
+                  enableBackdrop: true,
+                    route: '/pages/variable-analysis'
+                },
+                {
+                  anchorId: 'anchorTopTemplates',
+                  content: 'We cluster the log types together and detect if large deviations in log count if they happen.',
+                  enableBackdrop: true,
+                },
+                {
+                  anchorId: 'anchorLogs',
+                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
+                  enableBackdrop: true,
+                },
+                {
+                  anchorId: 'anchorApplications',
+                  content: 'Finally, here you can manage your applications. We offer creation of new applications, deletion, and of course easy steps for integration. Start sending data in less than 5 minutes !',
+                  enableBackdrop: true,
+                  route: '/pages/integration'
+                }
                 ]);
 
             }

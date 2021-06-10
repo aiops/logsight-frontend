@@ -1,7 +1,7 @@
 <div class="row" style="width: 100%; padding-left: 5%; padding-right: 5%">
   <div class="p-3" style="width: 100%">
-    <div class="row">
-      <div class="col-md-6">
+    <div class="row" tourAnchor="anchorParsing">
+      <div class="col-md-6" >
         <h5 style="font-weight: 600">Application</h5>
         <nb-select class="period-select col-md-4 pl-3" [(selected)]="this.selectedApplicationId"
                    (selectedChange)="applicationSelected($event)"
@@ -20,14 +20,14 @@
       </div>
     </div>
   </div>
-  <div class="p-3" style="width: 100%" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
+  <div class="p-3" style="width: 100%" *ngIf="selectedApplicationId && logCountLineChart.length > 0" >
     <h5 style="font-weight: 600">Log Count</h5>
     <stacked-area-chart [data]="logCountLineChart"></stacked-area-chart>
   </div>
 
   <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">
     <h5 style="font-weight: 600">Top reoccuring log types</h5>
-    <nb-card>
+    <nb-card tourAnchor="anchorTopTemplates">
       <hr noshade="true">
       <div class="row">
         <!--      <div class="col-md-6">-->
@@ -95,7 +95,7 @@
 
   <div *ngIf="selectedApplicationId" class="p-3" style="width: 100%">
     <h5 style="font-weight: 600">Logs </h5>
-    <nb-card>
+    <nb-card tourAnchor="anchorLogs">
       <hr noshade="true">
       <div class="row">
         <div class="col-md-12">

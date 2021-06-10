@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<div class="col-lg-12" style="padding-left: 5%;padding-right: 5%">
+<div class="col-lg-12" style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorIncidentsTab">
   <h5 style="font-weight: 600">Incidents</h5>
   <chart-heatmap [data]="heatmapData"></chart-heatmap>
 </div>
@@ -28,9 +28,9 @@
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 
 <div style="padding-left: 5%;padding-right: 5%">
-  <div *ngIf="tableData?.semanticCountAds">
-    <h5 style="font-weight: 600">Critical anomalies</h5>
-    <nb-card>
+  <div *ngIf="tableData?.semanticCountAds" >
+    <h5 style="font-weight: 600" >Critical anomalies</h5>
+    <nb-card tourAnchor="anchorCriticalAnomalies">
       <nb-card-body>
         <div class="col-lg-12 p-0">
           <div class="scrollable">
@@ -67,9 +67,9 @@
       </nb-card-body>
     </nb-card>
   </div>
-  <div *ngIf="tableData?.countAds">
-    <h5 style="font-weight: 600">Flow anomalies</h5>
-    <nb-card>
+  <div *ngIf="tableData?.countAds" tourAnchor="anchorFlowAnomalies">
+    <h5 style="font-weight: 600" >Flow anomalies</h5>
+    <nb-card >
       <nb-card-body>
         <div class="col-lg-12 p-0">
 
@@ -107,8 +107,8 @@
       </nb-card-body>
     </nb-card>
   </div>
-  <div *ngIf="tableData?.semanticAd">
-    <h5 style="font-weight: 600">Cognitive anomalies</h5>
+  <div *ngIf="tableData?.semanticAd" tourAnchor="anchorCogAnomalies">
+    <h5  style="font-weight: 600">Cognitive anomalies</h5>
     <nb-card>
       <nb-card-body>
         <div class="col-lg-12 p-0">
@@ -144,9 +144,9 @@
     </nb-card>
   </div>
 
-  <div *ngIf="tableData?.newTemplates">
+  <div *ngIf="tableData?.newTemplates"  tourAnchor="anchorNewAnomalies">
     <h5 style="font-weight: 600">New log types</h5>
-    <nb-card>
+    <nb-card >
       <nb-card-body>
         <div class="col-lg-12 p-0">
           <div class="scrollable">

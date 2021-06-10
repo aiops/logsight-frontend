@@ -23,7 +23,7 @@ export class QuickstartPage implements OnInit {
   curSec: number;
   progressIsHidden: boolean;
   applications: Application[] = [];
-
+  next: number;
 
   constructor(private fb: FormBuilder,
               private integrationService: IntegrationService,
@@ -31,8 +31,6 @@ export class QuickstartPage implements OnInit {
               private notificationService: NotificationsService,
               private router: Router,
               private tourService: TourService) {
-
-    // tourService.start()
   }
 
 
@@ -40,6 +38,7 @@ export class QuickstartPage implements OnInit {
     this.progressIsHidden = true
     this.progressValue = 0
     this.curSec = 0
+    this.next = 0
     this.authService.getLoggedUser().subscribe(user => {
       this.key = user.key
       this.email = user.email
@@ -73,26 +72,27 @@ export class QuickstartPage implements OnInit {
       this.curSec = sec;
       if (this.curSec === seconds) {
         sub.unsubscribe();
-        this.router.navigate(['/pages/dashboard'])
+        this.next = this.next + 1;
+        // this.router.navigate(['/pages/dashboard'])
       }
     });
   }
 
   createApplication() {
     if (this.key) {
-      this.integrationService.createApplication({ name: "sample_app", key: this.key }).subscribe(
-        resp => {
-          this.notificationService.success('Success', 'Please wait couple of minutes... sample data is streaming into logsight.ai.')
-        }, error => this.notificationService.error('Error', 'Sorry, a problem happened'))
+      // this.integrationService.createApplication({ name: "authN_sample_app", key: this.key }).subscribe(
+      //   resp => {
+      //     this.notificationService.success('Success', 'Please wait couple of minutes... sample data is streaming into logsight.ai.')
+      //   }, error => this.notificationService.error('Error', 'Sorry, a problem happened'))
 
-      this.startTimer(20)
-      this.router.navigate(['/pages/dashboard'])
+      this.startTimer(10)
     } else {
       this.notificationService.error('Error', 'Sorry, a problem happened')
     }
-
-
   }
 
+  startTutorial(){
+    this.tourService.start()
+  }
 
 }

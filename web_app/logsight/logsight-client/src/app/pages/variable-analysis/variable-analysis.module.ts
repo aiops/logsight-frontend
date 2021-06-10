@@ -12,6 +12,7 @@ import { VariableAnalysisTemplateResolver } from '../../@core/components/app/var
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 import { PagesModule } from '../pages.module';
 import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.module';
+import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.mod
         NbSelectModule,
         PagesModule,
         ChartsWrapperModule,
-        NbPopoverModule
+        NbPopoverModule,
+        TourMatMenuModule
     ],
   declarations: [VariableAnalysisPage],
   entryComponents: [VariableAnalysisTemplate]

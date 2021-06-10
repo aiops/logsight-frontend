@@ -7,6 +7,7 @@ import { IntegrationPage } from './integration.page';
 import { IntegrationRoutingModule } from './integration-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HighlightModule} from "ngx-highlightjs";
+import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import {HighlightModule} from "ngx-highlightjs";
     NbButtonModule,
     ReactiveFormsModule,
     HighlightModule,
+    TourMatMenuModule
   ],
   declarations: [
     IntegrationPage,

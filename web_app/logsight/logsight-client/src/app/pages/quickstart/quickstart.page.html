@@ -6,24 +6,45 @@
 <!--</div>-->
 <br>
 <div class="row justify-content-md-center" style="max-width: 100%">
+  <h1 style="color: #ff247c">Explore logsight.ai without setup</h1>
+  <br>
 <div class="col-md-12 col-lg-12 col-xxxl-12" style="padding-left: 20%; padding-right: 20%">
   <nb-card>
     <nb-card-body align="center">
-      <h1 style="color: #ff247c">Explore logsight.ai without setup</h1>
-      <p style="font-size: 18px">Use our sample log data to explore logsight AI features, no production data required.</p>
-      <br>
 
-      <button tourAnchor="anchorid" nbButton size="giant"  type="button" (click)="createApplication()"> Try now
+      <div class="row" style="padding-left: 50px">
+        <div class="col-sm">
+      <p style="font-size: 18px">Use our sample log data to explore logsight AI features.</p>
+        </div>
+        <div class="col-sm">
+          <p style="font-size: 18px">~50000 log messages from Openstack Compute Service</p>
+        </div>
+          <br>
+        <div class="col-sm">
+      <img style="max-width: 150px" alt="Python SDK" class="card-img" src="https://object-storage-ca-ymq-1.vexxhost.net/swift/v1/6e4619c416ff4bd19e1c087f27a43eea/www-images-prod/openstack-logo/OpenStack-Logo-Vertical.png" />
+        </div>
+          <br>
+      </div>
+      <button nbButton size="large" shape="round"  type="button" (click)="createApplication()"> Try now
       </button>
 <!--      <div ></div>-->
       <div *ngIf="!progressIsHidden" style="margin-top: 30px">
-        <p style="font-size: 18px">Please wait while we send sample logs to your account.
-          <br>It may take a minute or two.</p>
+        <p style="font-size: 18px">Please wait while we send and process sample logs to your account.
+          <br> logsight.ai deep learning system is getting the work for you in few seconds..</p>
       <nb-progress-bar [displayValue]="true" status="danger" [hidden]="progressIsHidden" [value]="progressValue"></nb-progress-bar>
       </div>
     </nb-card-body>
   </nb-card>
 
+  <nb-card *ngIf="next==1">
+    <nb-card-body align="center">
+      <p style="font-size: 18px">The data is loaded. Let us take you on a quickstart journey trough logsight.ai</p>
+      <br>
+      <button nbButton size="large" shape="round"  type="button" (click)="startTutorial()"> Start Tutorial
+      </button>
+
+    </nb-card-body>
+  </nb-card>
 <!--<div align="center">-->
 <!--  <h5>OR</h5>-->
 <!--  <p style="font-size: 18px">Send us logs ...</p>-->

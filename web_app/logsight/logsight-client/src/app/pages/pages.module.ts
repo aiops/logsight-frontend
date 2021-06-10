@@ -18,6 +18,7 @@ import { HostDirective } from '../@core/components/app/host.directive';
 import { SpecificTemplateModalComponent } from '../@core/components/specific-template-modal/specific-template-modal.component';
 import {ChartsWrapperModule} from "./charts-wrapper-module/charts-wrapper.module";
 import { ElasticCustomDatepickerComponent } from '../@core/components/elastic-custom-datepicker/elastic-custom-datepicker.component';
+import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { ElasticCustomDatepickerComponent } from '../@core/components/elastic-cu
     NbCardModule,
     ChartsWrapperModule,
     FormsModule,
-    NbButtonModule
+    NbButtonModule,
+    TourMatMenuModule
   ],
   declarations: [
     PagesComponent,

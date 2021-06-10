@@ -17,6 +17,6 @@ export class IntegrationService {
   }
 
   deleteApplication(id: number) {
-    return this.apiService.delete(`/api/applications/${id}`)
+    return this.apiService.post(`/api/applications/${id}`, null)
   }
 }

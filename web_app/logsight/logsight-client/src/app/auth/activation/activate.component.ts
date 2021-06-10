@@ -26,6 +26,19 @@ export class ActivateComponent implements OnInit {
               private route: ActivatedRoute) {
   }
 
+  startTimer(seconds: number) {
+    const time = seconds;
+    const timer$ = interval(1000);
+
+    const sub = timer$.subscribe((sec) => {
+      this.progressValue = Number((sec * 100 / seconds).toPrecision(1));
+      this.curSec = sec;
+      if (this.curSec === seconds) {
+        sub.unsubscribe();
+        this.router.navigate(['/pages/dashboard'])
+      }
+    });
+  }
 
   ngOnInit(): void {
     //hack code to stop spinner
@@ -44,7 +57,7 @@ export class ActivateComponent implements OnInit {
             this.loading = false
             this.email = this.user.email
             this.authService.login({email:this.email, password:'demo'}).subscribe(resp => {
-                this.router.navigate(['/pages/dashboard'])
+                this.startTimer(10)
               }, err => {
                 console.log('login error', err)
                 this.notificationService.error('Error', 'Incorrect or not activated email')

@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
+    localStorage.removeItem('token')
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/dashboard'])
       }, err => {

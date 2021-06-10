@@ -15,4 +15,8 @@ export class IntegrationService {
   loadApplications(key: string): Observable<Application[]> {
     return this.apiService.get(`/api/applications/user/${key}`)
   }
+
+  deleteApplication(id: number) {
+    return this.apiService.delete(`/api/applications/${id}`)
+  }
 }

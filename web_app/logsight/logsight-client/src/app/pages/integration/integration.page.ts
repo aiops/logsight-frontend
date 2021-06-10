@@ -15,14 +15,14 @@ export class IntegrationPage implements OnInit {
   key: string
   email: string
   applications: Application[] = [];
-  public show:boolean = false;
-  public python:boolean = true;
-  public fileBeats:boolean = false;
-  public rest:boolean = false;
-  public showHideAppBtn:any = 'Show';
-  public pythonBtn:any = 'Python';
-  public filebeatBtn:any = 'Filebeat';
-  public restBtn:any = 'Rest';
+  public show: boolean = false;
+  public python: boolean = true;
+  public fileBeats: boolean = false;
+  public rest: boolean = false;
+  public showHideAppBtn: any = 'Show';
+  public pythonBtn: any = 'Python';
+  public filebeatBtn: any = 'Filebeat';
+  public restBtn: any = 'Rest';
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });
@@ -50,26 +50,26 @@ export class IntegrationPage implements OnInit {
 
   onBtnShowApp() {
     this.show = !this.show;
-    if(this.show)
-      this.showHideAppBtn = "Hide";
-    else
-      this.showHideAppBtn = "Show";
+    if (this.show) {
+      this.showHideAppBtn = 'Hide';
+    } else {
+      this.showHideAppBtn = 'Show';
+    }
   }
 
-
-  onPythonBtn(){
+  onPythonBtn() {
     this.python = true
     this.fileBeats = false
     this.rest = false
   }
 
-  onFileBeatBtn(){
+  onFileBeatBtn() {
     this.python = false
     this.fileBeats = true
     this.rest = false
   }
 
-  onRestBtn(){
+  onRestBtn() {
     this.python = false
     this.fileBeats = false
     this.rest = true
@@ -79,8 +79,9 @@ export class IntegrationPage implements OnInit {
     if (this.key) {
       this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
         resp => {
-          this.loadApplications()
-          this.notificationService.success('Success', 'Application successfully created')
+          this.loadApplications();
+          this.notificationService.success('Success', 'Application successfully created');
+          this.form.reset()
         }, error => this.notificationService.error('Error', 'Sorry, a problem happened'))
     } else {
       this.notificationService.error('Error', 'Sorry, a problem happened')
@@ -148,7 +149,7 @@ logger.info("------------")`;
         hosts: ["logsight.ai:12350"]`;
   }
 
-  private getCodeRest(){
+  private getCodeRest() {
     return `
     //json
     {
@@ -175,5 +176,16 @@ logger.info("------------")`;
     // copy the above shell code into send-rest.sh
     // ./send-rest.sh File_name
     `
+  }
+
+  removeApplication(id: number) {
+    this.integrationService.deleteApplication(id).subscribe(
+      () => {
+        this.notificationService.success('Success', 'Application successfully deleted')
+        this.loadApplications()
+      }, err => {
+        this.notificationService.error('Error', 'Application not deleted');
+        console.log(err)
+      })
   }
 }

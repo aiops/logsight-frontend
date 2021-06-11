@@ -112,7 +112,8 @@ logger.setLevel(logging.DEBUG)
 
 PRIVATE_KEY = '${this.key}'
 APP_NAME = 'demo-app'
-logsight_handler = LogsightLogger(PRIVATE_KEY, APP_NAME)
+logsight_handler = LogsightLogger(PRIVATE_KEY,
+                                  APP_NAME)
 logsight_handler.setLevel(logging.INFO)
 
 logger.addHandler(logsight_handler)
@@ -165,8 +166,10 @@ logger.info("------------")`;
       curl -X POST "https://logsight.ai/api_v1/data"
       -H "accept: application/json"
       -H "Content-Type: application/json"
-      -d "{ \\"private-key\\": \\"${this.key}\\",
-      \\"app\\": \\"demo-app\\", \\"message\\": \\"$line\\",
+      -d "{ \\"private-key\\":
+      \\"${this.key}\\",
+      \\"app\\": \\"demo-app\\",
+      \\"message\\": \\"$line\\",
        \\"level\\": \\"string\\"}"
       echo "Text read from file: $line"
     done < "$1"

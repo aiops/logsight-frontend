@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { data } from './data';
 import {DatePipe} from "@angular/common";
+import * as moment from "moment";
 @Component({
   selector: 'grouped-vertical-bar-chart',
   styleUrls: ['./grouped-vertical-bar-chart.component.scss'],
@@ -30,10 +31,11 @@ export class GroupedVerticalBarChartComponent {
     this.data = data
   }
 
-  dateTickFormatting(val: any) {
-    const datepipe: DatePipe = new DatePipe('en-US');
-    let yourDate: Date = new Date(val + ' UTC-1');
-    return (datepipe.transform(yourDate, 'shortTime').toString())
+  dateTickFormatting(val: any) { 
+    var date = moment.utc(val, 'HH:mm:ss').add(1,'hour').format('DD-MM-YYYY HH:mm');
+    var stillUtc = moment.utc(date,'MM-DD-YYYY HH:mm');
+    var local = moment(stillUtc, 'MM-DD-YYYY HH:mm').local().format('hh:mm');
+    return local.toString()
   }
 
 }

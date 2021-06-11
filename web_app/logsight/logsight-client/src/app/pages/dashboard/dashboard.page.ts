@@ -13,7 +13,7 @@ import { Application } from '../../@core/common/application';
 import { IntegrationService } from '../../@core/service/integration.service';
 import { Observable, Subject, timer, combineLatest } from 'rxjs';
 import { Moment } from 'moment';
-import * as moment from 'moment';
+import * as moment from 'moment'
 import {TourService} from "ngx-ui-tour-md-menu";
 
 @Component({
@@ -254,5 +254,13 @@ export class DashboardPage implements OnInit, OnDestroy {
     if (!this.openDatePicker) {
       this.popover.hide();
     }
+  }
+
+  moment(startTimestamp: string | undefined) {
+    console.log(startTimestamp)
+    var date = moment.utc(startTimestamp, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm');
+    var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+    var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm:ss');
+    return local.toString()
   }
 }

@@ -3,6 +3,7 @@ import { data } from './data';
 import * as shape from 'd3-shape'
 import { locale } from 'd3';
 import { DatePipe } from '@angular/common';
+import * as moment from 'moment'
 
 @Component({
   selector: 'stacked-area-chart',
@@ -28,12 +29,16 @@ export class StackedAreaChartComponent {
   };
 
   dateTickFormatting(val: any) {
-    var splitDate = val.toString().split(' ')
-    var splitDate1 = splitDate[0].split('-')
-    var date = splitDate1[2] + '-' + splitDate1[1] + '-' + splitDate1[0] + ' ' + splitDate[1]
-    const datepipe: DatePipe = new DatePipe('en-US');
-    let yourDate: Date = new Date(date + ' UTC');
-    return (datepipe.transform(yourDate, 'shortTime').toString())
+    // var splitDate = val.toString().split(' ')
+    // var splitDate1 = splitDate[0].split('-')
+    // var date = splitDate1[2] + '-' + splitDate1[1] + '-' + splitDate1[0] + ' ' + splitDate[1]
+    // const datepipe: DatePipe = new DatePipe('en-US');
+    // let yourDate: Date = new Date(date + ' UTC');
+    // return (datepipe.transform(yourDate, 'shortTime').toString())
+    var date = moment.utc(val, 'MM-DD-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+    var stillUtc = moment.utc(date,'MM-DD-YYYY HH:mm');
+    var local = moment(stillUtc, 'MM-DD-YYYY HH:mm').local().format('hh:mm');
+    return local.toString()
   }
 
   constructor() {

@@ -23,7 +23,7 @@
   </div>
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
-<div class="col-lg-12" style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorSystemOverview">
+<div style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorSystemOverview">
   <h5 style="font-weight: 600">System overview</h5>
   <chart-heatmap [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
 </div>
@@ -88,7 +88,7 @@
                     <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled status='danger' shape="round" size="tiny"><nb-icon icon="bulb"></nb-icon>
                       {{topKIncident?.newTemplates?.length}} new log types</button></span>
                     <span class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</button></span>
+                      {{moment(topKIncident?.startTimestamp)}}</button></span>
                   </div>
                 </div>
 
@@ -127,7 +127,7 @@
                     <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled status='danger' shape="round" size="tiny"><nb-icon icon="bulb"></nb-icon>
                       {{topKIncident?.newTemplates?.length}} new log types</button></span>
                     <span class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</button></span>
+                      {{moment(topKIncident?.startTimestamp)}}</button></span>
                   </div>
                 </div>
               </div>
@@ -194,7 +194,7 @@
                     <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled status='danger' shape="round" size="tiny"><nb-icon icon="bulb"></nb-icon>
                       {{topKIncident?.newTemplates?.length}} new log types</button></span>
                     <span class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</button></span>
+                      {{moment(topKIncident?.startTimestamp)}}</button></span>
                   </div>
                 </div>
               </div>
@@ -232,7 +232,7 @@
                     <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled status='danger' shape="round" size="tiny"><nb-icon icon="bulb"></nb-icon>
                       {{topKIncident?.newTemplates?.length}} new log types</button></span>
                     <span class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</button></span>
+                      {{moment(topKIncident?.startTimestamp)}}</button></span>
                   </div>
                 </div>
               </div>
@@ -302,7 +302,7 @@
                     <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled status='danger' shape="round" size="tiny"><nb-icon icon="bulb"></nb-icon>
                       {{topKIncident?.newTemplates?.length}} new log types</button></span>
                     <span class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</button></span>
+                      {{moment(topKIncident?.startTimestamp)}}</button></span>
                   </div>
                 </div>
 
@@ -341,7 +341,7 @@
                     <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled status='danger' shape="round" size="tiny"><nb-icon icon="bulb"></nb-icon>
                       {{topKIncident?.newTemplates?.length}} new log types</button></span>
                     <span class="pr-2"><button nbButton  style="background-color: #6f5b5c; color: white" disabled shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                      {{topKIncident?.startTimestamp.concat(' UTC') | date:'shortTime'}}</button></span>
+                      {{moment(topKIncident?.startTimestamp)}}</button></span>
                   </div>
                 </div>
               </div>

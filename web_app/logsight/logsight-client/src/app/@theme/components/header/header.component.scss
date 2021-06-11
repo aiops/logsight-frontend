@@ -65,6 +65,12 @@
       white-space: nowrap;
       text-decoration: none;
     }
+
+    .active{
+      color: #bababa;
+      font-weight: 650;
+    }
+
   }
 
   @include media-breakpoint-down(sm) {
@@ -87,3 +93,5 @@
 .navbar-nav:hover {
   opacity: 0.7;
 }
+
+

@@ -23,10 +23,10 @@ export class KibanaPage implements OnInit {
 
 
   alerting() {
-    alert(`To log into your kibana, use your user key as username and 'test-test' as initial password. You can find your key in your profile, and change the password in your kibana user settings! \n \n
+    alert(`To log into your kibana, use your user key as username and 'test-test' as initial password. You can find your key in your profile, and change the password in your kibana user settings! \n
       username: ${this.key} \n
       initial password: test-test`);
-    prompt("Copy key:", this.key)
+    prompt("Copy key CTRL+C:", this.key)
   }
 
   startTimer(seconds: number) {

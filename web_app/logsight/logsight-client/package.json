@@ -48,6 +48,7 @@
     "@nebular/security": "7.0.0",
     "@nebular/theme": "7.0.0",
     "@popperjs/core": "^2.9.2",
+    "@stripe/stripe-js": "^1.15.0",
     "@swimlane/ngx-charts": "^14.0.0",
     "@swimlane/ngx-datatable": "^19.0.0",
     "angular2-chartjs": "0.4.1",

@@ -5,6 +5,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Application } from '../../@core/common/application';
 import { IntegrationService } from '../../@core/service/integration.service';
 import { HighlightResult } from 'ngx-highlightjs';
+import { loadStripe } from '@stripe/stripe-js/pure';
 
 @Component({
   selector: 'integration',
@@ -32,7 +33,7 @@ export class IntegrationPage implements OnInit {
   code_python = ''
   code_filebeats = ''
   code_rest = ''
-
+  stripePromise = loadStripe('key');
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService) {
   }
@@ -90,6 +91,13 @@ export class IntegrationPage implements OnInit {
 
   loadApplications() {
     this.integrationService.loadApplications(this.key).subscribe(resp => this.applications = resp)
+  }
+
+  async stripeCLick() {
+    const stripe = await this.stripePromise;
+    stripe.redirectToCheckout({
+      sessionId: '123',
+    });
   }
 
   onHighlight(e) {

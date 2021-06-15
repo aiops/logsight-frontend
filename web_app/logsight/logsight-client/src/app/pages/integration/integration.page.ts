@@ -33,7 +33,8 @@ export class IntegrationPage implements OnInit {
   code_python = ''
   code_filebeats = ''
   code_rest = ''
-  stripePromise = loadStripe('key');
+  stripePromise = loadStripe('pk_test_51J2hYvL4BgW4lbGuH3dCop6fwvkrp7tbJcxJgnTiTki5lXnwH4WuBR0wkRxvcjswZEOsEqgPKOlXp4IypLQ0zjcG00Vxsfup2f');
+
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService) {
   }
@@ -93,10 +94,22 @@ export class IntegrationPage implements OnInit {
     this.integrationService.loadApplications(this.key).subscribe(resp => this.applications = resp)
   }
 
+  payment = {
+    name: 'Iphone',
+    currency: 'usd',
+    // amount on cents *10 => to be on dollar
+    amount: 99900,
+    quantity: '1',
+    cancelUrl: 'http://localhost:4200/cancel_payment',
+    successUrl: 'http://localhost:4200/success_payment',
+  };
+
   async stripeCLick() {
     const stripe = await this.stripePromise;
-    stripe.redirectToCheckout({
-      sessionId: '123',
+    this.integrationService.getPayment(this.payment).subscribe(data => {
+      stripe.redirectToCheckout({
+        sessionId: data.id
+      })
     });
   }
 

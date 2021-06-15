@@ -19,4 +19,8 @@ export class IntegrationService {
   deleteApplication(id: number) {
     return this.apiService.post(`/api/applications/${id}`, null)
   }
+
+  getPayment(payment: any) {
+    return this.apiService.post(`/api/payments`, payment)
+  }
 }

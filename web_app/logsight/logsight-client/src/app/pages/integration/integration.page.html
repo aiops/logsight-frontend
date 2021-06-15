@@ -27,7 +27,8 @@
         <div class="row no-gutters">
           <div class="col">
             <h5><b>Integration types</b></h5>
-            <button (click)="stripeCLick()">StrIPE</button>
+
+
           </div>
         </div>
         <div class="row justify-content-center">
@@ -45,12 +46,13 @@
             <button nbButton class="rest-btn" type="button" (click)="onRestBtn()">
               {{restBtn}}
             </button>
+            <button nbButton (click)="stripeCLick()">PAY STRIPE</button>
           </div>
         </div>
       </nb-card>
     </div>
 
-    <div class="row create_new_app" >
+    <div class="row create_new_app">
       <nb-card class="p-3 row-one">
         <div class="row no-gutters">
           <div class="col">
@@ -90,7 +92,8 @@
             <tr *ngFor="let row of applications">
               <td>{{row.id}}</td>
               <td>{{row.name}}</td>
-              <td><i (click)="removeApplication(row.id)" [title]='"Delete application"' class="ml-3 fas fa-trash pointer"></i></td>
+              <td><i (click)="removeApplication(row.id)" [title]='"Delete application"'
+                     class="ml-3 fas fa-trash pointer"></i></td>
 
               <!--              <td>-->
               <!--                <i [title]="row.status" *ngIf="row.status == 'IN_PROGRESS'" class="ml-3 fas fa-spinner fa-spin"></i>-->

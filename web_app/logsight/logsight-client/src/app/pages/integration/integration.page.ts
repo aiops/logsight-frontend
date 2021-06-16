@@ -15,6 +15,7 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 export class IntegrationPage implements OnInit {
   key: string
   email: string
+  quantity: number;
   applications: Application[] = [];
   public show: boolean = false;
   public python: boolean = true;
@@ -33,7 +34,7 @@ export class IntegrationPage implements OnInit {
   code_python = ''
   code_filebeats = ''
   code_rest = ''
-  stripePromise = loadStripe('pk_test_51J2hYvL4BgW4lbGuH3dCop6fwvkrp7tbJcxJgnTiTki5lXnwH4WuBR0wkRxvcjswZEOsEqgPKOlXp4IypLQ0zjcG00Vxsfup2f');
+  stripePromise = loadStripe('pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService) {
@@ -48,6 +49,7 @@ export class IntegrationPage implements OnInit {
       this.code_filebeats = this.getFilebeatsCode()
       this.code_rest = this.getCodeRest()
     })
+    this.quantity = 1
   }
 
   onBtnShowApp() {
@@ -77,6 +79,17 @@ export class IntegrationPage implements OnInit {
     this.rest = true
   }
 
+  plus(){
+    this.quantity++;
+  }
+
+  minus(){
+    if (this.quantity > 1){
+      this.quantity--;
+    }
+
+  }
+
   createApplication() {
     if (this.key) {
       this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
@@ -94,19 +107,19 @@ export class IntegrationPage implements OnInit {
     this.integrationService.loadApplications(this.key).subscribe(resp => this.applications = resp)
   }
 
-  payment = {
-    name: 'Iphone',
-    currency: 'usd',
-    // amount on cents *10 => to be on dollar
-    amount: 99900,
-    quantity: '1',
-    cancelUrl: 'http://localhost:4200/cancel_payment',
-    successUrl: 'http://localhost:4200/success_payment',
-  };
 
   async stripeCLick() {
+    const payment = {
+      name: 'Iphone',
+      currency: 'eur',
+      quantity: this.quantity,
+      amount: 999,
+      priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
+      cancelUrl: 'http://localhost:4200/cancel_payment',
+      successUrl: 'http://localhost:4200/success_payment',
+    };
     const stripe = await this.stripePromise;
-    this.integrationService.getPayment(this.payment).subscribe(data => {
+    this.integrationService.getPayment(payment).subscribe(data => {
       stripe.redirectToCheckout({
         sessionId: data.id
       })

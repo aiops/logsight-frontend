@@ -30,11 +30,12 @@ export class IntegrationPage implements OnInit {
   });
 
   response: HighlightResult;
-
+  customerId = ''
   code_python = ''
   code_filebeats = ''
   code_rest = ''
-  stripePromise = loadStripe('pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
+  stripePromise = loadStripe(
+    'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService) {
@@ -79,12 +80,12 @@ export class IntegrationPage implements OnInit {
     this.rest = true
   }
 
-  plus(){
+  plus() {
     this.quantity++;
   }
 
-  minus(){
-    if (this.quantity > 1){
+  minus() {
+    if (this.quantity > 1) {
       this.quantity--;
     }
 
@@ -107,7 +108,6 @@ export class IntegrationPage implements OnInit {
     this.integrationService.loadApplications(this.key).subscribe(resp => this.applications = resp)
   }
 
-
   async stripeCLick() {
     const payment = {
       name: 'Iphone',
@@ -119,11 +119,17 @@ export class IntegrationPage implements OnInit {
       successUrl: 'http://localhost:4200/success_payment',
     };
     const stripe = await this.stripePromise;
-    this.integrationService.getPayment(payment).subscribe(data => {
+    this.integrationService.subscription(payment).subscribe(data => {
+      this.customerId = data.id;
       stripe.redirectToCheckout({
         sessionId: data.id
       })
     });
+  }
+
+  stripeCustomerPortal() {
+    console.log(' this.customerId', this.customerId)
+    this.integrationService.checkCustomerPortal(this.customerId).subscribe();
   }
 
   onHighlight(e) {

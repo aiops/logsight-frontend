@@ -19,4 +19,12 @@ export class IntegrationService {
   deleteApplication(id: number) {
     return this.apiService.post(`/api/applications/${id}`, null)
   }
+
+  subscription(payment: any) {
+    return this.apiService.post(`/api/payments`, payment)
+  }
+
+  checkCustomerPortal(customerId: string) {
+    return this.apiService.post(`/api/payments/customer_portal/${customerId}`, null)
+  }
 }

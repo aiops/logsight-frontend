@@ -257,7 +257,6 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   moment(startTimestamp: string | undefined) {
-    console.log(startTimestamp)
     var date = moment.utc(startTimestamp, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm');
     var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
     var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm:ss');

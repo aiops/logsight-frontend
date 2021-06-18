@@ -5,6 +5,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { Application } from '../../@core/common/application';
 import { IntegrationService } from '../../@core/service/integration.service';
 import { HighlightResult } from 'ngx-highlightjs';
+import { loadStripe } from '@stripe/stripe-js/pure';
 
 @Component({
   selector: 'integration',
@@ -14,6 +15,7 @@ import { HighlightResult } from 'ngx-highlightjs';
 export class IntegrationPage implements OnInit {
   key: string
   email: string
+  quantity: number;
   applications: Application[] = [];
   public show: boolean = false;
   public python: boolean = true;
@@ -28,10 +30,12 @@ export class IntegrationPage implements OnInit {
   });
 
   response: HighlightResult;
-
+  customerId = ''
   code_python = ''
   code_filebeats = ''
   code_rest = ''
+  stripePromise = loadStripe(
+    'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService) {
@@ -46,6 +50,7 @@ export class IntegrationPage implements OnInit {
       this.code_filebeats = this.getFilebeatsCode()
       this.code_rest = this.getCodeRest()
     })
+    this.quantity = 1
   }
 
   onBtnShowApp() {
@@ -75,6 +80,17 @@ export class IntegrationPage implements OnInit {
     this.rest = true
   }
 
+  plus() {
+    this.quantity++;
+  }
+
+  minus() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+
+  }
+
   createApplication() {
     if (this.key) {
       this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
@@ -90,6 +106,32 @@ export class IntegrationPage implements OnInit {
 
   loadApplications() {
     this.integrationService.loadApplications(this.key).subscribe(resp => this.applications = resp)
+  }
+
+  async stripeCLick() {
+    const payment = {
+      name: 'Iphone',
+      currency: 'eur',
+      quantity: this.quantity,
+      amount: 999,
+      priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
+      cancelUrl: 'http://localhost:4200/cancel_payment',
+      successUrl: 'http://localhost:4200/success_payment',
+    };
+    const stripe = await this.stripePromise;
+    this.integrationService.subscription(payment).subscribe(data => {
+      this.customerId = data.id;
+      stripe.redirectToCheckout({
+        sessionId: data.id
+      })
+    });
+  }
+
+  async stripeCustomerPortal() {
+    const stripe = await this.stripePromise;
+    this.integrationService.checkCustomerPortal("aaa").subscribe(data => {
+      window.open(data['url'], "_blank");
+    });
   }
 
   onHighlight(e) {

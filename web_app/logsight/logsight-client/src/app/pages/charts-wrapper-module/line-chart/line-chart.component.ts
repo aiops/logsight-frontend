@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DatePipe} from "@angular/common";
 import * as moment from "moment";
 
 @Component({
@@ -33,7 +32,6 @@ export class LineChartComponent implements OnInit {
 
   ngOnInit(): void {
     var xTicksLen = this.data[0].series.length
-    console.log(this.data[0].series)
     var step = xTicksLen / 5
     for (let i = step; i < xTicksLen; i++) {
       if (i % step != 0){
@@ -47,10 +45,9 @@ export class LineChartComponent implements OnInit {
 
   dateTickFormatting(val: any) {
     if (val.length > 0){
-      console.log(val)
-      var date = moment.utc(val, 'MM-DD-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-      var stillUtc = moment.utc(date,'MM-DD-YYYY HH:mm');
-      var local = moment(stillUtc, 'MM-DD-YYYY HH:mm').local().format('hh:mm:ss');
+      var date = moment.utc(val, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+      var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+      var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm:ss');
       return local.toString()
     }else{
       return val

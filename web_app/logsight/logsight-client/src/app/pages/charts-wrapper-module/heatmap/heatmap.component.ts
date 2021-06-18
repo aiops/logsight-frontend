@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { multi } from './data';
-import {DatePipe} from "@angular/common";
 import * as moment from "moment";
 
 @Component({
@@ -50,6 +49,7 @@ export class HeatmapComponent {
     var date = moment.utc(val, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
     var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
     var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm');
+    console.log(local)
     return local.toString()
   }
 

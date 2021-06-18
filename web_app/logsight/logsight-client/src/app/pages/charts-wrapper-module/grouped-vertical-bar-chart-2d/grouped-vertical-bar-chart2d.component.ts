@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { data } from './data';
-import {DatePipe} from "@angular/common";
 import * as moment from "moment";
 @Component({
   selector: 'grouped-vertical-bar-chart-2d',
@@ -35,9 +34,9 @@ export class GroupedVerticalBarChart2dComponent {
     // const datepipe: DatePipe = new DatePipe('en-US');
     // let yourDate: Date = new Date(date + ' UTC');
     // return (datepipe.transform(yourDate, 'shortTime').toString())
-    var date = moment.utc(val, 'MM-DD-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-    var stillUtc = moment.utc(date,'MM-DD-YYYY HH:mm');
-    var local = moment(stillUtc, 'MM-DD-YYYY HH:mm').local().format('hh:mm');
+    var date = moment.utc(val, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+    var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+    var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm');
     return local.toString()
   }
 

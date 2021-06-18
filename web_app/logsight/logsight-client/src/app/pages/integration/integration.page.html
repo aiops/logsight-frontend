@@ -32,8 +32,12 @@
         <input nbInput  style="width: 60%" type="text" [value]="quantity">
         <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>
         <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
+        <div>
         <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>
-<!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">Customer portal</button>-->
+        </div>
+        <div style="margin-top: 10px">
+        <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">Manage subscription</button>
+        </div>
       </nb-card-body>
 
     </nb-card>

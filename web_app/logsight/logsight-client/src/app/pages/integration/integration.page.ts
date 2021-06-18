@@ -127,9 +127,11 @@ export class IntegrationPage implements OnInit {
     });
   }
 
-  stripeCustomerPortal() {
-    console.log(' this.customerId', this.customerId)
-    this.integrationService.checkCustomerPortal(this.customerId).subscribe();
+  async stripeCustomerPortal() {
+    const stripe = await this.stripePromise;
+    this.integrationService.checkCustomerPortal("aaa").subscribe(data => {
+      window.open(data['url'], "_blank");
+    });
   }
 
   onHighlight(e) {

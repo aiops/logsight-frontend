@@ -12,11 +12,26 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
 import { AuthenticationGuard } from './auth/authentication-guard';
+import {TermsconditionsPage} from "./landing-page/TermsConditions/termsconditions.page";
+import {ImpressumPage} from "./landing-page/Impressum/impressum.page";
+import {PrivacypolicyPage} from "./landing-page/PrivacyPolicy/privacypolicy.page";
 
 export const routes: Routes = [
   {
     path: '',
     component: LandingPage
+  },
+  {
+    path: 'impressum',
+    component: ImpressumPage
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacypolicyPage,
+  },
+  {
+    path: 'terms-conditions',
+    component: TermsconditionsPage,
   },
   {
     path: 'pages',

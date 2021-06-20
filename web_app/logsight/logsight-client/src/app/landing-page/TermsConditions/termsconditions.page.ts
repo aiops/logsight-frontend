@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
-import { LoginService } from '../auth/login.service';
+import { LoginService } from '../../auth/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {timeout} from "rxjs/operators";
 
 @Component({
-  selector: 'landing',
-  styleUrls: ['./assets/css/animate.css', './assets/css/owl.carousel.css', './assets/css/owl.theme.css', './assets/css/style.css'],
-  templateUrl: './landing.page.html',
+  selector: 'terms-conditions',
+  styleUrls: ['../assets/css/animate.css', '../assets/css/owl.carousel.css', '../assets/css/owl.theme.css', '../assets/css/style.css'],
+  templateUrl: './termsconditions.page.html',
 })
-export class LandingPage implements OnInit{
+export class TermsconditionsPage implements OnInit{
 
   form = new FormGroup({
     email: new FormControl('', Validators.required),
@@ -40,36 +40,16 @@ export class LandingPage implements OnInit{
       element.classList.remove('sticky');
     }
   }
-  onLogin() {
-    this.authService.login(this.form.value).subscribe(resp => {
-        this.router.navigate(['/pages/quickstart'])
-      }, err => {
-        console.log('login error', err)
-        this.notificationService.error('Error', 'Incorrect email or password')
-      }
-    )
-  }
 
-  onSignUp() {
-    this.authService.registerDemo(this.form.value).subscribe(resp => {
-        this.notificationService.success('Success',
-          'You are successfully registered. Please check your email to activate')
-        this.router.navigate(['/auth/login'])
-      }, err => {
-        console.log('login error', err)
-        this.notificationService.error('Error', 'User already exists, please sign in!')
-      }
-    )
-  }
 
   redirectToLogin() {
     this.router.navigate(['/auth/login'])
   }
+  redirectToHomepage() {
+    this.router.navigate([''])
+  }
   redirectToImpressum() {
     this.router.navigate(['impressum'])
-  }
-  redirectToTermsAndConditions() {
-    this.router.navigate(['terms-conditions'])
   }
   redirectToPrivacyAndPolicy() {
     this.router.navigate(['privacy-policy'])

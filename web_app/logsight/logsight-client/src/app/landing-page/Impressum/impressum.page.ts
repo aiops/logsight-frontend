@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from '../../auth/login.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {timeout} from "rxjs/operators";
+import {ConnectionService} from "./connectionService";
 
 @Component({
   selector: 'impressum',
@@ -16,11 +17,21 @@ export class ImpressumPage implements OnInit{
     email: new FormControl('', Validators.required),
     password: new FormControl('demo')
   });
-  message = '';
+  contactForm: FormGroup;
+  disabledSubmitButton: boolean = true;
+  optionsSelect: Array<any>;
 
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
-              private router: Router) {
+              private router: Router,
+              fb: FormBuilder,
+              private connectionService: ConnectionService) {
+    this.contactForm = fb.group({
+      'contactFormName': ['', Validators.required],
+      'contactFormEmail': ['', Validators.compose([Validators.required, Validators.email])],
+      'contactFormSubjects': ['', Validators.required],
+      'contactFormMessage': ['', Validators.required],
+    });
   }
 
   ngOnInit(): void {
@@ -29,7 +40,21 @@ export class ImpressumPage implements OnInit{
     if (el) {
       el.style['display'] = 'none';
     }
+
+    this.optionsSelect = [
+      { value: 'Feedback', label: 'Feedback' },
+      { value: 'Report a bug', label: 'Report a bug' },
+      { value: 'Feature request', label: 'Feature request' },
+      { value: 'Other stuff', label: 'Other stuff' },
+    ];
   }
+  @HostListener('input') oninput() {
+
+    if (this.contactForm.valid) {
+      this.disabledSubmitButton = false;
+    }
+  }
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(e) {
     if (window.pageYOffset > 0) {
@@ -50,6 +75,32 @@ export class ImpressumPage implements OnInit{
     )
   }
 
+  get name() {
+    return this.contactForm.get('contactFormName');
+  }
+  get email() {
+    return this.contactForm.get('contactFormEmail');
+  }
+  get subjects() {
+    return this.contactForm.get('contactFormSubjects');
+  }
+  get message() {
+    return this.contactForm.get('contactFormMessage');
+  }
+  get copy() {
+    return this.contactForm.get('contactFormCopy');
+  }
+
+  onSubmit() {
+    this.connectionService.sendMessage(this.contactForm.value).subscribe(() => {
+      alert('Your message has been sent.');
+      this.contactForm.reset();
+      this.disabledSubmitButton = true;
+    }, (error: any) => {
+      console.log('Error', error);
+    });
+  }
+
   redirectToLogin() {
     this.router.navigate(['/auth/login'])
   }
@@ -63,4 +114,3 @@ export class ImpressumPage implements OnInit{
     this.router.navigate(['privacy-policy'])
   }
 }
-

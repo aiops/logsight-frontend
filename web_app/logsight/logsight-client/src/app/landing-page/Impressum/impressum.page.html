@@ -39,12 +39,11 @@
 <section class = "banner"></section>
 
 <div id="main" class="main">
-  <div id="signup" class="cta-sm">
+  <div class="cta-sm">
     <div class="container-s text-center">
-      <br>
-      <h1>Imprint/Impressum</h1>
-      <br>
-      <br>
+      <div class="imprint">
+        <h1>Imprint/Impressum</h1>
+      </div>
       <div class="col-md-auto">
         <div class="row justify-content-start">
           <h2> Alexandarplatz 25B, 10557 Berlin, Germany</h2>
@@ -68,6 +67,59 @@
       </div>
     </div>
   </div>
+  <!-- Default form contact -->
+  <div id="form-Contact us" class="features wow fadeInDown" style="background-color: #f6f6fd">
+    <div class="container-m">
+      <div class="row text-center">
+        <div class="col-sm">
+          <div class="feature-list">
+              <div class="card-text">
+                <div class="contact-us">
+                <div class="text-center">
+                    <br>
+                    <h1>Contact us</h1>
+                    <br>
+                  </div>
+                </div>
+
+                <form class="text-center border border-light p-5" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+                  <div class="row justify-content-center">
+                    <div class="col-5 formInputField">
+                      <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput class="form-control md-4" placeholder="Name">
+                    </div>
+                    <div class="col-5 formInputField">
+                      <input type="email" formControlName="contactFormEmail" id="defaultContactFormEmail" mdbInput class="form-control md-4" placeholder="E-mail">
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-4 formInputField">
+                      <select formControlName="contactFormSubjects" class="browser-default custom-select md-4">
+                        <option value="" disabled>Choose option</option>
+                        <option value="1" selected>Feedback</option>
+                        <option value="2">Report a bug</option>
+                        <option value="3">Feature request</option>
+                        <option value="4">Billing options</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-12 formInputField">
+                      <textarea formControlName="contactFormMessage" class="form-control rounded-10" mdbInput id="FormControlTextarea2" rows="3" placeholder="Message"></textarea>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-1">
+                      <input class="send-button" [disabled]="disabledSubmitButton" type="submit" value="Send">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <!-- Default form contact -->
 </div>
 
 <div class="footer-sm">

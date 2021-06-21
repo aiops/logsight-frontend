@@ -35,10 +35,9 @@ import {MatCardModule} from "@angular/material/card";
 import {PrivacypolicyPage} from "./landing-page/PrivacyPolicy/privacypolicy.page";
 import {ImpressumPage} from "./landing-page/Impressum/impressum.page";
 import {TermsconditionsPage} from "./landing-page/TermsConditions/termsconditions.page";
-import {LegalComponent} from "./landing-page/legal.component";
 
 @NgModule({
-  declarations: [AppComponent, LegalComponent ,LoginComponent, RegisterComponent, LandingPage, PrivacypolicyPage, ImpressumPage, TermsconditionsPage, ActivateComponent],
+  declarations: [AppComponent ,LoginComponent, RegisterComponent, LandingPage, PrivacypolicyPage, ImpressumPage, TermsconditionsPage, ActivateComponent],
   imports: [
     BrowserModule,
     FormsModule,

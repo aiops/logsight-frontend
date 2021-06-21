@@ -32,8 +32,12 @@ import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
 import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import {MatCardModule} from "@angular/material/card";
+import {PrivacypolicyPage} from "./landing-page/PrivacyPolicy/privacypolicy.page";
+import {ImpressumPage} from "./landing-page/Impressum/impressum.page";
+import {TermsconditionsPage} from "./landing-page/TermsConditions/termsconditions.page";
+
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent],
+  declarations: [AppComponent ,LoginComponent, RegisterComponent, LandingPage, PrivacypolicyPage, ImpressumPage, TermsconditionsPage, ActivateComponent],
   imports: [
     BrowserModule,
     FormsModule,

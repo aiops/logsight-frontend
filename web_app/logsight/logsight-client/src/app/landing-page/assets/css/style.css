@@ -1832,8 +1832,60 @@ input, label {
 	font-weight: 500;
 	color: #97a6b5
 }
+.contact-us h1{
+  font-size: 50px;
+  font-weight: 900;
+  color: #364655;
+  line-height: 1.2;
+}
+.imprint h1{
+  padding-top: 40px;
+  padding-bottom: 50px;
+}
+.subject {
+  font-family: 'Montserrat';
+  padding: 0;
+  font-size: 20px;
+  font-weight: 500;
+  height: 50px;
+  color: #364655;
+  ;
+}
+.formInputField {
+  margin: 10px 10px 10px 10px;
+}
+.send-button {
+  height: 50px;
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  margin: 0 auto;
+  margin: 0px 0;
+  padding: 0 25px 0 25px;
+  background: #222b45;
+  font-family: 'Montserrat';
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 100, .2);
+  -webkit-transition: 100ms;
+  -moz-transition: 100ms;
+  transition: 100ms;
+}
+.send-button:hover {
+  box-shadow: 0 5px 25px 0 rgba(0, 0, 100,.2);
+}
+.send-button:disabled{
+  background: #8fa1b3;
 
-
+}
+.send-button:focus, .send-button:active {
+  background: #222b45;
+}
 /*--------------------------------------------------------------
 -------------------- Footer Small Styling Starts ---------------
 --------------------------------------------------------------*/

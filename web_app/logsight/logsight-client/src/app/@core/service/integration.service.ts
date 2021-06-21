@@ -25,6 +25,6 @@ export class IntegrationService {
   }
 
   checkCustomerPortal(customerId: string) {
-    return this.apiService.post(`/api/payments/customer_portal/${customerId}`, null)
+    return this.apiService.post(`/api/payments/webhook`, { 'body': 'test' })
   }
 }

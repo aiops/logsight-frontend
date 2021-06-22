@@ -501,6 +501,30 @@ header {
 	opacity: 0.9;
 }
 
+
+.btn-footer{
+  margin-top: -1px;
+  font-family: 'Montserrat';
+  /*display: inline-block;*/
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+  text-decoration: none !important;
+  white-space: nowrap;
+  cursor: pointer;
+  /*color: #ffffff !important;*/
+  border: 1px solid transparent !important;
+  border-radius: 1px;
+  box-sizing: border-box;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  transition: 0.2s;
+  background: #222b45;
+}
+
+
 .btn-login{
   margin-top: -1px;
   font-family: 'Montserrat';
@@ -1891,7 +1915,8 @@ input, label {
 --------------------------------------------------------------*/
 
 .footer-sm {
-	padding: 30px 0;
+  bottom: 0px;
+	padding: 0px 0;
 	background: rgba(30, 166, 154, 0.1);
 	background: #222b45;
 	text-align: center;
@@ -1907,8 +1932,8 @@ input, label {
   font-weight: 600;
 }
 .footer-follow td{
-  padding: 0.5rem;
-  font-size: 18px;
+  padding: 0.9rem;
+  font-size: 14px;
   font-family: 'Montserrat';
 }
 

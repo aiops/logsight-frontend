@@ -27,7 +27,7 @@ export class ImpressumPage implements OnInit{
               fb: FormBuilder,
               private connectionService: ConnectionService) {
     this.contactForm = fb.group({
-      'contactFormName': ['', Validators.required],
+      'contactFormSubject': ['', Validators.required],
       'contactFormEmail': ['', Validators.compose([Validators.required, Validators.email])],
       'contactFormSubjects': ['', Validators.required],
       'contactFormMessage': ['', Validators.required],
@@ -76,7 +76,7 @@ export class ImpressumPage implements OnInit{
   }
 
   get name() {
-    return this.contactForm.get('contactFormName');
+    return this.contactForm.get('contactFormSubject');
   }
   get email() {
     return this.contactForm.get('contactFormEmail');

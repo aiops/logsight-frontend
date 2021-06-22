@@ -46,23 +46,19 @@
       </div>
       <div class="col-md-auto">
         <div class="row justify-content-start">
-          <h2> Alexandarplatz 25B, 10557 Berlin, Germany</h2>
+          <p> Street number, ZipCode Berlin, Germany</p>
         </div>
         <br>
         <div class="row justify-content-start">
-          <h2> Handelsregister-Nr: HRB 205539 B, Amtsgericht Charlottenburg</h2>
+          <p>VAT-ID / USt-IdNr: DEXXXXXXXXX</p>
         </div>
         <br>
         <div class="row justify-content-start">
-          <h2>VAT-ID / USt-IdNr: DE323716275</h2>
+          <p>E-Mail: logsight.ai@gmail.com </p>
         </div>
         <br>
         <div class="row justify-content-start">
-          <h2>E-Mail: contact@skyportgames.com </h2>
-        </div>
-        <br>
-        <div class="row justify-content-start">
-          <h2>Managing Director / Geschäftsführer: Sasho Nedelkoski</h2>
+          <p>Managing Director / Geschäftsführer: CEOs NAME SURNAME</p>
         </div>
       </div>
     </div>
@@ -84,26 +80,16 @@
 
                 <form class="text-center border border-light p-5" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
                   <div class="row justify-content-center">
-                    <div class="col-5 formInputField">
-                      <input type="text" formControlName="contactFormName" id="defaultContactFormName" mdbInput class="form-control md-4" placeholder="Name">
-                    </div>
-                    <div class="col-5 formInputField">
+                    <div class="col-sm formInputField">
                       <input type="email" formControlName="contactFormEmail" id="defaultContactFormEmail" mdbInput class="form-control md-4" placeholder="E-mail">
                     </div>
-                  </div>
-                  <div class="row justify-content-center">
-                    <div class="col-4 formInputField">
-                      <select formControlName="contactFormSubjects" class="browser-default custom-select md-4">
-                        <option value="" disabled>Choose option</option>
-                        <option value="1" selected>Feedback</option>
-                        <option value="2">Report a bug</option>
-                        <option value="3">Feature request</option>
-                        <option value="4">Billing options</option>
-                      </select>
+                    <div class="col-sm formInputField">
+                      <input type="email" formControlName="contactFormSubject" id="defaultContactFormSubject" mdbInput class="form-control md-4" placeholder="Subject">
                     </div>
                   </div>
+
                   <div class="row justify-content-center">
-                    <div class="col-12 formInputField">
+                    <div class="col-sm formInputField">
                       <textarea formControlName="contactFormMessage" class="form-control rounded-10" mdbInput id="FormControlTextarea2" rows="3" placeholder="Message"></textarea>
                     </div>
                   </div>
@@ -134,6 +120,9 @@
       </div>
       <div class="col-auto">
         <table class="footer-follow">
+          <!--            <tr>-->
+          <!--              <th  colspan="4">Follow us</th>-->
+          <!--            </tr>-->
           <tr>
             <td><a href="https://twitter.com/logsight"><img src="assets/icons/twitter.png" width="40" height="40" alt="Icon"></a></td>
             <td><a href="www.linkedin.com"><img src="assets/icons/linkedin.png" width="40" height="40" alt="Icon"></a></td>
@@ -141,30 +130,43 @@
             <td><a href="https://www.youtube.com/channel/UCt9NrwO9s4jPEwGf_YO6yzg"><img src="assets/icons/youtube.png" width="40" height="40" alt="Icon"></a></td>
         </table>
       </div>
-      <div class="col-auto">
-        <table class="footer-follow">
-          <tr>
-            <td>logsight.ai@gmail.com</td>
-          </tr>
-        </table>
-      </div>
     </div>
     <div class="row text-center align-items-center justify-content-center">
       <div class="col-auto">
         <table class="footer-follow">
           <tr>
-            <td (click)="redirectToPrivacyAndPolicy()"><a class="btn-login nav-link js-scroll-trigger">Privacy Policy</a></td>
+            <td (click)="redirectToPrivacyAndPolicy()"><a class="btn-footer nav-link js-scroll-trigger">Privacy policy/Datenschutz</a></td>
           </tr>
         </table>
       </div>
       <div class="col-auto">
         <table class="footer-follow">
           <tr>
-            <td (click)="redirectToTermsAndConditions()"><a class="btn-login nav-link js-scroll-trigger">Terms and Conditions</a></td>
+            <td (click)="redirectToTermsAndConditions()"><a class="btn-footer nav-link js-scroll-trigger">Terms and conditions/AGB</a></td>
           </tr>
         </table>
       </div>
+      <div class="col-auto">
+        <table class="footer-follow">
+          <tr>
+            <td (click)="redirectToImpressum()"><a class="btn-footer nav-link js-scroll-trigger">Imprint/Impressum</a></td>
+          </tr>
+        </table>
+      </div>
+      <!--        <div class="col-auto">-->
+      <!--          <table class="footer-follow">-->
+      <!--            &lt;!&ndash;            <tr>&ndash;&gt;-->
+      <!--            &lt;!&ndash;              <th  colspan="2">Contact</th>&ndash;&gt;-->
+      <!--            &lt;!&ndash;            </tr>&ndash;&gt;-->
+      <!--            <tr>-->
+      <!--              <td>logsight.ai@gmail.com</td>-->
+      <!--            </tr>-->
+      <!--          </table>-->
+      <!--        </div>-->
+
     </div>
+
+
   </div>
 </div>
 </body>

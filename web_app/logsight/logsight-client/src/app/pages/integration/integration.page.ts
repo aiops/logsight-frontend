@@ -114,6 +114,7 @@ export class IntegrationPage implements OnInit {
       currency: 'eur',
       quantity: this.quantity,
       amount: 999,
+      email: this.email,
       priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
       cancelUrl: 'http://localhost:4200/cancel_payment',
       successUrl: 'http://localhost:4200/success_payment',
@@ -129,7 +130,7 @@ export class IntegrationPage implements OnInit {
 
   async stripeCustomerPortal() {
     const stripe = await this.stripePromise;
-    this.integrationService.checkCustomerPortal("aaa").subscribe(data => {
+    this.integrationService.checkCustomerPortal().subscribe(data => {
       window.open(data['url'], "_blank");
     });
   }

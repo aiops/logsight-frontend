@@ -13,9 +13,10 @@ import { loadStripe } from '@stripe/stripe-js/pure';
   templateUrl: './integration.page.html',
 })
 export class IntegrationPage implements OnInit {
-  key: string
-  email: string
+  key: string;
+  email: string;
   quantity: number;
+  hasPaid: Boolean;
   applications: Application[] = [];
   public show: boolean = false;
   public python: boolean = true;
@@ -45,6 +46,7 @@ export class IntegrationPage implements OnInit {
     this.authService.getLoggedUser().subscribe(user => {
       this.key = user.key
       this.email = user.email
+      this.hasPaid = user.hasPaid
       this.loadApplications()
       this.code_python = this.getPythonCode()
       this.code_filebeats = this.getFilebeatsCode()
@@ -110,14 +112,14 @@ export class IntegrationPage implements OnInit {
 
   async stripeCLick() {
     const payment = {
-      name: 'Iphone',
+      name: 'LogsightPayment',
       currency: 'eur',
       quantity: this.quantity,
       amount: 999,
       email: this.email,
       priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
-      cancelUrl: 'http://localhost:4200/cancel_payment',
-      successUrl: 'http://localhost:4200/success_payment',
+      cancelUrl: 'http://localhost:4200/pages/integration',
+      successUrl: 'http://localhost:4200/pages/integration',
     };
     const stripe = await this.stripePromise;
     this.integrationService.subscription(payment).subscribe(data => {

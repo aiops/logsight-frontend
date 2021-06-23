@@ -22,25 +22,28 @@
       <!--        </div>-->
       <!--      </nb-card>-->
     </div>
-    <nb-card>
-      <nb-card-header>Select billing plan</nb-card-header>
-      <nb-card-body  align="center">
+<!--    <nb-card>-->
+<!--      <nb-card-header>Select billing plan</nb-card-header>-->
+<!--      <nb-card-body  align="center">-->
 
-        <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>
+<!--        <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>-->
 
-        <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>
-        <input nbInput  style="width: 60%" type="text" [value]="quantity">
-        <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>
-        <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
-        <div>
-        <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>
-        </div>
-        <div style="margin-top: 10px">
-        <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">Manage subscription</button>
-        </div>
-      </nb-card-body>
+<!--        <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>-->
+<!--        <input nbInput  style="width: 60%" type="text" [value]="quantity">-->
+<!--        <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>-->
+<!--        <p>Total cost per month: {{quantity * 2}}.00 Euro</p>-->
+<!--        <div *ngIf="!hasPaid">-->
+<!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>-->
+<!--        </div>-->
+<!--        <div *ngIf="hasPaid">-->
+<!--          <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE SUBSCRIPTION</button>-->
+<!--        </div>-->
+<!--        <div style="margin-top: 10px">-->
+<!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE SUBSCRIPTION</button>-->
+<!--        </div>-->
+<!--      </nb-card-body>-->
 
-    </nb-card>
+<!--    </nb-card>-->
     <div class="row integration_types">
       <nb-card class="p-3 row-one">
         <div class="row no-gutters">
@@ -72,7 +75,7 @@
       <nb-card class="p-3 row-one">
         <div class="row no-gutters">
           <div class="col">
-            <h5 class="mb-3">Create application</h5>
+            <h5 class="mb-3">Manage applications</h5>
           </div>
         </div>
         <div class="row p-3">

@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LogsightUser } from '../../@core/common/logsight-user';
 import {AuthenticationService} from "../../auth/authentication.service";
+import {HighlightResult} from "ngx-highlightjs";
+import {loadStripe} from "@stripe/stripe-js/pure";
+import {IntegrationService} from "../../@core/service/integration.service";
+import {NotificationsService} from "angular2-notifications";
 
 @Component({
   selector: 'profile',
@@ -9,17 +13,84 @@ import {AuthenticationService} from "../../auth/authentication.service";
   templateUrl: './profile.page.html',
 })
 export class ProfilePage implements OnInit {
+  availableData: number;
+  usedData: number;
+  key: string;
+  email: string;
+  quantity: number;
+  hasPaid: Boolean;
+  response: HighlightResult;
+  customerId = ''
+  view: any[] = [400, 200];
+  colorScheme = {
+    domain: ['#00ff00', '#ff0000', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
+  cardColor: string = '#ffffff';
 
-  key: string
-  email: string
+  units: string = 'GBs';
 
-  constructor(private router: Router, private authService: AuthenticationService) {
+  stripePromise = loadStripe(
+    'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
+
+  constructor(private router: Router, private integrationService: IntegrationService, private authService: AuthenticationService,
+              private notificationService: NotificationsService) {
   }
 
   ngOnInit(): void {
     this.authService.getLoggedUser().subscribe(user => {
       this.key = user.key
       this.email = user.email
+      this.hasPaid = user.hasPaid
+      this.availableData = user.availableData
+      this.usedData = user.usedData
     })
+    this.quantity = 1
   }
+
+
+  plus() {
+    this.quantity++;
+  }
+
+  minus() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+
+  }
+
+  async stripeCLick() {
+    const payment = {
+      name: 'LogsightPayment',
+      currency: 'eur',
+      quantity: this.quantity,
+      amount: 999,
+      email: this.email,
+      priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
+      cancelUrl: 'http://localhost:4200/pages/integration',
+      successUrl: 'http://localhost:4200/pages/integration',
+    };
+    const stripe = await this.stripePromise;
+    this.integrationService.subscription(payment).subscribe(data => {
+      this.customerId = data.id;
+      stripe.redirectToCheckout({
+        sessionId: data.id
+      })
+    });
+  }
+
+  async stripeCustomerPortal() {
+    const stripe = await this.stripePromise;
+    this.integrationService.checkCustomerPortal().subscribe(data => {
+      window.open(data['url'], "_blank");
+    });
+  }
+
+  valueFormatter(val){
+    console.log(val.value)
+    return val.value
+  }
+
+
+
 }

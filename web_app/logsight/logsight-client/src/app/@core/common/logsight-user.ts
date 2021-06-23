@@ -6,4 +6,6 @@ export interface LogsightUser {
   activationDate: Date,
   activated: Boolean,
   hasPaid: Boolean
+  availableData: number,
+  usedData: number
 }

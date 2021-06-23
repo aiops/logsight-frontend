@@ -13,13 +13,21 @@ import {NotificationsService} from "angular2-notifications";
   templateUrl: './profile.page.html',
 })
 export class ProfilePage implements OnInit {
-
+  availableData: number;
+  usedData: number;
   key: string;
   email: string;
   quantity: number;
   hasPaid: Boolean;
   response: HighlightResult;
   customerId = ''
+  view: any[] = [200, 200];
+  colorScheme = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
+
+  units: string = 'GBs';
+
   stripePromise = loadStripe(
     'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
 
@@ -32,6 +40,9 @@ export class ProfilePage implements OnInit {
       this.key = user.key
       this.email = user.email
       this.hasPaid = user.hasPaid
+      this.availableData = user.availableData
+      this.usedData = user.usedData
+      console.log(this.availableData, this.usedData)
     })
     console.log(this.hasPaid)
     this.quantity = 1

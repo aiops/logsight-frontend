@@ -5,6 +5,7 @@ import { ProfileRoutingModule} from "./profile-routing.module";
 import {CommonModule} from "@angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HighlightModule} from "ngx-highlightjs";
+import {GaugeModule, NgxChartsModule} from "@swimlane/ngx-charts";
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import {HighlightModule} from "ngx-highlightjs";
     HighlightModule,
     NbUserModule,
     NbContextMenuModule,
+    NgxChartsModule,
   ],
   declarations: [
     ProfilePage,

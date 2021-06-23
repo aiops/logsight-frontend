@@ -1,49 +1,60 @@
 <div class="container">
   <div class="main-body">
     <div class="row gutters-sm">
-      <div class="col-md-4 mb-3">
-            <div class="row no-gutters p-3 row-one">
-              <div class="col" align="center">
-                <p class="mb-3">Username:</p>
-                <p class="mb-3"><b>{{email}}</b></p>
-                <p class="mb-3">PRIVATE_KEY:</p>
-                <p class="mb-3"><b>{{key}}</b></p>
+      <div class="col-sm">
+        <h5>User info</h5>
+        <p class="mb-3">Username:</p>
+        <p class="mb-3"><b>{{email}}</b></p>
+        <p class="mb-3">Private key:</p>
+        <p class="mb-3"><b>{{key}}</b></p>
+        </div>
+
+
+      <div class="col-sm">
+          <h5>Billing plan</h5>
+
+          <nb-card>
+            <nb-card-body  align="center">
+
+              <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>
+
+              <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>
+              <input nbInput  style="width: 60%" type="text" [value]="quantity">
+              <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>
+              <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
+              <div *ngIf="!hasPaid">
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>
               </div>
-            </div>
+              <div *ngIf="hasPaid">
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE SUBSCRIPTION</button>
+              </div>
+              <div style="margin-top: 10px">
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE SUBSCRIPTION</button>
+              </div>
+            </nb-card-body>
 
-        <nb-card>
-          <nb-card-header>Select billing plan</nb-card-header>
-          <nb-card-body  align="center">
+          </nb-card>
+          <h5>Data usage:</h5>
+          <div align="center">
 
-            <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>
+            <ngx-charts-number-card
+              [view]="view"
+              [scheme]="colorScheme"
+              [valueFormatting]="valueFormatter"
+              [results]='[
+                  {
+                    "name": "Data sent",
+                    "value": usedData / 1000000000
+                  },
+                  {
+                    "name": "Data available",
+                    "value": availableData / 1000000000
+                  }]'
+              [cardColor]="cardColor">
+            </ngx-charts-number-card>
 
-            <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>
-            <input nbInput  style="width: 60%" type="text" [value]="quantity">
-            <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>
-            <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
-            <div *ngIf="!hasPaid">
-              <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>
-            </div>
-            <div *ngIf="hasPaid">
-              <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE SUBSCRIPTION</button>
-            </div>
-            <div style="margin-top: 10px">
-              <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE SUBSCRIPTION</button>
-            </div>
-          </nb-card-body>
+          </div>
 
-        </nb-card>
-      </div>
-
-      <div class="col-md-4 mb-3">
-
-        <ngx-charts-linear-gauge
-          [view]="view"
-          [scheme]="colorScheme"
-          [value]="100"
-          [max]="200"
-          [units]="units">
-        </ngx-charts-linear-gauge>
       </div>
     </div>
   </div>

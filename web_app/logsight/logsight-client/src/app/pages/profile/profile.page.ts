@@ -21,10 +21,11 @@ export class ProfilePage implements OnInit {
   hasPaid: Boolean;
   response: HighlightResult;
   customerId = ''
-  view: any[] = [200, 200];
+  view: any[] = [400, 200];
   colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    domain: ['#00ff00', '#ff0000', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
+  cardColor: string = '#ffffff';
 
   units: string = 'GBs';
 
@@ -42,9 +43,7 @@ export class ProfilePage implements OnInit {
       this.hasPaid = user.hasPaid
       this.availableData = user.availableData
       this.usedData = user.usedData
-      console.log(this.availableData, this.usedData)
     })
-    console.log(this.hasPaid)
     this.quantity = 1
   }
 
@@ -85,6 +84,11 @@ export class ProfilePage implements OnInit {
     this.integrationService.checkCustomerPortal().subscribe(data => {
       window.open(data['url'], "_blank");
     });
+  }
+
+  valueFormatter(val){
+    console.log(val.value)
+    return val.value
   }
 
 

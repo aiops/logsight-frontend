@@ -23,18 +23,18 @@
               <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>
               <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
               <div *ngIf="!hasPaid">
-                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">PROCEED TO CHECKOUT</button>
               </div>
               <div *ngIf="hasPaid">
-                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE SUBSCRIPTION</button>
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE PLAN</button>
               </div>
               <div style="margin-top: 10px">
-                <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE SUBSCRIPTION</button>
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE PLAN</button>
               </div>
             </nb-card-body>
 
           </nb-card>
-          <h5>Data usage:</h5>
+          <h5>Data usage (MBs)</h5>
           <div align="center">
 
             <ngx-charts-number-card
@@ -43,12 +43,12 @@
               [valueFormatting]="valueFormatter"
               [results]='[
                   {
-                    "name": "Data sent",
-                    "value": usedData / 1000000000
+                    "name": "Sent",
+                    "value": usedData / 1000000
                   },
                   {
-                    "name": "Data available",
-                    "value": availableData / 1000000000
+                    "name": "Available",
+                    "value": availableData / 1000000
                   }]'
               [cardColor]="cardColor">
             </ngx-charts-number-card>

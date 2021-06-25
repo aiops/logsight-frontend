@@ -11,6 +11,8 @@
 
 
       <div class="col-sm">
+        <nb-alert *ngIf="paymentSuccessful=='true'" status="success">The payment was successful!</nb-alert>
+        <nb-alert *ngIf="paymentSuccessful=='false'" status="danger">The payment was not successful, try again!</nb-alert>
           <h5>Billing plan</h5>
 
           <nb-card>
@@ -22,11 +24,14 @@
               <input nbInput  style="width: 60%" type="text" [value]="quantity">
               <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>
               <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
+              <div *ngIf="!hasPaid" style="margin-bottom: 10px">
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLickSubscription()">SUBSCRIBE</button>
+              </div>
               <div *ngIf="!hasPaid">
-                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">PROCEED TO CHECKOUT</button>
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLickCheckout()">ONE-TIME PURCHASE</button>
               </div>
               <div *ngIf="hasPaid">
-                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE PLAN</button>
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLickSubscription()">UPDATE PLAN</button>
               </div>
               <div style="margin-top: 10px">
                 <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE PLAN</button>

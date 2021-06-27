@@ -35,6 +35,7 @@ import {MatCardModule} from "@angular/material/card";
 import {PrivacypolicyPage} from "./landing-page/PrivacyPolicy/privacypolicy.page";
 import {ImpressumPage} from "./landing-page/Impressum/impressum.page";
 import {TermsconditionsPage} from "./landing-page/TermsConditions/termsconditions.page";
+import {TooltipModule} from "@swimlane/ngx-charts";
 
 @NgModule({
   declarations: [AppComponent ,LoginComponent, RegisterComponent, LandingPage, PrivacypolicyPage, ImpressumPage, TermsconditionsPage, ActivateComponent],
@@ -63,7 +64,8 @@ import {TermsconditionsPage} from "./landing-page/TermsConditions/termscondition
     NbButtonModule,
     SimpleNotificationsModule.forRoot(),
     HighlightModule,
-    MatCardModule
+    MatCardModule,
+    TooltipModule
   ],
   bootstrap: [AppComponent],
   providers: [LoginService, {

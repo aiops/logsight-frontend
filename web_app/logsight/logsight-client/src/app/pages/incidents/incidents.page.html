@@ -29,7 +29,7 @@
 
 <div style="padding-left: 5%;padding-right: 5%">
   <div *ngIf="tableData?.semanticCountAds" >
-    <h5 style="font-weight: 600" >Critical anomalies</h5>
+    <h5 style="font-weight: 600" >Critical anomalies  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <nb-card tourAnchor="anchorCriticalAnomalies">
       <nb-card-body>
         <div class="col-lg-12 p-0">
@@ -39,7 +39,7 @@
               <tr>
                 <th style="width: 2%" scope="col"></th>
                 <th style="width: 15%" scope="col">Timestamp</th>
-                <th style="width: 12%" scope="col">Ratio</th>
+                <th style="width: 12%" scope="col">Ratio  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></th>
                 <th style="width: 5%" scope="col">Level</th>
                 <th style="width: 66%" scope="col">Log message</th>
               </tr>
@@ -68,7 +68,7 @@
     </nb-card>
   </div>
   <div *ngIf="tableData?.countAds" tourAnchor="anchorFlowAnomalies">
-    <h5 style="font-weight: 600" >Flow anomalies</h5>
+    <h5 style="font-weight: 600" >Flow anomalies  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <nb-card >
       <nb-card-body>
         <div class="col-lg-12 p-0">
@@ -79,7 +79,8 @@
               <tr>
                 <th style="width: 2%" scope="col"></th>
                 <th style="width: 15%" scope="col">Timestamp</th>
-                <th style="width: 8%" scope="col">Ratio</th>
+                <th style="width: 8%" scope="col">Ratio <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+                </th>
                 <th style="width: 5%" scope="col">Level</th>
                 <th style="width: 70%" scope="col">Log message</th>
               </tr>
@@ -108,7 +109,7 @@
     </nb-card>
   </div>
   <div *ngIf="tableData?.semanticAd" tourAnchor="anchorCogAnomalies">
-    <h5  style="font-weight: 600">Cognitive anomalies</h5>
+    <h5  style="font-weight: 600">Cognitive anomalies  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <nb-card>
       <nb-card-body>
         <div class="col-lg-12 p-0">
@@ -145,7 +146,7 @@
   </div>
 
   <div *ngIf="tableData?.newTemplates"  tourAnchor="anchorNewAnomalies">
-    <h5 style="font-weight: 600">New log types</h5>
+    <h5 style="font-weight: 600">New log types  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <nb-card >
       <nb-card-body>
         <div class="col-lg-12 p-0">

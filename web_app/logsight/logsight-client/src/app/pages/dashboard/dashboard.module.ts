@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
-import { NbButtonModule, NbCardModule, NbIconModule, NbPopoverModule } from '@nebular/theme';
+import {NbButtonModule, NbCardModule, NbIconModule, NbPopoverModule, NbTooltipModule} from '@nebular/theme';
 import { DashboardPage } from './dashboard.page';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -25,7 +25,8 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
         NbButtonModule,
         NbIconModule,
         NbPopoverModule,
-        TourMatMenuModule
+        TourMatMenuModule,
+        NbTooltipModule
     ],
   declarations: [
     DashboardPage,

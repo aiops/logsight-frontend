@@ -7,29 +7,31 @@
           (click)="openPopover()"
           nbPopoverTrigger="noop" size="tiny" shape="round"><i class="fa fa-calendar"></i></button>
 </div>
+
+
 <div class="row" style="padding-left: 5%;padding-right: 5%">
   <div class="col-4" tourAnchor="anchorLogLevels" >
-    <h5 style="font-weight: 600">Log levels</h5>
+    <h5 style="font-weight: 600">Log levels  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <piechart [data]="pieChartData"></piechart>
   </div>
   <div class="col-4" tourAnchor="anchorLogLevelDistribution">
-    <h5 style="font-weight: 600">Log level distribution</h5>
+    <h5 style="font-weight: 600">Log level distribution  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
   </div>
 
   <div class="col-4" tourAnchor="anchorCognitiveAnomalies">
-    <h5 style="font-weight: 600">Cognitive anomalies</h5>
+    <h5 style="font-weight: 600" >Cognitive anomalies <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
   </div>
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 <div style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorSystemOverview">
-  <h5 style="font-weight: 600">System overview</h5>
+  <h5 style="font-weight: 600">System overview  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
   <chart-heatmap [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 <div  style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorTopIncidents">
-  <h5 style="font-weight: 600">Top 5 incidents in 24h</h5>
+  <h5 style="font-weight: 600">Top 5 incidents in 24h  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
   <br>
 <nb-card>
   <nb-card-body>

@@ -26,7 +26,7 @@
   </div>
 
   <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">
-    <h5 style="font-weight: 600">Top reoccuring log types</h5>
+    <h5 style="font-weight: 600">Top reoccuring log types  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <nb-card tourAnchor="anchorTopTemplates">
       <hr noshade="true">
       <div class="row">
@@ -59,9 +59,9 @@
           <table class="table table-striped table-borderless">
             <thead>
             <tr>
-              <th style="width: 20%">Ratio</th>
-              <th style="width: 60%">Log type</th>
-              <th style="width: 20%">Description</th>
+              <th style="width: 20%">Ratio  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></th>
+              <th style="width: 60%">Log type  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></th>
+              <th style="width: 20%">Description  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></th>
             </tr>
             </thead>
             <tbody>
@@ -94,7 +94,7 @@
   </div>
 
   <div *ngIf="selectedApplicationId" class="p-3" style="width: 100%">
-    <h5 style="font-weight: 600">Logs </h5>
+    <h5 style="font-weight: 600">Logs <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <nb-card tourAnchor="anchorLogs">
       <hr noshade="true">
       <div class="row">
@@ -113,7 +113,7 @@
               <tr>
                 <th style="width: 10%" scope="col">Timestamp</th>
                 <th style="width: 5%" scope="col">Level</th>
-                <th style="width: 90%" scope="col">Log message</th>
+                <th style="width: 90%" scope="col">Log message <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></th>
               </tr>
               </thead>
               <tbody>

@@ -138,6 +138,16 @@ body {
 	position: relative;
 }
 
+.container-m-pp {
+  max-width: 1300px;
+  margin: 0 auto !important;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  font-family: Montserrat;
+  line-height: 25px;
+}
+
 .container-s {
 	max-width: 920px;
 	margin: 0 auto !important;

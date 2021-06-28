@@ -19,9 +19,9 @@ export class IntegrationPage implements OnInit {
   hasPaid: Boolean;
   applications: Application[] = [];
   public show: boolean = false;
-  public python: boolean = true;
+  public python: boolean = false;
   public fileBeats: boolean = false;
-  public rest: boolean = false;
+  public rest: boolean = true;
   public showHideAppBtn: any = 'Show';
   public pythonBtn: any = 'Python';
   public filebeatBtn: any = 'Filebeat';
@@ -199,30 +199,29 @@ logger.info("------------")`;
     return `
     //json
     {
-    "private-key": "${this.key}",
-    "app": "demo-app",
-    "message": "This is an error message, representing failure!",
-    "level": "ERROR"
+    "logMessages": [
+      {
+        "private-key": "${this.key}",
+        "app": "string",
+        "timestamp": "string",
+        "level": "string",
+        "message": "string"
+      }
+    ]
     }
-
-    //shell script
-    #!/bin/bash
-    while IFS= read -r line; do
-      curl -X POST "https://logsight.ai/api_v1/data"
-      -H "accept: application/json"
-      -H "Content-Type: application/json"
-      -d "{ \\"private-key\\":
-      \\"${this.key}\\",
-      \\"app\\": \\"demo-app\\",
-      \\"message\\": \\"$line\\",
-       \\"level\\": \\"string\\"}"
-      echo "Text read from file: $line"
-    done < "$1"
-
-
-    // to use the shell script just
-    // copy the above shell code into send-rest.sh
-    // ./send-rest.sh File_name
+    //curl command
+    curl -X POST "http://localhost/api_v1/data"
+    -H "accept: application/json"
+    -H "Content-Type: application/json"
+    -d "{ \"logMessages\":
+    [ { \"private-key\": \"jua9p6pucfae6yu7aflichduda\",
+        \"app\": \"compute_sample_app\",
+        \"timestamp\": \"string\",
+        \"level\": \"string\",
+         \"message\": \"string\"
+      }
+    ]
+    }"
     `
   }
 

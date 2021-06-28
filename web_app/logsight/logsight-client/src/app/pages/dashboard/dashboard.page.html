@@ -11,27 +11,27 @@
 
 <div class="row" style="padding-left: 5%;padding-right: 5%">
   <div class="col-4" tourAnchor="anchorLogLevels" >
-    <h5 style="font-weight: 600">Log levels  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
+    <h5 style="font-weight: 600">Log level ratio <nb-icon icon="info-outline" nbTooltip="A log level or log severity is a piece of information telling how important a given log message is. It is a simple, yet very powerful way of distinguishing log events from each other. If the log levels are used properly in your application all you need is to look at the severity first." nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <piechart [data]="pieChartData"></piechart>
   </div>
   <div class="col-4" tourAnchor="anchorLogLevelDistribution">
-    <h5 style="font-weight: 600">Log level distribution  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
+    <h5 style="font-weight: 600">Log level distribution  <nb-icon icon="info-outline" nbTooltip="Log levels evolution through time. If you notice any strange changes, it might be an indication of anomaly!" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
   </div>
 
   <div class="col-4" tourAnchor="anchorCognitiveAnomalies">
-    <h5 style="font-weight: 600" >Cognitive anomalies <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
+    <h5 style="font-weight: 600" >Cognitive anomalies <nb-icon icon="info-outline" nbTooltip="Cognitive anomalies are log messages that have negative semantic meaning in software systems. The AI system in the background knows how to distinguish normal and anomaly log messages based on learning from millions log messages." nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
     <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
   </div>
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 <div style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorSystemOverview">
-  <h5 style="font-weight: 600">System overview  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
+  <h5 style="font-weight: 600">System overview  <nb-icon icon="info-outline" nbTooltip="Get an overview of the system! Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
   <chart-heatmap [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 <div  style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorTopIncidents">
-  <h5 style="font-weight: 600">Top 5 incidents in 24h  <nb-icon icon="info-outline" nbTooltip="This is a tooltip" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
+  <h5 style="font-weight: 600">Top 5 incidents in 24h  <nb-icon icon="info-outline" nbTooltip="Here you can see the top 5 most severe incidents in the last 24 hours. Clicking on View Details will show you details of the incident!" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
   <br>
 <nb-card>
   <nb-card-body>

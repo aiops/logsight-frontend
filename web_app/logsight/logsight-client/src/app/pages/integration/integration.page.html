@@ -53,6 +53,11 @@
         </div>
         <div class="row justify-content-center">
           <div class=".col-6 .col-md-4">
+            <button nbButton shape="round" class="rest-btn" type="button" (click)="onRestBtn()">
+              {{restBtn}}
+            </button>
+          </div>
+          <div class=".col-6 .col-md-4">
             <button nbButton shape="round" class="python-btn" type="button" (click)="onPythonBtn()">
               {{pythonBtn}}
             </button>
@@ -62,11 +67,7 @@
               {{filebeatBtn}}
             </button>
           </div>
-          <div class=".col-6 .col-md-4">
-            <button nbButton shape="round" class="rest-btn" type="button" (click)="onRestBtn()">
-              {{restBtn}}
-            </button>
-          </div>
+
         </div>
       </nb-card>
     </div>
@@ -135,7 +136,7 @@
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h5>Usage</h5>
+            <h5>Python-SDK Usage</h5>
           </div>
           <div class="row">
             <p class="dscr">To start sending logs from a Python script you need to install the Logsight Python-SDK:</p>
@@ -189,7 +190,7 @@
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h5>Usage</h5>
+            <h5>Filebeats Usage</h5>
           </div>
           <div class="row">
             <p class="dscr">Logsight provides integration with Filebeat</p>
@@ -282,7 +283,7 @@
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h5>Usage</h5>
+            <h5>REST API Usage</h5>
           </div>
           <div class="row">
             <p class="dscr">Logsight exposes an API that allows you to send your logs from anywhere, here is how:</p>
@@ -301,7 +302,7 @@
             <table class="table table-borderless">
               <tr>
                 <th>URL</th>
-                <td>https://logsight.ai/api_v1/data</td>
+                <td>https://logsight.ai/api_v1</td>
               </tr>
               <tr>
                 <th>HTTP method</th>
@@ -315,7 +316,7 @@
           </div>
 
           <div class="row">
-            <h5>POST BODY</h5>
+            <h5>Post body</h5>
           </div>
           <div class="row">
             <table class="table table-borderless">
@@ -328,8 +329,24 @@
                 <td>string, name of the application you have created)</td>
               </tr>
               <tr>
-                <th>message</th>
-                <td>string, the content of the log message</td>
+                <th>logMessages</th>
+                <td>List of Log messages</td>
+              </tr>
+            </table>
+          </div>
+          <div class="row">
+            <h5>Log body</h5>
+          </div>
+
+          <div class="row">
+            <table class="table table-borderless">
+              <tr>
+                <th>timestamp</th>
+                <td>string, the timestamp of the log</td>
+              </tr>
+              <tr>
+                <th>level</th>
+                <td>string, the log level (e.g., INFO, WARNING, ERROR)</td>
               </tr>
               <tr>
                 <th>level</th>
@@ -337,10 +354,19 @@
               </tr>
               <tr>
                 <th>Other fields</th>
-                <td>Related to the log message</td>
+                <td>Related to the log message (e.g., class name)</td>
               </tr>
             </table>
           </div>
+
+
+          <div class="row user_guidance">
+            <div class="row">
+              <div class="col">
+            You can send logs in batches to optimize network calls. The using the "logMessages" key accepts a list of log messages.
+              </div>
+              </div>
+            </div>
 
           <div class="row user_guidance">
             <div class="col">

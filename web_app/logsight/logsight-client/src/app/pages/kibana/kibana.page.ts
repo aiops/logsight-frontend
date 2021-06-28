@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {interval} from "rxjs";
 import {AuthenticationService} from "../../auth/authentication.service";
+import {ApiService} from "../../@core/service/api.service";
+import {HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'kibana',
@@ -13,13 +15,14 @@ export class KibanaPage implements OnInit {
   key: string;
   email: string;
 
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService, private apiService: ApiService) {
     this.curSec = 0;
     this.authService.getLoggedUser().subscribe(user => {
       this.key = user.key
       this.email = user.email
     });
   }
+
 
 
   alerting() {
@@ -32,7 +35,6 @@ export class KibanaPage implements OnInit {
   startTimer(seconds: number) {
     const time = seconds;
     const timer$ = interval(1000);
-
     const sub = timer$.subscribe((sec) => {
       this.progressValue = Number((sec * 100 / seconds).toPrecision(1));
       this.curSec = sec;
@@ -44,6 +46,10 @@ export class KibanaPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.startTimer(1)
+    // this.startTimer(1)
+    this.apiService.post("/api/applications/kibana/login",
+      '{"password":"test-test","username":'+this.key+ '}').subscribe(data =>{
+        console.log(data)
+    })
   }
 }

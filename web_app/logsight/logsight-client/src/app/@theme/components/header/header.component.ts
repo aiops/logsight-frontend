@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../auth/authentication.service";
 import {TourService} from "ngx-ui-tour-md-menu";
+import {ApiService} from "../../../@core/service/api.service";
 
 @Component({
   selector: "'ngx-header','ngx-pages'",
@@ -49,7 +50,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private router: Router,
               private breakpointService: NbMediaBreakpointsService,
-              private authService: AuthenticationService, private tourService: TourService) {
+              private authService: AuthenticationService,
+              private tourService: TourService,
+              private apiService: ApiService) {
 
               this.tourService.initialize([
                 {
@@ -186,6 +189,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // this.layoutService.changeLayoutSize();
 
     return false;
+  }
+
+  loginKibana(){
+    this.apiService.post("/api/applications/kibana/login",
+      '{"password":"test-test","username":'+this.key+ '}').subscribe(data =>{
+    })
+    console.log("Test")
   }
 
   navigateHome() {

@@ -14,13 +14,12 @@ export class KibanaPage implements OnInit {
   curSec: number;
   key: string;
   email: string;
+  reloadNum: number;
 
   constructor(private authService: AuthenticationService, private apiService: ApiService) {
     this.curSec = 0;
-    this.authService.getLoggedUser().subscribe(user => {
-      this.key = user.key
-      this.email = user.email
-    });
+    this.reloadNum = 0;
+
   }
 
 
@@ -31,25 +30,22 @@ export class KibanaPage implements OnInit {
       initial password: test-test`);
     prompt("Copy key CTRL+C:", this.key)
   }
-
-  startTimer(seconds: number) {
-    const time = seconds;
-    const timer$ = interval(1000);
-    const sub = timer$.subscribe((sec) => {
-      this.progressValue = Number((sec * 100 / seconds).toPrecision(1));
-      this.curSec = sec;
-      if (this.curSec === seconds) {
-        sub.unsubscribe();
-        this.alerting()
-      }
-    });
-  }
+  //
+  // startTimer(seconds: number) {
+  //   const time = seconds;
+  //   const timer$ = interval(1000);
+  //   const sub = timer$.subscribe((sec) => {
+  //     this.progressValue = Number((sec * 100 / seconds).toPrecision(1));
+  //     this.curSec = sec;
+  //     if (this.curSec === seconds) {
+  //       sub.unsubscribe();
+  //       // this.alerting()
+  //     }
+  //   });
+  // }
 
   ngOnInit(): void {
-    // this.startTimer(1)
-    this.apiService.post("/api/applications/kibana/login",
-      '{"password":"test-test","username":'+this.key+ '}').subscribe(data =>{
-        console.log(data)
-    })
+
+
   }
 }

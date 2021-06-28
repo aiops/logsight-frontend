@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
+import {ApiService} from "../../@core/service/api.service";
 
 @Component({
   selector: 'login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
-              private router: Router) {
+              private router: Router,
+              private apiService: ApiService) {
   }
 
   form = new FormGroup({
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     localStorage.removeItem('token')
+
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/dashboard'])
       }, err => {

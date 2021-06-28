@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 // import { LayoutService } from '../../../@core/utils';
 import {filter, map, takeUntil} from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import {interval, Subject} from 'rxjs';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../auth/authentication.service";
 import {TourService} from "ngx-ui-tour-md-menu";
@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user: any;
   key: string;
   email: string;
+  progressValue: number;
+  curSec: number;
   horizontal: boolean = true;
   themes = [
     {
@@ -142,10 +144,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
             }
   ngOnInit() {
-
+    this.curSec = 0;
     this.authService.getLoggedUser().subscribe(user => {
       this.key = user.key
       this.email = user.email
+    })
+
+
+    this.apiService.post("/api/auth/kibana/login",
+      '{"password":"test-test","username":'+this.key+ '}').subscribe(data =>{
+      console.log(data)
     })
 
     this.currentTheme = this.themeService.currentTheme;
@@ -191,12 +199,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  loginKibana(){
-    this.apiService.post("/api/applications/kibana/login",
-      '{"password":"test-test","username":'+this.key+ '}').subscribe(data =>{
-    })
-    console.log("Test")
-  }
+
+  // startTimer(seconds: number) {
+  //   const time = seconds;
+  //   const timer$ = interval(1000);
+  //   const sub = timer$.subscribe((sec) => {
+  //     this.progressValue = Number((sec * 100 / seconds).toPrecision(1));
+  //     this.curSec = sec;
+  //     if (this.curSec === seconds) {
+  //       sub.unsubscribe();
+  //       this.router.navigate(['/pages/kibana'])
+  //     }
+  //   });
+  // }
+
+  // loginKibana(){
+  //   this.apiService.post("/api/auth/kibana/login",
+  //     '{"password":"test-test","username":'+this.key+ '}').subscribe(data =>{
+  //   })
+  // }
 
   navigateHome() {
     this.menuService.navigateHome();

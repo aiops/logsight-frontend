@@ -61,6 +61,10 @@ export const routes: Routes = [
         component: ActivateComponent
       },
       {
+        path: 'activate/:key',
+        component: ActivateComponent
+      },
+      {
         path: 'logout',
         component: NbLogoutComponent,
       },

@@ -22,6 +22,16 @@ export class LoginService {
     return this.apiService.post('/api/auth/login', login);
   }
 
+  loginLink(login: { email: string, password: string }): any {
+    return this.apiService.post('/api/auth/login/login-link', login);
+  }
+
+  userLoginLink(key: string): any {
+    var userDetails = key.split("_")
+    return this.apiService.post('/api/auth/activate/login-link', { "loginID": userDetails[0],
+      "key":userDetails[1] });
+  }
+
   getUser(): Observable<LogsightUser> {
     return this.apiService.get(`/api/users`);
   }

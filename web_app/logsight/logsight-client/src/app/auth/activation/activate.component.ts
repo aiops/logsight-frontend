@@ -19,7 +19,7 @@ export class ActivateComponent implements OnInit {
   email: string;
   progressValue: number;
   curSec: number;
-
+  status = "default"
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
               private router: Router,
@@ -51,19 +51,40 @@ export class ActivateComponent implements OnInit {
       .subscribe(params => {
 
         if (params.key) {
-          this.authService.activateUser(params.key).subscribe(user => {
-            this.user = user
-            this.activationSuccess = true;
-            this.loading = false
-            this.email = this.user.email
-            this.authService.login({email:this.email, password:'demo'}).subscribe(resp => {
-                this.startTimer(10)
-              }, err => {
-                console.log('login error', err)
-                this.notificationService.error('Error', 'Incorrect or not activated email')
-              }
-            )
-          })
+          this.status = 'activate'
+          console.log(params.key, params.key.length)
+          if (params.key.split("_").length < 2){
+            this.authService.activateUser(params.key).subscribe(user => {
+              this.user = user
+              this.activationSuccess = true;
+              this.loading = false
+              this.email = this.user.email
+              this.authService.login({email:this.email, password:'demo'}).subscribe(resp => {
+                  this.startTimer(10)
+                }, err => {
+                  console.log('login error', err)
+                  this.notificationService.error('Error', 'Incorrect or not activated email')
+                }
+              )
+            })
+          }else{
+            this.status = 'login'
+            this.authService.userLoginLink(params.key).subscribe(user => {
+              this.user = user
+              this.activationSuccess = true;
+              this.loading = false
+              this.email = this.user.email
+              this.authService.login({email:this.email, password:'demo'}).subscribe(resp => {
+                this.router.navigate(['/pages/dashboard'])
+                }, err => {
+                  console.log('login error', err)
+                  this.notificationService.error('Error', 'Incorrect or not activated email')
+                }
+              )
+            })
+          }
+
+
         }
       }, error => {
         this.activationSuccess = false;

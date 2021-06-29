@@ -25,7 +25,7 @@ export class IntegrationPage implements OnInit {
   public showHideAppBtn: any = 'Show';
   public pythonBtn: any = 'Python';
   public filebeatBtn: any = 'Filebeat';
-  public restBtn: any = 'Rest';
+  public restBtn: any = 'REST API';
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });

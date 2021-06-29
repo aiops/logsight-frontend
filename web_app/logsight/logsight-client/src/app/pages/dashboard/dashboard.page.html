@@ -5,7 +5,7 @@
 
   <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
           (click)="openPopover()"
-          nbPopoverTrigger="noop" size="tiny" shape="round"><i class="fa fa-calendar"></i></button>
+          nbPopoverTrigger="noop" size="small" shape="round"><i class="fa fa-calendar"></i></button>
 </div>
 
 
@@ -135,7 +135,7 @@
               </div>
             </div>
             <div class="col-md-1 center">
-              <button nbButton (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
+              <button style="text-transform: none" nbButton (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
                       status='basic' shape="round" size="medium"> View details
               </button>
             </div>
@@ -240,7 +240,7 @@
               </div>
             </div>
             <div class="col-md-1 center">
-              <button nbButton (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
+              <button style="text-transform: none" nbButton (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
                       status='basic' shape="round" size="medium"> View details
               </button>
             </div>
@@ -251,7 +251,7 @@
           *ngIf="topKIncident.newTemplates.length > 0 && topKIncident?.scAnomalies.length == 0 && topKIncident?.semanticAD.length == 0">
           <div class="row">
             <div class="col-md-1 center">
-              <button nbButton (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
+              <button style="text-transform: none" nbButton (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
                       status='danger' shape="round" size="tiny"> View details
               </button>
             </div>
@@ -349,7 +349,7 @@
               </div>
             </div>
         <div class="col-md-1 center">
-          <button nbButton (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
+          <button style="text-transform: none" nbButton (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
                   status='basic' shape="round" size="medium"> View details
           </button>
         </div>

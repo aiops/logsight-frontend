@@ -25,21 +25,21 @@
               <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>
               <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
               <div *ngIf="!hasPaid" style="margin-bottom: 10px">
-                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLickSubscription()" nbTooltip="This is a tooltip" nbTooltipStatus="basic">SUBSCRIBE</button>
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLickSubscription()">SUBSCRIBE</button>
               </div>
               <div *ngIf="!hasPaid">
-                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLickCheckout()" nbTooltip="This is a tooltip" nbTooltipStatus="basic">ONE-TIME PURCHASE</button>
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLickCheckout()" >ONE-TIME PURCHASE</button>
               </div>
               <div *ngIf="hasPaid">
-                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLickSubscription()" nbTooltip="This is a tooltip" nbTooltipStatus="basic">UPDATE PLAN</button>
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCLickSubscription()">UPDATE PLAN</button>
               </div>
               <div style="margin-top: 10px">
-                <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()" nbTooltip="This is a tooltip" nbTooltipStatus="basic">MANAGE PLAN</button>
+                <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE PLAN</button>
               </div>
             </nb-card-body>
 
           </nb-card>
-          <h5>Data usage (MBs) <nb-icon icon="info-outline" nbTooltip="This is a tooltp" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
+          <h5>Data usage (MBs)</h5>
           <div align="center">
 
             <ngx-charts-number-card

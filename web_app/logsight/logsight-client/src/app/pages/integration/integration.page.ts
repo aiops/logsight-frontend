@@ -141,10 +141,11 @@ export class IntegrationPage implements OnInit {
     this.response = {
       language: e.language,
       relevance: e.relevance,
-      second_best: '{...}',
-      top: '{...}',
-      value: '{...}'
+      second_best: e.second_best,
+      top: e.top,
+      value: e.value
     }
+    console.log(this.response)
   }
 
   private getPythonCode() {
@@ -156,7 +157,7 @@ logger = logging.getLogger("Python Logger")
 logger.setLevel(logging.DEBUG)
 
 PRIVATE_KEY = '${this.key}'
-APP_NAME = 'demo-app'
+APP_NAME = 'string'
 logsight_handler = LogsightLogger(PRIVATE_KEY,
                                   APP_NAME)
 logsight_handler.setLevel(logging.INFO)
@@ -189,7 +190,7 @@ logger.info("------------")`;
       fields_under_root: true
       fields:
         PRIVATE_KEY: "${this.key}"
-        APP_NAME: "demo-app"
+        APP_NAME: "string"
 
       output.logstash:
         hosts: ["logsight.ai:12350"]`;
@@ -210,12 +211,12 @@ logger.info("------------")`;
     ]
     }
     //curl command
-    curl -X POST "http://localhost/api_v1/data"
+    curl -X POST "https://logsight.ai/api_v1/data"
     -H "accept: application/json"
     -H "Content-Type: application/json"
     -d "{ \"logMessages\":
-    [ { \"private-key\": \"jua9p6pucfae6yu7aflichduda\",
-        \"app\": \"compute_sample_app\",
+    [ { \"private-key\": \"${this.key}\",
+        \"app\": \"string\",
         \"timestamp\": \"string\",
         \"level\": \"string\",
          \"message\": \"string\"

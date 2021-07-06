@@ -2,8 +2,10 @@
   line-height: 32px;
 }
 
-#chart-parent {
-  display: grid;
-  height: 200px;
+::ng-deep{
+  .active {
+    .legend-label-text {
+      color: #fff !important;
+    }
+  }
 }
-

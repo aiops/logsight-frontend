@@ -21,4 +21,10 @@
     overflow-wrap: break-word;
     width: 95% !important;
   }
+
+  .active {
+    .legend-label-text {
+      color: #fff !important;
+    }
+  }
 }

@@ -23,7 +23,7 @@
   </div>
   <div class="p-3" style="width: 100%" *ngIf="selectedApplicationId && logCountLineChart.length > 0" >
     <h5 style="font-weight: 600">Log Count</h5>
-    <stacked-area-chart [data]="logCountLineChart"></stacked-area-chart>
+    <stacked-area-chart [chartParentHeight]="'100px'" [data]="logCountLineChart"></stacked-area-chart>
   </div>
 
   <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">

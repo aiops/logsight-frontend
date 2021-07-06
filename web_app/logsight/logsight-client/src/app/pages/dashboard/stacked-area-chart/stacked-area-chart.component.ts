@@ -12,6 +12,7 @@ import * as moment from 'moment'
 })
 export class StackedAreaChartComponent {
   @Input() data = [];
+  @Input() chartParentHeight = '200px'
   legend: boolean = true;
   showLabels: boolean = true;
   animations: boolean = true;

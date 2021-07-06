@@ -1,6 +1,6 @@
-<div class="row" style="width: 100%; padding-right: 5%; padding-left: 5%">
+<div class="row" style="width: 100%; height: 100%;  padding-right: 5%; padding-left: 5%">
 
-  <div class="col-md-3" tourAnchor="anchorApplications">
+  <div class="col-md-3" tourAnchor="anchorApplications"  style="background-color: #222b45; height: 100%">
 
     <div class="row user_info">
       <!--      <nb-card class="p-3 row-one">-->
@@ -11,7 +11,7 @@
         <div class="col" align="center">
           <p class="mb-3">Username:</p>
           <p class="mb-3"><b>{{email}}</b></p>
-          <p class="mb-3">PRIVATE_KEY:</p>
+          <p class="mb-3">private-key:</p>
           <p class="mb-3"><b>{{key}}</b></p>
         </div>
       </div>
@@ -45,7 +45,7 @@
 
 <!--    </nb-card>-->
     <div class="row integration_types">
-      <nb-card class="p-3 row-one">
+      <nb-card class="p-3 row-one" style="border: none">
         <div class="row no-gutters">
           <div class="col">
             <h5><b>Integration types</b></h5>
@@ -73,7 +73,7 @@
     </div>
 
     <div class="row create_new_app">
-      <nb-card class="p-3 row-one">
+      <nb-card class="p-3 row-one" style="border: none">
         <div class="row no-gutters">
           <div class="col">
             <h5 class="mb-3">Manage applications</h5>
@@ -130,7 +130,7 @@
     </div>
   </div>
 
-  <div class="col-5 px-4">
+  <div class="col" style="margin-left: 50px">
     <ng-container *ngIf="python">
       <div class="row description">
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
@@ -155,10 +155,10 @@
           <div class="row">
             <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with
               the following attributes: </p>
-            <table class="table table-striped table-borderless">
+            <table class="table table-borderless">
               <tr>
                 <th>PRIVATE_KEY</th>
-                <td>A private key which is used to validate your authenticity.</td>
+                <td>The private-key which is used to validate your authenticity.</td>
               </tr>
               <tr>
                 <th>APP_NAME</th>
@@ -230,37 +230,27 @@
           </div>
 
           <div class="row">
-            <h5>Configuration</h5>
+            <div class="col">
             <div class="row">
-              <table class="table table-borderless">
-                <tr>
-                  <td>
-                    Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable
-                    Elastic output).
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    For more information about configuring Filebeat to use Logstash please refer to:
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    For more information about configuring Filebeat to use Logstash please refer to:
-                  </td>
-                </tr>
-              </table>
+              <h5>Configuration</h5>
             </div>
+            <div class="row">
+              Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable
+                    Elastic output).
+              <br>
+              <br>
+              For more information about configuring Filebeat to use Logstash please refer to:
+              <br>
+              <br>
+              <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>
+              Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350
+              <br>
+              <br>
+              For more information about configuring Filebeat to use Logstash please refer to:
+              <br>
+              <br>
+            </div>
+          </div>
           </div>
 
           <div class="row user_guidance">
@@ -322,11 +312,11 @@
             <table class="table table-borderless">
               <tr>
                 <th>private-key</th>
-                <td>{{key}} (your private key)</td>
+                <td>{{key}} (Your private key)</td>
               </tr>
               <tr>
                 <th>app</th>
-                <td>string, name of the application you have created)</td>
+                <td>String, name of the application you have created</td>
               </tr>
               <tr>
                 <th>logMessages</th>
@@ -342,15 +332,15 @@
             <table class="table table-borderless">
               <tr>
                 <th>timestamp</th>
-                <td>string, the timestamp of the log</td>
+                <td>String, the timestamp of the log</td>
               </tr>
               <tr>
                 <th>level</th>
-                <td>string, the log level (e.g., INFO, WARNING, ERROR)</td>
+                <td>String, the log level (e.g., INFO, WARNING, ERROR)</td>
               </tr>
               <tr>
                 <th>level</th>
-                <td>string, the log level</td>
+                <td>String, the log level</td>
               </tr>
               <tr>
                 <th>Other fields</th>
@@ -384,35 +374,31 @@
     </ng-container>
   </div>
 
+  <div class="col" style="margin-left: 50px">
   <ng-container *ngIf="python">
-    <div class="col-4 px-3">
       <h5>Example code</h5>
       <div>
         <pre><code style="background-color: transparent" [highlight]="code_python" (highlighted)="onHighlight($event)"
                    [lineNumbers]="true"></code></pre>
       </div>
-    </div>
   </ng-container>
 
   <ng-container *ngIf="fileBeats">
-    <div class="col-4 px-3 ">
       <h5>Example code</h5>
       <div>
-        <pre><code style="background-color: transparent" [highlight]="code_filebeats"
+        <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_filebeats"
                    (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
       </div>
-    </div>
   </ng-container>
 
   <ng-container *ngIf="rest">
-    <div class="col-4 px-3 ">
       <h5>Example code</h5>
       <div>
-        <pre><code style="background-color: transparent" [highlight]="code_rest" (highlighted)="onHighlight($event)"
+        <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_rest" (highlighted)="onHighlight($event)"
                    [lineNumbers]="true"></code></pre>
       </div>
-    </div>
   </ng-container>
+  </div>
 </div>
 
 

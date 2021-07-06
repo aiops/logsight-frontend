@@ -25,4 +25,9 @@
     white-space: normal !important;
     width: 100% !important;
   }
+  .active {
+    .legend-label-text {
+      color: #fff !important;
+    }
+  }
 }

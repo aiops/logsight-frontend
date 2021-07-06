@@ -6,7 +6,7 @@ import { NbButtonModule, NbCardModule, NbInputModule } from '@nebular/theme';
 import { IntegrationPage } from './integration.page';
 import { IntegrationRoutingModule } from './integration-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import {HighlightModule} from "ngx-highlightjs";
+import {HIGHLIGHT_OPTIONS, HighlightModule} from "ngx-highlightjs";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
@@ -24,7 +24,17 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
   ],
   declarations: [
     IntegrationPage,
-  ]
+  ],
+
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        fullLibraryLoader: () => import('highlight.js')
+      }
+    }
+  ],
+
 })
 export class IntegrationModule {
 }

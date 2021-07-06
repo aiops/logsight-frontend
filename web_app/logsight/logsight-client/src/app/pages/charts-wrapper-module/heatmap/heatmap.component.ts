@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { multi } from './data';
 import * as moment from "moment";
+import {Style} from "@angular/cli/lib/config/schema";
 
 @Component({
   selector: 'chart-heatmap',
@@ -9,8 +10,8 @@ import * as moment from "moment";
 })
 export class HeatmapComponent {
   @Input() data = [];
+  @Input() heatmapHeight = '300px'
   @Output() select = new EventEmitter();
-
   legend: boolean = false;
   showLabels: boolean = false;
   animations: boolean = true;
@@ -21,7 +22,6 @@ export class HeatmapComponent {
   xAxisLabel: string = 'Country';
   yAxisLabel: string = 'Year';
   fill: boolean = true;
-
   colorScheme = {
     domain: [
       'rgb(0,255,0)',

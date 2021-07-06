@@ -1,7 +1,7 @@
 .model-full {
-  width: 50% !important;
-  height: 50% !important;
-  margin: 20%;
+  width: 100% !important;
+  height: 80% !important;
+  //margin: 20%;
 
   .cdk-visually-hidden {
     width: 99% !important;
@@ -15,8 +15,8 @@
 }
 
 /deep/ .cdk-overlay-pane {
-  width: 90% !important;
-  height: 90% !important;
+  width: 80% !important;
+  height: 80% !important;
 }
 
 /deep/ nb-dialog-container {

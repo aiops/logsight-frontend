@@ -1,4 +1,4 @@
-<div id="chart-parent">
+<div [ngStyle]="{'display':'grid', 'height': heatmapHeight}">
   <ngx-charts-heat-map
     [scheme]="colorScheme"
     [legend]="legend"
@@ -11,6 +11,6 @@
     [results]="data"
     (select)="select.emit($event)"
     [xAxisTickFormatting]="dateTickFormatting"
-    style="fill: white">
+    [ngStyle]="{'fill':'white'}">
   </ngx-charts-heat-map>
 </div>

@@ -27,7 +27,7 @@
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 <div style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorSystemOverview">
   <h5 style="font-weight: 600">System overview  <nb-icon icon="info-outline" nbTooltip="Get an overview of the system! Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
-  <chart-heatmap [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
+  <chart-heatmap heatmapHeight="{{(heatmapData[0].series.length+1)*50}}px" [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 <div  style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorTopIncidents">

@@ -2,3 +2,27 @@
   display: grid;
   height: 200px;
 }
+
+::ng-deep{
+  /* Makes the chart container expand to the full width of the parent container*/
+  .ngx-charts-outer {
+    width: 100% !important;
+  }
+
+  /* Sets the legend width to auto expand to fit labels, but caps at 200px */
+  .chart-legend > div {
+    width: auto !important;
+    max-width: 200px;
+  }
+
+  /* Some extra space is needed to offset the way the labels display */
+  .legend-labels {
+    width: calc(100% + 10px) !important;
+  }
+
+  /* Wrap the label text if it ends up being longer than the max width */
+  .legend-label-text {
+    white-space: normal !important;
+    width: 100% !important;
+  }
+}

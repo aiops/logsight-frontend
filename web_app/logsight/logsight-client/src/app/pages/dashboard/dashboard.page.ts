@@ -86,6 +86,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
     this.heatmapData$.subscribe(data => {
       this.heatmapData = data.data;
+      console.log(this.heatmapData)
     })
 
     this.pieChartData$.subscribe(data => {

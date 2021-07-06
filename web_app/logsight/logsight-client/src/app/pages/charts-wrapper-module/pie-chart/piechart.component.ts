@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { data } from './data';
+import Any = jasmine.Any;
 
 @Component({
   selector: 'piechart',
@@ -30,5 +31,9 @@ export class PiechartComponent {
   }
 
   onDeactivate(data): void {
+  }
+
+  tooltipFormatter(val: Any){
+    return val
   }
 }

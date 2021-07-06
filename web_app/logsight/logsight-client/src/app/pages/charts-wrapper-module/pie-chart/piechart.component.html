@@ -3,9 +3,21 @@
     [scheme]="colorScheme"
     [results]="data"
     [animations]="false"
+    [tooltipDisabled]="false"
     (select)="onSelect($event)"
     (activate)="onActivate($event)"
     (deactivate)="onDeactivate($event)"
     style="fill: white"><!--    [explodeSlices]="true"-->
+    <ng-template #tooltipTemplate let-model="model">
+      <div style="text-align: left; max-width: 250px">
+        <div *ngFor="let d of data; let i = index">
+          <p *ngIf="d. name === model .name && d .name == 'INFO'"> {{d .name}} log messages often are there to provide workflow system information.</p>
+          <p *ngIf="d. name === model .name && (d .name == 'WARN' || d .name == 'WARNING' || d .name == 'warn' || d .name == 'warning')"> {{d .name}} log messages suggest that something unusual is going on in the system. You need to pay attention to {{d .name}} logs. </p>
+          <p *ngIf="d. name === model .name && (d .name == 'ERROR' || d .name == 'ERR')"> {{d .name}} log messages represent erroneous system behaviour.</p>
+          <p *ngIf="d. name === model .name && (d .name == 'CRITICAL' || d .name == 'FATAL')"> {{d .name}} log messages represent the most severe system information. They suggest that the system might fail or already failed.</p>
+        </div>
+      </div>
+    </ng-template>
+
   </ngx-charts-pie-grid>
 </div>

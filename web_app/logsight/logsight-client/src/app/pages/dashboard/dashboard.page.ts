@@ -37,6 +37,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   barData$: Observable<any>;
   startDateTime = 'now-12h';
   endDateTime = 'now'
+  heatmapHeight = '200px';
   reload$: Subject<boolean> = new Subject();
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
@@ -85,8 +86,23 @@ export class DashboardPage implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.heatmapData$.subscribe(data => {
+      for (let i = 0; i < data.data.length; i++){
+        for (let j = 0; j< data.data[i].series.length; j++){
+          data.data[i].series[j].extra = data.data[i].name
+        }
+
+        var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+        var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+        data.data[i].name = local.toString()
+      }
+      console.log("DATA", data.data)
       this.heatmapData = data.data;
-      console.log(this.heatmapData)
+      if (this.heatmapData[0].series.length > 0){
+        this.heatmapHeight = (70*(this.heatmapData[0].series.length)).toString() + "px"
+      }else{
+        this.heatmapHeight = "150px"
+      }
     })
 
     this.pieChartData$.subscribe(data => {
@@ -94,6 +110,14 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
 
     this.stackedAreaChartData$.subscribe(data => {
+      for (let i = 0; i < data.data.length; i++){
+        for (let j = 0; j < data.data[i].series.length; j++){
+          var date = moment.utc(data.data[i].series[j].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+          var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+          data.data[i].series[j].name = local.toString()
+      }
+      }
       this.stackedChartData = data.data;
     })
 
@@ -118,6 +142,12 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
 
     this.barData$.subscribe(data => {
+      for (let i = 0; i < data.length; i++){
+        var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+        var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+        data[i].name = local.toString()
+      }
       this.barData = data;
     })
 
@@ -190,13 +220,14 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onHeatMapSelect(data: any) {
-    const dateTime = data.series
+    const dateTime = data.extra
     const date = dateTime.split(' ')[0].split('-');
     const time = dateTime.split(' ')[1].split(':');
     const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
       +time[1]);
-    this.navigateToIncidentsPage(startDateTime.subtract(1, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'),
-      startDateTime.add(5, 'minutes').format('YYYY-MM-DDTHH:mm:ss.sss'), data.id)
+    console.log(startDateTime)
+    this.navigateToIncidentsPage(startDateTime.format('YYYY-MM-DDTHH:mm'),
+      startDateTime.add(1, 'minutes').format('YYYY-MM-DDTHH:mm'), data.id)
   }
 
   parseTemplates(data, incident) {

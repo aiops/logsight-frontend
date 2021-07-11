@@ -27,10 +27,10 @@
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 <div style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorSystemOverview">
   <h5 style="font-weight: 600">System overview  <nb-icon icon="info-outline" nbTooltip="Get an overview of the system! Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
-  <chart-heatmap heatmapHeight="{{(heatmapData[0].series.length+1)*70}}px" [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
+  <chart-heatmap [heatmapHeight]="heatmapHeight" [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
-<div  style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorTopIncidents">
+<div  style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorTopIncidents" align="left">
   <h5 style="font-weight: 600">Top 5 incidents in 24h  <nb-icon icon="info-outline" nbTooltip="Here you can see the top 5 most severe incidents in the last 24 hours. Clicking on View Details will show you details of the incident!" nbTooltipStatus="basic" nbButton status="basic"></nb-icon></h5>
   <br>
 <nb-card>

@@ -31,10 +31,10 @@ export class GroupedVerticalBarChartComponent {
     this.data = data
   }
 
-  dateTickFormatting(val: any) { 
+  dateTickFormatting(val: any) {
     var date = moment.utc(val, 'HH:mm:ss').add(1,'hour').format('DD-MM-YYYY HH:mm');
     var stillUtc = moment.utc(date,'MM-DD-YYYY HH:mm');
-    var local = moment(stillUtc, 'MM-DD-YYYY HH:mm').local().format('hh:mm');
+    var local = moment(stillUtc, 'MM-DD-YYYY HH:mm').local().format('hh:mm A');
     return local.toString()
   }
 

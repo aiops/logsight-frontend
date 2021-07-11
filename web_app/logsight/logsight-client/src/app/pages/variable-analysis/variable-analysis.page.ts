@@ -118,6 +118,13 @@ export class VariableAnalysisPage implements OnInit {
     this.variableAnalysisService.loadData(this.selectedApplicationId, this.startDateTime, this.endDateTime,
       search).subscribe(
       resp => {
+        for (let i = 0; i < resp.length; i++){
+          var date = moment.utc(resp[i].timestamp, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
+          var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm:ss.SSS');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('DD-MM-YYYY HH:mm:ss.SSS');
+          resp[i].timestamp = local.toString()
+        }
+
         this.variableAnalysisHits = resp;
         this.allTemplatesLoading = false;
       }, error => {
@@ -132,6 +139,12 @@ export class VariableAnalysisPage implements OnInit {
 
     this.variableAnalysisService.getLogCountLineChart(this.selectedApplicationId, this.startDateTime,
       this.endDateTime).subscribe(resp => {
+      for (let i = 0; i < resp[0].series.length; i++){
+        var date = moment.utc(resp[0].series[i].name, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
+        var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm:ss.SSS');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('HH:mm A');
+        resp[0].series[i].name = local.toString()
+      }
       this.logCountLineChart = resp
     });
 

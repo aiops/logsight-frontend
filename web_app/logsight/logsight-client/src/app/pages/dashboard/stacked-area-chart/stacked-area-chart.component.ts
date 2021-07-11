@@ -39,7 +39,7 @@ export class StackedAreaChartComponent {
 
     var date = moment.utc(val, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
     var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
-    var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm');
+    var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
     return local.toString()
   }
 

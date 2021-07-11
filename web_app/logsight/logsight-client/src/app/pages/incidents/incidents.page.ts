@@ -39,6 +39,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
   applications: Application[] = [];
   startDateTime = 'now-12h';
   endDateTime = 'now'
+  heatmapHeight = '200px';
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private route: ActivatedRoute,
@@ -57,6 +58,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
     this.route.queryParamMap.subscribe(queryParams => {
       const startTime = queryParams.get('startTime')
       const endTime = queryParams.get('endTime')
+      console.log("TIMES", startTime, endTime)
       const applicationParam = queryParams.get('applicationId')
       const dateTimeType = queryParams.get('dateTimeType');
       this.applicationId = applicationParam ? +applicationParam : null
@@ -69,6 +71,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
           this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
         }
       }
+
+      console.log("TIMESFINAL", this.startDateTime, this.endDateTime)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
     });
@@ -104,15 +108,43 @@ export class IncidentsPage implements OnInit, OnDestroy {
     })
   }
 
+  toLocalTime(data){
+    for (let i = 0; i < data.length; i++) {
+      var date = moment.utc(data[i].timestamp, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
+      var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
+      var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('DD-MM-YYYY HH:mm:ss.SSS');
+      data[i].timestamp = local.toString()
+    }
+    return data
+  }
+
   private loadIncidentsTableData(startTime: string, endTime: string, applicationId: number | null) {
     this.incidentsService.loadIncidentsTableData(startTime, endTime, applicationId).subscribe(resp => {
+      resp["countAds"] = this.toLocalTime(resp["countAds"])
+      resp["newTemplates"] = this.toLocalTime(resp["newTemplates"])
+      resp["semanticCountAds"] = this.toLocalTime(resp["semanticCountAds"])
+      resp["semanticAd"] = this.toLocalTime(resp["semanticAd"])
       this.tableData = resp
     })
   }
 
   loadHeatmapData(startTime: string, endTime: string, applicationId: number | null) {
     return this.dashboardService.loadHeatmapData(startTime, endTime, applicationId).subscribe(
-      data => this.heatmapData = data.data)
+      data => {
+        for (let i = 0; i < data.data.length; i++){
+          var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+          var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+          data.data[i].name = local.toString()
+        }
+        this.heatmapData = data.data;
+        if (this.heatmapData[0].series.length > 0){
+          this.heatmapHeight = (70*(this.heatmapData[0].series.length)).toString() + "px"
+        }else{
+          this.heatmapHeight = "150px"
+        }
+
+      })
   }
 
   onDateTimeSearch(event) {

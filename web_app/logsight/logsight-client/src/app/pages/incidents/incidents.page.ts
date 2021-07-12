@@ -38,6 +38,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
   applicationId: number;
   applications: Application[] = [];
   heatmapHeightList = [];
+  unique = [];
   startDateTime = 'now-12h';
   endDateTime = 'now'
   heatmapHeight = '200px';
@@ -142,18 +143,17 @@ export class IncidentsPage implements OnInit, OnDestroy {
             this.heatmapHeightList.push(this.heatmapData[i].series[j].name)
           }
         }
-        this.heatmapHeightList = Array.from(new Set(this.heatmapHeightList.map(team => team)));
-
-        if (this.heatmapHeightList.length > 0){
-          if (50*(this.heatmapHeightList.length) < 350){
-            this.heatmapHeight = (50*(this.applications.length)).toString() + "px"
+        this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
+        if (this.unique.length > 0){
+          if (50*(this.unique.length) < 350){
+            console.log(50*(this.unique.length))
+            this.heatmapHeight = (50*(this.unique.length)).toString() + "px"
           }else {
             this.heatmapHeight = "300px"
           }
         }else{
           this.heatmapHeight = "150px"
         }
-
       })
   }
 

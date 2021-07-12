@@ -90,22 +90,25 @@ export class DashboardPage implements OnInit, OnDestroy {
         for (let j = 0; j< data.data[i].series.length; j++){
           data.data[i].series[j].extra = data.data[i].name
         }
-
         var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
         var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
         data.data[i].name = local.toString()
       }
-      console.log("DATA", data.data)
-      if (this.heatmapData[0].series.length > 0){
+
+      this.heatmapData = data.data;
+
+      if (this.applications.length > 0){
         if (50*(this.applications.length) < 350){
           this.heatmapHeight = (50*(this.applications.length)).toString() + "px"
         }else {
-          this.heatmapHeight = "350px"
+          this.heatmapHeight = "300px"
         }
       }else{
         this.heatmapHeight = "150px"
       }
+
+
     })
 
     this.pieChartData$.subscribe(data => {

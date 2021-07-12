@@ -97,9 +97,12 @@ export class DashboardPage implements OnInit, OnDestroy {
         data.data[i].name = local.toString()
       }
       console.log("DATA", data.data)
-      this.heatmapData = data.data;
       if (this.heatmapData[0].series.length > 0){
-        this.heatmapHeight = (70*(this.heatmapData[0].series.length)).toString() + "px"
+        if (50*(this.applications.length) < 350){
+          this.heatmapHeight = (50*(this.applications.length)).toString() + "px"
+        }else {
+          this.heatmapHeight = "350px"
+        }
       }else{
         this.heatmapHeight = "150px"
       }

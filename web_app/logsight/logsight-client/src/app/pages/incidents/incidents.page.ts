@@ -139,7 +139,11 @@ export class IncidentsPage implements OnInit, OnDestroy {
         }
         this.heatmapData = data.data;
         if (this.heatmapData[0].series.length > 0){
-          this.heatmapHeight = (70*(this.heatmapData[0].series.length)).toString() + "px"
+          if (50*(this.applications.length) < 350){
+            this.heatmapHeight = (50*(this.applications.length)).toString() + "px"
+          }else {
+            this.heatmapHeight = "350px"
+          }
         }else{
           this.heatmapHeight = "150px"
         }

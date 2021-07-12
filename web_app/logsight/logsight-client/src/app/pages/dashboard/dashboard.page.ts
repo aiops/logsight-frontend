@@ -98,24 +98,23 @@ export class DashboardPage implements OnInit, OnDestroy {
         data.data[i].name = local.toString()
       }
 
-      this.heatmapData = data.data;
-      for (let i = 0; i < this.heatmapData.length; i++){
-        for (let j = 0; j< this.heatmapData[i].series.length; j++){
-          this.heatmapHeightList.push(this.heatmapData[i].series[j].name)
+      for (let i = 0; i < data.data.length; i++){
+        for (let j = 0; j< data.data[i].series.length; j++){
+          this.heatmapHeightList.push(data.data[i].series[j].name)
         }
       }
       this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
       if (this.unique.length > 0){
-        if (50*(this.unique.length) < 350){
+        if (50*(this.unique.length+1) < 350){
           console.log(50*(this.unique.length))
-          this.heatmapHeight = (50*(this.unique.length)).toString() + "px"
+          this.heatmapHeight = (50*(this.unique.length+1)).toString() + "px"
         }else {
           this.heatmapHeight = "300px"
         }
       }else{
         this.heatmapHeight = "150px"
       }
-
+      this.heatmapData = data.data;
 
     })
 

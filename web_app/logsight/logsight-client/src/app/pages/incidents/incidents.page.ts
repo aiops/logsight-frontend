@@ -37,6 +37,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
   openDatePicker = false;
   applicationId: number;
   applications: Application[] = [];
+  heatmapHeightList = [];
   startDateTime = 'now-12h';
   endDateTime = 'now'
   heatmapHeight = '200px';
@@ -58,7 +59,6 @@ export class IncidentsPage implements OnInit, OnDestroy {
     this.route.queryParamMap.subscribe(queryParams => {
       const startTime = queryParams.get('startTime')
       const endTime = queryParams.get('endTime')
-      console.log("TIMES", startTime, endTime)
       const applicationParam = queryParams.get('applicationId')
       const dateTimeType = queryParams.get('dateTimeType');
       this.applicationId = applicationParam ? +applicationParam : null
@@ -72,7 +72,6 @@ export class IncidentsPage implements OnInit, OnDestroy {
         }
       }
 
-      console.log("TIMESFINAL", this.startDateTime, this.endDateTime)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
     });
@@ -138,8 +137,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
           data.data[i].name = local.toString()
         }
         this.heatmapData = data.data;
-        if (this.applications.length > 0){
-          if (50*(this.applications.length) < 350){
+        if (this.heatmapHeightList.length > 0){
+          if (50*(this.heatmapHeightList.length) < 350){
             this.heatmapHeight = (50*(this.applications.length)).toString() + "px"
           }else {
             this.heatmapHeight = "300px"

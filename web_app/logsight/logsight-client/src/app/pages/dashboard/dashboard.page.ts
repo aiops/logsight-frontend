@@ -38,6 +38,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   startDateTime = 'now-12h';
   endDateTime = 'now'
   heatmapHeight = '200px';
+  heatmapHeightList = [];
   reload$: Subject<boolean> = new Subject();
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
@@ -97,9 +98,15 @@ export class DashboardPage implements OnInit, OnDestroy {
       }
 
       this.heatmapData = data.data;
+      for (let i = 0; i < this.heatmapData.length; i++){
+        for (let j = 0; j< this.heatmapData[i].series.length; j++){
+          this.heatmapHeightList.push(this.heatmapData[i].series[j].name)
+        }
+      }
+      this.heatmapHeightList = Array.from(new Set(this.heatmapHeightList.map(team => team)));
 
-      if (this.applications.length > 0){
-        if (50*(this.applications.length) < 350){
+      if (this.heatmapHeightList.length > 0){
+        if (50*(this.heatmapHeightList.length) < 350){
           this.heatmapHeight = (50*(this.applications.length)).toString() + "px"
         }else {
           this.heatmapHeight = "300px"
@@ -231,7 +238,6 @@ export class DashboardPage implements OnInit, OnDestroy {
     const time = dateTime.split(' ')[1].split(':');
     const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
       +time[1]);
-    console.log(startDateTime)
     this.navigateToIncidentsPage(startDateTime.format('YYYY-MM-DDTHH:mm'),
       startDateTime.add(1, 'minutes').format('YYYY-MM-DDTHH:mm'), data.id)
   }

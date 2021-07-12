@@ -137,6 +137,13 @@ export class IncidentsPage implements OnInit, OnDestroy {
           data.data[i].name = local.toString()
         }
         this.heatmapData = data.data;
+        for (let i = 0; i < this.heatmapData.length; i++){
+          for (let j = 0; j< this.heatmapData[i].series.length; j++){
+            this.heatmapHeightList.push(this.heatmapData[i].series[j].name)
+          }
+        }
+        this.heatmapHeightList = Array.from(new Set(this.heatmapHeightList.map(team => team)));
+
         if (this.heatmapHeightList.length > 0){
           if (50*(this.heatmapHeightList.length) < 350){
             this.heatmapHeight = (50*(this.applications.length)).toString() + "px"

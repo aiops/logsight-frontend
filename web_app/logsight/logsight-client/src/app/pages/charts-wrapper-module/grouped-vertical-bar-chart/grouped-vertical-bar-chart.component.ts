@@ -32,10 +32,13 @@ export class GroupedVerticalBarChartComponent {
   }
 
   dateTickFormatting(val: any) {
-    var date = moment.utc(val, 'HH:mm:ss').add(1,'hour').format('DD-MM-YYYY HH:mm');
-    var stillUtc = moment.utc(date,'MM-DD-YYYY HH:mm');
-    var local = moment(stillUtc, 'MM-DD-YYYY HH:mm').local().format('hh:mm A');
-    return local.toString()
+    if (val.length > 0) {
+      var date = moment.utc(val, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+      var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+      var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm:ss A');
+      return local.toString()
+    } else {
+      return val
+    }
   }
-
 }

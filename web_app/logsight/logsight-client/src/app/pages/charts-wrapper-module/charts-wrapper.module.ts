@@ -9,11 +9,14 @@ import { GroupedVerticalBarChartComponent } from './grouped-vertical-bar-chart/g
 import { VerticalBarChartComponent } from './vertical-bar-chart/vertical-bar-chart.component';
 import {GroupedVerticalBarChart2dComponent} from "./grouped-vertical-bar-chart-2d/grouped-vertical-bar-chart2d.component";
 import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
+import {NbIconModule, NbTooltipModule} from "@nebular/theme";
 
 @NgModule({
   imports: [
     NgxChartsModule,
     ChartModule,
+    NbIconModule,
+    NbTooltipModule,
   ],
   exports: [
     PiechartComponent,

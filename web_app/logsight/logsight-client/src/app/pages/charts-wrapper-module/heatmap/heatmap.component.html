@@ -1,4 +1,4 @@
-<div [ngStyle]="{'display':'grid', 'height': heatmapHeight}">
+<div [ngStyle]="{'display':'grid', 'height': heatmapHeight}" xmlns="http://www.w3.org/1999/html">
   <ngx-charts-heat-map
     [scheme]="colorScheme"
     [legend]="legend"
@@ -12,8 +12,21 @@
     (select)="select.emit($event)"
     [ngStyle]="{'fill':'white'}">
     <ng-template #tooltipTemplate let-model="model">
-      <div style="text-align: left; max-width: 250px; font-size: 10pt; padding: 5px; text-align: center; display:inline;">
-        Average number of anomalies per incident<div style="font-size: 12pt">{{model.value}}</div>
+      <div style="text-align: left;">
+        <div *ngFor="let d of data; let i = index">
+          <div *ngFor="let e of d.series; let j= index">
+            <div *ngIf="model .name == e.name && model .series == d.name">
+              <p> Number of incidents:
+              {{e.count}}
+              </p>
+              <p>
+              Severity score:
+              {{model .value}}
+               </p>
+            </div>
+          </div>
+
+        </div>
       </div>
     </ng-template>
 

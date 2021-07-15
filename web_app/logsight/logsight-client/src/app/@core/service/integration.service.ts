@@ -9,7 +9,7 @@ export class IntegrationService {
   }
 
   createApplication(app: { name: string; key: string }): Observable<Application> {
-    return this.apiService.post('/api/applications', app)
+    return this.apiService.post('/api/applications/create', app)
   }
 
   loadApplications(key: string): Observable<Application[]> {

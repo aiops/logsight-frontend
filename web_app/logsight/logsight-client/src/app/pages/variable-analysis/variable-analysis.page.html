@@ -112,9 +112,9 @@
             <table class="table table-striped table-borderless" *ngIf="!allTemplatesLoading">
               <thead>
               <tr>
-                <th style="width: 10%" scope="col">Timestamp</th>
-                <th style="width: 5%" scope="col">Level</th>
-                <th style="width: 90%" scope="col">Log message <nb-icon icon="info-outline" nbTooltip="Clicking on the highlighted words will show you historical chart providing all needed information for that variable. Users often use variable analysis to find anomalies in the log message parameters. For example, analysis of the HTTP error codes of particular request." nbTooltipStatus="basic" nbButton status="basic"></nb-icon></th>
+                <th [appSort]="variableAnalysisHits" data-order="desc" data-name="actualLevel" class='clickable' style="width: 10%" scope="col">Timestamp</th>
+                <th [appSort]="variableAnalysisHits" data-order="desc" data-name="actualLevel" class='clickable' style="width: 5%" scope="col">Level</th>
+                <th style="width: 90%" scope="col">Message <nb-icon icon="info-outline" nbTooltip="Clicking on the highlighted words will show you historical chart providing all needed information for that variable. Users often use variable analysis to find anomalies in the log message parameters. For example, analysis of the HTTP error codes of particular request." nbTooltipStatus="basic" nbButton status="basic"></nb-icon></th>
               </tr>
               </thead>
               <tbody>

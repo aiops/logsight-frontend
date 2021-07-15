@@ -49,7 +49,7 @@
                            nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
                 </th>
                 <th [appSort]="tableData.semanticCountAds" data-order="desc" data-name="actualLevel" class="clickable" style="width: 5%" scope="col">Level</th>
-                <th style="width: 66%" scope="col">Log message</th>
+                <th style="width: 66%" scope="col">Message</th>
               </tr>
               </thead>
               <tbody>
@@ -93,14 +93,14 @@
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
-                <th style="width: 15%" scope="col">Timestamp</th>
-                <th style="width: 8%" scope="col">Ratio
+                <th [appSort]="tableData.countAds" data-order="desc" data-name="timestamp" class="clickable" style="width: 15%" scope="col">Timestamp</th>
+                <th style="width: 12%" scope="col">Ratio
                   <nb-icon icon="info-outline"
                            nbTooltip="The ratio presents information about the current and expected count number of appereance of particular log type"
                            nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
                 </th>
-                <th style="width: 5%" scope="col">Level</th>
-                <th style="width: 70%" scope="col">Log message</th>
+                <th [appSort]="tableData.countAds" data-order="desc" data-name="actualLevel" class="clickable" style="width: 5%" scope="col">Level</th>
+                <th style="width: 66%" scope="col">Message</th>
               </tr>
               </thead>
               <tbody>
@@ -144,13 +144,13 @@
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
-                <th [appSort]="tableData.semanticAd" data-order="desc" data-name="timestamp" style="width: 13%"
-                    scope="col">Date
+                <th [appSort]="tableData.semanticAd" data-order="desc" data-name="timestamp" class='clickable' style="width: 15%"
+                    scope="col">Timestamp
                 </th>
-                <th [appSort]="tableData.semanticAd" data-order="desc" data-name="actualLevel" style="width: 5%"
+                <th [appSort]="tableData.semanticAd" data-order="desc" data-name="actualLevel" class='clickable' style="width: 5%"
                     scope="col">Level
                 </th>
-                <th style="width: 80%" scope="col">Message</th>
+                <th style="width: 78%" scope="col">Message</th>
               </tr>
               </thead>
               <tbody>
@@ -189,8 +189,8 @@
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
-                <th style="width: 13%" scope="col">Date</th>
-                <th style="width: 5%" scope="col">Level</th>
+                <th [appSort]="tableData.newTemplates" data-order="desc" data-name="timestamp" class='clickable' style="width: 13%" scope="col">Timestamp</th>
+                <th [appSort]="tableData.newTemplates" data-order="desc" data-name="actualLevel" class='clickable' style="width: 5%" scope="col">Level</th>
                 <th style="width: 80%" scope="col">Message</th>
               </tr>
               </thead>

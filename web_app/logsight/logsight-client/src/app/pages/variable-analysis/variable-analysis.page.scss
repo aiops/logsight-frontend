@@ -36,3 +36,11 @@ table {
 .info {
   color: #00b0e8 !important;
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  opacity: 0.8;
+}

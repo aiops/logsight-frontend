@@ -129,7 +129,8 @@
                 <td>{{i + 1}}</td>
                 <td>{{row.timestamp}}</td>
                 <td>
-                <span [class.error]="row.actualLevel == 'ERROR'"
+                <span style="float: left; color: yellow; font-weight: 600;"
+                      [class.error]="row.actualLevel == 'ERROR'"
                       [class.info]="row.actualLevel == 'INFO'"
                       class="mr-2">{{row.actualLevel}}</span>
                 </td>
@@ -165,7 +166,8 @@
                 <td>{{i + 1}}</td>
                 <td>{{row.timestamp}}</td>
                 <td>
-                <span [class.error]="row.actualLevel == 'ERROR'"
+                <span style="float: left; color: yellow; font-weight: 600;"
+                      [class.error]="row.actualLevel == 'ERROR'"
                       [class.info]="row.actualLevel == 'INFO'"
                       class="mr-2">{{row.actualLevel}}</span>
                 </td>

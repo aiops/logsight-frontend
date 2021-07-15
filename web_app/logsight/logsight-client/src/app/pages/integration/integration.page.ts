@@ -26,6 +26,7 @@ export class IntegrationPage implements OnInit {
   public pythonBtn: any = 'Python';
   public filebeatBtn: any = 'Filebeat';
   public restBtn: any = 'REST API';
+  format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]+/;
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });
@@ -94,16 +95,32 @@ export class IntegrationPage implements OnInit {
   }
 
   createApplication() {
-    if (this.key) {
-      this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
-        resp => {
-          this.loadApplications();
-          this.notificationService.success('Success', 'Application successfully created');
-          this.form.reset()
-        }, error => this.notificationService.error('Error', 'Sorry, a problem happened'))
+    var app_name = this.form.controls['name'].value.toString()
+    if(!this.format.test(app_name) && /[a-z]/.test(app_name) && !/[A-Z]/.test(app_name)){
+      if (this.key) {
+        this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
+          resp => {
+            this.loadApplications();
+            this.notificationService.success('Success', 'Application successfully created');
+            this.form.reset()
+          }, error => this.notificationService.error('Error', 'Please choose another name, the application already exists!'))
+      } else {
+        this.notificationService.error('Error', 'Please choose another name, the application already exists!')
+      }
     } else {
-      this.notificationService.error('Error', 'Sorry, a problem happened')
+      this.notificationService.error('Error', 'The name of the application should contain only numbers and lowercase letters. Special signs are not allowed!')
     }
+
+    // if (this.key) {
+    //   this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
+    //     resp => {
+    //       this.loadApplications();
+    //       this.notificationService.success('Success', 'Application successfully created');
+    //       this.form.reset()
+    //     }, error => this.notificationService.error('Error', 'Please choose another name, the application already exists!'))
+    // } else {
+    //   this.notificationService.error('Error', 'Please choose another name, the application already exists!')
+    // }
   }
 
   loadApplications() {

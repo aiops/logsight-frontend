@@ -14,7 +14,7 @@ import { IntegrationService } from '../../@core/service/integration.service';
 import { Observable, Subject, timer, combineLatest } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment'
-import {TourService} from "ngx-ui-tour-md-menu";
+import { TourService } from 'ngx-ui-tour-md-menu';
 
 @Component({
   selector: 'dashboard',
@@ -88,32 +88,32 @@ export class DashboardPage implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.heatmapData$.subscribe(data => {
-      for (let i = 0; i < data.data.length; i++){
-        for (let j = 0; j< data.data[i].series.length; j++){
+      for (let i = 0; i < data.data.length; i++) {
+        for (let j = 0; j < data.data[i].series.length; j++) {
           data.data[i].series[j].extra = data.data[i].name
         }
         var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-        var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
         var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
         data.data[i].name = local.toString()
       }
       console.log(data.data)
 
-      for (let i = 0; i < data.data.length; i++){
-        for (let j = 0; j< data.data[i].series.length; j++){
+      for (let i = 0; i < data.data.length; i++) {
+        for (let j = 0; j < data.data[i].series.length; j++) {
           this.heatmapHeightList.push(data.data[i].series[j].name)
         }
       }
       this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
-      if (this.unique.length > 0){
-        if (50*(this.unique.length+1) < 350){
-          console.log(50*(this.unique.length))
-          this.heatmapHeight = (50*(this.unique.length+1)).toString() + "px"
-        }else {
-          this.heatmapHeight = "300px"
+      if (this.unique.length > 0) {
+        if (50 * (this.unique.length + 1) < 350) {
+          console.log(50 * (this.unique.length))
+          this.heatmapHeight = (50 * (this.unique.length + 1)).toString() + 'px'
+        } else {
+          this.heatmapHeight = '300px'
         }
-      }else{
-        this.heatmapHeight = "150px"
+      } else {
+        this.heatmapHeight = '150px'
       }
       this.heatmapData = data.data;
 
@@ -124,13 +124,13 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
 
     this.stackedAreaChartData$.subscribe(data => {
-      for (let i = 0; i < data.data.length; i++){
-        for (let j = 0; j < data.data[i].series.length; j++){
+      for (let i = 0; i < data.data.length; i++) {
+        for (let j = 0; j < data.data[i].series.length; j++) {
           var date = moment.utc(data.data[i].series[j].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-          var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
           var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
           data.data[i].series[j].name = local.toString()
-      }
+        }
       }
       this.stackedChartData = data.data;
     })
@@ -156,9 +156,9 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
 
     this.barData$.subscribe(data => {
-      for (let i = 0; i < data.length; i++){
+      for (let i = 0; i < data.length; i++) {
         var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-        var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
         var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
         data[i].name = local.toString()
       }
@@ -210,9 +210,10 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
   }
 
-  startTour(){
+  startTour() {
     this.tourService.start()
   }
+
   loadHeatmapData(startTime: string, endTime: string) {
     return this.dashboardService.loadHeatmapData(startTime, endTime, null)
   }
@@ -234,6 +235,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onHeatMapSelect(data: any) {
+    console.log('data', data)
     const dateTime = data.extra
     const date = dateTime.split(' ')[0].split('-');
     const time = dateTime.split(' ')[1].split(':');
@@ -303,7 +305,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   moment(startTimestamp: string | undefined) {
     var date = moment.utc(startTimestamp, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm');
-    var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+    var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
     var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm:ss');
     return local.toString()
   }

@@ -21,25 +21,25 @@ import {BarChartModule} from "@swimlane/ngx-charts";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
-    imports: [
-        IncidentsRoutingModule,
-        NbCardModule,
-        NbTreeGridModule,
-        NbIconModule,
-        NbInputModule,
-        ThemeModule,
-        Ng2SmartTableModule,
-        NvD3Module,
-        FormsModule,
-        NbButtonModule,
-        PagesModule,
-        ChartsWrapperModule,
-        NbPopoverModule,
-        NbTooltipModule,
-        NbSelectModule,
-        BarChartModule,
-        TourMatMenuModule
-    ],
+  imports: [
+    IncidentsRoutingModule,
+    NbCardModule,
+    NbTreeGridModule,
+    NbIconModule,
+    NbInputModule,
+    ThemeModule,
+    Ng2SmartTableModule,
+    NvD3Module,
+    FormsModule,
+    NbButtonModule,
+    PagesModule,
+    ChartsWrapperModule,
+    NbPopoverModule,
+    NbTooltipModule,
+    NbSelectModule,
+    BarChartModule,
+    TourMatMenuModule
+  ],
   declarations: [
     IncidentsPage,
   ],

@@ -41,3 +41,12 @@ table {
   color: #00b0e8 !important;
   font-weight: 600;
 }
+
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  opacity: 0.8;
+}

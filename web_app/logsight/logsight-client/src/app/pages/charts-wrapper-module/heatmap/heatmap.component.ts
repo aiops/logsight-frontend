@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { multi } from './data';
-import * as moment from "moment";
-import {Style} from "@angular/cli/lib/config/schema";
+import * as moment from 'moment';
+import { Style } from '@angular/cli/lib/config/schema';
 
 @Component({
   selector: 'chart-heatmap',
@@ -22,7 +22,7 @@ export class HeatmapComponent {
   xAxisLabel: string = 'Country';
   yAxisLabel: string = 'Year';
   fill: boolean = true;
-  colorScheme = {
+  @Input() colorScheme = {
     domain: [
       'rgb(0,255,0)',
       '#ffb908',
@@ -51,7 +51,6 @@ export class HeatmapComponent {
   //   var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
   //   return local.toString()
   // }
-
 
   onSelect(data): void {
     console.log('onSelect', data)

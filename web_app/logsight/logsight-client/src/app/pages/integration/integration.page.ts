@@ -100,11 +100,13 @@ export class IntegrationPage implements OnInit {
     if (this.key) {
       this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
         resp => {
+          console.log(resp)
           this.loadApplications();
           this.notificationService.success('Success', 'Application successfully created');
           this.form.reset()
         }, error => {
-          this.notificationService.error('Error', error)
+          console.log(error)
+          this.notificationService.error('Error', error.description)
         })
     } else {
       this.notificationService.error('Error', 'No key. Please log in.')
@@ -245,7 +247,8 @@ logger.info("------------")`;
 
   removeApplication(id: number) {
     this.integrationService.deleteApplication(id).subscribe(
-      () => {
+      resp => {
+        console.log(resp)
         this.notificationService.success('Success', 'Application successfully deleted')
         this.loadApplications()
       }, err => {

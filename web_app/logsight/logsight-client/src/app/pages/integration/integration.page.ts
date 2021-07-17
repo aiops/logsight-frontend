@@ -100,12 +100,10 @@ export class IntegrationPage implements OnInit {
     if (this.key) {
       this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
         resp => {
-          console.log(resp)
           this.loadApplications();
           this.notificationService.success('Success', 'Application successfully created');
           this.form.reset()
         }, error => {
-          console.log(error)
           this.notificationService.error('Error', error.description)
         })
     } else {
@@ -248,12 +246,10 @@ logger.info("------------")`;
   removeApplication(id: number) {
     this.integrationService.deleteApplication(id).subscribe(
       resp => {
-        console.log(resp)
         this.notificationService.success('Success', 'Application successfully deleted')
         this.loadApplications()
       }, err => {
         this.notificationService.error('Error', 'Application not deleted');
-        console.log(err)
       })
   }
 }

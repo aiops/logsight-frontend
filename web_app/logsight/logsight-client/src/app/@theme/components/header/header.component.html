@@ -61,70 +61,83 @@
 
   <!--  <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">-->
   <!--    <div class="container">-->
+  <div>
   <div class="row justify-content-end" style="margin-right: 4rem">
-    <div tourAnchor="anchorDashboard" style="white-space: nowrap; margin-right: 2rem">
-      <ul class="nav navbar-nav" >
-        <li class="nav-item">
-          <a routerLinkActive="active" class="nav-link" [routerLink]="['/pages', 'dashboard']">
-            <nb-icon icon="grid-outline"></nb-icon>
-            Dashboard
-          </a>
+    <div>
+      <ul>
+        <li style="white-space: nowrap; margin-right: 1rem;">
+          <div tourAnchor="anchorDashboard" style="white-space: nowrap; ">
+            <ul class="nav navbar-nav" >
+              <li class="nav-item">
+                <a routerLinkActive="active" class="nav-link" [routerLink]="['/pages', 'dashboard']">
+                  <nb-icon icon="grid-outline"></nb-icon>
+                  Dashboard
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li style="white-space: nowrap; margin-right: 1rem">
+          <div tourAnchor="anchorIncidents" style="white-space: nowrap;">
+            <ul class="nav navbar-nav" >
+              <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'incidents']">
+                  <nb-icon icon="radio-button-on-outline"></nb-icon>
+                  Incidents
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <!--    <div tourAnchor="anchorIntegration" style="white-space: nowrap; margin-right: 2rem">-->
+        <!--      <ul class="nav navbar-nav">-->
+        <!--        <li class="nav-item">-->
+        <!--          <a class="nav-link"  routerLinkActive="active" [routerLink]="['/pages', 'integration']">-->
+        <!--            <nb-icon icon="link-outline"></nb-icon>-->
+        <!--            Integration-->
+        <!--          </a>-->
+        <!--        </li>-->
+        <!--      </ul>-->
+        <!--    </div>-->
+        <li style="white-space: nowrap; margin-right: 1rem">
+          <div tourAnchor="anchorVanalysis" style="white-space: nowrap;" >
+            <ul class="nav navbar-nav" >
+              <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'variable-analysis']">
+                  <nb-icon icon="bar-chart"></nb-icon>
+                  Analysis
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li style="white-space: nowrap; margin-right: 1rem">
+          <div tourAnchor="anchorQuickstart" style="white-space: nowrap;">
+            <ul class="nav navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link"  routerLinkActive="active" [routerLink]="['/pages', 'quickstart']">
+                  <nb-icon icon="flash-outline"></nb-icon>
+                    Quickstart
+                </a>
+             </li>
+            </ul>
+          </div>
+        </li>
+        <li style="white-space: nowrap;">
+          <div tourAnchor="anchorKibana" style="white-space: nowrap;">
+            <ul class="nav navbar-nav" >
+              <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="/pages/kibana">
+                  <span class="iconify" data-icon="logos-kibana" data-inline="false"></span>
+                  Kibana
+                </a>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
-    </div>
-    <div tourAnchor="anchorIncidents" style="white-space: nowrap; margin-right: 2rem">
-      <ul class="nav navbar-nav" >
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'incidents']">
-            <nb-icon icon="radio-button-on-outline"></nb-icon>
-            Incidents
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div tourAnchor="anchorVanalysis" style="white-space: nowrap; margin-right: 4rem">
-      <ul class="nav navbar-nav" >
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'variable-analysis']">
-            <nb-icon icon="bar-chart"></nb-icon>
-            Variable Analysis
-          </a>
-        </li>
-      </ul>
-    </div>
-<!--    <div tourAnchor="anchorIntegration" style="white-space: nowrap; margin-right: 2rem">-->
-<!--      <ul class="nav navbar-nav">-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link"  routerLinkActive="active" [routerLink]="['/pages', 'integration']">-->
-<!--            <nb-icon icon="link-outline"></nb-icon>-->
-<!--            Integration-->
-<!--          </a>-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </div>-->
-
-    <div tourAnchor="anchorQuickstart" style="white-space: nowrap; margin-right: 2rem">
-      <ul class="nav navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link"  routerLinkActive="active" [routerLink]="['/pages', 'quickstart']">
-            <nb-icon icon="flash-outline"></nb-icon>
-            Quickstart
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div tourAnchor="anchorKibana" style="white-space: nowrap; margin-right: 2rem">
-      <ul class="nav navbar-nav" >
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/pages/kibana">
-            <span class="iconify" data-icon="logos-kibana" data-inline="false"></span>
-            Kibana
-          </a>
-        </li>
-      </ul>
-    </div>
-
+  </div>
+  </div>
 
 
   </div>

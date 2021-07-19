@@ -11,7 +11,7 @@ export class GroupedVerticalBarChart2dComponent {
 
   showXAxis: boolean = true;
   showYAxis: boolean = true;
-  gradient: boolean = true;
+  gradient: boolean = false;
   showLegend: boolean = true;
   showXAxisLabel: boolean = false;
   xAxisLabel: string = '';

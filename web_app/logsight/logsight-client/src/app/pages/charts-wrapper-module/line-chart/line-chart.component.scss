@@ -5,10 +5,10 @@
   }
 
   /* Sets the legend width to auto expand to fit labels, but caps at 200px */
-  .chart-legend > div {
-    width: 200px !important;
-    max-width: 200px;
-  }
+  //.chart-legend > div {
+  //  width: 200px !important;
+  //  max-width: 200px;
+  //}
 
   /* Some extra space is needed to offset the way the labels display */
   .legend-labels {

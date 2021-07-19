@@ -97,7 +97,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
         data.data[i].name = local.toString()
       }
-      console.log(data.data)
 
       for (let i = 0; i < data.data.length; i++) {
         for (let j = 0; j < data.data[i].series.length; j++) {

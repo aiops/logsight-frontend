@@ -4,7 +4,7 @@
                (selectedChange)="applicationSelected($event)"
                placeholder="Select application">
       <nb-option [value]="0">All</nb-option>
-      <nb-option *ngFor="let app of applications" [value]="app.id">
+      <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
         {{ app.name }}
       </nb-option>
     </nb-select>

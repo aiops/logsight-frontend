@@ -6,7 +6,7 @@
         <nb-select class="period-select col-md-4 pl-3" [(selected)]="this.selectedApplicationId"
                    (selectedChange)="applicationSelected($event)"
                    placeholder="Select application">
-          <nb-option *ngFor="let app of applications" [value]="app.id">
+          <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
             {{ app.name }}
           </nb-option>
         </nb-select>
@@ -68,7 +68,7 @@
             <tbody>
             <tr *ngFor="let row of templatesRowMerged">
               <td style="padding-right: 0px">
-                <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [yAxis]="true" [roundEdges]="false" [view]="[300,100]" [results]="[{'name':'Current', 'value':row.new.count}, {'name':'Previous', 'value':row.old.count}]"></ngx-charts-bar-horizontal>
+                <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [yAxis]="true" [roundEdges]="false" [view]="[300,60]" [results]="[{'name':'Current', 'value':row.new.count}, {'name':'Previous', 'value':row.old.count}]"></ngx-charts-bar-horizontal>
               </td>
               <td style="padding-right: 10%; padding-top: 20px">
                 {{row.new.template}}

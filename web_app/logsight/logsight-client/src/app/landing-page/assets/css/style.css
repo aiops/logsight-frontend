@@ -308,26 +308,36 @@ header {
 .nav-white .navbar-brand {
 	color: #FFFFFF;
 }
-
+.loginBut {
+  color: #ffffff;
+  font-weight: 600;
+  margin-right: 10px;
+}
 @media only screen and (max-width: 768px) {
 
-	.navbar {
-		/*background: rgba(255, 255, 255, 0.99) !important;*/
-		padding-top: 10px;
-		padding-bottom: 10px;
-	}
+  .navbar {
+    /*background: rgba(255, 255, 255, 0.99) !important;*/
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 
-	.navbar .navbar-nav {
-		padding-bottom: 25px;
-	}
+  .navbar .navbar-nav {
+    padding-bottom: 25px;
+  }
 
-	.nav-white .nav-item .nav-link {
-		color: #222b45;
-	}
+  .nav-white .nav-item .nav-link {
+    color: #222b45;
+  }
 
-	.navbar .btn-cta {
-		padding: 0 30px;
-	}
+  .navbar .btn-cta {
+    padding: 0 30px;
+  }
+
+}
+@media only screen and (min-width: 768px) {
+  .loginBut {
+    display:none;
+  }
 
 }
 

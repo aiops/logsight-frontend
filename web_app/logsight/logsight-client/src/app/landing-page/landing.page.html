@@ -24,10 +24,10 @@
           <!--        <div class="container container-l">-->
           <!--          <div class="navbar navbar-title">-->
           <a class="navbar-brand" href="#"><img alt="logo" src="../../../../assets/images/logsight_logo.png" height="60" /></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+<!--          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
+<!--                  aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--          </button>-->
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto navbar-right">
@@ -35,6 +35,11 @@
             <!--            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#partners">Partners</a></li>-->
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#research">Platform</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#pricingPlans">Pricing</a></li>
+            <li class="nav-item" (click)="redirectToLogin()"><a class="btn-login nav-link js-scroll-trigger">Login</a></li>
+          </ul>
+        </div>
+        <div class="loginBut">
+          <ul>
             <li class="nav-item" (click)="redirectToLogin()"><a class="btn-login nav-link js-scroll-trigger">Login</a></li>
           </ul>
         </div>

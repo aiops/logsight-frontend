@@ -14,12 +14,12 @@
   }
 }
 
-/deep/ .cdk-overlay-pane {
+/deep/ .model-full {
   width: 80% !important;
   height: 80% !important;
 }
 
-/deep/ nb-dialog-container {
+/deep/ .model-full nb-dialog-container {
   width: 100% !important;
   height: 100% !important;
 }

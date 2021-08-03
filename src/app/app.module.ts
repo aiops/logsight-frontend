@@ -30,15 +30,16 @@ import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
 import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
 import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
-import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
-import {MatCardModule} from "@angular/material/card";
-import {PrivacypolicyPage} from "./landing-page/PrivacyPolicy/privacypolicy.page";
-import {ImpressumPage} from "./landing-page/Impressum/impressum.page";
-import {TermsconditionsPage} from "./landing-page/TermsConditions/termsconditions.page";
-import {TooltipModule} from "@swimlane/ngx-charts";
+import { TourMatMenuModule } from 'ngx-ui-tour-md-menu';
+import { MatCardModule } from '@angular/material/card';
+import { PrivacypolicyPage } from './landing-page/PrivacyPolicy/privacypolicy.page';
+import { ImpressumPage } from './landing-page/Impressum/impressum.page';
+import { TermsconditionsPage } from './landing-page/TermsConditions/termsconditions.page';
+import { TooltipModule } from '@swimlane/ngx-charts';
 
 @NgModule({
-  declarations: [AppComponent ,LoginComponent, RegisterComponent, LandingPage, PrivacypolicyPage, ImpressumPage, TermsconditionsPage, ActivateComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, PrivacypolicyPage, ImpressumPage,
+    TermsconditionsPage, ActivateComponent],
   imports: [
     BrowserModule,
     FormsModule,

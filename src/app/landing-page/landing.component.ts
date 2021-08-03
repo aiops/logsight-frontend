@@ -3,15 +3,14 @@ import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from '../auth/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { timeout } from 'rxjs/operators';
 
 @Component({
-  selector: 'landing-page',
+  selector: 'landing',
   styleUrls: ['./assets/css/animate.css', './assets/css/owl.carousel.css', './assets/css/owl.theme.css',
-    './assets/css/style.css', 'landing-page.css'],
-  templateUrl: './landing.page.html',
+    './assets/css/style.css', './landing.component.css'],
+  templateUrl: './landing.component.html',
 })
-export class LandingPage implements OnInit, AfterViewInit {
+export class LandingComponent implements OnInit, AfterViewInit {
 
   form = new FormGroup({
     email: new FormControl('', Validators.required),

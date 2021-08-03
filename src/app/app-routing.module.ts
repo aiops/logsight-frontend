@@ -3,23 +3,22 @@ import { NgModule } from '@angular/core';
 import {
   NbAuthComponent,
   NbLogoutComponent,
-  NbRegisterComponent,
   NbRequestPasswordComponent,
   NbResetPasswordComponent
 } from '@nebular/auth';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
 import { AuthenticationGuard } from './auth/authentication-guard';
-import {TermsconditionsPage} from "./landing-page/TermsConditions/termsconditions.page";
-import {ImpressumPage} from "./landing-page/Impressum/impressum.page";
-import {PrivacypolicyPage} from "./landing-page/PrivacyPolicy/privacypolicy.page";
+import { TermsconditionsPage } from './landing-page/TermsConditions/termsconditions.page';
+import { ImpressumPage } from './landing-page/Impressum/impressum.page';
+import { PrivacypolicyPage } from './landing-page/PrivacyPolicy/privacypolicy.page';
 
 export const routes: Routes = [
   {
     path: '',
-    component: LandingPage
+    loadChildren: () => import('./landing-page/landing.module')
+      .then(m => m.LandingModule),
   },
   {
     path: 'impressum',

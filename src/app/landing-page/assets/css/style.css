@@ -389,7 +389,7 @@ header {
 ----------------------------------------------------------*/
 
 .home {
-  padding: 100px 0 50px 0;
+  padding: 20px 0 20px 0;
 }
 
 .home .intro-block {
@@ -498,7 +498,8 @@ header {
 
 
 .home .client-list {
-	margin-top: 25px;
+	margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .home .client-list ul {
@@ -512,7 +513,7 @@ header {
 
 
 .home .client-list ul li img {
-  width: 100px;
+  width: 10%;
 	opacity: 0.6;
 	cursor: pointer;
 }
@@ -742,7 +743,7 @@ header {
 }
 
 .flex-intro {
-	margin-bottom: 0px;
+	margin-bottom: 50px;
 	text-align: center;
 }
 
@@ -794,6 +795,15 @@ header {
 	margin-top: 20px;
 }
 
+.flex-inner .f-text h3 {
+	font-size: 32px;
+	font-weight: 600;
+	color: #3a3a47;
+	line-height: 1.3;
+	margin-top: 20px;
+}
+
+
 .flex-inner .f-text  p {
 	font-size: 14px;
   font-weight: 400;
@@ -840,6 +850,8 @@ header {
 	-ms-flex-order:1;
 	order:1
 }
+
+
 
 /*---------------------------------------------
 ----------- Features Section Styles------------
@@ -906,7 +918,7 @@ header {
 }
 
 .card-text h3 {
-	font-size: 22px;
+	font-size: 20px;
 	font-weight: 600;
 	color: #364655;
 	margin-bottom: 15px;
@@ -926,8 +938,8 @@ header {
 --------------------------------------*/
 
 .yd-stats {
-	padding: 100px 0;
-	background: #222b45;
+	/*padding: 5px 5px;*/
+	background: #e3ffff;
 }
 
 .yd-stats .intro {
@@ -2140,7 +2152,7 @@ input, label {
 	}
 
 	.flex-inner .f-text h2 {
-		font-size: 24px;
+		font-size: 20px;
 	}
 
 	.flex-inner .f-text  p {

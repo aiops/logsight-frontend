@@ -8,7 +8,7 @@ import { timeout } from 'rxjs/operators';
 @Component({
   selector: 'landing',
   styleUrls: ['./assets/css/animate.css', './assets/css/owl.carousel.css', './assets/css/owl.theme.css',
-    './assets/css/style.css'],
+    './assets/css/style.css', './assets/css/ionicons.min.css'],
   templateUrl: './landing.page.html',
 })
 export class LandingPage implements OnInit {

@@ -40,8 +40,7 @@
                  id="dropdownMenuButton"
                  data-mdb-toggle="dropdown"
                  aria-expanded="false">
-                Dropdown button
-                <span class="iconify mt-1" data-icon="il-arrow-down" data-inline="false"></span>
+                Resources
               </a>
 
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -71,7 +70,41 @@
             </div>
             <!--            <li class="nav-item"><a class="nav-link js-scroll-trigger" [routerLink]="'second'">Features</a></li>-->
             <!--            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#partners">Partners</a></li>-->
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#research">Platform</a></li>
+<!--            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#research">Platform</a></li>-->
+            <div class="dropdown padding-7 mr-3">
+              <a class="custom-dropdown"
+                 type="button"
+                 id="dropdownMenuButton"
+                 data-mdb-toggle="dropdown"
+                 aria-expanded="false">
+                Platform
+              </a>
+
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" [routerLink]="'second'">Features</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    Submenu &raquo;
+                  </a>
+                  <ul class="dropdown-menu dropdown-submenu">
+                    <li>
+                      <a class="dropdown-item" href="#">Submenu item 1</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Submenu item 3 &raquo; </a>
+                      <ul class="dropdown-menu dropdown-submenu">
+                        <li>
+                          <a class="dropdown-item" href="#">Multi level 1</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#">Multi level 2</a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#pricingPlans">Pricing</a></li>
             <li class="nav-item" (click)="redirectToLogin()"><a class="btn-login nav-link js-scroll-trigger">Login</a>
             </li>

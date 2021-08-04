@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../@core/service/api.service';
+import { Observable } from 'rxjs/Observable';
+import { PredefinedTime } from '../../@core/common/predefined-time';
 
 @Injectable()
 export class DashboardService {
@@ -29,5 +31,17 @@ export class DashboardService {
 
   loadTopKIncidentsData(startTime: string, endTime: string) {
     return this.apiService.get(`/api/incidents/top_k_incidents?startTime=${startTime}&endTime=${endTime}`);
+  }
+
+  findPredefinedTimes(): Observable<PredefinedTime[]> {
+    return this.apiService.get(`/api/applications//user/predefined_times`);
+  }
+
+  deletePredefinedTime(id: number) {
+    return this.apiService.delete(`/api/applications/user/predefined_times/${id}`);
+  }
+
+  createPredefinedTime(predefinedTime: PredefinedTime) {
+    return this.apiService.post(`/api/applications/user/predefined_times`, predefinedTime);
   }
 }

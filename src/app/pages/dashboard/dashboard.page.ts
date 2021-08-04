@@ -15,6 +15,7 @@ import { Observable, Subject, timer, combineLatest } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment'
 import { TourService } from 'ngx-ui-tour-md-menu';
+import { PredefinedTime } from '../../@core/common/predefined-time';
 
 @Component({
   selector: 'dashboard',
@@ -44,6 +45,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   private destroy$: Subject<void> = new Subject<void>();
+  predefinedTimes: PredefinedTime[] = [];
 
   constructor(private dashboardService: DashboardService, private router: Router, private route: ActivatedRoute,
               private variableAnalysisService: VariableAnalysisService,
@@ -115,7 +117,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.heatmapHeight = '150px'
       }
       this.heatmapData = data.data;
-
     })
 
     this.pieChartData$.subscribe(data => {
@@ -207,6 +208,12 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.reload$.next()
       }
     })
+
+    this.loadPredefinedTimes()
+  }
+
+  loadPredefinedTimes() {
+    this.dashboardService.findPredefinedTimes().subscribe(resp => this.predefinedTimes = resp)
   }
 
   startTour() {
@@ -286,8 +293,8 @@ export class DashboardPage implements OnInit, OnDestroy {
       this.endDateTime = 'now'
       dateTimeType = 'relative';
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
-      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.startDateTime = event.absoluteDateTime.startDateTime
+      this.endDateTime = event.absoluteDateTime.endDateTime
     }
     this.router.navigate([],
       { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
@@ -307,5 +314,14 @@ export class DashboardPage implements OnInit, OnDestroy {
     var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
     var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm:ss');
     return local.toString()
+  }
+
+  onDeletePredefinedTime(id: number) {
+    console.log('id', id)
+    this.dashboardService.deletePredefinedTime(id).subscribe(() => this.loadPredefinedTimes())
+  }
+
+  onSavePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.createPredefinedTime(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
   }
 }

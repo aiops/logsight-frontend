@@ -114,7 +114,6 @@ export class VariableAnalysisPage implements OnInit {
   }
 
   loadVariableAnalysisData(search: string | null = null) {
-    console.log('asd', this.startDateTime, this.endDateTime)
     this.variableAnalysisService.loadData(this.selectedApplicationId, this.startDateTime, this.endDateTime,
       search).subscribe(
       resp => {

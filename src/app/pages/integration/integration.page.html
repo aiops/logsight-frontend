@@ -45,26 +45,32 @@
 
 <!--    </nb-card>-->
     <div class="row integration_types">
-      <nb-card class="p-3 row-one" style="border: none">
+      <nb-card class="p-3 row-one" style="border: none" >
         <div class="row no-gutters">
           <div class="col">
             <h5><b>Integration types</b></h5>
           </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" style="margin-bottom: 10px">
           <div class=".col-6 .col-md-4">
             <button nbButton shape="round" style="text-transform: none" class="rest-btn" type="button" (click)="onRestBtn()">
               {{restBtn}}
             </button>
           </div>
-          <div class=".col-6 .col-md-4">
+          <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
             <button nbButton shape="round" style="text-transform: none" class="python-btn" type="button" (click)="onPythonBtn()">
               {{pythonBtn}}
             </button>
           </div>
-          <div class=".col-6 .col-md-4">
+          <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
             <button nbButton shape="round" style="text-transform: none" class="filebeat-btn" type="button" (click)="onFileBeatBtn()">
               {{filebeatBtn}}
+            </button>
+          </div>
+
+          <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
+            <button nbButton shape="round" style="text-transform: none" class="upload-btn" type="button" (click)="onUploadBtn()">
+              {{uploadBtn}}
             </button>
           </div>
 
@@ -339,8 +345,8 @@
                 <td>String, the log level (e.g., INFO, WARNING, ERROR)</td>
               </tr>
               <tr>
-                <th>level</th>
-                <td>String, the log level</td>
+                <th>message</th>
+                <td>String, the log message</td>
               </tr>
               <tr>
                 <th>Other fields</th>
@@ -372,6 +378,67 @@
         </div>
       </div>
     </ng-container>
+
+
+
+    <ng-container *ngIf="uploadFile">
+      <div class="row description">
+        <!--      <nb-card class="p-2 rows" style="width: 100%">-->
+        <div class="col">
+          <div class="row">
+            <h5>Upload log file</h5>
+          </div>
+        </div>
+        <!--        </nb-card>-->
+      </div>
+      <br>
+      <br>
+
+        <div class="col-sm">
+          <div class="row">
+            <p>Choose the application and your log file for which you want to upload data.</p>
+          </div>
+    <nb-select class="period-select" [(selected)]="this.applicationId"
+               (selectedChange)="applicationSelected($event)"
+               placeholder="Select application">
+<!--      <nb-option [value]="0">All</nb-option>-->
+      <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
+        {{ app.name }}
+      </nb-option>
+    </nb-select>
+  </div>
+
+      <br>
+      <br>
+
+      <div class="row user_guidance">
+
+         <div class="col-sm" align="center">
+    <div class="form-group">
+      <br /> <input nbInput size="giant" style="text-align: left" fullWidth status="basic" type="file" id="file" (change)="uploadFiles($event.target.files)">
+    </div>
+
+    <button nbButton size="small" style="text-transform: none"  status="basic" shape="round" type="button" (click)="RequestUpload()">Upload logs</button>
+      </div>
+
+<!--          <div class="row user_guidance">-->
+<!--            <div class="col">-->
+<!--              <div class="row">-->
+<!--                <h5>Integration help?</h5>-->
+<!--              </div>-->
+<!--              <div class="row">-->
+<!--                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+        </div>
+    </ng-container>
+
+
+
+
+
   </div>
 
   <div class="col" style="margin-left: 50px">
@@ -399,6 +466,15 @@
       </div>
   </ng-container>
   </div>
+
+
+<!--  <div class="col" style="margin-left: 50px">-->
+<!--  <ng-container *ngIf="uploadFile">-->
+<!--      <h5>Upload log file</h5>-->
+
+<!--  </ng-container>-->
+
+<!--  </div>-->
 </div>
 
 

@@ -6,7 +6,13 @@ import {
   NbTabsetModule,
   NbUserModule,
   NbListModule,
-  NbRouteTabsetModule, NbStepperModule, NbAccordionModule, NbProgressBarModule, NbSpinnerModule, NbLayoutModule,
+  NbRouteTabsetModule,
+  NbStepperModule,
+  NbAccordionModule,
+  NbProgressBarModule,
+  NbSpinnerModule,
+  NbLayoutModule,
+  NbInputModule,
 } from '@nebular/theme';
 import { QuickstartRoutingModule } from './quickstart-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +27,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatCardModule} from "@angular/material/card";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
+import {FileUploadModule} from "@iplab/ngx-file-upload";
 
 @NgModule({
   imports: [
@@ -48,7 +55,9 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
     MatDialogModule,
     TourMatMenuModule,
     MatCardModule,
-    NbLayoutModule
+    NbLayoutModule,
+    FileUploadModule,
+    NbInputModule
   ],
   providers: [
     ],

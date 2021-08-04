@@ -6,6 +6,8 @@ import { Application } from '../../@core/common/application';
 import { IntegrationService } from '../../@core/service/integration.service';
 import { HighlightResult } from 'ngx-highlightjs';
 import { loadStripe } from '@stripe/stripe-js/pure';
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'integration',
@@ -17,19 +19,27 @@ export class IntegrationPage implements OnInit {
   email: string;
   quantity: number;
   hasPaid: Boolean;
+  applicationId: number;
   applications: Application[] = [];
   public show: boolean = false;
   public python: boolean = false;
   public fileBeats: boolean = false;
   public rest: boolean = true;
+  public uploadFile: boolean = false;
   public showHideAppBtn: any = 'Show';
   public pythonBtn: any = 'Python';
   public filebeatBtn: any = 'Filebeat';
+  public uploadBtn: any = 'Upload File';
   public restBtn: any = 'REST API';
   format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]+/;
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });
+
+
+
+  public formData = new FormData();
+  ReqJson: any = {};
 
   response: HighlightResult;
   customerId = ''
@@ -40,7 +50,7 @@ export class IntegrationPage implements OnInit {
     'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
-              private notificationService: NotificationsService) {
+              private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -65,22 +75,62 @@ export class IntegrationPage implements OnInit {
     }
   }
 
+  applicationSelected(appId: number) {
+    appId === 0 ? this.applicationId = null : this.applicationId = appId;
+  }
+
+
+  uploadFiles( file ) {
+          if (file[0]["type"] == "application/json"){
+            for ( let i = 0; i < file.length; i++ ) {
+              this.formData.append( "file", file[i], file[i]['name']);
+          }
+            this.notificationService.success("Click the upload button to send the log file.")
+          }else {
+            this.notificationService.error("The file should be in JSON format.")
+          }
+
+      }
+
+
+  RequestUpload() {
+          this.ReqJson["id"] = this.applicationId
+          this.formData.append( 'info', JSON.stringify( this.ReqJson ) )
+              this.http.post( '/api/applications/uploadFile', this.formData )
+                  .subscribe(resp => {
+                    this.notificationService.success("Log data uploaded successfully!")
+                  });
+          this.formData = new FormData();
+          this.ReqJson = {};
+          this.router.navigate(['/pages', 'dashboard'])
+      }
+
   onPythonBtn() {
     this.python = true
     this.fileBeats = false
     this.rest = false
+    this.uploadFile = false
   }
 
   onFileBeatBtn() {
     this.python = false
     this.fileBeats = true
     this.rest = false
+    this.uploadFile = false
+  }
+
+  onUploadBtn() {
+    this.python = false
+    this.fileBeats = false
+    this.rest = false
+    this.uploadFile = true
   }
 
   onRestBtn() {
     this.python = false
     this.fileBeats = false
     this.rest = true
+    this.uploadFile = false
   }
 
   plus() {

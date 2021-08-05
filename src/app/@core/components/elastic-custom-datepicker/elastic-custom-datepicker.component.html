@@ -3,8 +3,8 @@
     <span class="chips" *ngFor="let pt of predefinedTimes">
       <span class="pointer mr-1 font-weight-bold font-size-c" (click)="selectPredefinedTime(pt)">{{pt.name}}</span>
 
-      <span (click)="deletePredefinedTime.emit(pt.id)" class="iconify pointer" title="Remove"
-            data-icon="simple-line-icons:close" style="padding-top: 3px;"></span>
+      <i (click)="deletePredefinedTime.emit(pt.id)" class="fa fa-times-circle pointer" title="Remove"
+         style="padding-top: 3px;"></i>
 </span>
   </div>
   <div class="text-left" style="margin-left: 28px; margin-right: 10px;">

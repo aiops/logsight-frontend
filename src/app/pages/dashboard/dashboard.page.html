@@ -47,7 +47,14 @@
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 <div style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorTopIncidents" align="left">
-  <h5 style="font-weight: 600">Top 5 incidents
+  <form [formGroup]="numberOfIncidentsFormGroup" (submit)="changeTopKIncidents()">
+    <label class="mr-2" for="numberOfIncidents">Choose number of incidents: </label>
+    <input type="number" style="width: 100px" class="mr-2" nbInput formControlName="numberOfIncidents"
+           id="numberOfIncidents"
+           placeholder="Choose number of incidents"/>
+    <button nbButton type="submit">Find</button>
+  </form>
+  <h5 style="font-weight: 600">Top {{numberOfIncidents}} incidents
     <nb-icon icon="info-outline"
              nbTooltip="Here you can see the top 5 most severe incidents in the last 24 hours. Clicking on View Details will show you details of the incident!"
              nbTooltipStatus="basic" nbButton status="basic"></nb-icon>

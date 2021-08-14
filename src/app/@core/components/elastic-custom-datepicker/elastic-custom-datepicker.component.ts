@@ -56,9 +56,8 @@ export class ElasticCustomDatepickerComponent {
   }
 
   selectPredefinedTime(pt: PredefinedTime) {
-    console.log('DAA')
     if (pt.dateTimeType == 'RELATIVE') {
-      this.search.emit({ relativeTimeChecked: true, relativeDateTime: pt.startTime })
+      this.search.emit({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
     } else {
       this.search.emit({
         absoluteTimeChecked: true, absoluteDateTime: {

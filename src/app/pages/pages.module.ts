@@ -21,6 +21,7 @@ import { ElasticCustomDatepickerComponent } from '../@core/components/elastic-cu
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import { SortDirective } from '../@core/directives/sort-directive';
 import { CreatePredefinedTimeModal } from '../@core/components/create-predefined-time-modal/create-predefined-time-modal.component';
+import { PredefinedTimesComponent } from '../@core/components/predefined-times/predefined-times.component';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { CreatePredefinedTimeModal } from '../@core/components/create-predefined
     HostDirective,
     SpecificTemplateModalComponent,
     ElasticCustomDatepickerComponent,
+    PredefinedTimesComponent,
     SortDirective,
     CreatePredefinedTimeModal
   ],
@@ -56,7 +58,8 @@ import { CreatePredefinedTimeModal } from '../@core/components/create-predefined
     RelativeTimeComponent,
     VariableAnalysisTemplateResolver,
     ElasticCustomDatepickerComponent,
-    SortDirective
+    SortDirective,
+    PredefinedTimesComponent
   ],
   providers: [IntegrationService, VariableAnalysisService, MessagingService, NbDialogService]
 })

@@ -1,0 +1,7 @@
+<div class="mt-1" style="margin-right: 10px; border-right: 1px solid gray">
+    <span class="chips" *ngFor="let pt of predefinedTimes">
+      <span class="pointer mr-1 font-weight-bold font-size-c" (click)="selectPredefinedTime.emit(pt)">{{pt.name}}</span>
+      <i (click)="deletePredefinedTime.emit(pt.id)" class="fa fa-times-circle pointer" title="Remove"
+         style="padding-top: 3px;"></i>
+    </span>
+</div>

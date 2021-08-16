@@ -1,6 +1,6 @@
 <div class="row" style="padding-left: 5%;padding-right: 5%">
-  <div class="col-md-6 p-0 mb-4">
-    <nb-select class="period-select col-md-4 pl-3" [(selected)]="this.applicationId"
+  <div class="col-md-4 p-0">
+    <nb-select class="period-select col-md-2 pl-3" [(selected)]="this.applicationId"
                (selectedChange)="applicationSelected($event)"
                placeholder="Select application">
       <nb-option [value]="0">All</nb-option>
@@ -9,14 +9,19 @@
       </nb-option>
     </nb-select>
   </div>
-  <div class="col-md-6 text-right">
-    <div style="width: 100%;" class="text-right">
+  <div class="col-md-8 mt-2 text-right">
+    <div class="row" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
+      <predefined-times [predefinedTimes]="predefinedTimes" (deletePredefinedTime)="onDeletePredefinedTime($event)"
+                        (selectPredefinedTime)="onSelectPredefinedTime($event)">
+
+      </predefined-times>
       <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
               (click)="openPopover()" size="small" shape="round"
               nbPopoverTrigger="noop"><i class="fa fa-calendar"></i></button>
     </div>
   </div>
 </div>
+<hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
 
 <div class="col-lg-12" style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorIncidentsTab">
   <h5 style="font-weight: 600">Incidents</h5>
@@ -42,13 +47,17 @@
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
-                <th [appSort]="tableData.semanticCountAds" data-order="desc" data-name="timestamp" class="clickable" style="width: 15%" scope="col">Timestamp</th>
+                <th [appSort]="tableData.semanticCountAds" data-order="desc" data-name="timestamp" class="clickable"
+                    style="width: 15%" scope="col">Timestamp
+                </th>
                 <th style="width: 12%" scope="col">Ratio
                   <nb-icon icon="info-outline"
                            nbTooltip="The ratio presents information about the current and expected count number of appereance of particular log type"
                            nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
                 </th>
-                <th [appSort]="tableData.semanticCountAds" data-order="desc" data-name="actualLevel" class="clickable" style="width: 5%" scope="col">Level</th>
+                <th [appSort]="tableData.semanticCountAds" data-order="desc" data-name="actualLevel" class="clickable"
+                    style="width: 5%" scope="col">Level
+                </th>
                 <th style="width: 66%" scope="col">Message</th>
               </tr>
               </thead>
@@ -93,13 +102,17 @@
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
-                <th [appSort]="tableData.countAds" data-order="desc" data-name="timestamp" class="clickable" style="width: 15%" scope="col">Timestamp</th>
+                <th [appSort]="tableData.countAds" data-order="desc" data-name="timestamp" class="clickable"
+                    style="width: 15%" scope="col">Timestamp
+                </th>
                 <th style="width: 12%" scope="col">Ratio
                   <nb-icon icon="info-outline"
                            nbTooltip="The ratio presents information about the current and expected count number of appereance of particular log type"
                            nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
                 </th>
-                <th [appSort]="tableData.countAds" data-order="desc" data-name="actualLevel" class="clickable" style="width: 5%" scope="col">Level</th>
+                <th [appSort]="tableData.countAds" data-order="desc" data-name="actualLevel" class="clickable"
+                    style="width: 5%" scope="col">Level
+                </th>
                 <th style="width: 66%" scope="col">Message</th>
               </tr>
               </thead>
@@ -144,10 +157,12 @@
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
-                <th [appSort]="tableData.semanticAd" data-order="desc" data-name="timestamp" class='clickable' style="width: 15%"
+                <th [appSort]="tableData.semanticAd" data-order="desc" data-name="timestamp" class='clickable'
+                    style="width: 15%"
                     scope="col">Timestamp
                 </th>
-                <th [appSort]="tableData.semanticAd" data-order="desc" data-name="actualLevel" class='clickable' style="width: 5%"
+                <th [appSort]="tableData.semanticAd" data-order="desc" data-name="actualLevel" class='clickable'
+                    style="width: 5%"
                     scope="col">Level
                 </th>
                 <th style="width: 78%" scope="col">Message</th>
@@ -189,8 +204,12 @@
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
-                <th [appSort]="tableData.newTemplates" data-order="desc" data-name="timestamp" class='clickable' style="width: 13%" scope="col">Timestamp</th>
-                <th [appSort]="tableData.newTemplates" data-order="desc" data-name="actualLevel" class='clickable' style="width: 5%" scope="col">Level</th>
+                <th [appSort]="tableData.newTemplates" data-order="desc" data-name="timestamp" class='clickable'
+                    style="width: 13%" scope="col">Timestamp
+                </th>
+                <th [appSort]="tableData.newTemplates" data-order="desc" data-name="actualLevel" class='clickable'
+                    style="width: 5%" scope="col">Level
+                </th>
                 <th style="width: 80%" scope="col">Message</th>
               </tr>
               </thead>
@@ -219,5 +238,6 @@
 
 </div>
 <ng-template #dateTimePicker>
-  <elastic-custom-datepicker (search)="onDateTimeSearch($event)"></elastic-custom-datepicker>
+  <elastic-custom-datepicker (search)="onDateTimeSearch($event)"
+                             (savePredefinedTime)="onSavePredefinedTime($event)"></elastic-custom-datepicker>
 </ng-template>

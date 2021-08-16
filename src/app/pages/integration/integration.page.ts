@@ -95,7 +95,9 @@ export class IntegrationPage implements OnInit {
 
   RequestUpload() {
           this.ReqJson["id"] = this.applicationId
+
           this.formData.append( 'info', JSON.stringify( this.ReqJson ) )
+          console.log(this.formData)
               this.http.post( '/api/applications/uploadFile', this.formData )
                   .subscribe(resp => {
                     this.notificationService.success("Log data uploaded successfully!")

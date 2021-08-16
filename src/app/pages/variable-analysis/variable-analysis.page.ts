@@ -38,7 +38,7 @@ export class VariableAnalysisPage implements OnInit {
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   openDatePicker = false;
-  startDateTime = 'now-12h';
+  startDateTime = 'now-720m';
   endDateTime = 'now'
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -106,7 +106,7 @@ export class VariableAnalysisPage implements OnInit {
           this.endDateTime = endTime;
         }
       } else {
-        this.startDateTime = 'now-12h'
+        this.startDateTime = 'now-720m'
         this.endDateTime = 'now'
       }
       this.applicationSelected(this.selectedApplicationId);

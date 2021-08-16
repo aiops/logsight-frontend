@@ -17,7 +17,7 @@ export class ElasticCustomDatepickerComponent {
   }
 
   absoluteDateTime: { startDateTime: string, endDateTime: string }
-  relativeDateTime: string = 'now-12h';
+  relativeDateTime: string = 'now-720m';
   relativeTimeChecked = true;
   absoluteTimeChecked = false;
 

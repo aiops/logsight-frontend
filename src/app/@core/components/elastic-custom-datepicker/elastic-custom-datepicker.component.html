@@ -1,4 +1,12 @@
 <div class="p-4">
+  <div class="mb-2">
+    <span class="chips" *ngFor="let pt of predefinedTimes">
+      <span class="pointer mr-1 font-weight-bold font-size-c" (click)="selectPredefinedTime(pt)">{{pt.name}}</span>
+
+      <i (click)="deletePredefinedTime.emit(pt.id)" class="fa fa-times-circle pointer" title="Remove"
+         style="padding-top: 3px;"></i>
+</span>
+  </div>
   <div class="text-left" style="margin-left: 28px; margin-right: 10px;">
     <div class="form-check mb-2" style="margin-left: -28px">
       <input type="checkbox" [(ngModel)]="relativeTimeChecked"
@@ -18,9 +26,16 @@
     </div>
     <range-date-time [disabled]="!absoluteTimeChecked" (change)="onAbsoluteDateChange($event)"></range-date-time>
   </div>
-  <button style="text-transform: none" [disabled]="!relativeDateTime && !absoluteDateTime" nbButton status='basic' shape="round" type="button"
+  <button style="text-transform: none" [disabled]="!relativeDateTime && !absoluteDateTime" nbButton status='basic'
+          shape="round" type="button"
           class="search-button"
           (click)="submit()">
     Search
+  </button>
+  <button style="text-transform: none" nbButton status='basic'
+          shape="round" type="button"
+          class="search-button ml-2"
+          (click)="openSaveTimeDialog()">
+    Save Time
   </button>
 </div>

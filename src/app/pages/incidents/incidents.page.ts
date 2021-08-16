@@ -39,7 +39,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
   applications: Application[] = [];
   heatmapHeightList = [];
   unique = [];
-  startDateTime = 'now-12h';
+  startDateTime = 'now-720m';
   endDateTime = 'now'
   heatmapHeight = '200px';
   private destroy$: Subject<void> = new Subject<void>();

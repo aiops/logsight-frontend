@@ -14,6 +14,11 @@ const routes: Routes = [{
         .then(m => m.QuickstartModule),
     },
     {
+      path: 'quality',
+      loadChildren: () => import('./quality/quality.module')
+        .then(m => m.QualityModule),
+    },
+    {
       path: 'dashboard',
       loadChildren: () => import('./dashboard/dashboard.module')
         .then(m => m.DashboardModule),

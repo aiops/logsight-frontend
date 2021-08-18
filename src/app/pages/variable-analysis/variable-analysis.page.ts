@@ -176,8 +176,8 @@ export class VariableAnalysisPage implements OnInit {
       this.endDateTime = 'now'
       dateTimeType = 'relative';
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
-      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.startDateTime = event.absoluteDateTime.startDateTime;
+      this.endDateTime = event.absoluteDateTime.endDateTime;
     }
     this.applicationSelected(this.selectedApplicationId)
     this.router.navigate([],

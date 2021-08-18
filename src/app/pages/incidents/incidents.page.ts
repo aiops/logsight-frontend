@@ -70,8 +70,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
           this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
           this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
         } else {
-          this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSS').format('YYYY-MM-DDTHH:mm:ss.SSSSSS');
-          this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSS').format('YYYY-MM-DDTHH:mm:ss.SSSSSS');
+          this.startDateTime = startTime;
+          this.endDateTime = endTime;
         }
       }
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
@@ -103,7 +103,6 @@ export class IncidentsPage implements OnInit, OnDestroy {
     ).subscribe(resp => {
       this.applications = resp;
       if (this.applications.length > 0) {
-        // this.applicationId = this.applications[0].id;
         this.applicationSelected(this.applicationId);
       }
     })
@@ -152,7 +151,6 @@ export class IncidentsPage implements OnInit, OnDestroy {
         this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
         if (this.unique.length > 0) {
           if (50 * (this.unique.length) < 350) {
-            console.log(50 * (this.unique.length))
             this.heatmapHeight = (50 * (this.unique.length + 1)).toString() + 'px'
           } else {
             this.heatmapHeight = '300px'
@@ -175,8 +173,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
-      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.startDateTime = event.absoluteDateTime.startDateTime
+      this.endDateTime = event.absoluteDateTime.endDateTime
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     }

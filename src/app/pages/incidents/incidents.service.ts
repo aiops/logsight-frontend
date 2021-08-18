@@ -17,6 +17,7 @@ export class IncidentsService {
     if (applicationId) {
       applicationParam = `&applicationId=${applicationId}`
     }
+    console.log("SS", startTime, endTime)
     return this.apiService.get(`/api/incidents/table_data?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
   }
 }

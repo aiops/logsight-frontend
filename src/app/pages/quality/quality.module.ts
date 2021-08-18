@@ -19,6 +19,7 @@ import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.mod
 import {DashboardService} from "../dashboard/dashboard.service";
 import {BarChartModule} from "@swimlane/ngx-charts";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
+import {NgxGaugeModule} from "ngx-gauge";
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
     NbTooltipModule,
     NbSelectModule,
     BarChartModule,
-    TourMatMenuModule
+    TourMatMenuModule,
+    NgxGaugeModule
   ],
   declarations: [
     QualityPage,

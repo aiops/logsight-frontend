@@ -7,11 +7,26 @@ export class QualityService {
   constructor(private apiService: ApiService) {
   }
 
-    loadIncidentsTableData(startTime: string, endTime: string, applicationId: number | null): Observable<any> {
+    loadQualityData(startTime: string, endTime: string, applicationId: number | null): Observable<any> {
     let applicationParam = '';
     if (applicationId) {
       applicationParam = `&applicationId=${applicationId}`
     }
-    return this.apiService.get(`/api/quality/gauge_data?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
+
+    return this.apiService.get(`/api/quality/overall_quality?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
   }
+
+  loadQualityOverview(startTime: string, endTime: string, applicationId: number | null): Observable<any> {
+    let applicationParam = '';
+    if (applicationId) {
+      applicationParam = `&applicationId=${applicationId}`
+    }
+    return this.apiService.get(`/api/quality/overall_quality_overview?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
+  }
+
+  computeLogQuality(startTime: string, endTime: string): Observable<any> {
+    console.log("AAA",startTime, endTime)
+    return this.apiService.get(`/api/quality/compute_log_quality?startTime=${startTime}&endTime=${endTime}`);
+  }
+
 }

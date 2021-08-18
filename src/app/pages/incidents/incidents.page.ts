@@ -180,8 +180,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     }
-    this.router.navigate([],
-      { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
+    // this.router.navigate([],
+    //   { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
   }
 
   openPopover() {
@@ -194,6 +194,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
 
   applicationSelected(appId: number) {
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
+    console.log("AA", this.startDateTime, this.endDateTime)
     this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
   }

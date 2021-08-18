@@ -21,6 +21,8 @@ import { DashboardService } from '../dashboard/dashboard.service';
 import { Application } from '../../@core/common/application';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { IntegrationService } from '../../@core/service/integration.service';
+import {LogQualityTableData} from "../../@core/common/log-quality-table-data";
+import {LogQualityOverview} from "../../@core/common/log-quality-overview";
 
 @Component({
   selector: 'quality',
@@ -30,7 +32,9 @@ import { IntegrationService } from '../../@core/service/integration.service';
 })
 export class QualityPage implements OnInit, OnDestroy {
   heatmapData = [];
-  tableData: IncidentTableData;
+  logLevelData = [];
+  tableData: LogQualityOverview;
+  linguisticData = [];
   options = options.timelineChart()
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
@@ -39,10 +43,24 @@ export class QualityPage implements OnInit, OnDestroy {
   applications: Application[] = [];
   heatmapHeightList = [];
   unique = [];
+  gaugeTypeLogLevel = 0;
+  gaugeTypeLinguistic = 0;
+  gaugeTypeOverall = 0;
   startDateTime = 'now-720m';
   endDateTime = 'now'
   heatmapHeight = '200px';
   private destroy$: Subject<void> = new Subject<void>();
+
+
+  gaugeType = "arch";
+  gaugeValue = 28.3;
+  gaugeLabel = "Log quality";
+  gaugeAppendText = "%";
+  thresholdConfigLogLevel = {
+        '0': {color: 'red'},
+        '40': {color: 'orange'},
+        '70': {color: 'yellow'}
+    };
 
   constructor(private route: ActivatedRoute,
               private qualityService: QualityService,
@@ -57,6 +75,40 @@ export class QualityPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+
+
+
+    this.route.queryParamMap.subscribe(queryParams => {
+      const startTime = queryParams.get('startTime')
+      const endTime = queryParams.get('endTime')
+      const applicationParam = queryParams.get('applicationId')
+      const dateTimeType = queryParams.get('dateTimeType');
+      this.applicationId = applicationParam ? +applicationParam : null
+      if (startTime && endTime) {
+        if (dateTimeType == 'absolute') {
+          this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+          this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
+        } else {
+          this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSS').format('YYYY-MM-DDTHH:mm:ss.SSSSSS');
+          this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSS').format('YYYY-MM-DDTHH:mm:ss.SSSSSS');
+        }
+      }
+      this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
+    });
+
+
+
+    this.authService.getLoggedUser().pipe(
+      switchMap(user => this.integrationService.loadApplications(user.key))
+    ).subscribe(resp => {
+      this.applications = resp;
+      if (this.applications.length > 0) {
+        // this.applicationId = this.applications[0].id;
+        this.applicationSelected(this.applicationId);
+      }
+    })
 
     this.messagingService.getVariableAnalysisTemplate()
       .pipe(takeUntil(this.destroy$), map(it => it['item']))
@@ -78,15 +130,6 @@ export class QualityPage implements OnInit, OnDestroy {
         }
       })
 
-    this.authService.getLoggedUser().pipe(
-      switchMap(user => this.integrationService.loadApplications(user.key))
-    ).subscribe(resp => {
-      this.applications = resp;
-      if (this.applications.length > 0) {
-        // this.applicationId = this.applications[0].id;
-        this.applicationSelected(this.applicationId);
-      }
-    })
   }
 
   toLocalTime(data){
@@ -99,15 +142,45 @@ export class QualityPage implements OnInit, OnDestroy {
     return data
   }
 
-  private loadQualityGaugeData(startTime: string, endTime: string, applicationId: number | null) {
-    // this.qualityService.loadQualityGaugeData(startTime, endTime, applicationId).subscribe(resp => {
-    //   resp["countAds"] = this.toLocalTime(resp["countAds"])
-    //   resp["newTemplates"] = this.toLocalTime(resp["newTemplates"])
-    //   resp["semanticCountAds"] = this.toLocalTime(resp["semanticCountAds"])
-    //   resp["semanticAd"] = this.toLocalTime(resp["semanticAd"])
-    //   this.tableData = resp
-    // })
+  private loadQualityData(startTime: string, endTime: string, applicationId: number | null) {
+    this.logLevelData = []
+    this.linguisticData = []
+
+    this.qualityService.loadQualityData(startTime, endTime, applicationId).subscribe(resp => {
+      let data = this.toLocalTime(resp)
+
+      for (let i = 0; i < data.length; i++){
+        if (resp[i].actualLevel != resp[i].predictedLevel){
+          this.logLevelData.push(resp[i])
+        }
+        if (resp[i].linguisticPrediction == 1){
+          this.linguisticData.push(resp[i])
+        }
+      }
+    })
+
   }
+
+  private loadQualityOverview(startTime: string, endTime: string, applicationId: number | null) {
+
+    this.qualityService.loadQualityOverview(startTime, endTime, applicationId).subscribe(resp => {
+      this.tableData = resp
+
+      this.gaugeTypeLogLevel = 0
+      this.gaugeTypeOverall = 0
+      this.gaugeTypeLinguistic = 0
+      for (let i=0; i < resp.length; i++){
+        this.gaugeTypeLogLevel = this.gaugeTypeLogLevel + resp[i].logLevelScore
+        this.gaugeTypeLinguistic = this.gaugeTypeLinguistic + resp[i].linguisticPrediction
+        this.gaugeTypeOverall = this.gaugeTypeOverall + (resp[i].logLevelScore + resp[i].linguisticPrediction) / 2
+      }
+      this.gaugeTypeLogLevel = this.gaugeTypeLogLevel * 100 / resp.length
+      this.gaugeTypeLinguistic = this.gaugeTypeLinguistic * 100 / resp.length
+      this.gaugeTypeOverall = this.gaugeTypeOverall * 100 / resp.length
+    })
+
+  }
+
 
   onDateTimeSearch(event) {
     this.popover.hide();
@@ -117,16 +190,16 @@ export class QualityPage implements OnInit, OnDestroy {
       dateTimeType = 'relative'
       this.startDateTime = event.relativeDateTime
       this.endDateTime = 'now'
-      // this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
-      // this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
     } else if (event.absoluteTimeChecked) {
       this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
       this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
-      // this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
-      // this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
     }
-    this.router.navigate([],
-      { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
+    // this.router.navigate([],
+    //   { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
   }
 
   openPopover() {
@@ -137,10 +210,20 @@ export class QualityPage implements OnInit, OnDestroy {
     }
   }
 
+  computeLogQuality(){
+    this.qualityService.computeLogQuality(this.startDateTime, this.endDateTime).subscribe(resp => {
+      this.notificationService.success("Log Quality was successfully computed.")
+       this.loadQualityOverview(this.startDateTime, this.endDateTime,null)
+      this.loadQualityData(this.startDateTime, this.endDateTime, null)
+    }, error => {
+      this.notificationService.error("Bad request, contact support!")
+    })
+    }
+
   applicationSelected(appId: number) {
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
-    // this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
-    // this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+    this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
+    this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
   }
 
   ngOnDestroy(): void {

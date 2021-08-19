@@ -181,7 +181,6 @@ export class QualityPage implements OnInit, OnDestroy {
 
   }
 
-
   onDateTimeSearch(event) {
     this.popover.hide();
     this.openDatePicker = false;
@@ -193,8 +192,8 @@ export class QualityPage implements OnInit, OnDestroy {
       this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
-      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.startDateTime = event.absoluteDateTime.startDateTime
+      this.endDateTime = event.absoluteDateTime.endDateTime
       this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
     }

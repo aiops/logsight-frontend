@@ -124,7 +124,6 @@ export class QualityPage implements OnInit, OnDestroy {
                 }, dialogClass: 'model-full'
               });
             }, err => {
-              console.log(err)
               this.notificationService.error('Error', 'Error fetching data')
             })
         }
@@ -148,15 +147,16 @@ export class QualityPage implements OnInit, OnDestroy {
 
     this.qualityService.loadQualityData(startTime, endTime, applicationId).subscribe(resp => {
       let data = this.toLocalTime(resp)
-
+      console.log(data)
       for (let i = 0; i < data.length; i++){
-        if (resp[i].actualLevel != resp[i].predictedLevel){
+        if (!resp[i].predictedLevel.includes(resp[i].actualLevel)){
           this.logLevelData.push(resp[i])
         }
-        if (resp[i].linguisticPrediction == 1){
+        if (resp[i].linguisticPrediction > 0.5){
           this.linguisticData.push(resp[i])
         }
       }
+      console.log(this.linguisticData)
     })
 
   }

@@ -181,14 +181,16 @@
                 </td>
 
                 <td>
-                <span style="float: left; color: yellow; font-weight: 600;"
+                <span style="float: left; color: #CECE00FF; font-weight: 600;"
                       [class.error]="row.predictedLevel == 'ERROR'"
                       [class.info]="row.predictedLevel == 'INFO'"
                       class="mr-2">{{row.predictedLevel}}</span>
                 </td>
 
                 <td>
+                  <div>
                   <app-ad-banner [row]="row.variableHit"></app-ad-banner>
+                  </div>
                 </td>
               </tr>
               </tbody>
@@ -242,7 +244,17 @@
                 </td>
 
                 <td>
+                  <div>
                   <app-ad-banner [row]="row.variableHit"></app-ad-banner>
+                  </div>
+                  <br>
+                    <div>
+                      <p style="color: #CECE00FF">Existing tags: {{row.tags}}</p>
+                  </div>
+                  <div>
+                    <p style="color: #CECE00FF">You can improve the quality by modifying your message to contain: {{row.suggestions[0]}}</p>
+                  </div>
+
                 </td>
               </tr>
               </tbody>

@@ -1,6 +1,6 @@
 <div class="row" style="width: 100%; height: 100%;  padding-right: 5%; padding-left: 5%">
 
-  <div class="col-md-3" tourAnchor="anchorApplications"  style="background-color: #222b45; height: 100%">
+  <div class="col-md-3" tourAnchor="anchorApplications" style="background-color: #222b45; height: 100%">
 
     <div class="row user_info">
       <!--      <nb-card class="p-3 row-one">-->
@@ -22,30 +22,30 @@
       <!--        </div>-->
       <!--      </nb-card>-->
     </div>
-<!--    <nb-card>-->
-<!--      <nb-card-header>Select billing plan</nb-card-header>-->
-<!--      <nb-card-body  align="center">-->
+    <!--    <nb-card>-->
+    <!--      <nb-card-header>Select billing plan</nb-card-header>-->
+    <!--      <nb-card-body  align="center">-->
 
-<!--        <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>-->
+    <!--        <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>-->
 
-<!--        <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>-->
-<!--        <input nbInput  style="width: 60%" type="text" [value]="quantity">-->
-<!--        <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>-->
-<!--        <p>Total cost per month: {{quantity * 2}}.00 Euro</p>-->
-<!--        <div *ngIf="!hasPaid">-->
-<!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>-->
-<!--        </div>-->
-<!--        <div *ngIf="hasPaid">-->
-<!--          <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE SUBSCRIPTION</button>-->
-<!--        </div>-->
-<!--        <div style="margin-top: 10px">-->
-<!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE SUBSCRIPTION</button>-->
-<!--        </div>-->
-<!--      </nb-card-body>-->
+    <!--        <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>-->
+    <!--        <input nbInput  style="width: 60%" type="text" [value]="quantity">-->
+    <!--        <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>-->
+    <!--        <p>Total cost per month: {{quantity * 2}}.00 Euro</p>-->
+    <!--        <div *ngIf="!hasPaid">-->
+    <!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>-->
+    <!--        </div>-->
+    <!--        <div *ngIf="hasPaid">-->
+    <!--          <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE SUBSCRIPTION</button>-->
+    <!--        </div>-->
+    <!--        <div style="margin-top: 10px">-->
+    <!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE SUBSCRIPTION</button>-->
+    <!--        </div>-->
+    <!--      </nb-card-body>-->
 
-<!--    </nb-card>-->
+    <!--    </nb-card>-->
     <div class="row integration_types">
-      <nb-card class="p-3 row-one" style="border: none" >
+      <nb-card class="p-3 row-one" style="border: none">
         <div class="row no-gutters">
           <div class="col">
             <h5><b>Integration types</b></h5>
@@ -53,23 +53,27 @@
         </div>
         <div class="row justify-content-center" style="margin-bottom: 10px">
           <div class=".col-6 .col-md-4">
-            <button nbButton shape="round" style="text-transform: none" class="rest-btn" type="button" (click)="onRestBtn()">
+            <button nbButton shape="round" style="text-transform: none" class="rest-btn" type="button"
+                    (click)="onRestBtn()">
               {{restBtn}}
             </button>
           </div>
           <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
-            <button nbButton shape="round" style="text-transform: none" class="python-btn" type="button" (click)="onPythonBtn()">
+            <button nbButton shape="round" style="text-transform: none" class="python-btn" type="button"
+                    (click)="onPythonBtn()">
               {{pythonBtn}}
             </button>
           </div>
           <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
-            <button nbButton shape="round" style="text-transform: none" class="filebeat-btn" type="button" (click)="onFileBeatBtn()">
+            <button nbButton shape="round" style="text-transform: none" class="filebeat-btn" type="button"
+                    (click)="onFileBeatBtn()">
               {{filebeatBtn}}
             </button>
           </div>
 
           <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
-            <button nbButton shape="round" style="text-transform: none" class="upload-btn" type="button" (click)="onUploadBtn()">
+            <button nbButton shape="round" style="text-transform: none" class="upload-btn" type="button"
+                    (click)="onUploadBtn()">
               {{uploadBtn}}
             </button>
           </div>
@@ -237,26 +241,26 @@
 
           <div class="row">
             <div class="col">
-            <div class="row">
-              <h5>Configuration</h5>
+              <div class="row">
+                <h5>Configuration</h5>
+              </div>
+              <div class="row">
+                Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable
+                Elastic output).
+                <br>
+                <br>
+                For more information about configuring Filebeat to use Logstash please refer to:
+                <br>
+                <br>
+                <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>
+                Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350
+                <br>
+                <br>
+                For more information about configuring Filebeat to use Logstash please refer to:
+                <br>
+                <br>
+              </div>
             </div>
-            <div class="row">
-              Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable
-                    Elastic output).
-              <br>
-              <br>
-              For more information about configuring Filebeat to use Logstash please refer to:
-              <br>
-              <br>
-              <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>
-              Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350
-              <br>
-              <br>
-              For more information about configuring Filebeat to use Logstash please refer to:
-              <br>
-              <br>
-            </div>
-          </div>
           </div>
 
           <div class="row user_guidance">
@@ -359,10 +363,11 @@
           <div class="row user_guidance">
             <div class="row">
               <div class="col">
-            You can send logs in batches to optimize network calls. The using the "log-messages" key accepts a list of log messages.
-              </div>
+                You can send logs in batches to optimize network calls. The using the "log-messages" key accepts a list
+                of log messages.
               </div>
             </div>
+          </div>
 
           <div class="row user_guidance">
             <div class="col">
@@ -380,7 +385,6 @@
     </ng-container>
 
 
-
     <ng-container *ngIf="uploadFile">
       <div class="row description">
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
@@ -389,92 +393,104 @@
             <h5>Upload log file</h5>
           </div>
         </div>
-        <!--        </nb-card>-->
       </div>
       <br>
       <br>
 
-        <div class="col-sm">
-          <div class="row">
-            <p>Choose the application and your log file for which you want to upload data.</p>
+      <div class="col-sm">
+        <div class="row">
+          <p>Choose the application and your log file for which you want to upload data.</p>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <nb-select class="period-select" [(selected)]="this.applicationId"
+                       (selectedChange)="applicationSelected($event)"
+                       placeholder="Select application">
+              <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
+                {{ app.name }}
+              </nb-option>
+            </nb-select>
           </div>
-    <nb-select class="period-select" [(selected)]="this.applicationId"
-               (selectedChange)="applicationSelected($event)"
-               placeholder="Select application">
-<!--      <nb-option [value]="0">All</nb-option>-->
-      <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
-        {{ app.name }}
-      </nb-option>
-    </nb-select>
-  </div>
+          <div class="col-sm">
+            <nb-select class="period-select" [(selected)]="this.logFileType"
+                       (selectedChange)="logFileTypeSelected($event)"
+                       placeholder="Select log file type">
+              <nb-option *ngFor="let fileType of logFileTypes" [value]="fileType.type">
+                {{ fileType.renderType }}
+              </nb-option>
+            </nb-select>
+          </div>
+        </div>
+      </div>
 
       <br>
       <br>
 
       <div class="row user_guidance">
 
-         <div class="col-sm" align="center">
-    <div class="form-group">
-      <br /> <input nbInput size="giant" style="text-align: left" fullWidth status="basic" type="file" id="file" (change)="uploadFiles($event.target.files)">
-    </div>
+        <div class="col-sm" align="center">
+          <div class="form-group">
+            <br/> <input nbInput size="giant" style="text-align: left" fullWidth status="basic" type="file" id="file"
+                         (change)="uploadFiles($event.target.files)">
+          </div>
 
-    <button nbButton size="small" style="text-transform: none"  status="basic" shape="round" type="button" (click)="RequestUpload()">Upload logs</button>
-      </div>
-
-<!--          <div class="row user_guidance">-->
-<!--            <div class="col">-->
-<!--              <div class="row">-->
-<!--                <h5>Integration help?</h5>-->
-<!--              </div>-->
-<!--              <div class="row">-->
-<!--                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-
+          <button nbButton size="small" style="text-transform: none" status="basic" shape="round" type="button"
+                  (click)="RequestUpload()">Upload logs
+          </button>
         </div>
+
+        <!--          <div class="row user_guidance">-->
+        <!--            <div class="col">-->
+        <!--              <div class="row">-->
+        <!--                <h5>Integration help?</h5>-->
+        <!--              </div>-->
+        <!--              <div class="row">-->
+        <!--                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+
+      </div>
     </ng-container>
-
-
-
 
 
   </div>
 
   <div class="col" style="margin-left: 50px">
-  <ng-container *ngIf="python">
+    <ng-container *ngIf="python">
       <h5>Example code</h5>
       <div>
         <pre><code style="background-color: transparent" [highlight]="code_python" (highlighted)="onHighlight($event)"
                    [lineNumbers]="true"></code></pre>
       </div>
-  </ng-container>
+    </ng-container>
 
-  <ng-container *ngIf="fileBeats">
+    <ng-container *ngIf="fileBeats">
       <h5>Example code</h5>
       <div>
         <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_filebeats"
                    (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
       </div>
-  </ng-container>
+    </ng-container>
 
-  <ng-container *ngIf="rest">
+    <ng-container *ngIf="rest">
       <h5>Example code</h5>
       <div>
-        <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_rest" (highlighted)="onHighlight($event)"
+        <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_rest"
+                   (highlighted)="onHighlight($event)"
                    [lineNumbers]="true"></code></pre>
       </div>
-  </ng-container>
+    </ng-container>
   </div>
 
 
-<!--  <div class="col" style="margin-left: 50px">-->
-<!--  <ng-container *ngIf="uploadFile">-->
-<!--      <h5>Upload log file</h5>-->
+  <!--  <div class="col" style="margin-left: 50px">-->
+  <!--  <ng-container *ngIf="uploadFile">-->
+  <!--      <h5>Upload log file</h5>-->
 
-<!--  </ng-container>-->
+  <!--  </ng-container>-->
 
-<!--  </div>-->
+  <!--  </div>-->
 </div>
 
 

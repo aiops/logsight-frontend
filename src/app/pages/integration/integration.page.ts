@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../auth/authentication.service';
-import { NotificationsService } from 'angular2-notifications';
-import { Application } from '../../@core/common/application';
-import { IntegrationService } from '../../@core/service/integration.service';
-import { HighlightResult } from 'ngx-highlightjs';
-import { loadStripe } from '@stripe/stripe-js/pure';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthenticationService} from '../../auth/authentication.service';
+import {NotificationsService} from 'angular2-notifications';
+import {Application} from '../../@core/common/application';
+import {IntegrationService} from '../../@core/service/integration.service';
+import {HighlightResult} from 'ngx-highlightjs';
+import {loadStripe} from '@stripe/stripe-js/pure';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {LogFileType} from "../../@core/common/log-file-type";
 
 @Component({
   selector: 'integration',
@@ -20,7 +21,9 @@ export class IntegrationPage implements OnInit {
   quantity: number;
   hasPaid: Boolean;
   applicationId: number;
+  logFileType: String;
   applications: Application[] = [];
+  logFileTypes: LogFileType[] = [];
   public show: boolean = false;
   public python: boolean = false;
   public fileBeats: boolean = false;
@@ -35,7 +38,6 @@ export class IntegrationPage implements OnInit {
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });
-
 
 
   public formData = new FormData();
@@ -59,6 +61,7 @@ export class IntegrationPage implements OnInit {
       this.email = user.email
       this.hasPaid = user.hasPaid
       this.loadApplications()
+      this.loadLogFileTypes()
       this.code_python = this.getPythonCode()
       this.code_filebeats = this.getFilebeatsCode()
       this.code_rest = this.getCodeRest()
@@ -79,31 +82,31 @@ export class IntegrationPage implements OnInit {
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
   }
 
+  logFileTypeSelected(logFileType: string) {
+    logFileType === "" ? this.logFileType = null : this.logFileType = logFileType;
+  }
 
-  uploadFiles( file ) {
-          if (file[0]["type"] == "application/json"){
-            for ( let i = 0; i < file.length; i++ ) {
-              this.formData.append( "file", file[i], file[i]['name']);
-          }
-            this.notificationService.success("Click the upload button to send the log file.")
-          }else {
-            this.notificationService.error("The file should be in JSON format.")
-          }
 
-      }
+  uploadFiles(file) {
+    for (let i = 0; i < file.length; i++) {
+      this.formData.append("file", file[i], file[i]['name']);
+    }
+    this.notificationService.success("Click the upload button to send the log file.")
+  }
 
 
   RequestUpload() {
-          this.ReqJson["id"] = this.applicationId
-          this.formData.append( 'info', JSON.stringify( this.ReqJson ) )
-              this.http.post( '/api/applications/uploadFile', this.formData )
-                  .subscribe(resp => {
-                    this.notificationService.success("Log data uploaded successfully!")
-                  });
-          this.formData = new FormData();
-          this.ReqJson = {};
-          this.router.navigate(['/pages', 'dashboard'])
-      }
+    this.http.post(`/api/applications/${this.applicationId}/uploadFile/${this.logFileType}`, this.formData)
+      .subscribe(resp => {
+        this.notificationService.success("Log data uploaded successfully!")
+      }, error => {
+        console.log(error.error.description)
+        this.notificationService.error("Error: ", error.error.description)
+      });
+    this.formData = new FormData();
+    this.ReqJson = {};
+    this.router.navigate(['/pages', 'dashboard'])
+  }
 
   onPythonBtn() {
     this.python = true
@@ -148,7 +151,7 @@ export class IntegrationPage implements OnInit {
     var app_name = this.form.controls['name'].value.toString()
 
     if (this.key) {
-      this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
+      this.integrationService.createApplication({name: this.form.controls['name'].value, key: this.key}).subscribe(
         resp => {
           this.loadApplications();
           this.notificationService.success('Success', 'Application successfully created');
@@ -175,6 +178,10 @@ export class IntegrationPage implements OnInit {
 
   loadApplications() {
     this.integrationService.loadApplications(this.key).subscribe(resp => this.applications = resp)
+  }
+
+  loadLogFileTypes() {
+    this.integrationService.loadLogFileTypes().subscribe(resp => this.logFileTypes = resp)
   }
 
   async stripeCLick() {

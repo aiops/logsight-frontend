@@ -25,7 +25,6 @@ export class QualityService {
   }
 
   computeLogQuality(startTime: string, endTime: string): Observable<any> {
-    console.log("AAA",startTime, endTime)
     return this.apiService.get(`/api/quality/compute_log_quality?startTime=${startTime}&endTime=${endTime}`);
   }
 

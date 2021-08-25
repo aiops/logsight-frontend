@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Application } from '../common/application';
+import {LogFileType} from "../common/log-file-type";
 
 @Injectable()
 export class IntegrationService {
@@ -26,5 +27,9 @@ export class IntegrationService {
 
   checkCustomerPortal() {
     return this.apiService.post(`/api/payments/customer_portal`, { 'body': 'empty' })
+  }
+
+  loadLogFileTypes(): Observable<LogFileType[]> {
+    return this.apiService.get(`/api/applications/logFileFormats`)
   }
 }

@@ -17,6 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { PredefinedTime } from '../../@core/common/predefined-time';
 import { DashboardService } from '../dashboard/dashboard.service';
+import {rgb} from "d3";
 
 @Component({
   selector: 'variable-analysis',
@@ -44,7 +45,9 @@ export class VariableAnalysisPage implements OnInit {
   endDateTime = 'now'
   private destroy$: Subject<void> = new Subject<void>();
   predefinedTimes: PredefinedTime[] = [];
-
+      colorScheme = {
+    domain: ['#00ff00']
+  };
   constructor(private variableAnalysisService: VariableAnalysisService,
               private integrationService: IntegrationService,
               private authService: AuthenticationService,
@@ -151,6 +154,7 @@ export class VariableAnalysisPage implements OnInit {
         resp[0].series[i].name = local.toString()
       }
       this.logCountLineChart = resp
+      console.log(this.logCountLineChart)
     });
 
     this.variableAnalysisService.getTopNTemplates(this.selectedApplicationId, this.startDateTime,
@@ -176,8 +180,8 @@ export class VariableAnalysisPage implements OnInit {
       this.endDateTime = 'now'
       dateTimeType = 'relative';
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
-      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.startDateTime = event.absoluteDateTime.startDateTime;
+      this.endDateTime = event.absoluteDateTime.endDateTime;
     }
     this.applicationSelected(this.selectedApplicationId)
     this.router.navigate([],

@@ -10,6 +10,7 @@ import { VerticalBarChartComponent } from './vertical-bar-chart/vertical-bar-cha
 import {GroupedVerticalBarChart2dComponent} from "./grouped-vertical-bar-chart-2d/grouped-vertical-bar-chart2d.component";
 import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
 import {NbIconModule, NbTooltipModule} from "@nebular/theme";
+import {GroupedHorizontalBarChart2dComponent} from "./grouped-horizontal-bar-chart-2d/grouped-horizontal-bar-chart2d.component";
 
 @NgModule({
   imports: [
@@ -18,26 +19,28 @@ import {NbIconModule, NbTooltipModule} from "@nebular/theme";
     NbIconModule,
     NbTooltipModule,
   ],
-  exports: [
-    PiechartComponent,
-    StackedAreaChartComponent,
-    HeatmapComponent,
-    LineChartComponent,
-    GroupedVerticalBarChartComponent,
-    VerticalBarChartComponent,
-    GroupedVerticalBarChart2dComponent,
-    HorizontalBarChartComponent
-  ],
-  declarations: [
-    HeatmapComponent,
-    PiechartComponent,
-    StackedAreaChartComponent,
-    LineChartComponent,
-    GroupedVerticalBarChartComponent,
-    VerticalBarChartComponent,
-    GroupedVerticalBarChart2dComponent,
-    HorizontalBarChartComponent
-  ]
+    exports: [
+        PiechartComponent,
+        StackedAreaChartComponent,
+        HeatmapComponent,
+        LineChartComponent,
+        GroupedVerticalBarChartComponent,
+        VerticalBarChartComponent,
+        GroupedVerticalBarChart2dComponent,
+        HorizontalBarChartComponent,
+        GroupedHorizontalBarChart2dComponent
+    ],
+    declarations: [
+        HeatmapComponent,
+        PiechartComponent,
+        StackedAreaChartComponent,
+        LineChartComponent,
+        GroupedVerticalBarChartComponent,
+        VerticalBarChartComponent,
+        GroupedVerticalBarChart2dComponent,
+        HorizontalBarChartComponent,
+        GroupedHorizontalBarChart2dComponent
+    ]
 })
 export class ChartsWrapperModule {
 }

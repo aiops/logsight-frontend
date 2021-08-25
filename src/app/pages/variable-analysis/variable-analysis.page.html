@@ -27,12 +27,12 @@
       </div>
     </div>
   </div>
-  <div class="p-3" style="width: 100%" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
+  <div class="p-3" style="width: 100%; height: 120px" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
     <h5 style="font-weight: 600">Log Count</h5>
-    <stacked-area-chart [chartParentHeight]="'100px'" [data]="logCountLineChart"></stacked-area-chart>
+    <ngx-charts-bar-vertical [showGridLines]="false" [scheme]="colorScheme" [xAxis]="true" yAxis="true" style="fill: white" [results]="logCountLineChart[0].series"></ngx-charts-bar-vertical>
   </div>
 
-  <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%">
+  <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%; margin-top: 70px;">
     <h5 style="font-weight: 600">Top reoccurring log types
       <nb-icon icon="info-outline"
                nbTooltip="We cluster the log types together and detect if large deviations in log count if they happen. The ratio numbers provide information about the count of particular log type in the last hour compared to the previous hour."

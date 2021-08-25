@@ -1,3 +1,8 @@
+#chart-parent {
+  display: grid;
+  height: 200px;
+}
+
 ::ng-deep{
   /* Makes the chart container expand to the full width of the parent container*/
   .ngx-charts-outer {
@@ -26,64 +31,3 @@
     }
   }
 }
-
-
-th, td {
-  color: white;
-  font-weight: 600;
-  font-size: 16px;
-}
-
-.scrollable {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.nv-x .tick line {
-  display: none;
-}
-
-.template {
-  color: red;
-}
-
-.template:hover {
-  cursor: pointer;
-  opacity: .7;
-}
-
-table {
-  table-layout: fixed;
-  width: 100%;
-}
-
-.table-height {
-  max-height: 80vh;
-  overflow-y: auto
-}
-
-.error {
-  color: red !important;
-  font-weight: 600;
-}
-
-.info {
-  color: #00b0e8 !important;
-  font-weight: 600;
-}
-
-
-.clickable {
-  cursor: pointer;
-}
-
-.clickable:hover {
-  opacity: 0.8;
-}
-
-
-.reading-block {
-  font-size: 30px !important;
-}
-
-

@@ -213,7 +213,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       }
     })
 
-    this.loadPredefinedTimes()
+    this.loadPredefinedTimes();
   }
 
   loadPredefinedTimes() {
@@ -288,6 +288,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onDateTimeSearch(event) {
+    console.log(event)
     this.popover.hide();
     this.openDatePicker = false;
     let dateTimeType = 'absolute';
@@ -325,6 +326,19 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   onSavePredefinedTime(predefinedTime: PredefinedTime) {
     this.dashboardService.createPredefinedTime(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+  }
+
+  onSelectPredefinedTime(pt: PredefinedTime) {
+    if (pt.dateTimeType == 'RELATIVE') {
+      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
+    } else {
+      this.onDateTimeSearch({
+        absoluteTimeChecked: true, absoluteDateTime: {
+          startDateTime: pt.startTime,
+          endDateTime: pt.endTime
+        }
+      })
+    }
   }
 
   changeTopKIncidents() {

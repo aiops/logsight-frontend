@@ -15,6 +15,9 @@ import { TopNTemplatesDataMerged } from '../../@core/common/top-n-templates-data
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
+import { PredefinedTime } from '../../@core/common/predefined-time';
+import { DashboardService } from '../dashboard/dashboard.service';
+import {rgb} from "d3";
 
 @Component({
   selector: 'variable-analysis',
@@ -41,7 +44,10 @@ export class VariableAnalysisPage implements OnInit {
   startDateTime = 'now-720m';
   endDateTime = 'now'
   private destroy$: Subject<void> = new Subject<void>();
-
+  predefinedTimes: PredefinedTime[] = [];
+      colorScheme = {
+    domain: ['#00ff00']
+  };
   constructor(private variableAnalysisService: VariableAnalysisService,
               private integrationService: IntegrationService,
               private authService: AuthenticationService,
@@ -49,7 +55,8 @@ export class VariableAnalysisPage implements OnInit {
               private messagingService: MessagingService,
               private dialogService: NbDialogService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private dashboardService: DashboardService) {
   }
 
   ngOnInit(): void {
@@ -90,6 +97,8 @@ export class VariableAnalysisPage implements OnInit {
           })
       }
     })
+
+    this.loadPredefinedTimes();
   }
 
   subscribeQueryParams() {
@@ -117,9 +126,9 @@ export class VariableAnalysisPage implements OnInit {
     this.variableAnalysisService.loadData(this.selectedApplicationId, this.startDateTime, this.endDateTime,
       search).subscribe(
       resp => {
-        for (let i = 0; i < resp.length; i++){
+        for (let i = 0; i < resp.length; i++) {
           var date = moment.utc(resp[i].timestamp, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
-          var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm:ss.SSS');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
           var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('DD-MM-YYYY HH:mm:ss.SSS');
           resp[i].timestamp = local.toString()
         }
@@ -138,13 +147,14 @@ export class VariableAnalysisPage implements OnInit {
 
     this.variableAnalysisService.getLogCountLineChart(this.selectedApplicationId, this.startDateTime,
       this.endDateTime).subscribe(resp => {
-      for (let i = 0; i < resp[0].series.length; i++){
+      for (let i = 0; i < resp[0].series.length; i++) {
         var date = moment.utc(resp[0].series[i].name, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
-        var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm:ss.SSS');
+        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
         var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('HH:mm A');
         resp[0].series[i].name = local.toString()
       }
       this.logCountLineChart = resp
+      console.log(this.logCountLineChart)
     });
 
     this.variableAnalysisService.getTopNTemplates(this.selectedApplicationId, this.startDateTime,
@@ -170,8 +180,8 @@ export class VariableAnalysisPage implements OnInit {
       this.endDateTime = 'now'
       dateTimeType = 'relative';
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
-      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.startDateTime = event.absoluteDateTime.startDateTime;
+      this.endDateTime = event.absoluteDateTime.endDateTime;
     }
     this.applicationSelected(this.selectedApplicationId)
     this.router.navigate([],
@@ -183,6 +193,31 @@ export class VariableAnalysisPage implements OnInit {
     this.openDatePicker = !this.openDatePicker
     if (!this.openDatePicker) {
       this.popover.hide();
+    }
+  }
+
+  loadPredefinedTimes() {
+    this.dashboardService.findPredefinedTimes().subscribe(resp => this.predefinedTimes = resp)
+  }
+
+  onDeletePredefinedTime(id: number) {
+    this.dashboardService.deletePredefinedTime(id).subscribe(() => this.loadPredefinedTimes())
+  }
+
+  onSavePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.createPredefinedTime(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+  }
+
+  onSelectPredefinedTime(pt: PredefinedTime) {
+    if (pt.dateTimeType == 'RELATIVE') {
+      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
+    } else {
+      this.onDateTimeSearch({
+        absoluteTimeChecked: true, absoluteDateTime: {
+          startDateTime: pt.startTime,
+          endDateTime: pt.endTime
+        }
+      })
     }
   }
 

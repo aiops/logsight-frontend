@@ -1,0 +1,273 @@
+<div class="row" style="padding-left: 5%;padding-right: 5%">
+  <div class="col-md-6 p-0 mb-4">
+    <nb-select class="period-select col-md-4 pl-3" [(selected)]="this.applicationId"
+               (selectedChange)="applicationSelected($event)"
+               placeholder="Select application">
+      <nb-option [value]="0">All</nb-option>
+      <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
+        {{ app.name }}
+      </nb-option>
+    </nb-select>
+
+    <button nbButton shape="round" (click)="computeLogQuality()">Compute Log Quality</button>
+  </div>
+
+  <div class="col-md-6 text-right">
+    <div style="width: 100%;" class="text-right">
+      <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
+              (click)="openPopover()" size="small" shape="round"
+              nbPopoverTrigger="noop"><i class="fa fa-calendar"></i></button>
+    </div>
+  </div>
+</div>
+
+<!--<div class="col-lg-12" style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorIncidentsTab">-->
+<!--  <h5 style="font-weight: 600">Incidents</h5>-->
+<!--  <chart-heatmap [heatmapHeight]="heatmapHeight" [data]="heatmapData"></chart-heatmap>-->
+<!--</div>-->
+
+
+
+
+<div class="row" style="padding-left: 5%;padding-right: 5%;">
+  <div class="col">
+  <h5 style="font-weight: 600">Quality Overview
+    <nb-icon icon="info-outline"
+             nbTooltip="Critical anomalies are most severe. It means that they are deviating from the normal service execution flow (or are new log messages) and in the same time are recognized as cognitive anomalies by our deep network."
+             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+  </h5>
+  <nb-card>
+    <nb-card-body>
+<div class="col-lg-12 p-0">
+
+<div class="row" style="padding-left: 15%; height: 200px">
+
+<div class="col-sm">
+  <h5 style="font-weight: 600">Overall log quality
+    <nb-icon icon="info-outline"
+             nbTooltip="Log quality tooltip"
+             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+  </h5>
+  <ngx-gauge class="reading-block" [type]="gaugeType"
+         [value]="gaugeTypeOverall"
+         [label]="''"
+             [size]="150"
+         [append]="gaugeAppendText"
+         [thresholds]="thresholdConfigLogLevel"
+         backgroundColor="#FFE5E5FF"
+         [thick]="15">
+</ngx-gauge>
+</div>
+<div class="col-sm" tourAnchor="anchorLogLevelDistribution">
+  <h5 style="font-weight: 600">Log level quality
+    <nb-icon icon="info-outline"
+             nbTooltip="Log levels evolution through time. If you notice any strange changes, it might be an indication of anomaly!"
+             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+  </h5>
+  <ngx-gauge class="reading-block" [type]="gaugeType"
+         [value]="gaugeTypeLogLevel"
+         [label]="''"
+             [size]="150"
+         [append]="gaugeAppendText"
+         [thresholds]="thresholdConfigLogLevel"
+         backgroundColor="#FFE5E5FF"
+         [thick]="15">
+</ngx-gauge>
+</div>
+
+<div class="col-sm" tourAnchor="anchorCognitiveAnomalies">
+  <h5 style="font-weight: 600">Linguistic quality
+    <nb-icon icon="info-outline"
+             nbTooltip="Cognitive anomalies are log messages that have negative semantic meaning in software systems. The AI system in the background knows how to distinguish normal and anomaly log messages based on learning from millions log messages."
+             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+  </h5>
+  <ngx-gauge class="reading-block" [type]="gaugeType"
+         [value]="gaugeTypeLinguistic"
+             [size]="150"
+         [label]="''"
+         [append]="gaugeAppendText"
+         [thresholds]="thresholdConfigLogLevel"
+         backgroundColor="#FFE5E5FF"
+         [thick]="15">
+</ngx-gauge>
+</div>
+</div>
+
+          <div class="scrollable" style="padding-left: 5%; padding-right: 5%; text-align: center">
+            <table class="table table-striped table-borderless">
+              <thead>
+              <tr>
+                <th
+                    style="width: 20%" scope="col">Score
+                </th>
+
+                <th
+                    style="width: 20%" scope="col">App name
+                </th>
+                <th
+                    style="width: 20%" scope="col">Level score
+                </th>
+                <th style="width: 20%" scope="col">Linguistic score</th>
+                <th style="width: 20%" scope="col"># Log types</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let row of tableData; let i = index">
+                <td>{{(row.linguisticPrediction + row.logLevelScore)/2}}</td>
+                <td>
+                {{row.key}}
+                </td>
+
+                <td>
+                {{row.logLevelScore}}
+                </td>
+
+                <td>
+                  {{row.linguisticPrediction}}
+                </td>
+
+                <td>
+                {{row.docCount}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+    </div>
+
+
+<div  class="row" style="padding-left: 5%;padding-right: 5%">
+
+  <div class="col">
+    <h5 style="font-weight: 600">Log level analysis
+      <nb-icon icon="info-outline"
+               nbTooltip="Critical anomalies are most severe. It means that they are deviating from the normal service execution flow (or are new log messages) and in the same time are recognized as cognitive anomalies by our deep network."
+               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+    </h5>
+    <nb-card>
+      <nb-card-body>
+ <div class="col-lg-12 p-0">
+          <div class="scrollable">
+            <table class="table table-striped table-borderless">
+              <thead>
+              <tr>
+                <th style="width: 2%" scope="col"></th>
+                <th [appSort]="logLevelData" data-order="desc" data-name="timestamp" class="clickable"
+                    style="width: 18%" scope="col">Timestamp
+                </th>
+
+                <th [appSort]="logLevelData" data-order="desc" data-name="actualLevel" class="clickable"
+                    style="width: 15%" scope="col">Current
+                </th>
+                <th [appSort]="logLevelData" data-order="desc" data-name="predictedLevel" class="clickable"
+                    style="width: 20%" scope="col">Recommended
+                </th>
+                <th style="width: 45%" scope="col">Message</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let row of logLevelData; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{row.timestamp}}</td>
+                <td>
+                <span style="float: left; color: yellow; font-weight: 600;"
+                      [class.error]="row.actualLevel == 'ERROR'"
+                      [class.info]="row.actualLevel == 'INFO'"
+                      class="mr-2">{{row.actualLevel}}</span>
+                </td>
+
+                <td>
+                <span style="float: left; color: #CECE00FF; font-weight: 600;"
+                      [class.error]="row.predictedLevel == 'ERROR'"
+                      [class.info]="row.predictedLevel == 'INFO'"
+                      class="mr-2">{{row.predictedLevel}}</span>
+                </td>
+
+                <td>
+                  <div>
+                  <app-ad-banner [row]="row.variableHit"></app-ad-banner>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col">
+    <h5 style="font-weight: 600">Linguistic analysis
+      <nb-icon icon="info-outline"
+               nbTooltip="Flow anomalies are those logs that deviate from the normal flow of the system. For example, consider that log statements A and B are always appearing together in a time interval. If this ratio is broken then we report a flow anomaly. logsight.ai learns system flows, our method needs ~10.000 log messages for this feature to be enabled"
+               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+    </h5>
+    <nb-card>
+      <nb-card-body>
+        <div class="col-lg-12 p-0">
+          <div class="scrollable">
+            <table class="table table-striped table-borderless">
+              <thead>
+              <tr>
+                <th style="width: 2%" scope="col"></th>
+                <th [appSort]="linguisticData" data-order="desc" data-name="timestamp" class="clickable"
+                    style="width: 18%" scope="col">Timestamp
+                </th>
+
+                <th [appSort]="linguisticData" data-order="desc" data-name="actualLevel" class="clickable"
+                    style="width: 15%" scope="col">Level
+                </th>
+
+                <th [appSort]="linguisticData" data-order="desc" data-name="linguisticPrediction" class="clickable"
+                    style="width: 15%" scope="col">Score
+                </th>
+
+                <th style="width: 45%" scope="col">Message</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let row of linguisticData; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{row.timestamp}}</td>
+                <td>
+                <span style="float: left; color: yellow; font-weight: 600;"
+                      [class.error]="row.actualLevel == 'ERROR'"
+                      [class.info]="row.actualLevel == 'INFO'"
+                      class="mr-2">{{row.actualLevel}}</span>
+                </td>
+                <td>
+                {{row.linguisticPrediction}}
+                </td>
+
+                <td>
+                  <div>
+                  <app-ad-banner [row]="row.variableHit"></app-ad-banner>
+                  </div>
+                  <br>
+                    <div>
+                      <p style="color: #CECE00FF">Existing tags: {{row.tags}}</p>
+                  </div>
+                  <div>
+                    <p style="color: #CECE00FF">You can improve the quality by modifying your message to contain: {{row.suggestions[0]}}</p>
+                  </div>
+
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+</div>
+
+
+<ng-template #dateTimePicker>
+  <elastic-custom-datepicker (search)="onDateTimeSearch($event)"></elastic-custom-datepicker>
+</ng-template>

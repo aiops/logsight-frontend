@@ -14,10 +14,6 @@ export class LoginService {
     return this.apiService.post('/api/auth/register', registerForm);
   }
 
-  registerDemo(registerForm: { email: string }): any {
-    return this.apiService.post('/api/auth/register/demo', registerForm);
-  }
-
   login(login: { email: string, password: string }): any {
     return this.apiService.post('/api/auth/login', login);
   }

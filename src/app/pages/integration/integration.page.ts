@@ -99,6 +99,9 @@ export class IntegrationPage implements OnInit {
     this.http.post(`/api/applications/${this.applicationId}/uploadFile/${this.logFileType}`, this.formData)
       .subscribe(resp => {
         this.notificationService.success("Log data uploaded successfully!")
+      }, error => {
+        console.log(error.error.description)
+        this.notificationService.error("Error: ", error.error.description)
       });
     this.formData = new FormData();
     this.ReqJson = {};

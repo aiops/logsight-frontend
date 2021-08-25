@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { NbCardModule } from '@nebular/theme';
 
 @Component({
   selector: 'specific-template-modal',

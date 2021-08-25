@@ -8,13 +8,15 @@ import { VariableAnalysisService } from '../../@core/service/variable-analysis.s
 import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
 import { AuthenticationService } from '../../auth/authentication.service';
-import { map, retry, share, skip, switchMap, takeUntil, timeout } from 'rxjs/operators';
+import { debounceTime, map, retry, share, skip, switchMap, takeUntil, timeout } from 'rxjs/operators';
 import { Application } from '../../@core/common/application';
 import { IntegrationService } from '../../@core/service/integration.service';
 import { Observable, Subject, timer, combineLatest } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment'
 import { TourService } from 'ngx-ui-tour-md-menu';
+import { PredefinedTime } from '../../@core/common/predefined-time';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'dashboard',
@@ -35,15 +37,20 @@ export class DashboardPage implements OnInit, OnDestroy {
   stackedAreaChartData$: Observable<any>;
   topKIncidents$: Observable<any>;
   barData$: Observable<any>;
-  startDateTime = 'now-12h';
+  startDateTime = 'now-720m';
   endDateTime = 'now'
   heatmapHeight = '200px';
+  numberOfIncidents = 5;
   heatmapHeightList = [];
   unique = [];
   reload$: Subject<boolean> = new Subject();
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   private destroy$: Subject<void> = new Subject<void>();
+  predefinedTimes: PredefinedTime[] = [];
+  numberOfIncidentsFormGroup = new FormGroup({
+    numberOfIncidents: new FormControl(5),
+  });
 
   constructor(private dashboardService: DashboardService, private router: Router, private route: ActivatedRoute,
               private variableAnalysisService: VariableAnalysisService,
@@ -73,7 +80,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     );
 
     this.topKIncidents$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadTopKIncidents(this.startDateTime, this.endDateTime)),
+      switchMap(() => this.loadTopKIncidents(this.startDateTime, this.endDateTime, this.numberOfIncidents)),
       share(),
       takeUntil(this.stopPolling)
     );
@@ -86,7 +93,6 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.heatmapData$.subscribe(data => {
       for (let i = 0; i < data.data.length; i++) {
         for (let j = 0; j < data.data[i].series.length; j++) {
@@ -115,7 +121,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.heatmapHeight = '150px'
       }
       this.heatmapData = data.data;
-
     })
 
     this.pieChartData$.subscribe(data => {
@@ -202,11 +207,17 @@ export class DashboardPage implements OnInit, OnDestroy {
         }
         this.reload$.next()
       } else {
-        this.startDateTime = 'now-12h'
+        this.startDateTime = 'now-720m'
         this.endDateTime = 'now'
         this.reload$.next()
       }
     })
+
+    this.loadPredefinedTimes();
+  }
+
+  loadPredefinedTimes() {
+    this.dashboardService.findPredefinedTimes().subscribe(resp => this.predefinedTimes = resp)
   }
 
   startTour() {
@@ -229,12 +240,11 @@ export class DashboardPage implements OnInit, OnDestroy {
     return this.dashboardService.loadStackedChartData(startTime, endTime);
   }
 
-  loadTopKIncidents(startTime: string, endTime: string) {
-    return this.dashboardService.loadTopKIncidentsData(startTime, endTime);
+  loadTopKIncidents(startTime: string, endTime: string, numberOfIncidents: number) {
+    return this.dashboardService.loadTopKIncidentsData(startTime, endTime, numberOfIncidents);
   }
 
   onHeatMapSelect(data: any) {
-    console.log('data', data)
     const dateTime = data.extra
     const date = dateTime.split(' ')[0].split('-');
     const time = dateTime.split(' ')[1].split(':');
@@ -278,6 +288,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onDateTimeSearch(event) {
+    console.log(event)
     this.popover.hide();
     this.openDatePicker = false;
     let dateTimeType = 'absolute';
@@ -286,8 +297,8 @@ export class DashboardPage implements OnInit, OnDestroy {
       this.endDateTime = 'now'
       dateTimeType = 'relative';
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
-      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.startDateTime = event.absoluteDateTime.startDateTime
+      this.endDateTime = event.absoluteDateTime.endDateTime
     }
     this.router.navigate([],
       { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
@@ -308,4 +319,31 @@ export class DashboardPage implements OnInit, OnDestroy {
     var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm:ss');
     return local.toString()
   }
+
+  onDeletePredefinedTime(id: number) {
+    this.dashboardService.deletePredefinedTime(id).subscribe(() => this.loadPredefinedTimes())
+  }
+
+  onSavePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.createPredefinedTime(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+  }
+
+  onSelectPredefinedTime(pt: PredefinedTime) {
+    if (pt.dateTimeType == 'RELATIVE') {
+      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
+    } else {
+      this.onDateTimeSearch({
+        absoluteTimeChecked: true, absoluteDateTime: {
+          startDateTime: pt.startTime,
+          endDateTime: pt.endTime
+        }
+      })
+    }
+  }
+
+  changeTopKIncidents() {
+    this.numberOfIncidents = this.numberOfIncidentsFormGroup.controls['numberOfIncidents'].value;
+    this.reload$.next()
+  }
+
 }

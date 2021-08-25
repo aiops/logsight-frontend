@@ -4,7 +4,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { IncidentsService } from './incidents.service';
+import { QualityService } from './quality.service';
 import { options } from './chart-options';
 import { IncidentTableData } from '../../@core/common/incident-table-data';
 import 'd3';
@@ -21,17 +21,20 @@ import { DashboardService } from '../dashboard/dashboard.service';
 import { Application } from '../../@core/common/application';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { IntegrationService } from '../../@core/service/integration.service';
-import { PredefinedTime } from '../../@core/common/predefined-time';
+import {LogQualityTableData} from "../../@core/common/log-quality-table-data";
+import {LogQualityOverview} from "../../@core/common/log-quality-overview";
 
 @Component({
-  selector: 'incidents',
-  styleUrls: ['./incidents.page.scss', '../../../../node_modules/nvd3/build/nv.d3.min.css'],
-  templateUrl: './incidents.page.html',
+  selector: 'quality',
+  styleUrls: ['./quality.page.scss', '../../../../node_modules/nvd3/build/nv.d3.min.css'],
+  templateUrl: './quality.page.html',
   encapsulation: ViewEncapsulation.None
 })
-export class IncidentsPage implements OnInit, OnDestroy {
+export class QualityPage implements OnInit, OnDestroy {
   heatmapData = [];
-  tableData: IncidentTableData;
+  logLevelData = [];
+  tableData: LogQualityOverview;
+  linguisticData = [];
   options = options.timelineChart()
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
@@ -40,14 +43,27 @@ export class IncidentsPage implements OnInit, OnDestroy {
   applications: Application[] = [];
   heatmapHeightList = [];
   unique = [];
+  gaugeTypeLogLevel = 0;
+  gaugeTypeLinguistic = 0;
+  gaugeTypeOverall = 0;
   startDateTime = 'now-720m';
   endDateTime = 'now'
   heatmapHeight = '200px';
-  predefinedTimes: PredefinedTime[] = [];
   private destroy$: Subject<void> = new Subject<void>();
 
+
+  gaugeType = "arch";
+  gaugeValue = 28.3;
+  gaugeLabel = "Log quality";
+  gaugeAppendText = "%";
+  thresholdConfigLogLevel = {
+        '0': {color: 'red'},
+        '40': {color: 'orange'},
+        '70': {color: 'yellow'}
+    };
+
   constructor(private route: ActivatedRoute,
-              private incidentsService: IncidentsService,
+              private qualityService: QualityService,
               private variableAnalysisService: VariableAnalysisService,
               private messagingService: MessagingService,
               private notificationService: NotificationsService,
@@ -59,6 +75,10 @@ export class IncidentsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+
+
+
     this.route.queryParamMap.subscribe(queryParams => {
       const startTime = queryParams.get('startTime')
       const endTime = queryParams.get('endTime')
@@ -70,13 +90,25 @@ export class IncidentsPage implements OnInit, OnDestroy {
           this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
           this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
         } else {
-          this.startDateTime = startTime;
-          this.endDateTime = endTime;
+          this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSS').format('YYYY-MM-DDTHH:mm:ss.SSSSSS');
+          this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSS').format('YYYY-MM-DDTHH:mm:ss.SSSSSS');
         }
       }
-      this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
-      this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
     });
+
+
+
+    this.authService.getLoggedUser().pipe(
+      switchMap(user => this.integrationService.loadApplications(user.key))
+    ).subscribe(resp => {
+      this.applications = resp;
+      if (this.applications.length > 0) {
+        // this.applicationId = this.applications[0].id;
+        this.applicationSelected(this.applicationId);
+      }
+    })
 
     this.messagingService.getVariableAnalysisTemplate()
       .pipe(takeUntil(this.destroy$), map(it => it['item']))
@@ -92,29 +124,14 @@ export class IncidentsPage implements OnInit, OnDestroy {
                 }, dialogClass: 'model-full'
               });
             }, err => {
-              console.log(err)
               this.notificationService.error('Error', 'Error fetching data')
             })
         }
       })
 
-    this.authService.getLoggedUser().pipe(
-      switchMap(user => this.integrationService.loadApplications(user.key))
-    ).subscribe(resp => {
-      this.applications = resp;
-      if (this.applications.length > 0) {
-        this.applicationSelected(this.applicationId);
-      }
-    })
-
-    this.loadPredefinedTimes();
   }
 
-  loadPredefinedTimes() {
-    this.dashboardService.findPredefinedTimes().subscribe(resp => this.predefinedTimes = resp)
-  }
-
-  toLocalTime(data) {
+  toLocalTime(data){
     for (let i = 0; i < data.length; i++) {
       var date = moment.utc(data[i].timestamp, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
       var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
@@ -124,42 +141,44 @@ export class IncidentsPage implements OnInit, OnDestroy {
     return data
   }
 
-  private loadIncidentsTableData(startTime: string, endTime: string, applicationId: number | null) {
-    this.incidentsService.loadIncidentsTableData(startTime, endTime, applicationId).subscribe(resp => {
-      resp['countAds'] = this.toLocalTime(resp['countAds'])
-      resp['newTemplates'] = this.toLocalTime(resp['newTemplates'])
-      resp['semanticCountAds'] = this.toLocalTime(resp['semanticCountAds'])
-      resp['semanticAd'] = this.toLocalTime(resp['semanticAd'])
-      this.tableData = resp
+  private loadQualityData(startTime: string, endTime: string, applicationId: number | null) {
+    this.logLevelData = []
+    this.linguisticData = []
+
+    this.qualityService.loadQualityData(startTime, endTime, applicationId).subscribe(resp => {
+      let data = this.toLocalTime(resp)
+      console.log(data)
+      for (let i = 0; i < data.length; i++){
+        if (!resp[i].predictedLevel.includes(resp[i].actualLevel)){
+          this.logLevelData.push(resp[i])
+        }
+        if (resp[i].linguisticPrediction > 0.5){
+          this.linguisticData.push(resp[i])
+        }
+      }
+      console.log(this.linguisticData)
     })
+
   }
 
-  loadHeatmapData(startTime: string, endTime: string, applicationId: number | null) {
-    return this.dashboardService.loadHeatmapData(startTime, endTime, applicationId).subscribe(
-      data => {
-        for (let i = 0; i < data.data.length; i++) {
-          var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
-          data.data[i].name = local.toString()
-        }
-        for (let i = 0; i < data.data.length; i++) {
-          for (let j = 0; j < data.data[i].series.length; j++) {
-            this.heatmapHeightList.push(data.data[i].series[j].name)
-          }
-        }
-        this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
-        if (this.unique.length > 0) {
-          if (50 * (this.unique.length) < 350) {
-            this.heatmapHeight = (50 * (this.unique.length + 1)).toString() + 'px'
-          } else {
-            this.heatmapHeight = '300px'
-          }
-        } else {
-          this.heatmapHeight = '150px'
-        }
-        this.heatmapData = data.data;
-      })
+  private loadQualityOverview(startTime: string, endTime: string, applicationId: number | null) {
+
+    this.qualityService.loadQualityOverview(startTime, endTime, applicationId).subscribe(resp => {
+      this.tableData = resp
+
+      this.gaugeTypeLogLevel = 0
+      this.gaugeTypeOverall = 0
+      this.gaugeTypeLinguistic = 0
+      for (let i=0; i < resp.length; i++){
+        this.gaugeTypeLogLevel = this.gaugeTypeLogLevel + resp[i].logLevelScore
+        this.gaugeTypeLinguistic = this.gaugeTypeLinguistic + resp[i].linguisticPrediction
+        this.gaugeTypeOverall = this.gaugeTypeOverall + (resp[i].logLevelScore + resp[i].linguisticPrediction) / 2
+      }
+      this.gaugeTypeLogLevel = this.gaugeTypeLogLevel * 100 / resp.length
+      this.gaugeTypeLinguistic = this.gaugeTypeLinguistic * 100 / resp.length
+      this.gaugeTypeOverall = this.gaugeTypeOverall * 100 / resp.length
+    })
+
   }
 
   onDateTimeSearch(event) {
@@ -170,13 +189,13 @@ export class IncidentsPage implements OnInit, OnDestroy {
       dateTimeType = 'relative'
       this.startDateTime = event.relativeDateTime
       this.endDateTime = 'now'
-      this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
-      this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
     } else if (event.absoluteTimeChecked) {
       this.startDateTime = event.absoluteDateTime.startDateTime
       this.endDateTime = event.absoluteDateTime.endDateTime
-      this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
-      this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
     }
     // this.router.navigate([],
     //   { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
@@ -190,32 +209,20 @@ export class IncidentsPage implements OnInit, OnDestroy {
     }
   }
 
+  computeLogQuality(){
+    this.qualityService.computeLogQuality(this.startDateTime, this.endDateTime).subscribe(resp => {
+      this.notificationService.success("Log Quality was successfully computed.")
+       this.loadQualityOverview(this.startDateTime, this.endDateTime,null)
+      this.loadQualityData(this.startDateTime, this.endDateTime, null)
+    }, error => {
+      this.notificationService.error("Bad request, contact support!")
+    })
+    }
+
   applicationSelected(appId: number) {
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
-    console.log("AA", this.startDateTime, this.endDateTime)
-    this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
-    this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
-  }
-
-  onDeletePredefinedTime(id: number) {
-    this.dashboardService.deletePredefinedTime(id).subscribe(() => this.loadPredefinedTimes())
-  }
-
-  onSavePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.createPredefinedTime(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
-  }
-
-  onSelectPredefinedTime(pt: PredefinedTime) {
-    if (pt.dateTimeType == 'RELATIVE') {
-      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
-    } else {
-      this.onDateTimeSearch({
-        absoluteTimeChecked: true, absoluteDateTime: {
-          startDateTime: pt.startTime,
-          endDateTime: pt.endTime
-        }
-      })
-    }
+    this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
+    this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
   }
 
   ngOnDestroy(): void {

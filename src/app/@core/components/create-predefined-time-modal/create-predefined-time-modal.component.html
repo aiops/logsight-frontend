@@ -1,0 +1,16 @@
+<nb-card class="model-full">
+  <nb-card-body style="display: grid;">
+    <form class="text-center p-5" [formGroup]="predefinedTimeForm">
+      <div class="row justify-content-center">
+        <div class="formInputField">
+          <p>Insert predefined time short name</p>
+          <input type="text" formControlName="name" id="name" mdbInput class="form-control md-4" placeholder="Name">
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="text-right">
+    <button nbButton (click)="save()" size="medium" status="basic" shape="round" style="text-transform: none"> Save
+    </button>
+  </nb-card-footer>
+</nb-card>

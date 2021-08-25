@@ -20,6 +20,8 @@ import {ChartsWrapperModule} from "./charts-wrapper-module/charts-wrapper.module
 import { ElasticCustomDatepickerComponent } from '../@core/components/elastic-custom-datepicker/elastic-custom-datepicker.component';
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import { SortDirective } from '../@core/directives/sort-directive';
+import { CreatePredefinedTimeModal } from '../@core/components/create-predefined-time-modal/create-predefined-time-modal.component';
+import { PredefinedTimesComponent } from '../@core/components/predefined-times/predefined-times.component';
 
 @NgModule({
   imports: [
@@ -46,7 +48,9 @@ import { SortDirective } from '../@core/directives/sort-directive';
     HostDirective,
     SpecificTemplateModalComponent,
     ElasticCustomDatepickerComponent,
-    SortDirective
+    PredefinedTimesComponent,
+    SortDirective,
+    CreatePredefinedTimeModal
   ],
   exports: [
     LoadingComponent,
@@ -54,7 +58,8 @@ import { SortDirective } from '../@core/directives/sort-directive';
     RelativeTimeComponent,
     VariableAnalysisTemplateResolver,
     ElasticCustomDatepickerComponent,
-    SortDirective
+    SortDirective,
+    PredefinedTimesComponent
   ],
   providers: [IntegrationService, VariableAnalysisService, MessagingService, NbDialogService]
 })

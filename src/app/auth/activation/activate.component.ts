@@ -4,6 +4,8 @@ import {NotificationsService} from 'angular2-notifications';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LogsightUser} from '../../@core/common/logsight-user';
 import {interval} from "rxjs";
+import {UserActivateForm} from "../../@core/common/auth/userActivateForm";
+import {UserLoginForm} from "../../@core/common/auth/userLoginForm";
 
 @Component({
   selector: 'activate',
@@ -19,10 +21,12 @@ export class ActivateComponent implements OnInit {
   curSec: number;
   status = "default"
 
-  constructor(private authService: LoginService,
-              private notificationService: NotificationsService,
-              private router: Router,
-              private route: ActivatedRoute) {
+  constructor(
+    private authService: LoginService,
+    private notificationService: NotificationsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
   }
 
   startTimer(seconds: number) {
@@ -46,40 +50,28 @@ export class ActivateComponent implements OnInit {
     }
 
     this.route.params.subscribe(params => {
-      if (params.key) {
-        this.status = 'activate'
-        if (params.key.split("_").length < 2) {
-          this.authService.activateUser(params.key).subscribe(user => {
-            this.user = user
-            this.activationSuccess = true;
-            this.loading = false
-            this.email = this.user.email
-            this.authService.login({email: this.email, password: 'demo'}).subscribe(resp => {
-                this.startTimer(10)
-              }, err => {
-                console.log('login error', err)
-                this.notificationService.error('Error', 'Incorrect or not activated email')
-              }
-            )
-          })
-        } else {
-          this.status = 'login'
-          this.authService.userLoginLink(params.key).subscribe(user => {
-            this.user = user
-            this.activationSuccess = true;
-            this.loading = false
-            this.email = this.user.email
-            this.authService.login({email: this.email, password: 'demo'}).subscribe(resp => {
-                this.router.navigate(['/pages/dashboard'])
-              }, err => {
-                console.log('login error', err)
-                this.notificationService.error('Error', 'Incorrect or not activated email')
-              }
-            )
-          })
+      if (params.id && params.key && params.password) {
+        const activateForm: UserActivateForm = {
+          id: params.id,
+          key: params.key
         }
-
-
+        const loginForm: UserLoginForm = {
+          id: params.id,
+          password: params.password
+        }
+        this.authService.activate(activateForm).subscribe(user => {
+          this.user = user
+          this.activationSuccess = true;
+          this.loading = false
+          this.email = this.user.email
+          this.authService.login(loginForm).subscribe(resp => {
+              this.startTimer(10)
+            }, err => {
+              console.log('login error', err)
+              this.notificationService.error('Error', 'Incorrect or not activated email')
+            }
+          )
+        })
       }
     }, error => {
       this.activationSuccess = false;

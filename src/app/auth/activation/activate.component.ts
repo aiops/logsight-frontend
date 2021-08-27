@@ -6,6 +6,7 @@ import {LogsightUser} from '../../@core/common/logsight-user';
 import {interval} from "rxjs";
 import {UserActivateForm} from "../../@core/common/auth/userActivateForm";
 import {UserLoginForm} from "../../@core/common/auth/userLoginForm";
+import {log} from "util";
 
 @Component({
   selector: 'activate',

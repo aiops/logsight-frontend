@@ -32,7 +32,6 @@ export class AuthHttpInterceptor implements HttpInterceptor {
   handleResponse(resp: HttpEvent<any>) {
     if (resp instanceof HttpResponse) {
       if (resp?.body?.token) {
-        console.log('set token', resp.body.token)
         localStorage['token'] = resp.body.token
       }
     }

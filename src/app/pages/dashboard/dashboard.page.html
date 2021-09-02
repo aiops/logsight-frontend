@@ -1,57 +1,67 @@
-<div class="row mb-3" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
+<div class="row" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
   <predefined-times [predefinedTimes]="predefinedTimes" (deletePredefinedTime)="onDeletePredefinedTime($event)"
                     (selectPredefinedTime)="onSelectPredefinedTime($event)">
 
   </predefined-times>
-  <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
+  <button title="Select date range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
           (click)="openPopover()"
-          nbPopoverTrigger="noop" size="small"><i class="fa fa-calendar"></i></button>
+          nbPopoverTrigger="noop" size="small" shape="round"><i class="fa fa-calendar"></i></button>
 </div>
-<hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
+
+<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
 <div class="row" style="padding-left: 5%;padding-right: 5%">
-  <div class="col-4" tourAnchor="anchorLogLevels">
-    <h5 style="font-weight: 600">Log level ratio
+  <div class="col-2" tourAnchor="anchorLogLevels">
+    <h6 style="font-weight: 600">Log levels
       <nb-icon icon="info-outline"
-               nbTooltip="A log level or log severity is a piece of information telling how important a given log message is. It is a simple, yet very powerful way of distinguishing log events from each other. If the log levels are used properly in your application all you need is to look at the severity first."
+               nbTooltip="A log level is information about the severity of a given log message is. It is a powerful way of distinguishing log events from each other. If the log levels are used properly, then troubleshooting becomes easier."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h5>
+    </h6>
     <piechart [data]="pieChartData"></piechart>
   </div>
-  <div class="col-4" tourAnchor="anchorLogLevelDistribution">
-    <h5 style="font-weight: 600">Log level distribution
+
+
+  <div class="col-5" tourAnchor="anchorCognitiveAnomalies">
+    <h6 style="font-weight: 600">Cognitive anomalies
       <nb-icon icon="info-outline"
-               nbTooltip="Log levels evolution through time. If you notice any strange changes, it might be an indication of anomaly!"
+               nbTooltip="Cognitive anomalies are identified log messages that have negative semantic meaning in software systems. The AI system in the background distinguishes normal and anomaly log messages based on a model that is trained on millions of log messages."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h5>
+    </h6>
+    <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
+  </div>
+
+  <div class="col-5" tourAnchor="anchorLogLevelDistribution">
+    <h6 style="font-weight: 600">Log level distribution
+      <nb-icon icon="info-outline"
+               nbTooltip="Log level evolution through time. If you notice any strange changes, it might be an indication of a problem!"
+               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+    </h6>
     <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
   </div>
 
-  <div class="col-4" tourAnchor="anchorCognitiveAnomalies">
-    <h5 style="font-weight: 600">Cognitive anomalies
-      <nb-icon icon="info-outline"
-               nbTooltip="Cognitive anomalies are log messages that have negative semantic meaning in software systems. The AI system in the background knows how to distinguish normal and anomaly log messages based on learning from millions log messages."
-               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h5>
-    <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
-  </div>
 </div>
-<hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
+<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
 <div style="padding-left: 5%;padding-right: 5%; overflow-y:auto; height: 300px" tourAnchor="anchorSystemOverview" >
-  <h5 style="font-weight: 600">System overview
+    <ng-scrollbar>
+  <h6 style="font-weight: 600">Application overview
     <nb-icon icon="info-outline"
-             nbTooltip="Get an overview of the system! Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!"
+             nbTooltip="Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!"
              nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-  </h5>
+  </h6>
   <chart-heatmap [heatmapHeight]="heatmapHeight" [data]="heatmapData"
                  (select)="onHeatMapSelect($event)"></chart-heatmap>
+  </ng-scrollbar>
 </div>
-<hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
+<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
 <div style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorTopIncidents" align="left">
-  <h5 style="font-weight: 600">Top {{numberOfIncidents}} incidents
+  <div class="row" style="margin-bottom: 20px">
+    <div class="col" style="text-align: left">
+  <h6 style="font-weight: 600">Top {{numberOfIncidents}} incidents
     <nb-icon icon="info-outline"
-             nbTooltip="Here you can see the top 5 most severe incidents in the last 24 hours. Clicking on View Details will show you details of the incident!"
+             nbTooltip="Top 5 most severe AI detected incidents in the specified time period. Clicking on View Details will show you details of the incident!"
              nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-  </h5>
+  </h6>
+      </div>
+    <div class="col" style="text-align: right">
     <form [formGroup]="numberOfIncidentsFormGroup" (submit)="changeTopKIncidents()">
     <label class="mr-2" for="numberOfIncidents">Number of incidents: </label>
     <input type="number" style="width: 100px" class="mr-2" nbInput formControlName="numberOfIncidents"
@@ -59,7 +69,8 @@
            placeholder="Choose number of incidents"/>
     <button nbButton type="submit" shape="round" style="text-transform: none" size="small">Select</button>
   </form>
-  <br>
+      </div>
+    </div>
   <nb-card>
     <nb-card-body>
       <div class="col-lg-12">
@@ -73,24 +84,24 @@
                   <div class="main-row">
                     <div class="row parent">
                       <div class="col-md-1">
-                 <span style="float: left; color: yellow; font-weight: 600; font-size: 16px"
+                 <span style="float: left; color: yellow; font-weight: 600; font-size: 14px"
                        [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
                        class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}</span>
                       </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 16px">
+                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                         <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
                       </div>
                     </div>
                     <div class="row parent">
                       <div class="col-md-1">
-                   <span style="float: left; color: yellow; font-weight: 600; font-size: 16px"
+                   <span style="float: left; color: yellow; font-weight: 600; font-size: 14px"
                          [class.error]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'ERROR'"
                          [class.info]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'INFO'"
                          class="mr-2">
                 {{topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]?.actualLevel}}</span>
                       </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 16px">
+                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                         <app-ad-banner
                           [row]="topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]"></app-ad-banner>
                       </div>
@@ -169,13 +180,13 @@
                 <div *ngIf="topKIncident.scAnomalies.length <= 1">
                   <div class="row main-row">
                     <div class="col-md-1">
-                <span style="float: left; color: yellow; font-weight: 600; font-size: 16px"
+                <span style="float: left; color: yellow; font-weight: 600; font-size: 14px"
                       [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
                       [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
                       class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}
              </span>
                     </div>
-                    <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 16px">
+                    <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
                       <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
                     </div>
                     <div class="row offset-md-1 details">
@@ -268,24 +279,24 @@
                   <div class="main-row">
                     <div class="row parent">
                       <div class="col-md-1">
-                 <span style="float: left; color: yellow;font-weight: 600; font-size: 16px"
+                 <span style="float: left; color: yellow;font-weight: 600; font-size: 14px"
                        [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
                        class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}</span>
                       </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 16px">
+                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                         <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
                       </div>
                     </div>
                     <div class="row parent">
                       <div class="col-md-1">
-                   <span style="float: left; color: yellow;font-size: 16px"
+                   <span style="float: left; color: yellow;font-size: 14px"
                          [class.error]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'ERROR'"
                          [class.info]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'INFO'"
                          class="mr-2">
                 {{topKIncident.semanticAD[topKIncident.semanticAD.length - 1]?.actualLevel}}</span>
                       </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 16px">
+                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                         <app-ad-banner
                           [row]="topKIncident.semanticAD[topKIncident.semanticAD.length - 1]"></app-ad-banner>
                       </div>
@@ -363,13 +374,13 @@
                 <div *ngIf="topKIncident.semanticAD.length <= 1">
                   <div class="row main-row">
                     <div class="col-md-1">
-                <span style="float: left; color: yellow;font-weight: 600; font-size: 16px"
+                <span style="float: left; color: yellow;font-weight: 600; font-size: 14px"
                       [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
                       [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
                       class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}
              </span>
                     </div>
-                    <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 16px">
+                    <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
                       <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
                     </div>
                     <div class="row offset-md-1 details">
@@ -466,24 +477,24 @@
                   <div class="main-row">
                     <div class="row parent">
                       <div class="col-md-1">
-                 <span style="float: left; color: yellow;font-weight: 600; font-size: 16px"
+                 <span style="float: left; color: yellow;font-weight: 600; font-size: 14px"
                        [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
                        class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}</span>
                       </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 16px">
+                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                         <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
                       </div>
                     </div>
                     <div class="row parent">
                       <div class="col-md-1">
-                   <span style="float: left; color: yellow;font-weight: 600; font-size: 16px"
+                   <span style="float: left; color: yellow;font-weight: 600; font-size: 14px"
                          [class.error]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'ERROR'"
                          [class.info]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'INFO'"
                          class="mr-2">
                 {{topKIncident.newTemplates[topKIncident.newTemplates.length - 1]?.actualLevel}}</span>
                       </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 16px">
+                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                         <app-ad-banner
                           [row]="topKIncident.newTemplates[topKIncident.newTemplates.length - 1]"></app-ad-banner>
                       </div>
@@ -562,13 +573,13 @@
                 <div *ngIf="topKIncident.newTemplates.length <= 1">
                   <div class="row main-row">
                     <div class="col-md-1">
-                <span style="float: left;  color: yellow;font-weight: 600; font-size: 16px"
+                <span style="float: left;  color: yellow;font-weight: 600; font-size: 14px"
                       [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
                       [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
                       class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}
              </span>
                     </div>
-                    <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 16px">
+                    <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
                       <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
                     </div>
                     <div class="row offset-md-1 details">

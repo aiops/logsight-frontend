@@ -8,6 +8,10 @@
         {{ app.name }}
       </nb-option>
     </nb-select>
+
+    <nb-icon icon="info-outline"
+               nbTooltip="Select application"
+               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
   </div>
   <div class="col-md-8 mt-2 text-right">
     <div class="row" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
@@ -21,55 +25,58 @@
     </div>
   </div>
 </div>
-<hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
+<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
 
-<div class="col-lg-12" style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorIncidentsTab">
-  <h5 style="font-weight: 600">Incidents</h5>
-  <chart-heatmap [heatmapHeight]="heatmapHeight" [data]="heatmapData"></chart-heatmap>
+<div class="col-lg-12" style="padding-left: 5%;padding-right: 5%; height: 300px" tourAnchor="anchorIncidentsTab">
+  <h6 style="font-weight: 600">Incidents</h6>
+  <ng-scrollbar>
+  <chart-heatmap [heatmapHeight]="heatmapHeight" [data]="heatmapData" (select)="onHeatMapSelect($event)"></chart-heatmap>
+  </ng-scrollbar>
 </div>
 
 <br>
 <br>
-<hr size="30" noshade style="margin-left: 5%; margin-right: 5%">
+<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
 
 <div style="padding-left: 5%;padding-right: 5%">
   <div *ngIf="tableData?.semanticCountAds">
-    <h5 style="font-weight: 600">Critical anomalies
+    <h6 style="font-weight: 600">Critical anomalies
       <nb-icon icon="info-outline"
                nbTooltip="Critical anomalies are most severe. It means that they are deviating from the normal service execution flow (or are new log messages) and in the same time are recognized as cognitive anomalies by our deep network."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h5>
+    </h6>
     <nb-card tourAnchor="anchorCriticalAnomalies">
       <nb-card-body>
         <div class="col-lg-12 p-0">
           <div class="scrollable">
-            <table class="table table-striped table-borderless">
+            <ng-scrollbar>
+                            <table *ngIf="tableData.semanticCountAds.length == 0" style="text-align: center; justify-content: center; align-items: center; margin-top:50px">
+                <p>No critical anomalies found.</p>
+                <i class="fas fa-check-circle fa-10x"></i>
+              </table>
+
+            <table *ngIf="tableData.semanticCountAds.length > 0" class="table table-striped table-borderless">
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
                 <th [appSort]="tableData.semanticCountAds" data-order="desc" data-name="timestamp" class="clickable"
-                    style="width: 15%" scope="col">Timestamp
+                    style="width: 8%" scope="col">Timestamp
                 </th>
-                <th style="width: 12%" scope="col">Ratio
+                <th [appSort]="tableData.semanticCountAds" data-order="desc" data-name="actualLevel" class="clickable"
+                    style="width: 7%" scope="col">Level
+                </th>
+                <th style="width: 70%" scope="col">Log message</th>
+                <th style="width: 13%" scope="col">Ratio
                   <nb-icon icon="info-outline"
                            nbTooltip="The ratio presents information about the current and expected count number of appereance of particular log type"
                            nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
                 </th>
-                <th [appSort]="tableData.semanticCountAds" data-order="desc" data-name="actualLevel" class="clickable"
-                    style="width: 5%" scope="col">Level
-                </th>
-                <th style="width: 66%" scope="col">Message</th>
               </tr>
               </thead>
               <tbody>
               <tr *ngFor="let row of tableData.semanticCountAds; let i = index">
                 <td>{{i + 1}}</td>
                 <td>{{row.timestamp}}</td>
-                <td>
-                  <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [noBarWhenZero]="true"
-                                             [yAxis]="false" [roundEdges]="false" [view]="[180,80]"
-                                             [results]="[{'name':'Current', 'value':row.rate_now}, {'name':'Previous', 'value':row.smr}]"></ngx-charts-bar-horizontal>
-                </td>
                 <td>
                 <span style="float: left; color: yellow; font-weight: 600;"
                       [class.error]="row.actualLevel == 'ERROR'"
@@ -79,52 +86,63 @@
                 <td>
                   <app-ad-banner [row]="row"></app-ad-banner>
                 </td>
+                <td>
+                  <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [noBarWhenZero]="true"
+                                             [yAxis]="false" [roundEdges]="false" [view]="[180,80]"
+                                             [results]="[{'name':'Current', 'value':row.rate_now}, {'name':'Previous', 'value':row.smr}]"></ngx-charts-bar-horizontal>
+                </td>
               </tr>
               </tbody>
             </table>
+            </ng-scrollbar>
           </div>
         </div>
       </nb-card-body>
     </nb-card>
   </div>
   <div *ngIf="tableData?.countAds" tourAnchor="anchorFlowAnomalies">
-    <h5 style="font-weight: 600">Flow anomalies
+    <h6 style="font-weight: 600">Flow anomalies
       <nb-icon icon="info-outline"
                nbTooltip="Flow anomalies are those logs that deviate from the normal flow of the system. For example, consider that log statements A and B are always appearing together in a time interval. If this ratio is broken then we report a flow anomaly. logsight.ai learns system flows, our method needs ~10.000 log messages for this feature to be enabled"
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h5>
+    </h6>
+
+
     <nb-card>
+
       <nb-card-body>
         <div class="col-lg-12 p-0">
-
           <div class="scrollable">
-            <table class="table table-striped table-borderless">
+            <ng-scrollbar>
+              <table *ngIf="tableData.countAds.length == 0" style="text-align: center; justify-content: center; align-items: center; margin-top:50px">
+                <p>No flow anomalies found.</p>
+                <i class="fas fa-check-circle fa-10x"></i>
+              </table>
+
+            <table *ngIf="tableData.countAds.length > 0" class="table table-striped table-borderless">
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
                 <th [appSort]="tableData.countAds" data-order="desc" data-name="timestamp" class="clickable"
-                    style="width: 15%" scope="col">Timestamp
+                    style="width: 8%" scope="col">Timestamp
                 </th>
-                <th style="width: 12%" scope="col">Ratio
+
+                <th [appSort]="tableData.countAds" data-order="desc" data-name="actualLevel" class="clickable"
+                    style="width: 7%" scope="col">Level
+                </th>
+                <th style="width: 70%" scope="col">Log message</th>
+                <th style="width: 13%" scope="col">Ratio
                   <nb-icon icon="info-outline"
                            nbTooltip="The ratio presents information about the current and expected count number of appereance of particular log type"
                            nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
                 </th>
-                <th [appSort]="tableData.countAds" data-order="desc" data-name="actualLevel" class="clickable"
-                    style="width: 5%" scope="col">Level
-                </th>
-                <th style="width: 66%" scope="col">Message</th>
               </tr>
               </thead>
               <tbody>
               <tr *ngFor="let row of tableData.countAds; let i = index">
                 <td>{{i + 1}}</td>
                 <td>{{row.timestamp}}</td>
-                <td>
-                  <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [noBarWhenZero]="true"
-                                             [yAxis]="false" [roundEdges]="false" [view]="[150,80]"
-                                             [results]="[{'name':'Current', 'value':row.rate_now}, {'name':'Previous', 'value':row.smr}]"></ngx-charts-bar-horizontal>
-                </td>
+
                 <td>
                     <span style="float: left; color: yellow; font-weight: 600;"
                           [class.error]="row.actualLevel == 'ERROR'"
@@ -134,38 +152,50 @@
                 <td>
                   <app-ad-banner [row]="row"></app-ad-banner>
                 </td>
+                <td>
+                  <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [noBarWhenZero]="true"
+                                             [yAxis]="false" [roundEdges]="false" [view]="[150,80]"
+                                             [results]="[{'name':'Current', 'value':row.rate_now}, {'name':'Previous', 'value':row.smr}]"></ngx-charts-bar-horizontal>
+                </td>
               </tr>
               </tbody>
             </table>
+            </ng-scrollbar>
           </div>
         </div>
       </nb-card-body>
     </nb-card>
   </div>
   <div *ngIf="tableData?.semanticAd" tourAnchor="anchorCogAnomalies">
-    <h5 style="font-weight: 600">Cognitive anomalies
+    <h6 style="font-weight: 600">Cognitive anomalies
       <nb-icon icon="info-outline"
                nbTooltip="Cognitive anomalies are log messages that have negative semantic meaning in software systems. The AI system in the background knows how to distinguish normal and anomaly log messages based on learning from millions log messages."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h5>
+    </h6>
     <nb-card>
       <nb-card-body>
         <div class="col-lg-12 p-0">
 
           <div class="scrollable">
-            <table class="table table-striped table-borderless">
+              <ng-scrollbar>
+                              <table *ngIf="tableData.semanticAd.length == 0" style="text-align: center; justify-content: center; align-items: center; margin-top:50px">
+                <p>No cognitive anomalies found.</p>
+                <i class="fas fa-check-circle fa-10x"></i>
+              </table>
+
+            <table *ngIf="tableData.semanticAd.length > 0" class="table table-striped table-borderless">
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
                 <th [appSort]="tableData.semanticAd" data-order="desc" data-name="timestamp" class='clickable'
-                    style="width: 15%"
+                    style="width: 8%"
                     scope="col">Timestamp
                 </th>
                 <th [appSort]="tableData.semanticAd" data-order="desc" data-name="actualLevel" class='clickable'
-                    style="width: 5%"
+                    style="width: 7%"
                     scope="col">Level
                 </th>
-                <th style="width: 78%" scope="col">Message</th>
+                <th style="width: 83%" scope="col">Message</th>
               </tr>
               </thead>
               <tbody>
@@ -184,6 +214,8 @@
               </tr>
               </tbody>
             </table>
+
+  </ng-scrollbar>
           </div>
         </div>
       </nb-card-body>
@@ -191,21 +223,28 @@
   </div>
 
   <div *ngIf="tableData?.newTemplates" tourAnchor="anchorNewAnomalies">
-    <h5 style="font-weight: 600">New log types
+    <h6 style="font-weight: 600">New log types
       <nb-icon icon="info-outline"
                nbTooltip='These log types are detected as novel and not seen before. This might happen when there is abnormal system behavior, or simply a new update of the application.'
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h5>
+    </h6>
     <nb-card>
       <nb-card-body>
         <div class="col-lg-12 p-0">
-          <div class="scrollable">
-            <table class="table table-striped table-borderless">
+          <div class="scrollable" >
+            <ng-scrollbar>
+              <table *ngIf="tableData.newTemplates.length == 0" style="text-align: center; justify-content: center; align-items: center; margin-top:50px">
+                <p>No new log types found.</p>
+                <i class="fas fa-check-circle fa-10x"></i>
+              </table>
+
+
+            <table *ngIf="tableData.newTemplates.length > 0" class="table table-striped table-borderless">
               <thead>
               <tr>
                 <th style="width: 2%" scope="col"></th>
                 <th [appSort]="tableData.newTemplates" data-order="desc" data-name="timestamp" class='clickable'
-                    style="width: 13%" scope="col">Timestamp
+                    style="width: 8%" scope="col">Timestamp
                 </th>
                 <th [appSort]="tableData.newTemplates" data-order="desc" data-name="actualLevel" class='clickable'
                     style="width: 5%" scope="col">Level
@@ -229,6 +268,7 @@
               </tr>
               </tbody>
             </table>
+            </ng-scrollbar>
           </div>
         </div>
       </nb-card-body>

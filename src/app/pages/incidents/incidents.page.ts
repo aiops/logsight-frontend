@@ -22,6 +22,7 @@ import { Application } from '../../@core/common/application';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { IntegrationService } from '../../@core/service/integration.service';
 import { PredefinedTime } from '../../@core/common/predefined-time';
+import {Moment} from "moment";
 
 @Component({
   selector: 'incidents',
@@ -138,9 +139,13 @@ export class IncidentsPage implements OnInit, OnDestroy {
     return this.dashboardService.loadHeatmapData(startTime, endTime, applicationId).subscribe(
       data => {
         for (let i = 0; i < data.data.length; i++) {
+
+          for (let j = 0; j < data.data[i].series.length; j++) {
+          data.data[i].series[j].extra = data.data[i].name
+        }
           var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
           var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
           data.data[i].name = local.toString()
         }
         for (let i = 0; i < data.data.length; i++) {
@@ -216,6 +221,45 @@ export class IncidentsPage implements OnInit, OnDestroy {
         }
       })
     }
+  }
+
+
+  onHeatMapSelect(data: any) {
+
+    const timeDiff = this.getTimeDiff()
+    const dateTime = data.extra
+    const date = dateTime.split(' ')[0].split('-');
+    const time = dateTime.split(' ')[1].split(':');
+    const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+
+    this.startDateTime = startDateTime.format('YYYY-MM-DDTHH:mm') + ":00"
+    this.endDateTime = startDateTime.add(timeDiff, 'minutes').format('YYYY-MM-DDTHH:mm') + ":00"
+
+    this.loadHeatmapData(this.startDateTime, this.endDateTime, data.id)
+    this.loadIncidentsTableData(this.startDateTime, this.endDateTime, data.id)
+  }
+
+  getTimeDiff() {
+    let timeList = []
+    let indx = []
+    for(let i = 0; i < this.heatmapData.length; i++){
+      if (this.heatmapData[i].series.length){
+        indx.push(i)
+        timeList.push(this.heatmapData[i].series[0].extra)
+      }
+    }
+    console.log("LIST:", timeList)
+    let date = timeList[0].split(' ')[0].split('-');
+    let time = timeList[0].split(' ')[1].split(':');
+    const firstTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+    date = timeList[1].split(' ')[0].split('-');
+    time = timeList[1].split(' ')[1].split(':');
+    const secondTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+    return (secondTime.diff(firstTime, "minutes") / indx[1] - indx[0])
+
   }
 
   ngOnDestroy(): void {

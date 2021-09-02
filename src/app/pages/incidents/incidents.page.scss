@@ -1,12 +1,23 @@
+ng-scrollbar {
+  --scrollbar-thumb-color: rgb(255 255 255 / 60%) !important;
+  --scrollbar-border-radius: 5px;
+  --scrollbar-padding: 0px !important;
+  --scroll-view-margin: 0 !important;
+  --scrollbar-track-color: #c13f3f00;
+  --scrollbar-size: 10px !important;
+}
+
 th, td {
   color: white;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
 }
+
 
 .scrollable {
   max-height: 400px;
   overflow-y: auto;
+  height: 300px;
 }
 
 .nv-x .tick line {
@@ -50,3 +61,4 @@ table {
 .clickable:hover {
   opacity: 0.8;
 }
+

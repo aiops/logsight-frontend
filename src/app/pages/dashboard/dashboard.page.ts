@@ -100,7 +100,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         }
         var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
         data.data[i].name = local.toString()
       }
 
@@ -112,7 +112,6 @@ export class DashboardPage implements OnInit, OnDestroy {
       this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
       if (this.unique.length > 0) {
         if (50 * (this.unique.length + 1) < 350) {
-          console.log(50 * (this.unique.length))
           this.heatmapHeight = (50 * (this.unique.length + 1)).toString() + 'px'
         } else {
           this.heatmapHeight = '300px'
@@ -132,7 +131,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         for (let j = 0; j < data.data[i].series.length; j++) {
           var date = moment.utc(data.data[i].series[j].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
           var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
           data.data[i].series[j].name = local.toString()
         }
       }
@@ -163,7 +162,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       for (let i = 0; i < data.length; i++) {
         var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
         data[i].name = local.toString()
       }
       this.barData = data;
@@ -187,7 +186,6 @@ export class DashboardPage implements OnInit, OnDestroy {
                 }, dialogClass: 'model-full'
               });
             }, err => {
-              console.log(err)
               this.notificationService.error('Error', 'Error fetching data')
             })
       })
@@ -245,13 +243,19 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onHeatMapSelect(data: any) {
+
+    const timeDiff = this.getTimeDiff()
     const dateTime = data.extra
     const date = dateTime.split(' ')[0].split('-');
     const time = dateTime.split(' ')[1].split(':');
     const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
       +time[1]);
-    this.navigateToIncidentsPage(startDateTime.format('YYYY-MM-DDTHH:mm'),
-      startDateTime.add(1, 'minutes').format('YYYY-MM-DDTHH:mm'), data.id)
+
+    this.startDateTime = startDateTime.format('YYYY-MM-DDTHH:mm') + ":00"
+    this.endDateTime = startDateTime.add(timeDiff, 'minutes').format('YYYY-MM-DDTHH:mm') + ":00"
+
+    this.navigateToIncidentsPage(this.startDateTime,
+      this.endDateTime, data.id)
   }
 
   parseTemplates(data, incident) {
@@ -288,7 +292,6 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onDateTimeSearch(event) {
-    console.log(event)
     this.popover.hide();
     this.openDatePicker = false;
     let dateTimeType = 'absolute';
@@ -316,7 +319,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   moment(startTimestamp: string | undefined) {
     var date = moment.utc(startTimestamp, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm');
     var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-    var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm:ss');
+    var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
     return local.toString()
   }
 
@@ -345,5 +348,27 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.numberOfIncidents = this.numberOfIncidentsFormGroup.controls['numberOfIncidents'].value;
     this.reload$.next()
   }
+
+  private getTimeDiff() {
+    let timeList = []
+    let indx = []
+    for(let i = 0; i < this.heatmapData.length; i++){
+      if (this.heatmapData[i].series.length){
+        indx.push(i)
+        timeList.push(this.heatmapData[i].series[0].extra)
+      }
+    }
+    let date = timeList[0].split(' ')[0].split('-');
+    let time = timeList[0].split(' ')[1].split(':');
+    const firstTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+    date = timeList[1].split(' ')[0].split('-');
+    time = timeList[1].split(' ')[1].split(':');
+    const secondTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+    return (secondTime.diff(firstTime, "minutes") / indx[1] - indx[0])
+
+  }
+
 
 }

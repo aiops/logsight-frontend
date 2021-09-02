@@ -18,26 +18,28 @@ import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.mod
 import { PagesModule } from '../pages.module';
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import { ReactiveFormsModule } from '@angular/forms';
+import {NgScrollbarModule} from "ngx-scrollbar";
 
 @NgModule({
-  imports: [
-    DashboardRoutingModule,
-    ThemeModule,
-    NgxChartsModule,
-    ChartModule,
-    NbCardModule,
-    Ng2SmartTableModule,
-    NgxDatatableModule,
-    ChartsWrapperModule,
-    PagesModule,
-    NbButtonModule,
-    NbIconModule,
-    NbPopoverModule,
-    TourMatMenuModule,
-    NbTooltipModule,
-    ReactiveFormsModule,
-    NbInputModule
-  ],
+    imports: [
+        DashboardRoutingModule,
+        ThemeModule,
+        NgxChartsModule,
+        ChartModule,
+        NbCardModule,
+        Ng2SmartTableModule,
+        NgxDatatableModule,
+        ChartsWrapperModule,
+        PagesModule,
+        NbButtonModule,
+        NbIconModule,
+        NbPopoverModule,
+        TourMatMenuModule,
+        NbTooltipModule,
+        ReactiveFormsModule,
+        NbInputModule,
+        NgScrollbarModule
+    ],
   declarations: [
     DashboardPage,
   ],

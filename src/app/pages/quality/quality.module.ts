@@ -5,7 +5,7 @@ import {
     NbCardModule,
     NbIconModule,
     NbInputModule,
-    NbPopoverModule, NbSelectModule, NbTooltipModule,
+    NbPopoverModule, NbSelectModule, NbSpinnerModule, NbTooltipModule,
     NbTreeGridModule
 } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
@@ -20,6 +20,7 @@ import {DashboardService} from "../dashboard/dashboard.service";
 import {BarChartModule} from "@swimlane/ngx-charts";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import {NgxGaugeModule} from "ngx-gauge";
+import {NgScrollbarModule} from "ngx-scrollbar";
 
 @NgModule({
   imports: [
@@ -40,7 +41,9 @@ import {NgxGaugeModule} from "ngx-gauge";
     NbSelectModule,
     BarChartModule,
     TourMatMenuModule,
-    NgxGaugeModule
+    NgxGaugeModule,
+    NbSpinnerModule,
+    NgScrollbarModule
   ],
   declarations: [
     QualityPage,

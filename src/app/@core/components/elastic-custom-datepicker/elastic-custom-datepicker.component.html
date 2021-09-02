@@ -4,7 +4,7 @@
       <input type="checkbox" [(ngModel)]="relativeTimeChecked"
              (change)="onRelativeTimeChecked(relativeTimeChecked)"
              class="form-check-input" id="relativeTime">
-      <label class="form-check-label" for="relativeTime">Relative Time</label>
+      <label class="form-check-label" for="relativeTime">Relative time</label>
     </div>
     <relative-time [disabled]="!relativeTimeChecked" class="mr-4"
                    (onChange)="onRelativeDateChange($event)"></relative-time>
@@ -14,7 +14,7 @@
       <input type="checkbox" [(ngModel)]="absoluteTimeChecked"
              (change)="onAbsoluteTimeChecked(absoluteTimeChecked)"
              class="form-check-input" id="absoluteTime">
-      <label class="form-check-label" for="absoluteTime">Absolute Time</label>
+      <label class="form-check-label" for="absoluteTime">Absolute time</label>
     </div>
     <range-date-time [disabled]="!absoluteTimeChecked" (change)="onAbsoluteDateChange($event)"></range-date-time>
   </div>
@@ -28,6 +28,6 @@
           shape="round" type="button"
           class="search-button ml-2"
           (click)="openSaveTimeDialog()">
-    Save Time
+    Save time
   </button>
 </div>

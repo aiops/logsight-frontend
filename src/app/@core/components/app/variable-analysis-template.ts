@@ -27,7 +27,6 @@ export class VariableAnalysisTemplate implements OnInit {
 
   selectTemplate(template: string, param: string, paramValue: string, applicationId: number) {
     const item = { template: template, param, paramValue, applicationId }
-    console.log('VLEZE');
     this.messagingService.sendVariableAnalysisTemplate(item)
   }
 

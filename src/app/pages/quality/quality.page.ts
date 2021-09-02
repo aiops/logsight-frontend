@@ -23,6 +23,7 @@ import { AuthenticationService } from '../../auth/authentication.service';
 import { IntegrationService } from '../../@core/service/integration.service';
 import {LogQualityTableData} from "../../@core/common/log-quality-table-data";
 import {LogQualityOverview} from "../../@core/common/log-quality-overview";
+import { DecimalPipe,formatNumber } from '@angular/common';
 
 @Component({
   selector: 'quality',
@@ -46,6 +47,7 @@ export class QualityPage implements OnInit, OnDestroy {
   gaugeTypeLogLevel = 0;
   gaugeTypeLinguistic = 0;
   gaugeTypeOverall = 0;
+  isSpinning = false;
   startDateTime = 'now-720m';
   endDateTime = 'now'
   heatmapHeight = '200px';
@@ -72,6 +74,7 @@ export class QualityPage implements OnInit, OnDestroy {
               private authService: AuthenticationService,
               private integrationService: IntegrationService,
               private router: Router) {
+
   }
 
   ngOnInit(): void {
@@ -147,16 +150,14 @@ export class QualityPage implements OnInit, OnDestroy {
 
     this.qualityService.loadQualityData(startTime, endTime, applicationId).subscribe(resp => {
       let data = this.toLocalTime(resp)
-      console.log(data)
       for (let i = 0; i < data.length; i++){
         if (!resp[i].predictedLevel.includes(resp[i].actualLevel)){
           this.logLevelData.push(resp[i])
         }
-        if (resp[i].linguisticPrediction > 0.5){
+        if (resp[i].linguisticPrediction < 0.5){
           this.linguisticData.push(resp[i])
         }
       }
-      console.log(this.linguisticData)
     })
 
   }
@@ -164,19 +165,25 @@ export class QualityPage implements OnInit, OnDestroy {
   private loadQualityOverview(startTime: string, endTime: string, applicationId: number | null) {
 
     this.qualityService.loadQualityOverview(startTime, endTime, applicationId).subscribe(resp => {
-      this.tableData = resp
-
+      const roundTo = function(num: number, places: number) {
+      const factor = 10 ** places;
+      return Math.round(num * factor) / factor;
+        };
       this.gaugeTypeLogLevel = 0
       this.gaugeTypeOverall = 0
       this.gaugeTypeLinguistic = 0
+
       for (let i=0; i < resp.length; i++){
+        resp[i].logLevelScore = roundTo(resp[i].logLevelScore, 2)
+        resp[i].linguisticPrediction = roundTo(resp[i].linguisticPrediction, 2)
         this.gaugeTypeLogLevel = this.gaugeTypeLogLevel + resp[i].logLevelScore
         this.gaugeTypeLinguistic = this.gaugeTypeLinguistic + resp[i].linguisticPrediction
         this.gaugeTypeOverall = this.gaugeTypeOverall + (resp[i].logLevelScore + resp[i].linguisticPrediction) / 2
       }
-      this.gaugeTypeLogLevel = this.gaugeTypeLogLevel * 100 / resp.length
-      this.gaugeTypeLinguistic = this.gaugeTypeLinguistic * 100 / resp.length
-      this.gaugeTypeOverall = this.gaugeTypeOverall * 100 / resp.length
+      this.gaugeTypeLogLevel = Math.round(this.gaugeTypeLogLevel * 100 / resp.length)
+      this.gaugeTypeLinguistic = Math.round(this.gaugeTypeLinguistic * 100 / resp.length)
+      this.gaugeTypeOverall = Math.round(this.gaugeTypeOverall * 100 / resp.length)
+      this.tableData = resp
     })
 
   }
@@ -210,13 +217,16 @@ export class QualityPage implements OnInit, OnDestroy {
   }
 
   computeLogQuality(){
+    this.isSpinning = true
     this.qualityService.computeLogQuality(this.startDateTime, this.endDateTime).subscribe(resp => {
+      this.isSpinning = false
       this.notificationService.success("Log Quality was successfully computed.")
        this.loadQualityOverview(this.startDateTime, this.endDateTime,null)
       this.loadQualityData(this.startDateTime, this.endDateTime, null)
     }, error => {
       this.notificationService.error("Bad request, contact support!")
     })
+
     }
 
   applicationSelected(appId: number) {

@@ -1,12 +1,9 @@
 <div id="chart-parent">
-  <ngx-charts-pie-grid
+  <ngx-charts-number-card
     [scheme]="colorScheme"
     [results]="data"
     [animations]="false"
-    [tooltipDisabled]="false"
     (select)="onSelect($event)"
-    (activate)="onActivate($event)"
-    (deactivate)="onDeactivate($event)"
     style="fill: white"><!--    [explodeSlices]="true"-->
     <ng-template #tooltipTemplate let-model="model">
       <div style="text-align: left; max-width: 250px">
@@ -18,5 +15,5 @@
         </div>
       </div>
     </ng-template>
-  </ngx-charts-pie-grid>
+  </ngx-charts-number-card>
 </div>

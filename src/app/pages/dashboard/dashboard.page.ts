@@ -94,6 +94,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.heatmapData$.subscribe(data => {
+      console.log(data)
       for (let i = 0; i < data.data.length; i++) {
         for (let j = 0; j < data.data[i].series.length; j++) {
           data.data[i].series[j].extra = data.data[i].name

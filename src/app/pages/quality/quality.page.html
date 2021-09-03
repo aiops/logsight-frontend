@@ -187,6 +187,7 @@
                 <td>
                 <span style="float: left; color: yellow; font-weight: 600;"
                       [class.error]="row.actualLevel == 'ERROR'"
+                      [class.severe]="row.actualLevel == 'SEVERE'"
                       [class.info]="row.actualLevel == 'INFO'"
                       class="mr-2">{{row.actualLevel}}</span>
                 </td>
@@ -200,6 +201,7 @@
                 <td>
                 <span style="float: left; color: #CECE00FF; font-weight: 600;"
                       [class.error]="row.predictedLevel == 'ERROR'"
+                      [class.severe]="row.predictedLevel == 'SEVERE'"
                       [class.info]="row.predictedLevel == 'INFO'"
                       class="mr-2">{{row.predictedLevel}}</span>
                 </td>
@@ -252,6 +254,7 @@
                 <td>
                 <span style="float: left; color: yellow; font-weight: 600;"
                       [class.error]="row.actualLevel == 'ERROR'"
+                      [class.severe]="row.actualLevel == 'SEVERE'"
                       [class.info]="row.actualLevel == 'INFO'"
                       class="mr-2">{{row.actualLevel}}</span>
                 </td>

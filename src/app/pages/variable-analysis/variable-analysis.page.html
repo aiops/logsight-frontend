@@ -151,6 +151,7 @@
                 <td>
                 <span style="float: left; color: yellow; font-weight: 600;"
                       [class.error]="row.actualLevel == 'ERROR'"
+                      [class.severe]="row.actualLevel == 'SEVERE'"
                       [class.info]="row.actualLevel == 'INFO'"
                       class="mr-2">{{row.actualLevel}}</span>
                 </td>

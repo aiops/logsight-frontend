@@ -24,7 +24,9 @@ export class HeatmapComponent {
   fill: boolean = true;
   @Input() colorScheme = {
     domain: [
-      'rgb(0,255,0)',
+      '#00FF00',
+      '#00FF00',
+      '#ffca4f',
       '#ffb908',
       '#fa8507',
       '#f47506',

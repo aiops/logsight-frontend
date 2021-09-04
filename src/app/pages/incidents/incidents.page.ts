@@ -61,8 +61,12 @@ export class IncidentsPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParams => {
-      const startTime = moment(queryParams.get('startTime'),'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
-      const endTime = moment(queryParams.get('endTime'),'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
+      let startTime = queryParams.get('startTime')
+      let endTime = queryParams.get('endTime')
+      if (startTime.toString().includes(":")){
+        startTime = moment(queryParams.get('startTime'),'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
+        endTime = moment(queryParams.get('endTime'),'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
+      }
       const applicationParam = queryParams.get('applicationId')
       const dateTimeType = queryParams.get('dateTimeType');
       this.applicationId = applicationParam ? +applicationParam : null

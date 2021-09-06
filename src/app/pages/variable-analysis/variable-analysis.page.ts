@@ -150,7 +150,7 @@ export class VariableAnalysisPage implements OnInit {
       for (let i = 0; i < resp[0].series.length; i++) {
         var date = moment.utc(resp[0].series[i].name, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('HH:mm A');
         resp[0].series[i].name = local.toString()
       }
       this.logCountLineChart = resp

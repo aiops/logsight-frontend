@@ -19,9 +19,14 @@ export class GroupedVerticalBarChart2dComponent {
   yAxisLabel: string = '';
   legendTitle: string = '';
 
+
   colorScheme = {
-    domain: ['#00ff00', '#d94800', '#ff006e', '#8338ec', '#3a86ff']
+    domain: ['#d94800']
   };
+
+  // colorScheme = {
+  //   domain: ['#00ff00', '#d94800', '#ff006e', '#8338ec', '#3a86ff']
+  // };
 
   constructor() {
     this.data = data

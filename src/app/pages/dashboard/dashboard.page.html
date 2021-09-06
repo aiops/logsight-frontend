@@ -19,6 +19,14 @@
     <piechart [data]="pieChartData"></piechart>
   </div>
 
+    <div class="col-4" tourAnchor="anchorLogLevelDistribution">
+    <h6 style="font-weight: 600">Log level distribution
+      <nb-icon icon="info-outline"
+               nbTooltip="Log level evolution through time. If you notice any strange changes, it might be an indication of a problem!"
+               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+    </h6>
+    <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
+  </div>
 
   <div class="col-5" tourAnchor="anchorCognitiveAnomalies">
     <h6 style="font-weight: 600">Cognitive anomalies
@@ -29,18 +37,11 @@
     <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
   </div>
 
-  <div class="col-4" tourAnchor="anchorLogLevelDistribution">
-    <h6 style="font-weight: 600">Log level distribution
-      <nb-icon icon="info-outline"
-               nbTooltip="Log level evolution through time. If you notice any strange changes, it might be an indication of a problem!"
-               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h6>
-    <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>
-  </div>
+
 
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
-<div style="padding-left: 5%;padding-right: 5%; overflow-y:auto; height: 300px" tourAnchor="anchorSystemOverview" >
+<div style="padding-left: 5%;padding-right: 5%; overflow-y:auto; height: 250px" tourAnchor="anchorSystemOverview" >
     <ng-scrollbar>
   <h6 style="font-weight: 600">Application overview
     <nb-icon icon="info-outline"

@@ -8,8 +8,7 @@ import * as moment from "moment";
 })
 export class LineChartComponent implements OnInit {
   @Input() data = [];
-
-  legend: boolean = true;
+  @Input() legend: boolean = false;
   showLabels: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;

@@ -38,7 +38,7 @@ export class DashboardService {
   }
 
   deletePredefinedTime(id: number) {
-    return this.apiService.delete(`/api/applications/user/predefined_times/${id}`);
+    return this.apiService.post(`/api/applications/user/predefined_times/delete`, {id: String(id)});
   }
 
   createPredefinedTime(predefinedTime: PredefinedTime) {

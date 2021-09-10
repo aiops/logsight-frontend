@@ -4,7 +4,6 @@ import { UserRegisterForm } from '../@core/common/auth/userRegisterForm';
 import { UserActivateForm } from '../@core/common/auth/userActivateForm';
 import { LogsightUser } from '../@core/common/logsight-user';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import {UserLoginForm} from "../@core/common/auth/userLoginForm";
 
 @Injectable()

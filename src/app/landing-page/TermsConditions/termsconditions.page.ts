@@ -7,7 +7,6 @@ import {timeout} from "rxjs/operators";
 
 @Component({
   selector: 'terms-conditions',
-  styleUrls: ['../assets/css/animate.css', '../assets/css/owl.carousel.css', '../assets/css/owl.theme.css', '../assets/css/style.css'],
   templateUrl: './termsconditions.page.html',
 })
 export class TermsconditionsPage implements OnInit{

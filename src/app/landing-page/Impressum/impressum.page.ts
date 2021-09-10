@@ -8,7 +8,6 @@ import {ConnectionService} from "./connectionService";
 
 @Component({
   selector: 'impressum',
-  styleUrls: ['../assets/css/animate.css', '../assets/css/owl.carousel.css', '../assets/css/owl.theme.css', '../assets/css/style.css'],
   templateUrl: './impressum.page.html',
 })
 export class ImpressumPage implements OnInit{

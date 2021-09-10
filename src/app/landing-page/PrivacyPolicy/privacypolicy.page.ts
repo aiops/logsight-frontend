@@ -7,7 +7,6 @@ import {timeout} from "rxjs/operators";
 
 @Component({
   selector: 'privacy-policy',
-  styleUrls: ['../assets/css/animate.css', '../assets/css/owl.carousel.css', '../assets/css/owl.theme.css', '../assets/css/style.css'],
   templateUrl: './privacypolicy.page.html',
 })
 export class PrivacypolicyPage implements OnInit{

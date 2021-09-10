@@ -54,6 +54,7 @@
     "@swimlane/ngx-datatable": "^19.0.0",
     "angular2-chartjs": "0.4.1",
     "angular2-notifications": "^9.0.0",
+    "aos": "^2.3.4",
     "bdc-walkthrough": "^1.1.1",
     "bootstrap": "4.3.1",
     "chart.js": "2.9.4",

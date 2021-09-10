@@ -149,7 +149,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
         }
           var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
           var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
           data.data[i].name = local.toString()
         }
         for (let i = 0; i < data.data.length; i++) {

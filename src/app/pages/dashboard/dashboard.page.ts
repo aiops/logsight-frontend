@@ -166,10 +166,16 @@ export class DashboardPage implements OnInit, OnDestroy {
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
         var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
         data[i].name = local.toString()
-        data[i].series = [data[i].series[1]]
+        if (data[i].series.length == 1){
+          data[i].series[0].name = 'Anomaly'
+          data[i].series[0].value = 0
+        }else if(data[i].series.length > 1) {
+          data[i].series = [data[i].series[1]]
+        }
+
       }
+
       this.barData = data;
-      console.log(this.barData)
     })
 
     this.authService.getLoggedUser().pipe(

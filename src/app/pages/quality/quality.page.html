@@ -13,12 +13,19 @@
   </div>
 
   <div class="col-md-6 text-right">
-    <div style="width: 100%;" class="text-right">
-      <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
-              (click)="openPopover()" size="small" shape="round"
-              nbPopoverTrigger="noop"><i class="fa fa-calendar"></i></button>
-    </div>
-  </div>
+        <div style="width: 100%;" class="text-right">
+          <div class="row mb-3" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
+            <predefined-times [predefinedTimes]="predefinedTimes"
+                              (deletePredefinedTime)="onDeletePredefinedTime($event)"
+                              (selectPredefinedTime)="onSelectPredefinedTime($event)">
+
+            </predefined-times>
+            <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton shape="round"
+                    (click)="openPopover()"
+                    nbPopoverTrigger="noop" size="small"><i class="fa fa-calendar"></i></button>
+          </div>
+        </div>
+      </div>
 </div>
 
 <!--<div class="col-lg-12" style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorIncidentsTab">-->

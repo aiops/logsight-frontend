@@ -25,6 +25,7 @@ import {Moment} from "moment";
 import {VariableAnalysisHit} from "../../@core/common/variable-analysis-hit";
 import {VariableAnalysisTemplate} from "../../@core/components/app/variable-analysis-template";
 import {round} from "@popperjs/core/lib/utils/math";
+import {PredefinedTime} from "../../@core/common/predefined-time";
 
 @Component({
   selector: 'log-compare',
@@ -71,6 +72,7 @@ export class LogComparePage {
   horizontalData$: Observable<any>;
   newTemplatesBarData$: Observable<any>;
   tableData = []
+  predefinedTimes: PredefinedTime[] = [];
   countAnomalies = []
   newTemplates = []
   private stopPolling = new Subject();
@@ -120,6 +122,7 @@ export class LogComparePage {
 
 
   ngOnInit(): void {
+    this.loadPredefinedTimes();
     this.heatmapData$.subscribe(data => {
       for (let i = 0; i < data.data.length; i++) {
         for (let j = 0; j < data.data[i].series.length; j++) {
@@ -269,7 +272,6 @@ export class LogComparePage {
             })
         }
       })
-
   }
 
   loadHeatmapData(startTime: string, endTime: string, applicationId: number, baselineTagId: string, compareTagId: string) {
@@ -491,4 +493,34 @@ export class LogComparePage {
     return (secondTime.diff(firstTime, "minutes") / indx[1] - indx[0])
 
   }
+
+  loadPredefinedTimes() {
+    this.dashboardService.findPredefinedTimes().subscribe(resp => {
+      this.predefinedTimes = resp
+    })
+  }
+
+
+    onDeletePredefinedTime(id: number) {
+    this.dashboardService.deletePredefinedTime(id).subscribe(() => this.loadPredefinedTimes())
+  }
+
+  onSavePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.createPredefinedTime(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+  }
+
+  onSelectPredefinedTime(pt: PredefinedTime) {
+    if (pt.dateTimeType == 'RELATIVE') {
+      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
+    } else {
+      this.onDateTimeSearch({
+        absoluteTimeChecked: true, absoluteDateTime: {
+          startDateTime: pt.startTime,
+          endDateTime: pt.endTime
+        }
+      })
+    }
+  }
+
+
 }

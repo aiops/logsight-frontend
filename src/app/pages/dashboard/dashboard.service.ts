@@ -33,15 +33,19 @@ export class DashboardService {
     return this.apiService.get(`/api/incidents/top_k_incidents?startTime=${startTime}&endTime=${endTime}&numberOfIncidents=${numberOfIncidents}`);
   }
 
-  findPredefinedTimes(): Observable<PredefinedTime[]> {
-    return this.apiService.get(`/api/applications/user/predefined_times`);
+  getAllTimeRanges(): Observable<PredefinedTime[]> {
+    return this.apiService.get(`/api/user/time_ranges`);
   }
 
-  deletePredefinedTime(id: number) {
-    return this.apiService.post(`/api/applications/user/predefined_times/delete`, {id: String(id)});
+  deleteTimeRange(predefinedTime: PredefinedTime) {
+    return this.apiService.post(`/api/user/time_ranges/range/delete`, predefinedTime);
   }
 
-  createPredefinedTime(predefinedTime: PredefinedTime) {
-    return this.apiService.post(`/api/applications/user/predefined_times`, predefinedTime);
+  createTimeRange(predefinedTime: PredefinedTime) {
+    return this.apiService.post(`/api/user/time_ranges/range`, predefinedTime);
+  }
+
+  createPredefinedTimeRange() {
+    return this.apiService.post(`/api/user/time_ranges/predefined`, null);
   }
 }

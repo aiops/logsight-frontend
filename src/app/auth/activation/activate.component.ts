@@ -5,12 +5,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LogsightUser} from '../../@core/common/logsight-user';
 import {interval} from "rxjs";
 import {UserActivateForm} from "../../@core/common/auth/userActivateForm";
-import {UserLoginForm} from "../../@core/common/auth/userLoginForm";
-import {log} from "util";
+import {DashboardService} from "../../pages/dashboard/dashboard.service";
+import {IntegrationService} from "../../@core/service/integration.service";
+import {UserLoginFormId} from "../../@core/common/auth/userLoginFormId";
 
 @Component({
   selector: 'activate',
   styleUrls: ['./activate.component.scss'],
+  providers: [DashboardService, IntegrationService],
   templateUrl: './activate.component.html',
 })
 export class ActivateComponent implements OnInit {
@@ -24,6 +26,8 @@ export class ActivateComponent implements OnInit {
 
   constructor(
     private authService: LoginService,
+    private dashboardService: DashboardService,
+    private integrationService: IntegrationService,
     private notificationService: NotificationsService,
     private router: Router,
     private route: ActivatedRoute
@@ -56,7 +60,7 @@ export class ActivateComponent implements OnInit {
           id: params.id,
           key: params.key
         }
-        const loginForm: UserLoginForm = {
+        const loginForm: UserLoginFormId = {
           id: params.id,
           password: params.password
         }
@@ -65,13 +69,33 @@ export class ActivateComponent implements OnInit {
           this.activationSuccess = true;
           this.loading = false
           this.email = this.user.email
-          this.authService.login(loginForm).subscribe(resp => {
-              this.startTimer(10)
-            }, err => {
-              console.log('login error', err)
-              this.notificationService.error('Error', 'Incorrect or not activated email')
-            }
+          this.authService.loginId(loginForm).subscribe(resp => {
+            this.status = "activate"
+            this.dashboardService.createPredefinedTimeRange().subscribe(
+              resp => {
+              },
+              error => {
+                console.log(error)
+              }
+            )
+            this.integrationService.createDemoApplications().subscribe(
+              resp => {
+              },
+              error => {
+                console.log(error)
+              }
+            )
+            this.startTimer(10)
+          }, err => {
+            console.log('login error', err)
+            this.notificationService.error('Error', 'Incorrect or not activated email')
+          })
+        }, error => {
+          this.notificationService.error(
+            "Error",
+            "User already activated. Please login."
           )
+          this.router.navigate(['/auth/login'])
         })
       }
     }, error => {

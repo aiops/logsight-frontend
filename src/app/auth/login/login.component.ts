@@ -4,7 +4,7 @@ import {LoginService} from '../login.service';
 import {NotificationsService} from 'angular2-notifications';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from "../../@core/service/api.service";
-import {UserLoginForm} from "../../@core/common/auth/userLoginForm";
+import {UserLoginFormId} from "../../@core/common/auth/userLoginFormId";
 
 @Component({
   selector: 'login',
@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
 
   form = new FormGroup({
     email: new FormControl('', Validators.required),
-    password: new FormControl('demo')
   });
 
   constructor(
@@ -35,12 +34,12 @@ export class LoginComponent implements OnInit {
     }
 
     this.route.params.subscribe(params => {
-      if (params.password) {
-        const loginForm: UserLoginForm = {
+      if (params.id && params.password) {
+        const loginForm: UserLoginFormId = {
           id: params.id,
           password: params.password
         }
-        this.authService.login(loginForm).subscribe(user => {
+        this.authService.loginId(loginForm).subscribe(user => {
           this.router.navigate(['/pages/dashboard'])
         }, err => {
           console.log('login error', err)

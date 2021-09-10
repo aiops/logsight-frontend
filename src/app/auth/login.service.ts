@@ -5,6 +5,7 @@ import { UserActivateForm } from '../@core/common/auth/userActivateForm';
 import { LogsightUser } from '../@core/common/logsight-user';
 import { Observable } from 'rxjs';
 import {UserLoginForm} from "../@core/common/auth/userLoginForm";
+import {UserLoginFormId} from "../@core/common/auth/userLoginFormId";
 
 @Injectable()
 export class LoginService {
@@ -17,6 +18,10 @@ export class LoginService {
 
   login(loginForm: UserLoginForm): any {
     return this.apiService.post('/api/auth/login', loginForm);
+  }
+
+  loginId(loginForm: UserLoginFormId): any {
+    return this.apiService.post('/api/auth/login_id', loginForm);
   }
 
   requestLoginLink(email: string): any {

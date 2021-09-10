@@ -27,7 +27,8 @@ export class DashboardPage implements OnInit, OnDestroy {
   heatmapData = [];
   pieChartData = [];
   stackedChartData = [];
-  barData = [];
+  barDatabarData = [];
+  barData = []
   topKIncidents: TopKIncident[] = [];
   applications: Application[] = [];
   private stopPolling = new Subject();
@@ -132,7 +133,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         for (let j = 0; j < data.data[i].series.length; j++) {
           var date = moment.utc(data.data[i].series[j].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
           var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('HH:mm A');
           data.data[i].series[j].name = local.toString()
         }
       }
@@ -163,10 +164,12 @@ export class DashboardPage implements OnInit, OnDestroy {
       for (let i = 0; i < data.length; i++) {
         var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('HH:mm A');
         data[i].name = local.toString()
+        data[i].series = [data[i].series[1]]
       }
       this.barData = data;
+      console.log(this.barData)
     })
 
     this.authService.getLoggedUser().pipe(

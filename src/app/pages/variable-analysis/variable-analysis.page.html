@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
-  <div class="p-0" style="width: 100%; height: 120px;" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
+  <div class="p-0" style="width: 100%; height: 150px;" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
     <h6 style="font-weight: 600">Log Count</h6>
     <ngx-charts-bar-vertical [showGridLines]="false" [scheme]="colorScheme" [xAxis]="true" yAxis="true" style="fill: white" [results]="logCountLineChart[0].series"></ngx-charts-bar-vertical>
   </div>

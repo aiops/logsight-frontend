@@ -32,6 +32,7 @@ export class IntegrationPage implements OnInit {
   public showHideAppBtn: any = 'Show';
   public pythonBtn: any = 'Python';
   public filebeatBtn: any = 'Filebeat';
+  public loadDemoAppBtn: any = 'Reload Demo Applications';
   public uploadBtn: any = 'Upload File';
   public restBtn: any = 'REST API';
   format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]+/;
@@ -147,6 +148,13 @@ export class IntegrationPage implements OnInit {
       this.quantity--;
     }
 
+  }
+
+  onLoadDemoApplications() {
+      this.integrationService.createDemoApplications().subscribe(
+        resp => { this.loadApplications() },
+        error => { console.log(error) }
+      )
   }
 
   createApplication() {

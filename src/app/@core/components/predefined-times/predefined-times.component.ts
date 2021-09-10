@@ -1,10 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { debounce, debounceTime, delay } from 'rxjs/operators';
-import { PredefinedTime } from '../../common/predefined-time';
-import { NbDialogService } from '@nebular/theme';
-import { SpecificTemplateModalComponent } from '../specific-template-modal/specific-template-modal.component';
-import { CreatePredefinedTimeModal } from '../create-predefined-time-modal/create-predefined-time-modal.component';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {PredefinedTime} from '../../common/predefined-time';
 
 @Component({
   selector: 'predefined-times',
@@ -13,11 +8,11 @@ import { CreatePredefinedTimeModal } from '../create-predefined-time-modal/creat
 })
 export class PredefinedTimesComponent {
 
+  @Input() predefinedTimes: PredefinedTime[] = [];
+  @Output() deletePredefinedTime: EventEmitter<PredefinedTime> = new EventEmitter<PredefinedTime>();
+  @Output() selectPredefinedTime: EventEmitter<PredefinedTime> = new EventEmitter<PredefinedTime>();
+
   constructor() {
   }
-
-  @Input() predefinedTimes: PredefinedTime[] = [];
-  @Output() deletePredefinedTime: EventEmitter<number> = new EventEmitter<number>();
-  @Output() selectPredefinedTime: EventEmitter<PredefinedTime> = new EventEmitter<PredefinedTime>();
 
 }

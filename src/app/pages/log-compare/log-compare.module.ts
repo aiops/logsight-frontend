@@ -20,6 +20,7 @@ import {DashboardService} from "../dashboard/dashboard.service";
 import {BarChartModule} from "@swimlane/ngx-charts";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import {NgxGaugeModule} from "ngx-gauge";
+import {NgScrollbarModule} from "ngx-scrollbar";
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import {NgxGaugeModule} from "ngx-gauge";
         BarChartModule,
         TourMatMenuModule,
         NgxGaugeModule,
-        NbSpinnerModule
+        NbSpinnerModule,
+        NgScrollbarModule
     ],
   declarations: [
     LogComparePage,

@@ -13,6 +13,10 @@ export class IntegrationService {
     return this.apiService.post('/api/applications/create', app)
   }
 
+  createDemoApplications(): Observable<String> {
+    return this.apiService.post('/api/applications/create/demo_apps', null)
+  }
+
   loadApplications(key: string): Observable<Application[]> {
     return this.apiService.get(`/api/applications/user/${key}`)
   }

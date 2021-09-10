@@ -52,15 +52,15 @@ export const routes: Routes = [
         component: LoginComponent,
       },
       {
+        path: 'login/:id/:password',
+        component: LoginComponent,
+      },
+      {
         path: 'register',
         component: RegisterComponent,
       },
       {
-        path: 'activate/:key',
-        component: ActivateComponent
-      },
-      {
-        path: 'activate/:key',
+        path: 'activate/:id/:key/:password',
         component: ActivateComponent
       },
       {

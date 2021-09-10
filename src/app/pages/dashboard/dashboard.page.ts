@@ -219,7 +219,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   loadPredefinedTimes() {
-    this.dashboardService.findPredefinedTimes().subscribe(resp => this.predefinedTimes = resp)
+    this.dashboardService.getAllTimeRanges().subscribe(resp => this.predefinedTimes = resp)
   }
 
   startTour() {
@@ -327,12 +327,12 @@ export class DashboardPage implements OnInit, OnDestroy {
     return local.toString()
   }
 
-  onDeletePredefinedTime(id: number) {
-    this.dashboardService.deletePredefinedTime(id).subscribe(() => this.loadPredefinedTimes())
+  onDeletePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.deleteTimeRange(predefinedTime).subscribe(() => this.loadPredefinedTimes())
   }
 
   onSavePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.createPredefinedTime(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+    this.dashboardService.createTimeRange(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
   }
 
   onSelectPredefinedTime(pt: PredefinedTime) {

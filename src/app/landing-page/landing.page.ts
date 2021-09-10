@@ -55,7 +55,7 @@ export class LandingPage implements OnInit, AfterViewInit {
 
   onSignUp() {
     localStorage.removeItem('token');
-    this.authService.registerDemo(this.form.value).subscribe(resp => {
+    this.authService.register(this.form.value).subscribe(resp => {
         this.notificationService.success('Success',
           'You are successfully registered. Please check your email to activate')
         this.router.navigate(['/auth/login'])

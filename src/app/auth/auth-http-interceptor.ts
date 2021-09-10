@@ -8,7 +8,6 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs-compat/add/observable/fromPromise';
-import { AuthenticationService } from './authentication.service';
 import { of, throwError } from 'rxjs';
 
 @Injectable()
@@ -33,7 +32,6 @@ export class AuthHttpInterceptor implements HttpInterceptor {
   handleResponse(resp: HttpEvent<any>) {
     if (resp instanceof HttpResponse) {
       if (resp?.body?.token) {
-        console.log('set token', resp.body.token)
         localStorage['token'] = resp.body.token
       }
     }

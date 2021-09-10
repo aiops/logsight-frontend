@@ -53,16 +53,16 @@ export class LandingComponent implements OnInit, AfterViewInit {
   }
 
   onSignUp() {
-    localStorage.removeItem('token');
-    this.authService.registerDemo(this.form.value).subscribe(resp => {
-        this.notificationService.success('Success',
-          'You are successfully registered. Please check your email to activate')
-        this.router.navigate(['/auth/login'])
-      }, err => {
-        console.log('login error', err)
-        this.notificationService.error('Error', 'User already exists, please sign in!')
-      }
-    )
+    localStorage.removeItem('token')
+    this.router.navigate(['/auth/login']).then(r =>
+      this.authService.register(this.form.value).subscribe(resp => {
+          this.notificationService.success('Success',
+            'You are successfully registered. Please check your email to activate')
+        }, err => {
+          console.log('login error', err)
+          this.notificationService.error('Error', 'User already exists, please sign in!')
+        }
+      ))
   }
 
   redirectToLogin() {

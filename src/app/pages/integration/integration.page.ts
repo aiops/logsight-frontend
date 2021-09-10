@@ -48,6 +48,7 @@ export class IntegrationPage implements OnInit {
   code_python = ''
   code_filebeats = ''
   code_rest = ''
+  code_upload = ''
   stripePromise = loadStripe(
     'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
 
@@ -65,6 +66,7 @@ export class IntegrationPage implements OnInit {
       this.code_python = this.getPythonCode()
       this.code_filebeats = this.getFilebeatsCode()
       this.code_rest = this.getCodeRest()
+      this.code_upload = this.getCodeUpload()
     })
     this.quantity = 1
   }
@@ -269,6 +271,31 @@ logger.info("------------")`;
       output.logstash:
         hosts: ["logsight.ai:12350"]`;
   }
+
+
+  private getCodeUpload(){
+    return `
+    1. JSON - native files should contain the following structure.
+    {
+    "logMessages": [
+      {
+        "private-key": "${this.key}",
+        "app": "string",
+        "timestamp": "string",
+        "level": "string",
+        "message": "string"
+      }
+    ]
+    }
+    }
+
+    2. JSON - logstash. We currently support all file outputs from logstash
+
+    3. syslog - We support log files that follow the syslog format.
+    Yes, you can upload your logs located in /var/log/syslog and get insights quickly!
+    `
+  }
+
 
   private getCodeRest() {
     return `

@@ -87,16 +87,6 @@
       </ul>
     </div>
 
-    <div class="col" tourAnchor="anchorIntegration" style="white-space: nowrap;">
-      <ul class="nav navbar-nav">
-        <li class="nav-item" style="padding-top: 3px">
-          <a nbButton size="small" shape="round" style="text-transform: none" class="nav-link"  routerLinkActive="active" routerLink="./pages/quickstart" (click)="startTutorial()" >
-            <nb-icon icon="flag-outline"></nb-icon>
-            Tutorial
-          </a>
-        </li>
-      </ul>
-    </div>
 
   </div>
   <!--    </div>-->
@@ -168,7 +158,17 @@
     <!--    </nb-action>-->
     <!--    <nb-action class="control-item" icon="email-outline"></nb-action>-->
     <!--    <nb-action class="control-item" icon="bell-outline"></nb-action>-->
+    <nb-action>
+      <ul class="nav navbar-nav">
+        <li class="nav-item" style="padding-top: 3px">
+          <a nbButton size="small" shape="round" style="text-transform: none" class="nav-link"  routerLinkActive="active" routerLink="./pages/quickstart" (click)="startTutorial()" >
+            <nb-icon icon="flag-outline"></nb-icon>
+            Start tutorial
+          </a>
+        </li>
+      </ul>
 
+    </nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user [nbContextMenu]="userMenu"
                nbContextMenuTag="context-menu"

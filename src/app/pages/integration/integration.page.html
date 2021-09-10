@@ -186,9 +186,10 @@
           <div class="row">
             <h6>Integration help?</h6>
           </div>
+          <br>
           <div class="row">
-            <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>
-          </div>
+                <p class="dscr">Are you interested in more details about logsight.ai? Feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+              </div>
         </div>
       </div>
 
@@ -268,8 +269,9 @@
               <div class="row">
                 <h6>Integration help?</h6>
               </div>
-              <div class="row">
-                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>
+              <br>
+             <div class="row">
+                <p class="dscr">Are you interested in more details about logsight.ai? Feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
               </div>
             </div>
           </div>
@@ -374,8 +376,9 @@
               <div class="row">
                 <h6>Integration help?</h6>
               </div>
+              <br>
               <div class="row">
-                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>
+                <p class="dscr">Are you interested in more details about logsight.ai? Feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
               </div>
             </div>
           </div>
@@ -390,7 +393,7 @@
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h6>Upload log file</h6>
+            <h6>Upload log file usage</h6>
           </div>
         </div>
       </div>
@@ -402,7 +405,7 @@
           <p>Choose the application and your log file for which you want to upload data.</p>
         </div>
         <div class="row">
-          <div class="col-sm">
+          <div class="col-sm text-left">
             <nb-select class="period-select" [(selected)]="this.applicationId"
                        (selectedChange)="applicationSelected($event)"
                        placeholder="Select application">
@@ -411,7 +414,7 @@
               </nb-option>
             </nb-select>
           </div>
-          <div class="col-sm">
+          <div class="col-sm text-right">
             <nb-select class="period-select" [(selected)]="this.logFileType"
                        (selectedChange)="logFileTypeSelected($event)"
                        placeholder="Select log file type">
@@ -451,6 +454,19 @@
         <!--          </div>-->
 
       </div>
+
+
+      <div class="row user_guidance">
+            <div class="col">
+              <div class="row">
+                <h6>Integration help?</h6>
+              </div>
+              <br>
+              <div class="row">
+                <p class="dscr">Are you interested in more details about logsight.ai? Feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+              </div>
+            </div>
+          </div>
     </ng-container>
 
 
@@ -479,6 +495,18 @@
         <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_rest"
                    (highlighted)="onHighlight($event)"
                    [lineNumbers]="true"></code></pre>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="uploadFile">
+      <h6>Example files</h6>
+      <div>
+        <pre><code style="background-color: transparent" [languages]="['json']" [highlight]="code_upload"
+                   (highlighted)="onHighlight($event)"
+                   [lineNumbers]="true"></code></pre>
+<!--        <a href="../../../assets/data/json-native.json" download="JSON-native">Download</a>-->
+<!--        <a href="../../../assets/data/json-native.json" download="JSON-native">Download</a>-->
+<!--        <a href="../../../assets/data/json-native.json" download="JSON-native">Download</a>-->
       </div>
     </ng-container>
   </div>

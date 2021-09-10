@@ -9,7 +9,7 @@ import { options } from './chart-options';
 import { IncidentTableData } from '../../@core/common/incident-table-data';
 import 'd3';
 import 'nvd3';
-import { Observable, Subject, timer } from 'rxjs';
+import {combineLatest, Observable, Subject, timer} from 'rxjs';
 import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
 import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
 import { MessagingService } from '../../@core/service/messaging.service';
@@ -45,6 +45,12 @@ export class QualityPage implements OnInit, OnDestroy {
   applications: Application[] = [];
   heatmapHeightList = [];
   unique = [];
+
+  logQualityData$: Observable<any>;
+  loadQualityOverview$: Observable<any>;
+  private stopPolling = new Subject();
+  reload$: Subject<boolean> = new Subject();
+
   gaugeTypeLogLevel = 0;
   gaugeTypeLinguistic = 0;
   gaugeTypeOverall = 0;
@@ -53,7 +59,6 @@ export class QualityPage implements OnInit, OnDestroy {
   endDateTime = 'now'
   heatmapHeight = '200px';
   private destroy$: Subject<void> = new Subject<void>();
-
   predefinedTimes: PredefinedTime[] = [];
 
   gaugeType = "arch";
@@ -77,13 +82,65 @@ export class QualityPage implements OnInit, OnDestroy {
               private integrationService: IntegrationService,
               private router: Router) {
 
+     this.logQualityData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)),
+      share(),
+      takeUntil(this.stopPolling)
+    );
+     this.loadQualityOverview$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)),
+      share(),
+      takeUntil(this.stopPolling)
+    );
+
   }
 
   ngOnInit(): void {
 
+    this.logQualityData$.subscribe( resp => {
+      console.log("LogQ data", resp)
+      if (resp.length > 0){
+        this.isSpinning = false
+      }
+    this.logLevelData = []
+    this.linguisticData = []
+      let data = this.toLocalTime(resp)
+      for (let i = 0; i < data.length; i++){
+        if (!resp[i].predictedLevel.includes(resp[i].actualLevel)){
+          this.logLevelData.push(resp[i])
+        }
+        if (resp[i].linguisticPrediction < 0.5){
+          this.linguisticData.push(resp[i])
+        }
+      }
+    }
+    )
+
+    this.loadQualityOverview$.subscribe(resp => {
+      const roundTo = function(num: number, places: number) {
+      const factor = 10 ** places;
+      return Math.round(num * factor) / factor;
+        };
+      this.gaugeTypeLogLevel = 0
+      this.gaugeTypeOverall = 0
+      this.gaugeTypeLinguistic = 0
+
+      for (let i=0; i < resp.length; i++){
+        resp[i].logLevelScore = roundTo(resp[i].logLevelScore, 2)
+        resp[i].linguisticPrediction = roundTo(resp[i].linguisticPrediction, 2)
+        this.gaugeTypeLogLevel = this.gaugeTypeLogLevel + resp[i].logLevelScore
+        this.gaugeTypeLinguistic = this.gaugeTypeLinguistic + resp[i].linguisticPrediction
+        this.gaugeTypeOverall = this.gaugeTypeOverall + (resp[i].logLevelScore + resp[i].linguisticPrediction) / 2
+      }
+      this.gaugeTypeLogLevel = Math.round(this.gaugeTypeLogLevel * 100 / resp.length)
+      this.gaugeTypeLinguistic = Math.round(this.gaugeTypeLinguistic * 100 / resp.length)
+      this.gaugeTypeOverall = Math.round(this.gaugeTypeOverall * 100 / resp.length)
+      this.tableData = resp
+    })
+
+
 
     this.loadPredefinedTimes();
-
 
     this.route.queryParamMap.subscribe(queryParams => {
       const startTime = queryParams.get('startTime')
@@ -147,49 +204,7 @@ export class QualityPage implements OnInit, OnDestroy {
     return data
   }
 
-  private loadQualityData(startTime: string, endTime: string, applicationId: number | null) {
-    this.logLevelData = []
-    this.linguisticData = []
 
-    this.qualityService.loadQualityData(startTime, endTime, applicationId).subscribe(resp => {
-      let data = this.toLocalTime(resp)
-      for (let i = 0; i < data.length; i++){
-        if (!resp[i].predictedLevel.includes(resp[i].actualLevel)){
-          this.logLevelData.push(resp[i])
-        }
-        if (resp[i].linguisticPrediction < 0.5){
-          this.linguisticData.push(resp[i])
-        }
-      }
-    })
-
-  }
-
-  private loadQualityOverview(startTime: string, endTime: string, applicationId: number | null) {
-
-    this.qualityService.loadQualityOverview(startTime, endTime, applicationId).subscribe(resp => {
-      const roundTo = function(num: number, places: number) {
-      const factor = 10 ** places;
-      return Math.round(num * factor) / factor;
-        };
-      this.gaugeTypeLogLevel = 0
-      this.gaugeTypeOverall = 0
-      this.gaugeTypeLinguistic = 0
-
-      for (let i=0; i < resp.length; i++){
-        resp[i].logLevelScore = roundTo(resp[i].logLevelScore, 2)
-        resp[i].linguisticPrediction = roundTo(resp[i].linguisticPrediction, 2)
-        this.gaugeTypeLogLevel = this.gaugeTypeLogLevel + resp[i].logLevelScore
-        this.gaugeTypeLinguistic = this.gaugeTypeLinguistic + resp[i].linguisticPrediction
-        this.gaugeTypeOverall = this.gaugeTypeOverall + (resp[i].logLevelScore + resp[i].linguisticPrediction) / 2
-      }
-      this.gaugeTypeLogLevel = Math.round(this.gaugeTypeLogLevel * 100 / resp.length)
-      this.gaugeTypeLinguistic = Math.round(this.gaugeTypeLinguistic * 100 / resp.length)
-      this.gaugeTypeOverall = Math.round(this.gaugeTypeOverall * 100 / resp.length)
-      this.tableData = resp
-    })
-
-  }
 
   onDateTimeSearch(event) {
     this.popover.hide();
@@ -222,20 +237,16 @@ export class QualityPage implements OnInit, OnDestroy {
   computeLogQuality(){
     this.isSpinning = true
     this.qualityService.computeLogQuality(this.startDateTime, this.endDateTime).subscribe(resp => {
-      this.isSpinning = false
-      this.notificationService.success("Log Quality was successfully computed.")
-       this.loadQualityOverview(this.startDateTime, this.endDateTime,null)
-      this.loadQualityData(this.startDateTime, this.endDateTime, null)
     }, error => {
       this.notificationService.error("Bad request, contact support!")
     })
-
     }
 
   applicationSelected(appId: number) {
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
     this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
     this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
+    this.reload$.next()
   }
 
     loadPredefinedTimes() {
@@ -253,6 +264,7 @@ export class QualityPage implements OnInit, OnDestroy {
     this.dashboardService.createPredefinedTime(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
   }
 
+
   onSelectPredefinedTime(pt: PredefinedTime) {
     if (pt.dateTimeType == 'RELATIVE') {
       this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
@@ -266,9 +278,16 @@ export class QualityPage implements OnInit, OnDestroy {
     }
   }
 
-
   ngOnDestroy(): void {
     this.destroy$.next()
     this.destroy$.complete()
+  }
+
+  private loadQualityData(startDateTime: string, endDateTime: string, applicationId: number) {
+    return this.qualityService.loadQualityData(startDateTime, endDateTime, applicationId)
+  }
+
+  private loadQualityOverview(startDateTime: string, endDateTime: string, applicationId: number) {
+    return this.qualityService.loadQualityOverview(startDateTime, endDateTime, applicationId)
   }
 }

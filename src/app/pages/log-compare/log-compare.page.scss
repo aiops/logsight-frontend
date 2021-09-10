@@ -27,6 +27,15 @@
   }
 }
 
+ng-scrollbar {
+  --scrollbar-thumb-color: rgb(255 255 255 / 60%) !important;
+  --scrollbar-border-radius: 5px;
+  --scrollbar-padding: 0px !important;
+  --scroll-view-margin: 0 !important;
+  --scrollbar-track-color: #c13f3f00;
+  --scrollbar-size: 10px !important;
+}
+
 
 th, td {
   color: white;

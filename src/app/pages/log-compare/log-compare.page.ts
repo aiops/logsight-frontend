@@ -130,7 +130,7 @@ export class LogComparePage {
         }
         var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
         data.data[i].name = local.toString()
       }
 
@@ -161,9 +161,9 @@ export class LogComparePage {
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
         var local = ""
         if (daysDiff > 0){
-          local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+          local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
         }else{
-          local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+          local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
         }
         data[i].name = local.toString()
       }
@@ -192,7 +192,7 @@ export class LogComparePage {
       for (let i = 0; i < data.length; i++) {
         var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
         data[i].name = local.toString()
       }
       console.log("AA",data )
@@ -203,7 +203,7 @@ export class LogComparePage {
       for (let i = 0; i < data.length; i++) {
         var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
         data[i].name = local.toString()
       }
       if (this.newTemplatesBarData.length > 0){
@@ -301,7 +301,7 @@ export class LogComparePage {
       for (let i = 0; i < resp[0].series.length; i++) {
         var date = moment.utc(resp[0].series[i].name, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('MMM DD HH:mm');
         resp[0].series[i].name = local.toString()
       }
       if (tag==this.baselineTagId){
@@ -448,6 +448,7 @@ export class LogComparePage {
       this.matchPercentage = this.matchPercentage * 100 / data.length
       this.matchPercentage = round(this.matchPercentage * 100) / 100
       this.countAnomalies = this.toLocalTime(this.countAnomalies)
+
       this.newTemplates = this.toLocalTime(this.newTemplates)
 
     })

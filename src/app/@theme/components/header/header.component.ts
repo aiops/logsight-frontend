@@ -230,6 +230,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return;
   }
 
+    startTutorial(){
+    this.tourService.start()
+  }
+
 }
 
 

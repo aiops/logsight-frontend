@@ -24,6 +24,7 @@ import { IntegrationService } from '../../@core/service/integration.service';
 import {LogQualityTableData} from "../../@core/common/log-quality-table-data";
 import {LogQualityOverview} from "../../@core/common/log-quality-overview";
 import { DecimalPipe,formatNumber } from '@angular/common';
+import {PredefinedTime} from "../../@core/common/predefined-time";
 
 @Component({
   selector: 'quality',
@@ -53,6 +54,7 @@ export class QualityPage implements OnInit, OnDestroy {
   heatmapHeight = '200px';
   private destroy$: Subject<void> = new Subject<void>();
 
+  predefinedTimes: PredefinedTime[] = [];
 
   gaugeType = "arch";
   gaugeValue = 28.3;
@@ -80,6 +82,7 @@ export class QualityPage implements OnInit, OnDestroy {
   ngOnInit(): void {
 
 
+    this.loadPredefinedTimes();
 
 
     this.route.queryParamMap.subscribe(queryParams => {
@@ -234,6 +237,35 @@ export class QualityPage implements OnInit, OnDestroy {
     this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
     this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
   }
+
+    loadPredefinedTimes() {
+    this.dashboardService.findPredefinedTimes().subscribe(resp => {
+      this.predefinedTimes = resp
+    })
+  }
+
+
+    onDeletePredefinedTime(id: number) {
+    this.dashboardService.deletePredefinedTime(id).subscribe(() => this.loadPredefinedTimes())
+  }
+
+  onSavePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.createPredefinedTime(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+  }
+
+  onSelectPredefinedTime(pt: PredefinedTime) {
+    if (pt.dateTimeType == 'RELATIVE') {
+      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
+    } else {
+      this.onDateTimeSearch({
+        absoluteTimeChecked: true, absoluteDateTime: {
+          startDateTime: pt.startTime,
+          endDateTime: pt.endTime
+        }
+      })
+    }
+  }
+
 
   ngOnDestroy(): void {
     this.destroy$.next()

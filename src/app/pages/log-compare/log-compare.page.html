@@ -25,13 +25,20 @@
     <button (click)="computeLogCompare()" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" size="small" style="text-transform: none">LogCompare
     </button>
   </div>
-  <div class="col-md-4 text-right">
-    <div class="text-right" style="width: 100%;">
-      <button (click)="openPopover()" [nbPopover]="dateTimePicker" nbButton nbPopoverPlacement="bottom"
-              nbPopoverTrigger="noop" shape="round" size="small"
-              title="Select Date Range"><i class="fa fa-calendar"></i></button>
-    </div>
-  </div>
+   <div class="col-md-4 text-right">
+        <div style="width: 100%;" class="text-right">
+          <div class="row mb-3" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
+            <predefined-times [predefinedTimes]="predefinedTimes"
+                              (deletePredefinedTime)="onDeletePredefinedTime($event)"
+                              (selectPredefinedTime)="onSelectPredefinedTime($event)">
+
+            </predefined-times>
+            <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton shape="round"
+                    (click)="openPopover()"
+                    nbPopoverTrigger="noop" size="small"><i class="fa fa-calendar"></i></button>
+          </div>
+        </div>
+      </div>
 </div>
 
 

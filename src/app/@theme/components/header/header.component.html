@@ -1,68 +1,18 @@
+
 <div class="header-container">
   <div class="logo-container">
     <!--    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">-->
     <!--      <nb-icon icon="menu-2-outline"></nb-icon>-->
     <!--    </a>-->
     <a class="logo" (click)="navigateHome()">
-      <img alt="logo" src="../../../../assets/images/logsight_logo.png" height="50"/>
+      <img alt="logo" src="../../../../assets/images/logsight_logo.png" height="40"/>
     </a>
   </div>
-
 </div>
-<div class="header-container">
 
-  <!--  <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">-->
-  <!--    <div class="container">-->
-  <!--      <div class="row justify-content-end">-->
-  <!--        <div class="col-md-2" style="margin-right: 5px">-->
-  <!--          <ul class="nav navbar-nav" routerLinkActive="active">-->
-  <!--            <li class="nav-item">-->
-  <!--              <a class="nav-link" routerLink="/pages/dashboard">-->
-  <!--                <nb-icon icon="grid-outline" ></nb-icon>-->
-  <!--                Dashboard-->
-  <!--              </a>-->
-  <!--            </li>-->
-  <!--          </ul>-->
-  <!--        </div>-->
-  <!--        <div class="col-md-2" style="margin-right: 5px">-->
-  <!--          <ul class="nav navbar-nav" routerLinkActive="active">-->
-  <!--            <li class="nav-item">-->
-  <!--              <a class="nav-link" routerLink="/pages/incidents">-->
-  <!--                <nb-icon icon="radio-button-on-outline" ></nb-icon>-->
-  <!--                Incidents-->
-  <!--              </a>-->
-  <!--            </li>-->
-  <!--          </ul>-->
-  <!--        </div>-->
-  <!--        <div class="col-md-3" style="white-space: nowrap;">-->
-  <!--          <ul class="nav navbar-nav" routerLinkActive="active">-->
-  <!--            <li class="nav-item">-->
-  <!--              <a class="nav-link" routerLink="/pages/variable-analysis">-->
-  <!--                <nb-icon icon="bar-chart" ></nb-icon>-->
-  <!--                Variable Analysis-->
-  <!--              </a>-->
-  <!--            </li>-->
-  <!--          </ul>-->
-  <!--        </div>-->
-  <!--        <div class="col-md-2" >-->
-  <!--          <ul class="nav navbar-nav" routerLinkActive="active">-->
-  <!--            <li class="nav-item">-->
-  <!--              <a class="nav-link" routerLink="/pages/integration">-->
-  <!--                <nb-icon icon="link-outline" ></nb-icon>-->
-  <!--                Integration-->
-  <!--              </a>-->
-  <!--            </li>-->
-  <!--          </ul>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </nav>-->
-
-
-  <!--  <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">-->
-  <!--    <div class="container">-->
-  <div class="row justify-content-end" style="margin-right: 4rem">
-    <div tourAnchor="anchorDashboard" style="white-space: nowrap; margin-right: 2rem">
+<div class="header-container" style="margin-left: 40%">
+  <div class="row justify-content-end">
+    <div class="col" tourAnchor="anchorDashboard" style="white-space: nowrap;">
       <ul class="nav navbar-nav" >
         <li class="nav-item">
           <a routerLinkActive="active" class="nav-link" [routerLink]="['/pages', 'dashboard']">
@@ -72,7 +22,7 @@
         </li>
       </ul>
     </div>
-    <div tourAnchor="anchorIncidents" style="white-space: nowrap; margin-right: 2rem">
+    <div class="col"  tourAnchor="anchorIncidents" style="white-space: nowrap;">
       <ul class="nav navbar-nav" >
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'incidents']">
@@ -82,7 +32,7 @@
         </li>
       </ul>
     </div>
-    <div tourAnchor="anchorVanalysis" style="white-space: nowrap; margin-right: 4rem">
+    <div class="col"  tourAnchor="anchorVanalysis" style="white-space: nowrap;">
       <ul class="nav navbar-nav" >
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'variable-analysis']">
@@ -93,29 +43,29 @@
       </ul>
     </div>
 
-    <div tourAnchor="anchorQuality" style="white-space: nowrap; margin-right: 2rem">
-      <ul class="nav navbar-nav" >
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'quality']">
-            <nb-icon icon="loader-outline"></nb-icon>
-            LogQuality
-          </a>
-        </li>
-      </ul>
-    </div>
+<!--    <div class="col"  tourAnchor="anchorQuality" style="white-space: nowrap;">-->
+<!--      <ul class="nav navbar-nav" >-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'quality']">-->
+<!--            <nb-icon icon="loader-outline"></nb-icon>-->
+<!--            LogQuality-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
 
-    <div tourAnchor="anchorQuality" style="white-space: nowrap; margin-right: 2rem">
-      <ul class="nav navbar-nav" >
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'log-compare']">
-            <nb-icon icon="swap-outline"></nb-icon>
-            LogCompare
-          </a>
-        </li>
-      </ul>
-    </div>
+<!--    <div class="col" tourAnchor="anchorQuality" style="white-space: nowrap;">-->
+<!--      <ul class="nav navbar-nav" >-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" routerLinkActive="active" [routerLink]="['/pages', 'log-compare']">-->
+<!--            <nb-icon icon="swap-outline"></nb-icon>-->
+<!--            LogCompare-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
 
-    <div tourAnchor="anchorIntegration" style="white-space: nowrap; margin-right: 2rem">
+    <div class="col" tourAnchor="anchorIntegration" style="white-space: nowrap;">
       <ul class="nav navbar-nav">
         <li class="nav-item">
           <a class="nav-link"  routerLinkActive="active" [routerLink]="['/pages', 'integration']">
@@ -126,18 +76,7 @@
       </ul>
     </div>
 
-<!--    <div tourAnchor="anchorQuickstart" style="white-space: nowrap; margin-right: 2rem">-->
-<!--      <ul class="nav navbar-nav">-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link"  routerLinkActive="active" [routerLink]="['/pages', 'quickstart']">-->
-<!--            <nb-icon icon="flash-outline"></nb-icon>-->
-<!--            Quickstart-->
-<!--          </a>-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </div>-->
-
-    <div tourAnchor="anchorKibana" style="white-space: nowrap; margin-right: 2rem">
+    <div class="col" tourAnchor="anchorKibana" style="white-space: nowrap;">
       <ul class="nav navbar-nav" >
         <li class="nav-item">
           <a class="nav-link"  routerLinkActive="active" routerLink="/pages/kibana">
@@ -147,9 +86,6 @@
         </li>
       </ul>
     </div>
-
-
-
   </div>
   <!--    </div>-->
   <!--  </nav>-->
@@ -211,8 +147,9 @@
   <!--    <ng-content select="nb-menu" class="menu-horizontal"></ng-content>-->
   <!--  </div>-->
 
+</div>
 
-  <nb-actions size="small">
+  <nb-actions size="small" >
 
     <!--    <nb-action class="control-item">-->
     <!--      <nb-search type="rotate-layout"></nb-search>-->
@@ -227,7 +164,7 @@
       </nb-user>
     </nb-action>
   </nb-actions>
-</div>
+
 
 <style>
   ol, ul {
@@ -235,18 +172,20 @@
   }
 
   li {
-    display: block;
-    width: 120px;
+    /*display: block;*/
+    /*width: 120px;*/
     float: left;
-    margin-left: 2px;
+    /*margin-left: 2px;*/
   }
 
   a {
     display: block;
-    padding: 3px;
+    /*padding: 3px;*/
     text-decoration: none;
   }
 </style>
+
+
 
 <tour-step-template hidden>
   <ng-template let-step="step">

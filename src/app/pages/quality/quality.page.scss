@@ -4,9 +4,21 @@ th, td {
   font-size: 16px;
 }
 
+
+ng-scrollbar {
+  --scrollbar-thumb-color: rgb(255 255 255 / 60%) !important;
+  --scrollbar-border-radius: 5px;
+  --scrollbar-padding: 0px !important;
+  --scroll-view-margin: 0 !important;
+  --scrollbar-track-color: #c13f3f00;
+  --scrollbar-size: 10px !important;
+}
+
+
 .scrollable {
   max-height: 400px;
   overflow-y: auto;
+  height: 300px;
 }
 
 .nv-x .tick line {
@@ -39,6 +51,11 @@ table {
 
 .info {
   color: #00b0e8 !important;
+  font-weight: 600;
+}
+
+.severe {
+  color: #ff0000 !important;
   font-weight: 600;
 }
 

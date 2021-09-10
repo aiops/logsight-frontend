@@ -1,4 +1,4 @@
-<div id="chart-parent">
+<div [ngStyle]="{'display':'grid', 'height': heatmapHeight}">
 <ngx-charts-bar-horizontal-2d
   [scheme]="colorScheme"
   [results]="data"
@@ -14,7 +14,7 @@
   [legendTitle]="legendTitle"
   [xAxisTickFormatting]="xTickFormatting"
   [roundDomains]="true"
-  [maxYAxisTickLength]="150"
+  [maxYAxisTickLength]="60"
   style="fill: white">
 </ngx-charts-bar-horizontal-2d>
 </div>

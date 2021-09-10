@@ -25,8 +25,18 @@ export class LogCompareService {
       `/api/log_compare/bar_plot_count?startTime=${startTime}&endTime=${endTime}&applicationId=${applicationId}&tag=${tag}`)
   }
 
-  getCognitiveBarData(applicationId: number, startTime: string, endTime: string, tag) {
-    return this.apiService.get(`/api/log_compare/cognitive_bar_plot?startTime=${startTime}&endTime=${endTime}&applicationId=${applicationId}&tag=${tag}`);
+  getCognitiveBarData(applicationId: number, startTime: string, endTime: string, baselineTagId: string, compareTagId: string, newTemplates: string) {
+    if (newTemplates == "new_templates" && baselineTagId && compareTagId){
+      return this.apiService.get(`/api/charts/log_comp_new_templates_bar?startTime=${startTime}&endTime=${endTime}&applicationId=${applicationId}&baselineTagId=${baselineTagId}&compareTagId=${compareTagId}`);
+    }else{
+      var tag = ""
+      if (baselineTagId){
+        tag = baselineTagId
+      }else{
+        tag = compareTagId
+      }
+      return this.apiService.get(`/api/log_compare/cognitive_bar_plot?startTime=${startTime}&endTime=${endTime}&applicationId=${applicationId}&tag=${tag}`);
+    }
   }
 
   loadCompareTemplatesHorizontalBar(applicationId: number, startTime: string, endTime: string, baselineTagId: string, compareTagId: string) {
@@ -37,6 +47,14 @@ export class LogCompareService {
  loadLogCompareData(startTime: string, endTime: string, applicationId: number, baselineTagId: string, compareTagId: string): Observable<any> {
     let applicationParam = `&applicationId=${applicationId}`
     return this.apiService.get(`/api/log_compare/data?startTime=${startTime}&endTime=${endTime}${applicationParam}&baselineTagId=${baselineTagId}&compareTagId=${compareTagId}`);
+  }
+
+  loadHeatmapData(startTime: string, endTime: string, applicationId: number, baselineTagId: string, compareTagId: string) {
+
+    let applicationParam = `&applicationId=${applicationId}`
+
+    return this.apiService.get(
+      `/api/charts/log_compare_heatmap?startTime=${startTime}&endTime=${endTime}&compareTagId=${compareTagId}&baselineTagId=${baselineTagId}${applicationParam}`);
   }
 
 }

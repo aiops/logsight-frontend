@@ -5,7 +5,7 @@ import {
     NbCardModule,
     NbIconModule,
     NbInputModule,
-    NbPopoverModule, NbSelectModule, NbTooltipModule,
+    NbPopoverModule, NbSelectModule, NbSpinnerModule, NbTooltipModule,
     NbTreeGridModule
 } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
@@ -22,26 +22,27 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import {NgxGaugeModule} from "ngx-gauge";
 
 @NgModule({
-  imports: [
-    LogCompareRoutingModule,
-    NbCardModule,
-    NbTreeGridModule,
-    NbIconModule,
-    NbInputModule,
-    ThemeModule,
-    Ng2SmartTableModule,
-    NvD3Module,
-    FormsModule,
-    NbButtonModule,
-    PagesModule,
-    ChartsWrapperModule,
-    NbPopoverModule,
-    NbTooltipModule,
-    NbSelectModule,
-    BarChartModule,
-    TourMatMenuModule,
-    NgxGaugeModule
-  ],
+    imports: [
+        LogCompareRoutingModule,
+        NbCardModule,
+        NbTreeGridModule,
+        NbIconModule,
+        NbInputModule,
+        ThemeModule,
+        Ng2SmartTableModule,
+        NvD3Module,
+        FormsModule,
+        NbButtonModule,
+        PagesModule,
+        ChartsWrapperModule,
+        NbPopoverModule,
+        NbTooltipModule,
+        NbSelectModule,
+        BarChartModule,
+        TourMatMenuModule,
+        NgxGaugeModule,
+        NbSpinnerModule
+    ],
   declarations: [
     LogComparePage,
   ],

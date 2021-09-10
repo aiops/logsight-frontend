@@ -1,3 +1,12 @@
+ng-scrollbar {
+  --scrollbar-thumb-color: rgb(255 255 255 / 60%) !important;
+  --scrollbar-border-radius: 5px;
+  --scrollbar-padding: 0px !important;
+  --scroll-view-margin: 0 !important;
+  --scrollbar-track-color: #c13f3f00;
+  --scrollbar-size: 10px !important;
+}
+
 th, td {
   color: white;
   font-size: 18px;
@@ -5,13 +14,18 @@ th, td {
 }
 
 .error {
-  color: #fd4747 !important;
+  color: #ff0000 !important;
   font-weight: 600;
   padding-top: 10%;
 }
 
 .info {
   color: #00b0e8 !important;
+  font-weight: 600;
+}
+
+.severe {
+  color: #ff0000 !important;
   font-weight: 600;
 }
 

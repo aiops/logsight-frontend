@@ -15,12 +15,16 @@ import { MessagingService } from '../../@core/service/messaging.service';
 import { NotificationsService } from 'angular2-notifications';
 import { NbDialogService, NbPopoverDirective } from '@nebular/theme';
 import * as moment from 'moment'
-import { map, retry, share, switchMap, takeUntil } from 'rxjs/operators';
+import {last, map, retry, share, switchMap, takeUntil} from 'rxjs/operators';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { Application } from '../../@core/common/application';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { IntegrationService } from '../../@core/service/integration.service';
 import {LogQualityOverview} from "../../@core/common/log-quality-overview";
+import {Moment} from "moment";
+import {VariableAnalysisHit} from "../../@core/common/variable-analysis-hit";
+import {VariableAnalysisTemplate} from "../../@core/components/app/variable-analysis-template";
+import {round} from "@popperjs/core/lib/utils/math";
 
 @Component({
   selector: 'log-compare',
@@ -38,9 +42,12 @@ export class LogComparePage {
   applications: Application[] = [];
   tags: String[] = [];
   baselineTagId: string;
-  matchPercentage = "100%"
+  matchPercentage = 0.0
   logBarFirst = []
   logBarSecond = []
+  heatmapData = []
+  isSpinning = false
+  heatmapData$: Observable<any>;
   colorSchemeFirst = {
     domain: ['#22c08f']
   };
@@ -54,13 +61,18 @@ export class LogComparePage {
   startDateTime = 'now-720m';
   endDateTime = 'now'
   heatmapHeight = '200px';
+  horizontalHeight = '300px';
   barDataFirst$: Observable<any>;
   barDataFirst = []
   barDataSecond$: Observable<any>;
   barDataSecond = []
+  newTemplatesBarData = []
   horizontalData = []
   horizontalData$: Observable<any>;
+  newTemplatesBarData$: Observable<any>;
   tableData = []
+  countAnomalies = []
+  newTemplates = []
   private stopPolling = new Subject();
   reload$: Subject<boolean> = new Subject();
   private destroy$: Subject<void> = new Subject<void>();
@@ -75,25 +87,26 @@ export class LogComparePage {
               private authService: AuthenticationService,
               private integrationService: IntegrationService,
               private router: Router) {
-  }
-
-
-  ngOnInit(): void {
+    this.heatmapData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)),
+      share(),
+      takeUntil(this.stopPolling)
+    );
 
     this.barDataFirst$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId)),
+      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, "", "")),
       share(),
       takeUntil(this.stopPolling)
     );
 
     this.barDataSecond$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.compareTagId)),
+      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, "", this.compareTagId, "")),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.barDataSecond$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.compareTagId)),
+    this.newTemplatesBarData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId, "new_templates")),
       share(),
       takeUntil(this.stopPolling)
     );
@@ -103,29 +116,111 @@ export class LogComparePage {
       share(),
       takeUntil(this.stopPolling)
     );
+  }
+
+
+  ngOnInit(): void {
+    this.heatmapData$.subscribe(data => {
+      for (let i = 0; i < data.data.length; i++) {
+        for (let j = 0; j < data.data[i].series.length; j++) {
+          data.data[i].series[j].extra = data.data[i].name
+        }
+        var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+        data.data[i].name = local.toString()
+      }
+
+      for (let i = 0; i < data.data.length; i++) {
+        for (let j = 0; j < data.data[i].series.length; j++) {
+          this.heatmapHeightList.push(data.data[i].series[j].name)
+        }
+      }
+      this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
+      if (this.unique.length > 0) {
+        if (50 * (this.unique.length + 1) < 350) {
+          this.heatmapHeight = (50 * (this.unique.length + 1)).toString() + 'px'
+        } else {
+          this.heatmapHeight = '300px'
+        }
+      } else {
+        this.heatmapHeight = '150px'
+      }
+      this.heatmapData = data.data;
+    })
 
     this.barDataFirst$.subscribe(data => {
+      let firstDay = moment.utc(data[0].name, 'DD-MM-YYYY HH:mm')
+      let lastDay = moment.utc(data[data.length-1].name, 'DD-MM-YYYY HH:mm')
+      let daysDiff = lastDay.diff(firstDay, "days")
       for (let i = 0; i < data.length; i++) {
         var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+        var local = ""
+        if (daysDiff > 0){
+          local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+        }else{
+          local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+        }
         data[i].name = local.toString()
       }
       this.barDataFirst = data;
     })
 
     this.barDataSecond$.subscribe(data => {
+
+      // let firstDay = moment.utc(data[0].name, 'DD-MM-YYYY HH:mm')
+      // let lastDay = moment.utc(data[data.length-1].name, 'DD-MM-YYYY HH:mm')
+      // console.log("AAAAAA:", data)
+      // let daysDiff = lastDay.diff(firstDay, "days")
+      // for (let i = 0; i < data.length; i++) {
+      //   var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+      //   var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+      //   var local = ""
+      //   console.log("AA", daysDiff)
+      //   if (daysDiff > 0){
+      //     local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+      //   }else{
+      //     local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('HH:mm A');
+      //   }
+      //   data[i].name = local.toString()
+      // }
+
       for (let i = 0; i < data.length; i++) {
         var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
         data[i].name = local.toString()
       }
+      console.log("AA",data )
       this.barDataSecond = data;
+    })
+
+    this.newTemplatesBarData$.subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('DD-MM-YYYY HH:mm');
+        data[i].name = local.toString()
+      }
+      if (this.newTemplatesBarData.length > 0){
+        if (this.isSpinning){
+          this.loadLogCompareData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+        }
+        this.isSpinning = false
+        // this.logCountBar(this.compareTagId)
+        // this.loadCompareTemplatesHorizontalBar(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+        // this.loadLogCompareData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+        // this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+        // this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId, "new_templates")
+        // this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, "", this.compareTagId, "")
+      }
+      this.newTemplatesBarData = data;
     })
 
     this.horizontalData$.subscribe(data => {
       this.horizontalData = data;
+      this.horizontalHeight = (60 * (this.horizontalData.length + 1)).toString() + 'px'
     })
 
     this.route.queryParamMap.subscribe(queryParams => {
@@ -177,9 +272,12 @@ export class LogComparePage {
 
   }
 
+  loadHeatmapData(startTime: string, endTime: string, applicationId: number, baselineTagId: string, compareTagId: string) {
+    return this.logCompareService.loadHeatmapData(startTime, endTime, applicationId, baselineTagId, compareTagId)
+  }
 
-  loadBarData(startDateTime, endDateTime, applicationId, baselineTagId) {
-    return this.logCompareService.getCognitiveBarData(applicationId, startDateTime, endDateTime, baselineTagId);
+  loadBarData(startDateTime, endDateTime, applicationId, baselineTagId, compareTagId, newTemplates) {
+    return this.logCompareService.getCognitiveBarData(applicationId, startDateTime, endDateTime, baselineTagId, compareTagId, newTemplates);
   }
 
   loadCompareTemplatesHorizontalBar(startDateTime, endDateTime, applicationId, baselineTagId, compareTagId) {
@@ -187,9 +285,9 @@ export class LogComparePage {
   }
 
   computeLogCompare(){
+    this.isSpinning = true
     if (this.applicationId && this.compareTagId && this.baselineTagId && this.compareTagId!=this.baselineTagId){
       this.logCompareService.computeLogCompare(this.applicationId, this.baselineTagId, this.compareTagId).subscribe(resp => {
-        console.log(resp)
       })
     }else {
       this.notificationService.bare("Make sure that the baseline and compare versions are different!")
@@ -198,11 +296,10 @@ export class LogComparePage {
 
   logCountBar(tag){
     this.logCompareService.getLogCountBar(this.applicationId, this.startDateTime, this.endDateTime, tag).subscribe(resp => {
-      console.log(resp)
       for (let i = 0; i < resp[0].series.length; i++) {
         var date = moment.utc(resp[0].series[i].name, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('HH:mm A');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('DD-MM-YYYY HH:mm');
         resp[0].series[i].name = local.toString()
       }
       if (tag==this.baselineTagId){
@@ -210,7 +307,32 @@ export class LogComparePage {
       }else{
         this.logBarSecond = resp[0].series
       }
-    });
+          // console.log(this.logBarFirst, this.logBarSecond)
+    }
+
+    );
+  }
+
+  onHeatMapSelect(data: any) {
+
+    const timeDiff = this.getTimeDiff()
+    const dateTime = data.extra
+    const date = dateTime.split(' ')[0].split('-');
+    const time = dateTime.split(' ')[1].split(':');
+    const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+
+    this.startDateTime = startDateTime.format('YYYY-MM-DDTHH:mm') + ":00"
+    this.endDateTime = startDateTime.add(timeDiff, 'minutes').format('YYYY-MM-DDTHH:mm') + ":00"
+    this.logCountBar(this.compareTagId)
+    this.loadCompareTemplatesHorizontalBar(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+    this.loadLogCompareData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+    this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+    this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId, "new_templates")
+    this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, "", this.compareTagId, "")
+    this.reload$.next()
+
+
   }
 
 
@@ -223,9 +345,6 @@ export class LogComparePage {
     }
     return data
   }
-
-
-
 
   onDateTimeSearch(event) {
     this.popover.hide();
@@ -243,6 +362,13 @@ export class LogComparePage {
       // this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
       // this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
     }
+    this.logCountBar(this.compareTagId)
+    this.loadCompareTemplatesHorizontalBar(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+    this.loadLogCompareData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+    this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+    this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId, "new_templates")
+    this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, "", this.compareTagId, "")
+    this.reload$.next()
     // this.router.navigate([],
     //   { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
   }
@@ -276,6 +402,9 @@ export class LogComparePage {
     this.logCountBar(this.compareTagId)
     this.loadCompareTemplatesHorizontalBar(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
     this.loadLogCompareData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+    this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
+    this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId, "new_templates")
+    this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, "", this.compareTagId, "")
     this.reload$.next()
     // this.loadApplicationVersions(this.applicationId, this.tagId)
     // this.loadQualityData(this.startDateTime, this.endDateTime, this.applicationId)
@@ -285,8 +414,40 @@ export class LogComparePage {
 
   private loadLogCompareData(startTime: string, endTime: string, applicationId: number, baselineTagId: string, compareTagId: string) {
     this.tableData = []
-    this.logCompareService.loadLogCompareData(startTime, endTime, applicationId,baselineTagId, compareTagId).subscribe(resp => {
-      console.log("RESP", resp)
+    this.countAnomalies = []
+    this.newTemplates = []
+    this.matchPercentage = 0.0
+    this.logCompareService.loadLogCompareData(startTime, endTime, applicationId,baselineTagId, compareTagId).subscribe(data => {
+      this.tableData = data
+      let countAnomaliesMap = new Map<string, string>();
+      let newTemplatesMap = new Map<string, string>();
+      for(let i = 0; i < data.length; i++){
+        this.matchPercentage += data[i].ratioScore
+        for(let j = 0; j < data[i].countAnomalyList.length; j++){
+          if (countAnomaliesMap.has(data[i].countAnomalyList[j].template)){
+            if (!(countAnomaliesMap.get(data[i].countAnomalyList[j].template) == data[i].countAnomalyList[j].timestamp)){
+                this.countAnomalies.push(data[i].countAnomalyList[j])
+                countAnomaliesMap.set(data[i].countAnomalyList[j].template, data[i].countAnomalyList[j].timestamp);
+            }
+          }else{
+            this.countAnomalies.push(data[i].countAnomalyList[j])
+                countAnomaliesMap.set(data[i].countAnomalyList[j].template, data[i].countAnomalyList[j].timestamp);
+          }
+        }
+        for(let k = 0; k < data[i].newTemplateList.length; k++){
+          if (!newTemplatesMap.has(data[i].newTemplateList[k].template)){
+            if (!(newTemplatesMap.get(data[i].newTemplateList[k].template) == data[i].newTemplateList[k].timestamp)){
+                this.newTemplates.push(data[i].newTemplateList[k])
+                newTemplatesMap.set(data[i].newTemplateList[k].template, data[i].newTemplateList[k].timestamp);
+            }
+          }
+        }
+      }
+      this.matchPercentage = this.matchPercentage * 100 / data.length
+      this.matchPercentage = round(this.matchPercentage * 100) / 100
+      this.countAnomalies = this.toLocalTime(this.countAnomalies)
+      this.newTemplates = this.toLocalTime(this.newTemplates)
+
     })
 
   }
@@ -307,6 +468,27 @@ export class LogComparePage {
     }, error => {
       this.notificationService.error("Bad request, contact support!")
     })
+
+  }
+
+  private getTimeDiff() {
+    let timeList = []
+    let indx = []
+    for(let i = 0; i < this.heatmapData.length; i++){
+      if (this.heatmapData[i].series.length){
+        indx.push(i)
+        timeList.push(this.heatmapData[i].series[0].extra)
+      }
+    }
+    let date = timeList[0].split(' ')[0].split('-');
+    let time = timeList[0].split(' ')[1].split(':');
+    const firstTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+    date = timeList[1].split(' ')[0].split('-');
+    time = timeList[1].split(' ')[1].split(':');
+    const secondTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+    return (secondTime.diff(firstTime, "minutes") / indx[1] - indx[0])
 
   }
 }

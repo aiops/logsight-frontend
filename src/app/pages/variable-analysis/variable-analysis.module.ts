@@ -19,26 +19,28 @@ import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.mod
 import { TourMatMenuModule } from 'ngx-ui-tour-md-menu';
 import { IncidentsService } from '../incidents/incidents.service';
 import { DashboardService } from '../dashboard/dashboard.service';
+import {NgScrollbarModule} from "ngx-scrollbar";
 
 @NgModule({
-  imports: [
-    VariableAnalysisRoutingModule,
-    ThemeModule,
-    NgxChartsModule,
-    ChartModule,
-    NbCardModule,
-    NbInputModule,
-    NbButtonModule,
-    ReactiveFormsModule,
-    NbSelectModule,
-    PagesModule,
-    ChartsWrapperModule,
-    NbPopoverModule,
-    TourMatMenuModule,
-    NbIconModule,
-    NbTooltipModule,
-    NbTreeGridModule
-  ],
+    imports: [
+        VariableAnalysisRoutingModule,
+        ThemeModule,
+        NgxChartsModule,
+        ChartModule,
+        NbCardModule,
+        NbInputModule,
+        NbButtonModule,
+        ReactiveFormsModule,
+        NbSelectModule,
+        PagesModule,
+        ChartsWrapperModule,
+        NbPopoverModule,
+        TourMatMenuModule,
+        NbIconModule,
+        NbTooltipModule,
+        NbTreeGridModule,
+        NgScrollbarModule
+    ],
   declarations: [VariableAnalysisPage],
   entryComponents: [VariableAnalysisTemplate],
   providers: [DashboardService]

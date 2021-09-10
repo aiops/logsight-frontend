@@ -1,0 +1,17 @@
+<div [ngStyle]="{'display':'grid', 'height': heatmapHeight}" xmlns="http://www.w3.org/1999/html">
+  <ngx-charts-heat-map
+    [scheme]="colorScheme"
+    [legend]="legend"
+    [legendTitle]="'Anomaly score'"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxis]="xAxis"
+    [yAxis]="yAxis"
+    [maxXAxisTickLength]="20"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [results]="data"
+    (select)="select.emit($event)"
+    [ngStyle]="{'fill':'white'}">
+  </ngx-charts-heat-map>
+</div>

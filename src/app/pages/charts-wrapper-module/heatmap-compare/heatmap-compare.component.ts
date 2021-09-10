@@ -4,11 +4,11 @@ import * as moment from 'moment';
 import { Style } from '@angular/cli/lib/config/schema';
 
 @Component({
-  selector: 'chart-heatmap',
-  styleUrls: ['./heatmap.component.scss'],
-  templateUrl: './heatmap.component.html',
+  selector: 'chart-heatmap-compare',
+  styleUrls: ['./heatmap-compare.component.scss'],
+  templateUrl: './heatmap-compare.component.html',
 })
-export class HeatmapComponent {
+export class HeatmapCompareComponent {
   @Input() data = [];
   @Input() heatmapHeight = '300px'
   @Output() select = new EventEmitter();
@@ -24,9 +24,7 @@ export class HeatmapComponent {
   fill: boolean = true;
   @Input() colorScheme = {
     domain: [
-      '#00FF00',
-      '#00FF00',
-      '#ffca4f',
+      'rgb(0,255,0)',
       '#ffb908',
       '#fa8507',
       '#f47506',

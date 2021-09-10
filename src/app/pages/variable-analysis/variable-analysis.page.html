@@ -2,7 +2,6 @@
   <div class="p-3" style="width: 100%">
     <div class="row" tourAnchor="anchorParsing">
       <div class="col-md-4">
-        <h5 style="font-weight: 600">Application</h5>
         <nb-select class="period-select col-md-4 pl-3" [(selected)]="this.selectedApplicationId"
                    (selectedChange)="applicationSelected($event)"
                    placeholder="Select application">
@@ -10,6 +9,9 @@
             {{ app.name }}
           </nb-option>
         </nb-select>
+        <nb-icon icon="info-outline"
+               nbTooltip="Select application"
+               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
       </div>
       <div class="col-md-8 text-right">
         <div style="width: 100%;" class="text-right">
@@ -27,98 +29,97 @@
       </div>
     </div>
   </div>
-  <div class="p-3" style="width: 100%; height: 120px" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
-    <h5 style="font-weight: 600">Log Count</h5>
+  <div class="p-0" style="width: 100%; height: 150px;" *ngIf="selectedApplicationId && logCountLineChart.length > 0">
+    <h6 style="font-weight: 600">Log Count</h6>
     <ngx-charts-bar-vertical [showGridLines]="false" [scheme]="colorScheme" [xAxis]="true" yAxis="true" style="fill: white" [results]="logCountLineChart[0].series"></ngx-charts-bar-vertical>
   </div>
 
-  <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%; margin-top: 70px;">
-    <h5 style="font-weight: 600">Top reoccurring log types
-      <nb-icon icon="info-outline"
-               nbTooltip="We cluster the log types together and detect if large deviations in log count if they happen. The ratio numbers provide information about the count of particular log type in the last hour compared to the previous hour."
-               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h5>
-    <nb-card tourAnchor="anchorTopTemplates">
-      <hr noshade="true">
-      <div class="row">
-        <!--      <div class="col-md-6">-->
-        <!--        <p class="font-weight-bold">Top 5 templates between Last 2 Hours and Last Hour</p>-->
-        <!--        <table class="table table-striped">-->
-        <!--          <thead>-->
-        <!--          <tr>-->
-        <!--            <th style="width: 70%">Template</th>-->
-        <!--            <th style="width: 15%" scope="col">Count</th>-->
-        <!--            <th style="width: 15%"></th>-->
-        <!--          </tr>-->
-        <!--          </thead>-->
-        <!--          <tbody>-->
-        <!--          <tr *ngFor="let row of topNTemplatesOlder">-->
-        <!--            <td>-->
-        <!--              {{row.template}}-->
-        <!--            </td>-->
-        <!--            <td>-->
-        <!--              {{row.count}}-->
-        <!--            </td>-->
-        <!--            <td>-->
-        <!--            </td>-->
-        <!--          </tr>-->
-        <!--          </tbody>-->
-        <!--        </table>-->
-        <!--      </div>-->
-        <div class="col">
+<!--  <div *ngIf="topNTemplatesNow || topNTemplatesOlder" class="p-3" style="width: 100%; margin-top: 70px;">-->
+<!--    <h6 style="font-weight: 600">Top reoccurring log types-->
+<!--      <nb-icon icon="info-outline"-->
+<!--               nbTooltip="We cluster the log types together and detect if large deviations in log count if they happen. The ratio numbers provide information about the count of particular log type in the last hour compared to the previous hour."-->
+<!--               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>-->
+<!--    </h6>-->
+<!--    <nb-card tourAnchor="anchorTopTemplates">-->
+<!--      <hr noshade="true">-->
+<!--      <div class="row">-->
+<!--        &lt;!&ndash;      <div class="col-md-6">&ndash;&gt;-->
+<!--        &lt;!&ndash;        <p class="font-weight-bold">Top 5 templates between Last 2 Hours and Last Hour</p>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <table class="table table-striped">&ndash;&gt;-->
+<!--        &lt;!&ndash;          <thead>&ndash;&gt;-->
+<!--        &lt;!&ndash;          <tr>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <th style="width: 70%">Template</th>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <th style="width: 15%" scope="col">Count</th>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <th style="width: 15%"></th>&ndash;&gt;-->
+<!--        &lt;!&ndash;          </tr>&ndash;&gt;-->
+<!--        &lt;!&ndash;          </thead>&ndash;&gt;-->
+<!--        &lt;!&ndash;          <tbody>&ndash;&gt;-->
+<!--        &lt;!&ndash;          <tr *ngFor="let row of topNTemplatesOlder">&ndash;&gt;-->
+<!--        &lt;!&ndash;            <td>&ndash;&gt;-->
+<!--        &lt;!&ndash;              {{row.template}}&ndash;&gt;-->
+<!--        &lt;!&ndash;            </td>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <td>&ndash;&gt;-->
+<!--        &lt;!&ndash;              {{row.count}}&ndash;&gt;-->
+<!--        &lt;!&ndash;            </td>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <td>&ndash;&gt;-->
+<!--        &lt;!&ndash;            </td>&ndash;&gt;-->
+<!--        &lt;!&ndash;          </tr>&ndash;&gt;-->
+<!--        &lt;!&ndash;          </tbody>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </table>&ndash;&gt;-->
+<!--        &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--        <div class="col">-->
 
-          <table class="table table-striped table-borderless">
-            <thead>
-            <tr>
-              <th style="width: 20%">Ratio</th>
-              <th style="width: 60%">Log type</th>
-              <th style="width: 20%">Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let row of templatesRowMerged">
-              <td style="padding-right: 0px">
-                <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [yAxis]="true"
-                                           [roundEdges]="false" [view]="[300,60]"
-                                           [results]="[{'name':'Current', 'value':row.new.count}, {'name':'Previous', 'value':row.old.count}]"></ngx-charts-bar-horizontal>
-              </td>
-              <td style="padding-right: 10%; padding-top: 20px">
-                {{row.new.template}}
-              </td>
+<!--          <table class="table table-striped table-borderless">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--              <th style="width: 15%">Ratio</th>-->
+<!--              <th style="width: 70%">Log type</th>-->
+<!--              <th style="width: 15%">Description</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr *ngFor="let row of templatesRowMerged">-->
+<!--              <td style="padding-right: 0px">-->
+<!--                <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [yAxis]="true"-->
+<!--                                           [roundEdges]="false" [view]="[300,60]"-->
+<!--                                           [results]="[{'name':'Current', 'value':row.new.count}, {'name':'Previous', 'value':row.old.count}]"></ngx-charts-bar-horizontal>-->
+<!--              </td>-->
+<!--              <td style="padding-right: 10%; padding-top: 20px">-->
+<!--                {{row.new.template}}-->
+<!--              </td>-->
 
-              <td *ngIf="row.new.percentage < 10 " style="padding-right: 10%; padding-top: 20px">
-                Stable behaviour
-              </td>
+<!--              <td *ngIf="row.new.percentage < 10 " style="padding-right: 10%; padding-top: 20px">-->
+<!--                Stable behaviour-->
+<!--              </td>-->
 
-              <td *ngIf="row.new.percentage > 10 && row.new.count > row.old.count"
-                  style="padding-right: 10%; padding-top: 20px">
-                {{row.new.percentage}}% above normal
-              </td>
+<!--              <td *ngIf="row.new.percentage > 10 && row.new.count > row.old.count"-->
+<!--                  style="padding-right: 10%; padding-top: 20px">-->
+<!--                {{row.new.percentage}}% above normal-->
+<!--              </td>-->
 
-              <td *ngIf="row.new.percentage > 10 && row.new.count < row.old.count"
-                  style="padding-right: 10%; padding-top: 20px">
-                {{row.new.percentage}}% below normal
-              </td>
+<!--              <td *ngIf="row.new.percentage > 10 && row.new.count < row.old.count"-->
+<!--                  style="padding-right: 10%; padding-top: 20px">-->
+<!--                {{row.new.percentage}}% below normal-->
+<!--              </td>-->
 
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </nb-card>
-  </div>
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </nb-card>-->
+<!--  </div>-->
 
-  <div *ngIf="selectedApplicationId" class="p-3" style="width: 100%">
-    <h5 style="font-weight: 600">Logs
+  <div *ngIf="selectedApplicationId" class="p-0" style="width: 100%; margin-top: 20px">
+    <h6 style="font-weight: 600">Logs
       <nb-icon icon="info-outline"
                nbTooltip="Explore your logs easily, empowered by our automatic log parsing. We automatically parse the variable parts of the log message."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h5>
+    </h6>
     <nb-card tourAnchor="anchorLogs">
       <hr noshade="true">
       <div class="row">
         <div class="col-md-12">
-
           <form [formGroup]="filterForm" class="filter-form">
             <div style="padding-left: 1%; padding-right: 1%" class="form-group">
               <input class="form-control" type="text" id="search"
@@ -127,14 +128,15 @@
             </div>
           </form>
           <div class="table-height">
+            <ng-scrollbar>
             <table class="table table-striped table-borderless" *ngIf="!allTemplatesLoading">
               <thead>
               <tr>
                 <th [appSort]="variableAnalysisHits" data-order="desc" data-name="actualLevel" class='clickable'
-                    style="width: 10%" scope="col">Timestamp
+                    style="width: 8%" scope="col">Timestamp
                 </th>
                 <th [appSort]="variableAnalysisHits" data-order="desc" data-name="actualLevel" class='clickable'
-                    style="width: 5%" scope="col">Level
+                    style="width: 7%" scope="col">Level
                 </th>
                 <th style="width: 90%" scope="col">Message
                   <nb-icon icon="info-outline"
@@ -149,6 +151,7 @@
                 <td>
                 <span style="float: left; color: yellow; font-weight: 600;"
                       [class.error]="row.actualLevel == 'ERROR'"
+                      [class.severe]="row.actualLevel == 'SEVERE'"
                       [class.info]="row.actualLevel == 'INFO'"
                       class="mr-2">{{row.actualLevel}}</span>
                 </td>
@@ -158,6 +161,7 @@
               </tr>
               </tbody>
             </table>
+            </ng-scrollbar>
           </div>
           <loading *ngIf="allTemplatesLoading" [height]="500"></loading>
         </div>

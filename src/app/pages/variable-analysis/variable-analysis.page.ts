@@ -154,7 +154,6 @@ export class VariableAnalysisPage implements OnInit {
         resp[0].series[i].name = local.toString()
       }
       this.logCountLineChart = resp
-      console.log(this.logCountLineChart)
     });
 
     this.variableAnalysisService.getTopNTemplates(this.selectedApplicationId, this.startDateTime,
@@ -163,10 +162,22 @@ export class VariableAnalysisPage implements OnInit {
       this.topNTemplatesOlder = resp.older;
       this.templatesRowMerged = [];
       for (var _i = 0; _i < this.topNTemplatesNow.length; _i++) {
-        this.templatesRowMerged.push({
-          new: this.topNTemplatesNow[_i],
-          old: this.topNTemplatesOlder[_i]
+        if(this.topNTemplatesOlder[_i]){
+            this.templatesRowMerged.push({
+                new: this.topNTemplatesNow[_i],
+                old: this.topNTemplatesOlder[_i]
         });
+        }else{
+          let tmp = this.topNTemplatesNow[_i]
+          tmp.count = 0
+          tmp.percentage = 0
+          this.templatesRowMerged.push({
+                new: this.topNTemplatesNow[_i],
+                old: tmp
+        });
+
+        }
+
       }
     });
   }

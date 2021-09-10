@@ -1,146 +1,346 @@
-<div class="row" style="padding-left: 5%;padding-right: 5%">
+<div class="row" style="padding-left: 5%; padding-right: 5%">
   <div class="col-md-8">
-    <nb-select class="period-select" [(selected)]="this.applicationId"
-               (selectedChange)="applicationSelected($event)"
+    <nb-select (selectedChange)="applicationSelected($event)" [(selected)]="this.applicationId"
+               class="period-select"
                placeholder="Select application">
-      <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
+      <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.id">
         {{ app.name }}
       </nb-option>
     </nb-select>
 
-    <nb-select class="period-select" [(selected)]="this.baselineTagId"
-               (selectedChange)="baselineTagSelected($event)"
+    <nb-select (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
+               class="period-select"
                placeholder="Select baseline tag">
-      <nb-option *ngFor="let tag of tags" [value]="tag" [nbSort]="tag">
+      <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
         {{ tag }}
       </nb-option>
     </nb-select>
-
-    <nb-select class="period-select" [(selected)]="this.compareTagId"
-               (selectedChange)="compareTagSelected($event)"
+    <nb-select (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
+               class="period-select"
                placeholder="Select compare tag">
-      <nb-option *ngFor="let tag of tags" [value]="tag" [nbSort]="tag">
+      <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
         {{ tag }}
       </nb-option>
     </nb-select>
-
-    <button nbButton shape="round" size="small" (click)="computeLogCompare()" style="text-transform: none">LogCompare</button>
+    <button (click)="computeLogCompare()" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" size="small" style="text-transform: none">LogCompare
+    </button>
   </div>
-
   <div class="col-md-4 text-right">
-    <div style="width: 100%;" class="text-right">
-      <button title="Select Date Range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
-              (click)="openPopover()" size="small" shape="round"
-              nbPopoverTrigger="noop"><i class="fa fa-calendar"></i></button>
+    <div class="text-right" style="width: 100%;">
+      <button (click)="openPopover()" [nbPopover]="dateTimePicker" nbButton nbPopoverPlacement="bottom"
+              nbPopoverTrigger="noop" shape="round" size="small"
+              title="Select Date Range"><i class="fa fa-calendar"></i></button>
     </div>
   </div>
 </div>
 
 
-<div class="container" style="margin-left: 5%;">
-  <h5 style="font-weight: 600">Log count</h5>
-  <div class="row" style="padding-right: 5%">
-    <div class="col-6" style="height: 150px">
-      <h5 style="font-weight: 600">{{baselineTagId}}
-    </h5>
-      <ngx-charts-bar-vertical [showGridLines]="true" [xAxis]="true"  [results]="logBarFirst" [scheme]="colorSchemeFirst" style="fill: white"></ngx-charts-bar-vertical>
-    </div>
-
-    <div  class="col-6" style="height: 150px">
-    <h5 style="font-weight: 600">{{compareTagId}}
-    </h5>
-    <ngx-charts-bar-vertical [showGridLines]="true" [xAxis]="true"  [results]="logBarSecond" [scheme]="colorSchemeSecond" style="fill: white"></ngx-charts-bar-vertical>
-    </div>
+<div class="row" style="height: 150px; margin-top: 30px; padding-left: 5%; padding-right: 5%">
+  <div class="col">
+    <h6 style="font-weight: 600">Compare overview
+    </h6>
+    <chart-heatmap-compare (select)="onHeatMapSelect($event)" [data]="heatmapData"
+                           [heatmapHeight]="heatmapHeight"></chart-heatmap-compare>
   </div>
 </div>
 
-<div class="container" style="margin-left: 5%; padding-top: 30px;">
-  <h5 style="font-weight: 600">Cognitive anomalies</h5>
-  <div class="row" style="padding-right: 5%">
-    <div class="col-6" style="height: 150px">
-      <grouped-vertical-bar-chart-2d [data]="barDataFirst"></grouped-vertical-bar-chart-2d>
-    </div>
+<!--<div class="row" style="padding-left: 5%; padding-right: 5%;">-->
+<!--  <div style="color: #e0e041; font-size: 18px; font-weight: 600; text-align: right">Match Degree:  {{matchPercentage}}%</div>-->
+<!--  <div class="col-sm" style="overflow-y:auto; height: 300px">-->
 
-    <div  class="col-6" style="height: 150px">
-    <grouped-vertical-bar-chart-2d [data]="barDataSecond"></grouped-vertical-bar-chart-2d>
-    </div>
-  </div>
-</div>
-
-<!--<div class="row"  >-->
-<!--  <div class="col-sm" style="height: 100px">-->
-<!--    <h5 style="font-weight: 600">{{baselineTagId}}-->
-<!--    </h5>-->
-<!--    <ngx-charts-bar-vertical-2d [showGridLines]="true" [xAxis]="true"  [results]="barData" style="fill: white"></ngx-charts-bar-vertical-2d>-->
+<!--&lt;!&ndash;    TODO compute heatmapheight dynamically&ndash;&gt;-->
+<!--    <grouped-horizontal-bar-chart-2d [data]="horizontalData"-->
+<!--                                     [heatmapHeight]="'300px'"></grouped-horizontal-bar-chart-2d>-->
 <!--  </div>-->
-<!--    <div  class="col-sm" style="height: 100px">-->
-<!--    <h5 style="font-weight: 600">{{compareTagId}}-->
-<!--    </h5>-->
-<!--    <ngx-charts-bar-vertical-2d [showGridLines]="true" [xAxis]="true"  [results]="barData" style="fill: white"></ngx-charts-bar-vertical-2d>-->
+
+<!--</div>-->
+
+
+<div class="row" style="padding-left: 5%;padding-right: 5%">
+
+  <div class="col">
+    <h6 style="font-weight: 600">Ratio anomalies
+    </h6>
+    <nb-card>
+      <nb-card-body>
+        <div class="col-lg-12 p-0">
+          <div style="color: #e0e041; font-size: 18px; font-weight: 600; text-align: right">
+            <button nbButton
+                                                                                          style="background-color: #6f5b5c; color: white"
+                                                                                          disabled status='danger'
+                                                                                          shape="round" size="small"><nb-icon
+                        icon="checkmark-circle-outline"></nb-icon>
+                        Match Degree:  {{matchPercentage}}%</button>
+
+            </div>
+          <div class="row" style="padding-top: 20px">
+            <div class="col">
+          <div class="row">
+          <div class="col" style="height: 120px">
+                        <grouped-vertical-bar-chart-2d [data]="barDataFirst"
+                                           [heatmapHeight]="'120px'"></grouped-vertical-bar-chart-2d>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col" style="height: 120px">
+            <grouped-vertical-bar-chart-2d [data]="barDataSecond"
+                                           [heatmapHeight]="'120px'"></grouped-vertical-bar-chart-2d>
+          </div>
+          </div></div>
+            <div class="col scrollable" style="height: 240px; overflow-y: auto">
+              <grouped-horizontal-bar-chart-2d [data]="horizontalData"
+                                     [heatmapHeight]="horizontalHeight"></grouped-horizontal-bar-chart-2d>
+              </div>
+        </div>
+
+
+          <div class="scrollable" style="padding-top: 30px">
+            <hr>
+            <table class="table table-striped table-borderless">
+              <thead>
+              <tr>
+                <th scope="col" style="width: 2%"></th>
+                <th [appSort]="countAnomalies" class="clickable" data-name="timestamp" data-order="desc"
+                    scope="col" style="width: 7%">Timestamp
+                </th>
+
+<!--                <th-->
+<!--                  scope="col" style="width: 6%">Ratios-->
+<!--                </th>-->
+                <th
+                  scope="col" style="width: 10%">Anomaly score
+                </th>
+                <th
+                  scope="col" style="width: 5%">Level
+                </th>
+
+                <th
+                  scope="col" style="width: 20%">Target log
+                </th>
+                <th scope="col" style="width: 50%">Log group</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let row of countAnomalies; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{row.timestamp}}</td>
+
+<!--                <td>-->
+<!--                  <table><tbody><tr>{{row.expectedRate}}</tr><tr>{{row.rateNow}}</tr></tbody></table>-->
+<!--                </td>-->
+                <td>
+                  {{row.ratioScore}}
+                </td>
+
+                <td>
+                <span [class.error]="row.actualLevel == 'ERROR'"
+                      [class.severe]="row.actualLevel == 'SEVERE'"
+                      [class.info]="row.actualLevel == 'INFO'"
+                      class="mr-2"
+                      style="float: left; color: yellow; font-weight: 600;">{{row.actualLevel}}</span>
+                </td>
+
+                <td><app-ad-banner [row]="row"></app-ad-banner></td>
+                <td>
+                  <table class="table table-striped table-borderless">
+                                        <thead>
+                                          <th scope="col" style="width: 52%"></th>
+                                          <th scope="col" style="width: 12%">Level</th>
+                                          <th  scope="col" style="width: 12%">Prediction</th>
+                                        <th scope="col" style="width: 12%">Expected rate</th>
+                                        <th  scope="col" style="width: 12%">Current rate</th>
+                                        </thead>
+                    <tbody>
+                    <tr *ngFor="let t of row.templateToGoList">
+                      <td><app-ad-banner [row]="t"></app-ad-banner></td>
+                      <td>
+                      <span [class.error]="t.actualLevel == 'ERROR'"
+                            [class.severe]="t.actualLevel == 'SEVERE'"
+                            [class.info]="t.actualLevel == 'INFO'"
+                            class="mr-2"
+                            style="float: left; color: yellow; font-weight: 600;">{{t.actualLevel}}</span>
+                      </td>
+                      <td><span [class.error]="row.prediction == 'Anomaly'"
+                      [class.info]="row.prediction == 'Normal'"
+                      class="mr-2"
+                      style="float: left; color: yellow; font-weight: 600;">{{t.prediction}}</span></td>
+                      <td>{{t.expectedRate}}</td>
+                      <td>{{t.rateNow}}</td>
+                      <!--                  <br>-->
+                      <!--                    <div>-->
+                      <!--                      <p style="color: #CECE00FF">Templates to go:</p>-->
+                      <!--                      <div *ngFor="let t of row.templateToGoList">-->
+                      <!--                        <div>{{t.template}}</div>-->
+                      <!--                        <div>{{t.rateNow}}</div>-->
+                      <!--                        <div>{{t.expectedRate}}</div>-->
+                      <!--                      </div>-->
+                      <!--                  </div>-->
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <!--  <div class="col">-->
+  <!--    <h5 style="font-weight: 600">New log types-->
+  <!--      <nb-icon icon="info-outline"-->
+  <!--               nbTooltip="Flow anomalies are those logs that deviate from the normal flow of the system. For example, consider that log statements A and B are always appearing together in a time interval. If this ratio is broken then we report a flow anomaly. logsight.ai learns system flows, our method needs ~10.000 log messages for this feature to be enabled"-->
+  <!--               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>-->
+  <!--    </h5>-->
+  <!--    <nb-card>-->
+  <!--      <nb-card-body>-->
+  <!--        <div class="col-lg-12 p-0">-->
+  <!--          <div class="scrollable">-->
+  <!--            <table class="table table-striped table-borderless">-->
+  <!--              <thead>-->
+  <!--              <tr>-->
+  <!--                <th style="width: 2%" scope="col"></th>-->
+  <!--                <th [appSort]="linguisticData" data-order="desc" data-name="timestamp" class="clickable"-->
+  <!--                    style="width: 18%" scope="col">Timestamp-->
+  <!--                </th>-->
+
+  <!--                <th [appSort]="linguisticData" data-order="desc" data-name="actualLevel" class="clickable"-->
+  <!--                    style="width: 15%" scope="col">Level-->
+  <!--                </th>-->
+
+  <!--                <th [appSort]="linguisticData" data-order="desc" data-name="linguisticPrediction" class="clickable"-->
+  <!--                    style="width: 15%" scope="col">Score-->
+  <!--                </th>-->
+
+  <!--                <th style="width: 45%" scope="col">Message</th>-->
+  <!--              </tr>-->
+  <!--              </thead>-->
+  <!--              <tbody>-->
+  <!--              <tr *ngFor="let row of linguisticData; let i = index">-->
+  <!--                <td>{{i + 1}}</td>-->
+  <!--                <td>{{row.timestamp}}</td>-->
+  <!--                <td>-->
+  <!--                <span style="float: left; color: yellow; font-weight: 600;"-->
+  <!--                      [class.error]="row.actualLevel == 'ERROR'"-->
+  <!--                      [class.info]="row.actualLevel == 'INFO'"-->
+  <!--                      class="mr-2">{{row.actualLevel}}</span>-->
+  <!--                </td>-->
+  <!--                <td>-->
+  <!--                {{row.linguisticPrediction}}-->
+  <!--                </td>-->
+
+  <!--                <td>-->
+  <!--                  <div>-->
+  <!--                  <app-ad-banner [row]="row.variableHit"></app-ad-banner>-->
+  <!--                  </div>-->
+  <!--                  <br>-->
+  <!--                    <div>-->
+  <!--                      <p style="color: #CECE00FF">Existing tags: {{row.tags}}</p>-->
+  <!--                  </div>-->
+  <!--                  <div>-->
+  <!--                    <p style="color: #CECE00FF">You can improve the quality by modifying your message to contain: {{row.suggestions[0]}}</p>-->
+  <!--                  </div>-->
+
+  <!--                </td>-->
+  <!--              </tr>-->
+  <!--              </tbody>-->
+  <!--            </table>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </nb-card-body>-->
+  <!--    </nb-card>-->
+  <!--  </div>-->
+
+</div>
+
+
+
+<!--<div class="row" style="padding-left: 5%; padding-right: 5%">-->
+<!--  <div class="col">-->
+<!--    &lt;!&ndash;  <h5 style="font-weight: 600">Cognitive anomalies</h5>&ndash;&gt;-->
+<!--    <grouped-vertical-bar-chart-2d [data]="newTemplatesBarData"-->
+<!--                                   [heatmapHeight]="'120px'"></grouped-vertical-bar-chart-2d>-->
 <!--  </div>-->
 <!--</div>-->
 
-<div class="row" style="padding-right: 5%; padding-left: 5%; margin-top: 30px;">
-  <div class="col-sm" style="height: 300px">
-    <h5 style="font-weight: 600">Results</h5> <div style="color: #abab34">Match Degree:  {{matchPercentage}}</div>
-    <grouped-horizontal-bar-chart-2d [data]="horizontalData"></grouped-horizontal-bar-chart-2d>
+
+
+<div class="row" style="padding-left: 5%;padding-right: 5%">
+
+  <div class="col">
+    <h6 style="font-weight: 600">New log types
+    </h6>
+    <nb-card>
+      <nb-card-body>
+        <div class="col-lg-12 p-0">
+          <grouped-vertical-bar-chart-2d [data]="newTemplatesBarData"
+                                   [heatmapHeight]="'120px'"></grouped-vertical-bar-chart-2d>
+          <div class="scrollable">
+            <hr>
+            <table class="table table-striped table-borderless">
+              <thead>
+              <tr>
+                <th scope="col" style="width: 2%"></th>
+                <th [appSort]="countAnomalies" class="clickable" data-name="timestamp" data-order="desc"
+                    scope="col" style="width: 10%">Timestamp
+                </th>
+
+                <th
+                  scope="col" style="width: 10%">Level
+                </th>
+
+                <th
+                  scope="col" style="width: 10%">Prediction
+                </th>
+                <th scope="col" style="width: 50%">Message</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let row of newTemplates; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{row.timestamp}}</td>
+                <td>
+                <span [class.error]="row.actualLevel == 'ERROR'"
+                      [class.severe]="row.actualLevel == 'SEVERE'"
+                      [class.info]="row.actualLevel == 'INFO'"
+                      class="mr-2"
+                      style="float: left; color: yellow; font-weight: 600;">{{row.actualLevel}}</span>
+                </td>
+
+                <td>
+                  <span [class.error]="row.prediction == 'Anomaly'"
+                      [class.info]="row.prediction == 'Normal'"
+                      class="mr-2"
+                      style="float: left; color: yellow; font-weight: 600;">{{row.prediction}}</span>
+
+                </td>
+                <td>
+                  <app-ad-banner [row]="row"></app-ad-banner>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
   </div>
-</div>
 
-
-
-<!--<div  class="row" style="padding-left: 5%;padding-right: 5%; margin-top: 75px">-->
 
 <!--  <div class="col">-->
-<!--    <h5 style="font-weight: 600">Detailed analysis-->
+<!--    <h5 style="font-weight: 600">New log types-->
 <!--    </h5>-->
 <!--    <nb-card>-->
 <!--      <nb-card-body>-->
-<!-- <div class="col-lg-12 p-0">-->
+<!--        <div class="col-lg-12 p-0">-->
 <!--          <div class="scrollable">-->
-<!--            <table class="table table-striped table-borderless">-->
-<!--              <thead>-->
-<!--              <tr>-->
-<!--                <th style="width: 2%" scope="col"></th>-->
-<!--                <th [appSort]="logLevelData" data-order="desc" data-name="timestamp" class="clickable"-->
-<!--                    style="width: 18%" scope="col">Timestamp-->
-<!--                </th>-->
 
-<!--                <th [appSort]="logLevelData" data-order="desc" data-name="actualLevel" class="clickable"-->
-<!--                    style="width: 15%" scope="col">Current-->
-<!--                </th>-->
-<!--                <th [appSort]="logLevelData" data-order="desc" data-name="predictedLevel" class="clickable"-->
-<!--                    style="width: 20%" scope="col">Recommended-->
-<!--                </th>-->
-<!--                <th style="width: 45%" scope="col">Message</th>-->
-<!--              </tr>-->
-<!--              </thead>-->
-<!--              <tbody>-->
-<!--              <tr *ngFor="let row of logLevelData; let i = index">-->
-<!--                <td>{{i + 1}}</td>-->
-<!--                <td>{{row.timestamp}}</td>-->
-<!--                <td>-->
-<!--                <span style="float: left; color: yellow; font-weight: 600;"-->
-<!--                      [class.error]="row.actualLevel == 'ERROR'"-->
-<!--                      [class.info]="row.actualLevel == 'INFO'"-->
-<!--                      class="mr-2">{{row.actualLevel}}</span>-->
-<!--                </td>-->
 
-<!--                <td>-->
-<!--                <span style="float: left; color: #CECE00FF; font-weight: 600;"-->
-<!--                      [class.error]="row.predictedLevel == 'ERROR'"-->
-<!--                      [class.info]="row.predictedLevel == 'INFO'"-->
-<!--                      class="mr-2">{{row.predictedLevel}}</span>-->
-<!--                </td>-->
+<!--    <div style="color: #e0e041; font-size: 14px; font-weight: 600">Match Degree:  {{matchPercentage}}%</div>-->
+<!--&lt;!&ndash;    TODO compute heatmapheight dynamically&ndash;&gt;-->
+<!--    <grouped-horizontal-bar-chart-2d [data]="horizontalData"-->
+<!--                                     [heatmapHeight]="'300px'"></grouped-horizontal-bar-chart-2d>-->
 
-<!--                <td>-->
-<!--                  <div>-->
-<!--                  <app-ad-banner [row]="row.variableHit"></app-ad-banner>-->
-<!--                  </div>-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--              </tbody>-->
-<!--            </table>-->
 <!--          </div>-->
 <!--        </div>-->
 <!--      </nb-card-body>-->
@@ -148,9 +348,101 @@
 <!--  </div>-->
 
 
+
+<!--  <div class="col">-->
+<!--    <nb-card>-->
+<!--      <nb-card-body>-->
+
+<!--        <div class="row">-->
+
+<!--            <div class="col">-->
+<!--    &lt;!&ndash;  <h5 style="font-weight: 600">Cognitive anomalies</h5>&ndash;&gt;-->
+<!--    <grouped-vertical-bar-chart-2d [data]="newTemplatesBarData"-->
+<!--                                   [heatmapHeight]="'120px'"></grouped-vertical-bar-chart-2d>-->
+<!--  </div>-->
+
+<!--        </div>-->
+
+
+<!--&lt;!&ndash;        <div class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="col-md-2" style="max-width: 15px">&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>{{compareTagId}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="col-md-5" style="height: 120px">&ndash;&gt;-->
+<!--&lt;!&ndash;            <ngx-charts-bar-vertical [results]="logBarSecond" [scheme]="colorSchemeSecond" [showGridLines]="true" [showYAxisLabel]="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                                     [xAxis]="true" [yAxisLabel]="'Count'" [yAxis]="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                                     style="fill: white"></ngx-charts-bar-vertical>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="col-md-5" style="height: 120px">&ndash;&gt;-->
+<!--&lt;!&ndash;            <grouped-vertical-bar-chart-2d [data]="barDataSecond"&ndash;&gt;-->
+<!--&lt;!&ndash;                                           [heatmapHeight]="'120px'"></grouped-vertical-bar-chart-2d>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--      </nb-card-body>-->
+<!--    </nb-card>-->
+<!--  </div>-->
+
+</div>
+
+
+<!--<div class="row" style="padding-left: 5%; padding-right: 5%">-->
+
+<!--  <div class="col">-->
+<!--    <nb-card>-->
+<!--      <nb-card-body>-->
+
+<!--        <div class="row">-->
+
+<!--          <div class="col-md-2" style="max-width: 15px">-->
+<!--            <p>{{baselineTagId}}</p>-->
+<!--          </div>-->
+<!--          <div class="col-md-5" style="height: 120px">-->
+<!--            <ngx-charts-bar-vertical [results]="logBarFirst" [scheme]="colorSchemeFirst" [showGridLines]="true"-->
+<!--                                     [showYAxisLabel]="true" [xAxis]="true" [yAxisLabel]="'Count'"-->
+<!--                                     [yAxis]="true" style="fill: white"></ngx-charts-bar-vertical>-->
+<!--          </div>-->
+<!--          <div class="col-md-5" style="height: 120px">-->
+<!--            <grouped-vertical-bar-chart-2d [data]="barDataFirst"-->
+<!--                                           [heatmapHeight]="'120px'"></grouped-vertical-bar-chart-2d>-->
+<!--          </div>-->
+
+<!--        </div>-->
+
+
+<!--        <div class="row">-->
+<!--          <div class="col-md-2" style="max-width: 15px">-->
+<!--            <p>{{compareTagId}}</p>-->
+<!--          </div>-->
+<!--          <div class="col-md-5" style="height: 120px">-->
+<!--            <ngx-charts-bar-vertical [results]="logBarSecond" [scheme]="colorSchemeSecond" [showGridLines]="true" [showYAxisLabel]="true"-->
+<!--                                     [xAxis]="true" [yAxisLabel]="'Count'" [yAxis]="true"-->
+<!--                                     style="fill: white"></ngx-charts-bar-vertical>-->
+<!--          </div>-->
+<!--          <div class="col-md-5" style="height: 120px">-->
+<!--            <grouped-vertical-bar-chart-2d [data]="barDataSecond"-->
+<!--                                           [heatmapHeight]="'120px'"></grouped-vertical-bar-chart-2d>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </nb-card-body>-->
+<!--    </nb-card>-->
+<!--  </div>-->
+<!--  -->
+<!--  -->
+<!--  <div class="col">-->
+<!--    <h5 style="font-weight: 600">New log types-->
+<!--    </h5>-->
+<!--    <nb-card>-->
+<!--      <nb-card-body>-->
+<!--        <div class="col-lg-12 p-0">-->
+<!--          <div class="scrollable">-->
+<!--            -->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </nb-card-body>-->
+<!--    </nb-card>-->
+<!--  </div>-->
+
 <!--</div>-->
-
-
 
 
 

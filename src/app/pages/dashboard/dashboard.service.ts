@@ -34,11 +34,11 @@ export class DashboardService {
   }
 
   findPredefinedTimes(): Observable<PredefinedTime[]> {
-    return this.apiService.get(`/api/applications//user/predefined_times`);
+    return this.apiService.get(`/api/applications/user/predefined_times`);
   }
 
   deletePredefinedTime(id: number) {
-    return this.apiService.delete(`/api/applications/user/predefined_times/${id}`);
+    return this.apiService.post(`/api/applications/user/predefined_times/delete`, {id: String(id)});
   }
 
   createPredefinedTime(predefinedTime: PredefinedTime) {

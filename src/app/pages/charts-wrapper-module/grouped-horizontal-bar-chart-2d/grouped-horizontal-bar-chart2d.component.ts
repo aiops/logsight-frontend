@@ -8,7 +8,7 @@ import * as moment from "moment";
 })
 export class GroupedHorizontalBarChart2dComponent {
   @Input() data = [];
-
+  @Input() heatmapHeight="'150px"
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = false;
@@ -20,8 +20,13 @@ export class GroupedHorizontalBarChart2dComponent {
   legendTitle: string = '';
 
   colorScheme = {
-    domain: ['#22c08f', '#8bb4ff']
+        domain: [
+      '#00d9ff',
+      '#82ff8e'
+    ]
   };
+
+
 
   constructor() {
     this.data = data

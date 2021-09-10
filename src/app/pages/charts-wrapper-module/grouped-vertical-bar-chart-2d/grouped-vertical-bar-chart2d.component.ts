@@ -8,7 +8,7 @@ import * as moment from "moment";
 })
 export class GroupedVerticalBarChart2dComponent {
   @Input() data = [];
-
+  @Input() heatmapHeight = '200px'
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = false;
@@ -19,9 +19,14 @@ export class GroupedVerticalBarChart2dComponent {
   yAxisLabel: string = '';
   legendTitle: string = '';
 
+
   colorScheme = {
-    domain: ['#00ff00', '#d94800', '#ff006e', '#8338ec', '#3a86ff']
+    domain: ['#d94800']
   };
+
+  // colorScheme = {
+  //   domain: ['#00ff00', '#d94800', '#ff006e', '#8338ec', '#3a86ff']
+  // };
 
   constructor() {
     this.data = data
@@ -34,10 +39,10 @@ export class GroupedVerticalBarChart2dComponent {
     // const datepipe: DatePipe = new DatePipe('en-US');
     // let yourDate: Date = new Date(date + ' UTC');
     // return (datepipe.transform(yourDate, 'shortTime').toString())
-    var date = moment.utc(val, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-    var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
-    var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
-    return local.toString()
+    // var date = moment.utc(val, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+    // var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
+    // var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+    return val
   }
 
 

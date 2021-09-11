@@ -29,8 +29,12 @@
 
 <body>
 
-<header id="header" class="header fixed-top" style="background-color: white">
-  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+<header id="header" class="header fixed-top" style="background-color: white; width: 100%;
+    padding-right: var(--bs-gutter-x,.75rem);
+    padding-left: var(--bs-gutter-x,.75rem);
+    margin-right: auto;
+    margin-left: auto;">
+  <div class="container container-xl d-flex align-items-center justify-content-between">
 
     <a href="index.html" class="logo d-flex align-items-center">
       <img src="assets/img/logo.png" alt="">
@@ -70,7 +74,6 @@
 
   </div>
 </header><!-- End Header -->
-<section class="banner"></section>
 <router-outlet></router-outlet>
 <footer id="footer" class="footer">
 

@@ -7,9 +7,13 @@ import {timeout} from "rxjs/operators";
 
 @Component({
   selector: 'terms-conditions',
-  templateUrl: './termsconditions.page.html',
+  templateUrl: './termsconditions.component.html',
+  styleUrls: ['../assets/css/style.css',
+    '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css',
+    '../assets/vendor/bootstrap-icons/bootstrap-icons.css',
+    '../assets/vendor/swiper/swiper-bundle.min.css', '../assets/vendor/glightbox/css/glightbox.css'],
 })
-export class TermsconditionsPage implements OnInit{
+export class TermsconditionsComponent implements OnInit{
 
   form = new FormGroup({
     email: new FormControl('', Validators.required),

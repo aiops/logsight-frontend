@@ -1,16 +1,20 @@
-import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from '../../auth/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {timeout} from "rxjs/operators";
 
 @Component({
   selector: 'privacy-policy',
-  templateUrl: './privacypolicy.page.html',
+  templateUrl: './privacy-policy.component.html',
+  styleUrls: ['../assets/css/style.css',
+    '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css',
+    '../assets/vendor/bootstrap-icons/bootstrap-icons.css',
+    '../assets/vendor/swiper/swiper-bundle.min.css', '../assets/vendor/glightbox/css/glightbox.css'],
 })
-export class PrivacypolicyPage implements OnInit{
+export class PrivacyPolicyComponent implements OnInit{
 
+  //DELETE EVERYTHING HERE IF NOT USED ON THE PAGE
   form = new FormGroup({
     email: new FormControl('', Validators.required),
     password: new FormControl('demo')

@@ -1,15 +1,16 @@
 import { Component, OnDestroy, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
-import { LoginService } from '../auth/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as AOS from 'aos';
+import { LoginService } from '../../auth/login.service';
 
 @Component({
   selector: 'landing',
-  styleUrls: ['./assets/css/style.css',
-    'assets/vendor/aos/aos.css', './assets/vendor/remixicon/remixicon.css', './assets/vendor/bootstrap-icons/bootstrap-icons.css',
-    './assets/vendor/swiper/swiper-bundle.min.css', './assets/vendor/glightbox/css/glightbox.css', 'landing-page.css'],
+  styleUrls: ['../assets/css/style.css',
+    '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css',
+    '../assets/vendor/bootstrap-icons/bootstrap-icons.css',
+    '../assets/vendor/swiper/swiper-bundle.min.css', '../assets/vendor/glightbox/css/glightbox.css'],
   templateUrl: './landing.component.html',
 })
 export class LandingComponent implements OnInit, AfterViewInit {

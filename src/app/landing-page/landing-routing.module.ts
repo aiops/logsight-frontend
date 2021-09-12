@@ -1,8 +1,10 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { LandingComponent } from './landing.component';
-import { SecondComponent } from './second.component';
 import { LandingPage } from './landing.page';
+import { ImpressumComponent } from './Impressum/impressum.component';
+import { LandingComponent } from './landing-component/landing.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { TermsconditionsComponent } from './terms-and-conditions/termsconditions.component';
 
 const routes: Routes = [{
   path: '',
@@ -13,8 +15,16 @@ const routes: Routes = [{
       component: LandingComponent
     },
     {
-      path: 'second',
-      component: SecondComponent
+      path: 'impressum',
+      component: ImpressumComponent
+    },
+    {
+      path: 'privacy-policy',
+      component: PrivacyPolicyComponent,
+    },
+    {
+      path: 'terms-conditions',
+      component: TermsconditionsComponent,
     },
   ]
 }];

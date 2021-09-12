@@ -1,17 +1,21 @@
-import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from '../../auth/login.service';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {timeout} from "rxjs/operators";
-import {ConnectionService} from "./connectionService";
+import { ConnectionService } from './connectionService';
 
 @Component({
   selector: 'impressum',
-  templateUrl: './impressum.page.html',
+  templateUrl: './impressum.component.html',
+  styleUrls: ['../assets/css/style.css',
+    '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css',
+    '../assets/vendor/bootstrap-icons/bootstrap-icons.css',
+    '../assets/vendor/swiper/swiper-bundle.min.css', '../assets/vendor/glightbox/css/glightbox.css'],
 })
-export class ImpressumPage implements OnInit{
+export class ImpressumComponent implements OnInit {
 
+  //DELETE EVERYTHING HERE IF NOT USED ON THE PAGE
   form = new FormGroup({
     email: new FormControl('', Validators.required),
     password: new FormControl('demo')
@@ -47,6 +51,7 @@ export class ImpressumPage implements OnInit{
       { value: 'Other stuff', label: 'Other stuff' },
     ];
   }
+
   @HostListener('input') oninput() {
 
     if (this.contactForm.valid) {
@@ -64,6 +69,7 @@ export class ImpressumPage implements OnInit{
       element.classList.remove('sticky');
     }
   }
+
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/quickstart'])
@@ -77,15 +83,19 @@ export class ImpressumPage implements OnInit{
   get name() {
     return this.contactForm.get('contactFormSubject');
   }
+
   get email() {
     return this.contactForm.get('contactFormEmail');
   }
+
   get subjects() {
     return this.contactForm.get('contactFormSubjects');
   }
+
   get message() {
     return this.contactForm.get('contactFormMessage');
   }
+
   get copy() {
     return this.contactForm.get('contactFormCopy');
   }
@@ -103,12 +113,15 @@ export class ImpressumPage implements OnInit{
   redirectToLogin() {
     this.router.navigate(['/auth/login'])
   }
+
   redirectToHomepage() {
     this.router.navigate([''])
   }
+
   redirectToTermsAndConditions() {
     this.router.navigate(['terms-conditions'])
   }
+
   redirectToPrivacyAndPolicy() {
     this.router.navigate(['privacy-policy'])
   }

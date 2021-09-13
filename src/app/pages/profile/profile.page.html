@@ -19,9 +19,36 @@
 
               <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>
 
-              <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>
-              <input nbInput  style="width: 60%" type="number"  (click)="changeQuantity($event)" [value]="quantity">
-              <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>
+
+              <form [formGroup]="form" (submit)="changeQuantity()" aria-labelledby="title">
+              <div class="row">
+<!--                <div class="col-lg-6 col-xl-8 text-center" style="margin-top: 3px">-->
+<!--                  <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>-->
+                <div class="col">
+                  <input nbInput class="mr-2" type="number" formControlName="name" id="name"
+                         placeholder="Quantity in GBs" [required]="true"
+                         [attr.aria-invalid]="form.invalid && form.touched ? true : null">
+<!--                   <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>-->
+                  <ng-container *ngIf="form.controls['name'].invalid && form.touched">
+                    <p class="error-message" *ngIf="form.controls['email'].errors?.required">
+                      Quantity is required
+                    </p>
+                  </ng-container>
+<!--                </div>-->
+<!--                <div class="col-lg-6 col-xl-4 text-center">-->
+                  <button nbButton style="text-transform: none" class="create-app-btn" status="success" [disabled]="!form.valid">Set quantity</button>
+                </div>
+                  <!--                </div>-->
+              </div>
+            </form>
+
+
+
+
+
+
+<!--              <input nbInput  style="width: 60%" type="number" [value]="quantity">-->
+
               <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
               <div *ngIf="!hasPaid" style="margin-bottom: 10px">
                 <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Subscribe</button>

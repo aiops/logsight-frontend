@@ -5,6 +5,7 @@ import {HighlightResult} from "ngx-highlightjs";
 import {loadStripe} from "@stripe/stripe-js/pure";
 import {IntegrationService} from "../../@core/service/integration.service";
 import {NotificationsService} from "angular2-notifications";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'profile',
@@ -20,6 +21,9 @@ export class ProfilePage implements OnInit {
   hasPaid: Boolean;
   response: HighlightResult;
   paymentSuccessful: string = 'default'
+  form = new FormGroup({
+  name: new FormControl('', Validators.required),
+  });
   customerId = ''
   view: any[] = [400, 200];
   colorScheme = {
@@ -67,10 +71,10 @@ export class ProfilePage implements OnInit {
     this.quantity++;
   }
 
-  changeQuantity(event){
-    if (event.key > 1){
-      this.quantity = this.quantity + event.key
-      console.log(this.quantity)
+  changeQuantity(){
+    var quantity = this.form.controls['name'].value
+    if (quantity > 1){
+      this.quantity = quantity
     }else{
       this.notificationService.error("The entry is not a valid number!")
     }

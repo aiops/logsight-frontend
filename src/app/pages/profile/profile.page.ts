@@ -67,6 +67,16 @@ export class ProfilePage implements OnInit {
     this.quantity++;
   }
 
+  changeQuantity(event){
+    if (event.key > 1){
+      this.quantity = this.quantity + event.key
+      console.log(this.quantity)
+    }else{
+      this.notificationService.error("The entry is not a valid number!")
+    }
+
+  }
+
   minus() {
     if (this.quantity > 1) {
       this.quantity--;

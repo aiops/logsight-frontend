@@ -36,7 +36,7 @@
 
 
 
-<div class="row" style="padding-left: 5%;padding-right: 5%;">
+<div class="row" style="padding-left: 5%;padding-right: 5%;" tourAnchor="qualityOverview">
   <div class="col">
   <h6 style="font-weight: 600">Quality Overview
     <nb-icon icon="info-outline"
@@ -65,7 +65,7 @@
 <!--         [thick]="15">-->
 <!--</ngx-gauge>-->
 <!--</div>-->
-<div class="col-sm" tourAnchor="anchorLogLevelDistribution">
+<div class="col-sm" tourAnchor="qualityLogLevel">
   <h6 style="font-weight: 600; text-align: center">Log level quality
     <nb-icon icon="info-outline"
              nbTooltip="Log level quality represents the trustworthiness of the system logs, regarding their log levels. For example logging a message as INFO, if in reality is ERROR makes troubleshooting more difficult!"
@@ -83,7 +83,7 @@
 </ngx-gauge>
 </div>
 
-<div class="col-sm" tourAnchor="anchorCognitiveAnomalies">
+<div class="col-sm" tourAnchor="qualityLinguistic">
   <h6 style="font-weight: 600">Linguistic quality
     <nb-icon icon="info-outline"
              nbTooltip="Log messages need to be written correctly. The linguistic quality represents a score of how good or bad a log message is written in terms of the readability and meaning"
@@ -154,7 +154,7 @@
     </div>
 
 
-<div  class="row" style="padding-left: 5%;padding-right: 5%">
+<div  class="row" style="padding-left: 5%;padding-right: 5%" tourAnchor="qualityLogLevelData">
 
   <div class="col">
     <h6 style="font-weight: 600">Log level analysis
@@ -224,7 +224,7 @@
       </nb-card-body>
     </nb-card>
   </div>
-  <div class="col">
+  <div class="col" tourAnchor="qualityLinguisticData">
     <h6 style="font-weight: 600">Linguistic analysis
     </h6>
     <nb-card>

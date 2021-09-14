@@ -1,5 +1,5 @@
 <div class="row" style="padding-left: 5%;padding-right: 5%">
-  <div class="col-md-4 p-0">
+  <div class="col-md-4">
     <nb-select class="period-select col-md-2 pl-3" [(selected)]="this.applicationId"
                (selectedChange)="applicationSelected($event)"
                placeholder="Select application">
@@ -13,7 +13,7 @@
                nbTooltip="Select application"
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
   </div>
-  <div class="col-md-8 mt-2 text-right">
+  <div class="col-md-8 text-right">
     <div class="row" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
       <predefined-times [predefinedTimes]="predefinedTimes" (deletePredefinedTime)="onDeletePredefinedTime($event)"
                         (selectPredefinedTime)="onSelectPredefinedTime($event)">
@@ -39,13 +39,13 @@
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
 
 <div style="padding-left: 5%;padding-right: 5%">
-  <div *ngIf="tableData.semanticCountAds.length > 0">
+  <div *ngIf="tableData.hasOwnProperty('semanticCountAds')" tourAnchor="anchorCriticalAnomalies">
     <h6 style="font-weight: 600">Critical anomalies
       <nb-icon icon="info-outline"
                nbTooltip="Critical anomalies are most severe. It means that they are deviating from the normal service execution flow (or are new log messages) and in the same time are recognized as cognitive anomalies by our deep network."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
     </h6>
-    <nb-card tourAnchor="anchorCriticalAnomalies">
+    <nb-card >
       <nb-card-body>
         <div class="col-lg-12 p-0">
           <div class="scrollable">
@@ -101,7 +101,7 @@
       </nb-card-body>
     </nb-card>
   </div>
-  <div *ngIf="tableData.countAds.length > 0" tourAnchor="anchorFlowAnomalies">
+  <div *ngIf="tableData.hasOwnProperty('countAds')" tourAnchor="anchorFlowAnomalies">
     <h6 style="font-weight: 600">Flow anomalies
       <nb-icon icon="info-outline"
                nbTooltip="Flow anomalies are those logs that deviate from the normal flow of the system. For example, consider that log statements A and B are always appearing together in a time interval. If this ratio is broken then we report a flow anomaly. logsight.ai learns system flows, our method needs ~10.000 log messages for this feature to be enabled"
@@ -168,7 +168,7 @@
       </nb-card-body>
     </nb-card>
   </div>
-  <div *ngIf="tableData.semanticAd.length > 0" tourAnchor="anchorCogAnomalies">
+  <div *ngIf="tableData.hasOwnProperty('semanticAd')" tourAnchor="anchorCogAnomalies">
     <h6 style="font-weight: 600">Cognitive anomalies
       <nb-icon icon="info-outline"
                nbTooltip="Cognitive anomalies are log messages that have negative semantic meaning in software systems. The AI system in the background knows how to distinguish normal and anomaly log messages based on learning from millions log messages."
@@ -225,7 +225,7 @@
     </nb-card>
   </div>
 
-  <div *ngIf="tableData.newTemplates.length > 0" tourAnchor="anchorNewAnomalies">
+  <div *ngIf="tableData.hasOwnProperty('newTemplates')" tourAnchor="anchorNewAnomalies">
     <h6 style="font-weight: 600">New log types
       <nb-icon icon="info-outline"
                nbTooltip='These log types are detected as novel and not seen before. This might happen when there is abnormal system behavior, or simply a new update of the application.'

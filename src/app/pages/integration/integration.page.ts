@@ -32,7 +32,7 @@ export class IntegrationPage implements OnInit {
   public showHideAppBtn: any = 'Show';
   public pythonBtn: any = 'Python';
   public filebeatBtn: any = 'Filebeat';
-  public loadDemoAppBtn: any = 'Reload Demo Applications';
+  public loadDemoAppBtn: any = 'Sample Data';
   public uploadBtn: any = 'Upload File';
   public restBtn: any = 'REST API';
   format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]+/;
@@ -103,7 +103,6 @@ export class IntegrationPage implements OnInit {
       .subscribe(resp => {
         this.notificationService.success("Log data uploaded successfully!")
       }, error => {
-        console.log(error.error.description)
         this.notificationService.error("Error: ", error.error.description)
       });
     this.formData = new FormData();
@@ -153,7 +152,7 @@ export class IntegrationPage implements OnInit {
   onLoadDemoApplications() {
       this.integrationService.createDemoApplications().subscribe(
         resp => { this.loadApplications() },
-        error => { console.log(error) }
+        error => { this.notificationService.error("There was an error while loading sample data, please contact us!") }
       )
   }
 
@@ -229,7 +228,6 @@ export class IntegrationPage implements OnInit {
       top: e.top,
       value: e.value
     }
-    console.log(this.response)
   }
 
   private getPythonCode() {

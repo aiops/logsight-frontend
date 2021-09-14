@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [{ title: 'Profile', data: 'profile' }, { title: 'Log out', data: 'log_out' }];
+  userMenu = [{ title: 'Settings', data: 'profile' }, { title: 'Log out', data: 'log_out' }];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 anchorId: 'anchorDashboard',
                 content: 'Get an overview of your system at the Dashboard. This includes the statistics of your log data, as well as top incidents within a period of time',
                 enableBackdrop: true,
-                  route: '/pages/dashboard'
+                route: '/pages/dashboard'
                 },
                 {
                   anchorId: 'anchorLogLevels',
@@ -125,14 +125,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
                     route: '/pages/variable-analysis'
                 },
                 {
-                  anchorId: 'anchorTopTemplates',
-                  content: 'We cluster the log types together and detect if large deviations in log count if they happen.',
-                  enableBackdrop: true,
-                },
-                {
                   anchorId: 'anchorLogs',
                   content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
                   enableBackdrop: true,
+                },
+                {
+                  anchorId: 'qualityOverview',
+                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
+                  enableBackdrop: true,
+                  route: '/pages/quality'
+                },
+                {
+                  anchorId: 'qualityLogLevel',
+                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
+                  enableBackdrop: true,
+                },{
+                  anchorId: 'qualityLinguistic',
+                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
+                  enableBackdrop: true,
+                },
+                {
+                  anchorId: 'qualityLogLevelData',
+                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
+                  enableBackdrop: true,
+                },{
+                  anchorId: 'qualityLinguisticData',
+                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
+                  enableBackdrop: true,
+                },
+                {
+                  anchorId: 'compareExplanation',
+                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
+                  enableBackdrop: true,
+                  route: '/pages/log-compare'
                 },
                 {
                   anchorId: 'anchorApplications',

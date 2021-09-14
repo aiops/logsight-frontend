@@ -29,7 +29,7 @@ export class LoginService {
   }
 
   activate(activateForm: UserActivateForm ): any {
-    return this.apiService.put('/api/auth/activate', activateForm)
+    return this.apiService.post('/api/auth/activate', activateForm)
   }
 
   getUser(): Observable<LogsightUser> {

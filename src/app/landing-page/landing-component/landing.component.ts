@@ -5,6 +5,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as AOS from 'aos';
 import { LoginService } from '../../auth/login.service';
 
+import Swiper, { Navigation, Pagination } from 'swiper';
+
+// configure Swiper to use modules
+Swiper.use([Navigation, Pagination]);
+
 @Component({
   selector: 'landing',
   styleUrls: ['../assets/css/style.css',

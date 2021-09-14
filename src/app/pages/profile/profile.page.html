@@ -1,13 +1,92 @@
 <div class="container">
   <div class="main-body">
     <div class="row gutters-sm">
-      <div class="col-sm">
-        <h5>User info</h5>
+      <div class="col-sm-4 text-center">
+        <h6>User info</h6>
         <p class="mb-3">Username:</p>
         <p class="mb-3"><b>{{email}}</b></p>
         <p class="mb-3">Private key:</p>
         <p class="mb-3"><b>{{key}}</b></p>
         </div>
+
+      <div class="col-sm-4 text-center">
+        <nb-alert *ngIf="paymentSuccessful=='true'" status="success">The payment was successful!</nb-alert>
+        <nb-alert *ngIf="paymentSuccessful=='false'" status="danger">The payment was not successful, try again!</nb-alert>
+          <h6>Billing plan</h6>
+
+          <nb-card>
+            <nb-card-body  align="center">
+
+              <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>
+
+
+              <form [formGroup]="form" (submit)="changeQuantity()" aria-labelledby="title">
+              <div class="row">
+<!--                <div class="col-lg-6 col-xl-8 text-center" style="margin-top: 3px">-->
+<!--                  <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>-->
+                <div class="col">
+                  <input nbInput class="mr-2" type="number" formControlName="name" id="name"
+                         placeholder="Quantity in GBs" [required]="true"
+                         [attr.aria-invalid]="form.invalid && form.touched ? true : null">
+<!--                   <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>-->
+                  <ng-container *ngIf="form.controls['name'].invalid && form.touched">
+                    <p class="error-message" *ngIf="form.controls['email'].errors?.required">
+                      Quantity is required
+                    </p>
+                  </ng-container>
+<!--                </div>-->
+<!--                <div class="col-lg-6 col-xl-4 text-center">-->
+                  <button nbButton style="text-transform: none" class="create-app-btn" status="success" [disabled]="!form.valid">Set quantity</button>
+                </div>
+                  <!--                </div>-->
+              </div>
+            </form>
+
+
+
+
+
+
+<!--              <input nbInput  style="width: 60%" type="number" [value]="quantity">-->
+
+              <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
+              <div *ngIf="!hasPaid" style="margin-bottom: 10px">
+                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Subscribe</button>
+              </div>
+              <div *ngIf="!hasPaid">
+                <button nbButton style="width: 60%; text-transform: none" shape="round" (click)="stripeCLickCheckout()" >One-time purchase</button>
+              </div>
+              <div *ngIf="hasPaid">
+                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Update plan</button>
+              </div>
+              <div style="margin-top: 10px">
+                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCustomerPortal()">Manage plan</button>
+              </div>
+            </nb-card-body>
+
+          </nb-card>
+          <h6>Data usage (MBs)</h6>
+          <div align="center">
+
+            <ngx-charts-number-card
+              [view]="view"
+              [scheme]="colorScheme"
+              [valueFormatting]="valueFormatter"
+              [results]='[
+                  {
+                    "name": "Data Sent",
+                    "value": usedData / 1000000
+                  },
+                  {
+                    "name": "Data Available",
+                    "value": availableData / 1000000
+                  }]'
+              [cardColor]="cardColor">
+            </ngx-charts-number-card>
+
+          </div>
+
+      </div>
 
     </div>
   </div>

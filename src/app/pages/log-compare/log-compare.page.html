@@ -1,4 +1,4 @@
-<div class="row" style="padding-left: 5%; padding-right: 5%">
+<div class="row" style="padding-left: 5%; padding-right: 5%" tourAnchor="compareExplanation">
   <div class="col-md-8">
     <nb-select (selectedChange)="applicationSelected($event)" [(selected)]="this.applicationId"
                class="period-select"
@@ -71,7 +71,7 @@
     <nb-card>
       <nb-card-body>
         <div class="col-lg-12 p-0">
-          <div style="color: #e0e041; font-size: 18px; font-weight: 600; text-align: right">
+          <div style="color: #e0e041; font-size: 18px; font-weight: 600; text-align: right" >
             <button nbButton
                                                                                           style="background-color: #6f5b5c; color: white"
                                                                                           disabled status='danger'
@@ -81,7 +81,7 @@
 
             </div>
           <div class="row" style="padding-top: 20px">
-            <div class="col">
+            <div class="col" >
           <div class="row">
           <div class="col" style="height: 120px">
                         <grouped-vertical-bar-chart-2d [data]="barDataFirst"
@@ -94,7 +94,7 @@
                                            [heatmapHeight]="'120px'"></grouped-vertical-bar-chart-2d>
           </div>
           </div></div>
-            <div class="col scrollable" style="height: 240px; overflow-y: auto">
+            <div class="col scrollable" style="height: 240px; overflow-y: auto" >
               <ng-scrollbar>
               <grouped-horizontal-bar-chart-2d [data]="horizontalData"
                                      [heatmapHeight]="horizontalHeight"></grouped-horizontal-bar-chart-2d>
@@ -103,7 +103,7 @@
         </div>
 
 <hr>
-          <div class="scrollable" style="padding-top: 30px; height: 400px">
+          <div class="scrollable" style="padding-top: 30px; height: 400px" >
 
             <ng-scrollbar>
             <table class="table table-striped table-borderless">
@@ -276,7 +276,7 @@
 
 
 
-<div class="row" style="padding-left: 5%;padding-right: 5%">
+<div class="row" style="padding-left: 5%;padding-right: 5%" >
 
   <div class="col">
     <h6 style="font-weight: 600">New log types

@@ -8,7 +8,6 @@ export class QualityService {
   }
 
     loadQualityData(startTime: string, endTime: string, applicationId: number | null): Observable<any> {
-    console.log("AAAA", applicationId)
     let applicationParam = '';
     if (applicationId) {
       applicationParam = `&applicationId=${applicationId}`

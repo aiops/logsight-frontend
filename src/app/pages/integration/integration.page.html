@@ -52,6 +52,13 @@
           </div>
         </div>
         <div class="row justify-content-center" style="margin-bottom: 10px">
+                    <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
+          <button nbButton shape="round" style="text-transform: none" class="demo-app-btn" type="button"
+              (click)="onLoadDemoApplications()">
+        {{loadDemoAppBtn}}
+      </button>
+    </div>
+
           <div class=".col-6 .col-md-4">
             <button nbButton shape="round" style="text-transform: none" class="rest-btn" type="button"
                     (click)="onRestBtn()">
@@ -77,6 +84,8 @@
               {{uploadBtn}}
             </button>
           </div>
+
+
 
         </div>
       </nb-card>
@@ -139,12 +148,7 @@
       </nb-card>
     </div>
 
-    <div class="row p-3" style="margin-bottom: 10px">
-      <button nbButton shape="round" style="text-transform: none" class="demo-app-btn" type="button"
-              (click)="onLoadDemoApplications()">
-        {{loadDemoAppBtn}}
-      </button>
-    </div>
+
 
   </div>
 

@@ -32,7 +32,7 @@ import {Moment} from "moment";
 })
 export class IncidentsPage implements OnInit, OnDestroy {
   heatmapData = [];
-  tableData: IncidentTableData;
+  tableData = [];
   options = options.timelineChart()
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
@@ -60,12 +60,15 @@ export class IncidentsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadPredefinedTimes();
     this.route.queryParamMap.subscribe(queryParams => {
       let startTime = queryParams.get('startTime')
       let endTime = queryParams.get('endTime')
+      if (startTime){
       if (startTime.toString().includes(":")){
         startTime = moment(queryParams.get('startTime'),'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
         endTime = moment(queryParams.get('endTime'),'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
+      }
       }
       const applicationParam = queryParams.get('applicationId')
       const dateTimeType = queryParams.get('dateTimeType');
@@ -97,7 +100,6 @@ export class IncidentsPage implements OnInit, OnDestroy {
                 }, dialogClass: 'model-full'
               });
             }, err => {
-              console.log(err)
               this.notificationService.error('Error', 'Error fetching data')
             })
         }
@@ -112,7 +114,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
       }
     })
 
-    this.loadPredefinedTimes();
+
   }
 
   loadPredefinedTimes() {
@@ -201,7 +203,6 @@ export class IncidentsPage implements OnInit, OnDestroy {
 
   applicationSelected(appId: number) {
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
-    console.log("AA", this.startDateTime, this.endDateTime)
     this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
   }
@@ -253,7 +254,6 @@ export class IncidentsPage implements OnInit, OnDestroy {
         timeList.push(this.heatmapData[i].series[0].extra)
       }
     }
-    console.log("LIST:", timeList)
     let date = timeList[0].split(' ')[0].split('-');
     let time = timeList[0].split(' ')[1].split(':');
     const firstTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(

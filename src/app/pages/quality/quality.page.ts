@@ -98,7 +98,6 @@ export class QualityPage implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.logQualityData$.subscribe( resp => {
-      console.log("LogQ data", resp)
       if (resp.length > 0){
         this.isSpinning = false
       }

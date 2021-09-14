@@ -3,12 +3,12 @@ import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from '../auth/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { timeout } from 'rxjs/operators';
-
+import * as AOS from 'aos';
 @Component({
   selector: 'landing-page',
-  styleUrls: ['./assets/css/animate.css', './assets/css/owl.carousel.css', './assets/css/owl.theme.css',
-    './assets/css/style.css', 'landing-page.css'],
+  styleUrls: ['./assets/css/style.css', './assets/vendor/bootstrap-icons/bootstrap-icons.css',
+    './assets/vendor/aos/aos.css', './assets/vendor/remixicon/remixicon.css',
+    './assets/vendor/swiper/swiper-bundle.min.css', './assets/vendor/glightbox/css/glightbox.css', 'landing-page.css'],
   templateUrl: './landing.page.html',
 })
 export class LandingPage implements OnInit, AfterViewInit {
@@ -30,6 +30,7 @@ export class LandingPage implements OnInit, AfterViewInit {
     if (el) {
       el.style['display'] = 'none';
     }
+    AOS.init();
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -69,39 +70,42 @@ export class LandingPage implements OnInit, AfterViewInit {
   redirectToLogin() {
     this.router.navigate(['/auth/login'])
   }
+
   redirectToImpressum() {
     this.router.navigate(['impressum'])
   }
+
   redirectToTermsAndConditions() {
     this.router.navigate(['terms-conditions'])
   }
+
   redirectToPrivacyAndPolicy() {
     this.router.navigate(['privacy-policy'])
   }
 
   ngAfterViewInit(): void {
-    document.addEventListener("DOMContentLoaded", function(){
+    document.addEventListener('DOMContentLoaded', function () {
       // make it as accordion for smaller screens
       if (window.innerWidth < 992) {
 
         // close all inner dropdowns when parent is closed
-        document.querySelectorAll('.navbar .dropdown').forEach(function(everydropdown){
+        document.querySelectorAll('.navbar .dropdown').forEach(function (everydropdown) {
           everydropdown.addEventListener('hidden.bs.dropdown', function () {
             // after dropdown is hidden, then find all submenus
-            this.querySelectorAll('.submenu').forEach(function(everysubmenu){
+            this.querySelectorAll('.submenu').forEach(function (everysubmenu) {
               // hide every submenu as well
               everysubmenu.style.display = 'none';
             });
           })
         });
 
-        document.querySelectorAll('.dropdown-menu a').forEach(function(element){
+        document.querySelectorAll('.dropdown-menu a').forEach(function (element) {
           element.addEventListener('click', function (e) {
             let nextEl = this.nextElementSibling;
-            if(nextEl && nextEl.classList.contains('submenu')) {
+            if (nextEl && nextEl.classList.contains('submenu')) {
               // prevent opening link if link needs to open dropdown
               e.preventDefault();
-              if(nextEl.style.display == 'block'){
+              if (nextEl.style.display == 'block') {
                 nextEl.style.display = 'none';
               } else {
                 nextEl.style.display = 'block';

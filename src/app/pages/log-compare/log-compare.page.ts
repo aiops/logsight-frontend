@@ -153,6 +153,7 @@ export class LogComparePage {
     })
 
     this.barDataFirst$.subscribe(data => {
+      if (data.length > 0){
       let firstDay = moment.utc(data[0].name, 'DD-MM-YYYY HH:mm')
       let lastDay = moment.utc(data[data.length-1].name, 'DD-MM-YYYY HH:mm')
       let daysDiff = lastDay.diff(firstDay, "days")
@@ -168,6 +169,7 @@ export class LogComparePage {
         data[i].name = local.toString()
       }
       this.barDataFirst = data;
+            }
     })
 
     this.barDataSecond$.subscribe(data => {
@@ -195,7 +197,7 @@ export class LogComparePage {
         var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
         data[i].name = local.toString()
       }
-      console.log("AA",data )
+      // console.log("AA",data )
       this.barDataSecond = data;
     })
 

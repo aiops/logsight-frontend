@@ -559,6 +559,7 @@ section {
   font-family: "Nunito", sans-serif;
   font-weight: 600;
   font-size: 16px;
+  white-space: nowrap;
   letter-spacing: 1px;
 }
 
@@ -1291,7 +1292,7 @@ section {
   margin: 40px 30px;
   box-shadow: 0px 0 20px rgba(1, 41, 112, 0.1);
   background: #fff;
-  /*min-height: 0px;*/
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   text-align: center;

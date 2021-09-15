@@ -295,10 +295,11 @@ logger.info("------------")`;
     }
     }
 
-    2. JSON - logstash. We currently support all file outputs from logstash
+    2. JSON - logstash.
+    We currently support all file outputs from logstash
 
     3. syslog - We support log files that follow the syslog format.
-    Yes, you can upload your logs located in /var/log/syslog and get insights quickly!
+    You can upload logs located in /var/log/syslog.
     `
   }
 

@@ -118,10 +118,10 @@
 <!--                  scope="col" style="width: 6%">Ratios-->
 <!--                </th>-->
                 <th
-                  scope="col" style="width: 10%">Anomaly score
+                  scope="col" style="width: 10%" [appSort]="countAnomalies" class="clickable" data-name="ratioScore" data-order="desc">Anomaly score
                 </th>
                 <th
-                  scope="col" style="width: 5%">Level
+                  scope="col" style="width: 5%" [appSort]="countAnomalies" class="clickable" data-name="actualLevel" data-order="desc">Level
                 </th>
 
                 <th
@@ -155,10 +155,10 @@
                   <table class="table table-striped table-borderless">
                                         <thead style="text-align: center">
                                           <th scope="col" style="width: 52%"></th>
-                                          <th scope="col" style="width: 8%">Level</th>
-                                          <th  scope="col" style="width: 10%">Prediction</th>
-                                        <th scope="col" style="width: 15%">Expected rate (%)</th>
-                                        <th  scope="col" style="width: 15%">Current rate (%)</th>
+                                          <th scope="col" style="width: 8%" [appSort]="row.templateToGoList" class="clickable" data-name="actualLevel" data-order="desc" >Level</th>
+                                          <th  scope="col" style="width: 10%" [appSort]="row.templateToGoList" class="clickable" data-name="prediction" data-order="desc" >Prediction</th>
+                                        <th scope="col" style="width: 15%" [appSort]="row.templateToGoList" class="clickable" data-name="expectedRate" data-order="desc" >Expected rate (%)</th>
+                                        <th  scope="col" style="width: 15%" [appSort]="row.templateToGoList" class="clickable" data-name="rateNow" data-order="desc">Current rate (%)</th>
                                         </thead>
                     <tbody>
                     <tr *ngFor="let t of row.templateToGoList">
@@ -294,16 +294,16 @@
               <thead>
               <tr>
                 <th scope="col" style="width: 2%"></th>
-                <th [appSort]="countAnomalies" class="clickable" data-name="timestamp" data-order="desc"
+                <th [appSort]="newTemplates" class="clickable" data-name="timestamp" data-order="desc"
                     scope="col" style="width: 10%">Timestamp
                 </th>
 
                 <th
-                  scope="col" style="width: 10%">Level
+                  scope="col" style="width: 10%" [appSort]="newTemplates" class="clickable" data-name="actualLevel" data-order="desc">Level
                 </th>
 
                 <th
-                  scope="col" style="width: 10%">Prediction
+                  scope="col" style="width: 10%" [appSort]="newTemplates" class="clickable" data-name="prediction" data-order="desc">Prediction
                 </th>
                 <th scope="col" style="width: 50%">Message</th>
               </tr>

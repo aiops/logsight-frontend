@@ -62,31 +62,31 @@ export class DashboardPage implements OnInit, OnDestroy {
               private integrationService: IntegrationService,
               private tourService: TourService) {
 
-    this.heatmapData$ = combineLatest([timer(1, 1000000), this.reload$]).pipe(
+    this.heatmapData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
       switchMap(() => this.loadHeatmapData(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.pieChartData$ = combineLatest([timer(1, 1000000), this.reload$]).pipe(
+    this.pieChartData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
       switchMap(() => this.loadPieChartData(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.stackedAreaChartData$ = combineLatest([timer(1, 1000000), this.reload$]).pipe(
+    this.stackedAreaChartData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
       switchMap(() => this.loadStackedAreaChartData(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.topKIncidents$ = combineLatest([timer(1, 1000000), this.reload$]).pipe(
+    this.topKIncidents$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
       switchMap(() => this.loadTopKIncidents(this.startDateTime, this.endDateTime, this.numberOfIncidents)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.barData$ = combineLatest([timer(1, 1000000), this.reload$]).pipe(
+    this.barData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
       switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)

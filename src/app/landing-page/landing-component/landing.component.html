@@ -13,8 +13,8 @@
           <tr>
             <td><input formControlName="email" class="form-control" id="chimp-email" type="email" name="email"
                        placeholder="Enter your email"
-                       autocomplete="off" style="width: 35rem; height: 3.5rem"></td>
-            <td style="padding-left: 1em;"><input style="text-transform: none; width: 8rem; height: 3.5rem" class="btn btn-primary mb-0"
+                       autocomplete="off" style="width: 100%; height: 3.5rem"></td>
+            <td style="padding-left: 1em;"><input style="text-transform: none; width: 100%; height: 3.5rem" class="btn btn-primary mb-0"
                                                   type="submit"
                                                   value="Sign up"></td>
           </tr>
@@ -457,19 +457,19 @@
             <p>Deep learning is the heart of intelligent log analytics.
             Five minute introduction to logsight.ai
             </p>
-            <div class="row text-center text-lg-start">
-              <div class="col">
+            <div class="row">
+              <div class="col-sm p-2" style="width: 100%">
               <a href="https://arxiv.org/pdf/2008.09340.pdf"
-                 class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
-                <span>Cognitive Anomalies</span>
-                <i class="bi bi-arrow-right"></i>
+                 class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center" >
+                <span >Cogn. Anomalies</span>
+<!--                <i class="bi bi-arrow-right"></i>-->
               </a>
               </div>
-              <div class="col">
+              <div class="col-sm p-2"  style="width: 100%">
               <a href="https://arxiv.org/abs/2003.07905"
                  class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
                 <span>Variable Analysis</span>
-                <i class="bi bi-arrow-right"></i>
+<!--                <i class="bi bi-arrow-right"></i>-->
               </a>
                 </div>
             </div>
@@ -480,7 +480,7 @@
 
         <div class="col-lg-6 d-flex align-items-center">
           <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/z1Gg_y_6-C0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+            <iframe width="100%" height="350" src="https://www.youtube.com/embed/z1Gg_y_6-C0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         </div>
 
 <!--        <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out">-->
@@ -884,9 +884,9 @@
         <h2>Testimonials</h2>
         <p>Our endorsements</p>
       </header>
-           <swiper [slidesPerView]="3" [spaceBetween]="50" [pagination]="true" [autoplay]= "true" [loop]="true">
+           <swiper class="row" [slidesPerView]="3" [spaceBetween]="50" [pagination]="{'clickable':true}" [autoplay]= "true" [loop]="true" >
           <ng-template swiperSlide>
-            <div class="testimonial-item">
+            <div class="testimonial-item col-sm">
               <p>
                 Unlike other systems which identify isolated anomalies, logsight.ai aggregates and correlates all log records  which together form an incident. This dramatically reduces the volume of false alarms triggered.
               </p>
@@ -899,7 +899,7 @@
           </ng-template><!-- End testimonial item -->
 
                       <ng-template swiperSlide>
-            <div class="testimonial-item">
+            <div class="testimonial-item col-sm">
               <p>
               With logsight.ai, our mean time to detection went from hours to a few minutes. The prioritization and classification of incidents using AI enables  a near real-time feedback loop.
               </p>
@@ -912,13 +912,13 @@
           </ng-template><!-- End testimonial item -->
 
             <ng-template swiperSlide>
-            <div class="testimonial-item">
+            <div class="testimonial-item col-sm">
               <p>
-            logsight.ai was the missing link to fully automate our CI/CD pipeline. Logs from service upgrades are automatically compared to detect latent failures. In the last 2 months we avoided 3 events of type P2 in production              </p>
+            logsight.ai was the missing link to fully automate our CI/CD pipeline. Logs from service upgrades are automatically compared to detect latent failures. In the last 2 months we avoided 3 events of type P2 in production.</p>
               <div class="profile mt-auto">
 <!--                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">-->
                 <h5>Jasmin Bogatinovski</h5>
-                <h5>Ceo &amp; Founder</h5>
+                <h5>AIOPS Researcher</h5>
               </div>
             </div>
           </ng-template><!-- End testimonial item -->

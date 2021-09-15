@@ -64,11 +64,10 @@ export class IncidentsPage implements OnInit, OnDestroy {
     this.route.queryParamMap.subscribe(queryParams => {
       let startTime = queryParams.get('startTime')
       let endTime = queryParams.get('endTime')
-      if (startTime){
+
       if (startTime.toString().includes(":")){
         startTime = moment(queryParams.get('startTime'),'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
         endTime = moment(queryParams.get('endTime'),'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
-      }
       }
       const applicationParam = queryParams.get('applicationId')
       const dateTimeType = queryParams.get('dateTimeType');

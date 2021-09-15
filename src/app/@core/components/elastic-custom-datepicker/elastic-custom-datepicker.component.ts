@@ -67,8 +67,8 @@ export class ElasticCustomDatepickerComponent {
             predefinedTime = {
                 id: 0,
                 name: name,
-                startTime: 'now',
-                endTime: this.relativeDateTime,
+                startTime: this.relativeDateTime,
+                endTime: 'now',
                 dateTimeType: 'RELATIVE'
             }
         } else {

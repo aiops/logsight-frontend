@@ -91,6 +91,7 @@ export class IntegrationPage implements OnInit {
 
 
   uploadFiles(file) {
+    this.formData = new FormData();
     for (let i = 0; i < file.length; i++) {
       this.formData.append("file", file[i], file[i]['name']);
     }

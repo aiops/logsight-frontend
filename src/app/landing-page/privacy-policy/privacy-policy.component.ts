@@ -33,6 +33,11 @@ export class PrivacyPolicyComponent implements OnInit{
       el.style['display'] = 'none';
     }
   }
+
+  ngAfterViewInit() {
+   window.scrollTo(0, 0);
+  }
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(e) {
     if (window.pageYOffset > 0) {

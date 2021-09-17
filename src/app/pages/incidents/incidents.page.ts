@@ -32,7 +32,7 @@ import {Moment} from "moment";
 })
 export class IncidentsPage implements OnInit, OnDestroy {
   heatmapData = [];
-  tableData = [];
+  tableData: IncidentTableData;
   options = options.timelineChart()
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
@@ -216,7 +216,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
 
   onSelectPredefinedTime(pt: PredefinedTime) {
     if (pt.dateTimeType == 'RELATIVE') {
-      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
+      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.startTime })
     } else {
       this.onDateTimeSearch({
         absoluteTimeChecked: true, absoluteDateTime: {

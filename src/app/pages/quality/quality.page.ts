@@ -266,7 +266,7 @@ export class QualityPage implements OnInit, OnDestroy {
 
   onSelectPredefinedTime(pt: PredefinedTime) {
     if (pt.dateTimeType == 'RELATIVE') {
-      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.endTime })
+      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.startTime })
     } else {
       this.onDateTimeSearch({
         absoluteTimeChecked: true, absoluteDateTime: {

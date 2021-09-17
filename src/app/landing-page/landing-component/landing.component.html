@@ -882,13 +882,13 @@
 
       <header class="section-header">
         <h2>Testimonials</h2>
-        <p>Our endorsements</p>
+        <p>Our Endorsements</p>
       </header>
-           <swiper class="row" [slidesPerView]="3" [spaceBetween]="50" [pagination]="{'clickable':true}" [autoplay]= "true" [loop]="true" >
-          <ng-template swiperSlide>
-            <div class="testimonial-item col-sm">
+           <swiper class="row" direction="horizontal" [slidesPerView]="'auto'" [spaceBetween]="50" [pagination]="{'clickable':true}" [autoplay]= "true">
+          <ng-template swiperSlide >
+            <div class="testimonial-item">
               <p>
-                Unlike other systems which identify isolated anomalies, logsight.ai aggregates and correlates all log records  which together form an incident. This dramatically reduces the volume of false alarms triggered.
+                Unlike other systems which identify isolated anomalies, logsight.ai aggregates and correlates all log records  which together form an incident. <br> This dramatically reduces the volume of false alarms triggered.
               </p>
               <div class="profile mt-auto">
 <!--                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">-->
@@ -899,9 +899,9 @@
           </ng-template><!-- End testimonial item -->
 
                       <ng-template swiperSlide>
-            <div class="testimonial-item col-sm">
+            <div class="testimonial-item">
               <p>
-              With logsight.ai, our mean time to detection went from hours to a few minutes. The prioritization and classification of incidents using AI enables  a near real-time feedback loop.
+              With logsight.ai, our mean time to detection went from hours to a few minutes. <br> The prioritization and classification of incidents using AI enables  a near real-time feedback loop.
               </p>
               <div class="profile mt-auto">
 <!--                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">-->
@@ -912,9 +912,9 @@
           </ng-template><!-- End testimonial item -->
 
             <ng-template swiperSlide>
-            <div class="testimonial-item col-sm">
+            <div class="testimonial-item">
               <p>
-            logsight.ai was the missing link to fully automate our CI/CD pipeline. Logs from service upgrades are automatically compared to detect latent failures. In the last 2 months we avoided 3 events of type P2 in production.</p>
+            logsight.ai was the missing link to fully automate our CI/CD pipeline. <br> Logs from service upgrades are automatically compared to detect latent failures. <br> In the last 2 months we avoided 3 events of type P2 in production.</p>
               <div class="profile mt-auto">
 <!--                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">-->
                 <h5>Jasmin Bogatinovski</h5>

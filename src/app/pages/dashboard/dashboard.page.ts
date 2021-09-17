@@ -297,7 +297,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   private navigateToIncidentsPage(startTime: string, endTime: String, applicationId: number) {
-    this.router.navigate(['/pages', 'incidents'], { queryParams: { startTime, endTime, applicationId } })
+    this.router.navigate(['/pages', 'incidents'], { queryParams: { startTimeSpecific: startTime, endTimeSpecific: endTime, applicationId } })
   }
 
   onDateTimeSearch(event) {

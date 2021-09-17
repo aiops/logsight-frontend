@@ -52,6 +52,10 @@ export class ImpressumComponent implements OnInit {
     ];
   }
 
+  ngAfterViewInit() {
+   window.scrollTo(0, 0);
+  }
+
   @HostListener('input') oninput() {
 
     if (this.contactForm.valid) {

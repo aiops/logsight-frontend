@@ -252,8 +252,14 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onHeatMapSelect(data: any) {
+    try {
+      var timeDiff = this.getTimeDiff()
+    }catch (e) {
+    }
 
-    const timeDiff = this.getTimeDiff()
+    if (!timeDiff){
+      timeDiff = 1
+    }
     const dateTime = data.extra
     const date = dateTime.split(' ')[0].split('-');
     const time = dateTime.split(' ')[1].split(':');

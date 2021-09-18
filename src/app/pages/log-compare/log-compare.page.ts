@@ -319,7 +319,14 @@ export class LogComparePage {
 
   onHeatMapSelect(data: any) {
 
-    const timeDiff = this.getTimeDiff()
+    try {
+      var timeDiff = this.getTimeDiff()
+    }catch (e) {
+    }
+
+    if (!timeDiff){
+      timeDiff = 1
+    }
     const dateTime = data.extra
     const date = dateTime.split(' ')[0].split('-');
     const time = dateTime.split(' ')[1].split(':');

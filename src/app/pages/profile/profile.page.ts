@@ -42,20 +42,14 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.getLoggedUser().subscribe(user => {
-      this.key = user.key
-      this.email = user.email
-      this.hasPaid = user.hasPaid
-      this.availableData = user.availableData
-      this.usedData = user.usedData
-    })
+    this.getUserData()
     this.quantity = 1
-
 
     this.route.queryParams
       .subscribe(params => {
         if (params["payment"]=='successful'.concat(this.key)){
           this.paymentSuccessful = 'true'
+          this.getUserData()
         }else if (params["payment"]=='failed'.concat(this.key)){
           this.paymentSuccessful = 'false'
         }
@@ -65,7 +59,20 @@ export class ProfilePage implements OnInit {
 
   }
 
+  getUserData(){
+    const roundTo = function(num: number, places: number) {
+      const factor = 10 ** places;
+      return Math.round(num * factor) / factor;
+        };
 
+      this.authService.getLoggedUser().subscribe(user => {
+      this.key = user.key
+      this.email = user.email
+      this.hasPaid = user.hasPaid
+      this.availableData = roundTo((user.availableData / 1000000), 1)
+      this.usedData = roundTo((user.usedData / 1000000), 1)
+    })
+  }
 
   plus() {
     this.quantity++;

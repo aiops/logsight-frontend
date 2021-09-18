@@ -97,8 +97,8 @@ export class ProfilePage implements OnInit {
       subscription: true,
       email: this.email,
       priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
-      cancelUrl: 'https://logsight.ai/pages/profile?payment=failed'.concat(this.key),
-      successUrl: 'https://logsight.ai/pages/profile?payment=successful'.concat(this.key),
+      cancelUrl: 'https://demo.logsight.ai/pages/profile?payment=failed'.concat(this.key),
+      successUrl: 'https://demo.logsight.ai/pages/profile?payment=successful'.concat(this.key),
     };
     const stripe = await this.stripePromise;
     this.integrationService.subscription(payment).subscribe(data => {
@@ -117,8 +117,8 @@ export class ProfilePage implements OnInit {
       subscription: false,
       email: this.email,
       priceID: 'price_1J6LloIf2Ur5sxpSp9CvjWZr',
-      cancelUrl: 'https://logsight.ai/pages/profile?payment=failed'.concat(this.key),
-      successUrl: 'https://logsight.ai/pages/profile?payment=successful'.concat(this.key),
+      cancelUrl: 'https://demo.logsight.ai/pages/profile?payment=failed'.concat(this.key),
+      successUrl: 'https://demo.logsight.ai/pages/profile?payment=successful'.concat(this.key),
     };
     const stripe = await this.stripePromise;
     this.integrationService.subscription(payment).subscribe(data => {

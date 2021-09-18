@@ -177,8 +177,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
     this.apiService.post("/api/auth/kibana/login",
-      '{"password":"test-test","username":'+this.key+ '}').subscribe(data =>{
-      console.log(data)
+      '{"key":"'+ this.key + '"}').subscribe(data =>{
     })
 
     this.currentTheme = this.themeService.currentTheme;

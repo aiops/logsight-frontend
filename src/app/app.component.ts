@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   onContextItemSelection(data) {
     if (data === 'log_out') {
       localStorage.removeItem('token')
-      this.router.navigate(['/']);
+      location.reload()
     }
   }
 }

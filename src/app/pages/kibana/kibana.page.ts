@@ -3,6 +3,7 @@ import {interval} from "rxjs";
 import {AuthenticationService} from "../../auth/authentication.service";
 import {ApiService} from "../../@core/service/api.service";
 import {HttpHeaders} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'kibana',
@@ -15,21 +16,22 @@ export class KibanaPage implements OnInit {
   key: string;
   email: string;
   reloadNum: number;
+  environment = environment
 
   constructor(private authService: AuthenticationService, private apiService: ApiService) {
     this.curSec = 0;
     this.reloadNum = 0;
-
+    this.environment = environment
   }
 
 
 
-  alerting() {
-    alert(`To log into your kibana, use your user key as username and 'test-test' as initial password. You can find your key in your profile, and change the password in your kibana user settings! \n
-      username: ${this.key} \n
-      initial password: test-test`);
-    prompt("Copy key CTRL+C:", this.key)
-  }
+  // alerting() {
+  //   alert(`To log into your kibana, use your user key as username and 'test-test' as initial password. You can find your key in your profile, and change the password in your kibana user settings! \n
+  //     username: ${this.key} \n
+  //     initial password: test-test`);
+  //   prompt("Copy key CTRL+C:", this.key)
+  // }
   //
   // startTimer(seconds: number) {
   //   const time = seconds;

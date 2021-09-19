@@ -51,16 +51,24 @@
 
               <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
               <div *ngIf="!hasPaid" style="margin-bottom: 10px">
-                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Subscribe</button>
+                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Subscribe <nb-icon icon="info-outline"
+               nbTooltip="Subscription will be monthly charged. You can cancel anytime."
+               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>
               </div>
-              <div *ngIf="!hasPaid">
-                <button nbButton style="width: 60%; text-transform: none" shape="round" (click)="stripeCLickCheckout()" >One-time purchase</button>
-              </div>
+<!--              <div>-->
+<!--                <button nbButton style="width: 60%; text-transform: none" shape="round" (click)="stripeCLickCheckout()" >One-time purchase <nb-icon icon="info-outline"-->
+<!--               nbTooltip="One time purchase enables you to pay for fixed amount of data, independently of the time period."-->
+<!--               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>-->
+<!--              </div>-->
               <div *ngIf="hasPaid">
-                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Update plan</button>
+                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Update plans <nb-icon icon="info-outline"
+               nbTooltip="If your subscription is not enough, you can subscribe again. Make sure you cancel your previous plan bellow in 'Manage Plan'."
+               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>
               </div>
               <div style="margin-top: 10px">
-                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCustomerPortal()">Manage plan</button>
+                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCustomerPortal()">Manage plans <nb-icon icon="info-outline"
+               nbTooltip="Manage your subscriptions, here you can cancel or modify your subscription."
+               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>
               </div>
             </nb-card-body>
 
@@ -74,11 +82,11 @@
               [valueFormatting]="valueFormatter"
               [results]='[
                   {
-                    "name": "Data Sent",
+                    "name": "Data Used",
                     "value": usedData
                   },
                   {
-                    "name": "Data Available",
+                    "name": "Data Purchased",
                     "value": availableData
                   }]'
               [cardColor]="cardColor">

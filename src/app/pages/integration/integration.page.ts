@@ -50,8 +50,7 @@ export class IntegrationPage implements OnInit {
   code_filebeats = ''
   code_rest = ''
   code_upload = ''
-  stripePromise = loadStripe(
-    'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
+
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
@@ -194,32 +193,6 @@ export class IntegrationPage implements OnInit {
     this.integrationService.loadLogFileTypes().subscribe(resp => this.logFileTypes = resp)
   }
 
-  async stripeCLick() {
-    const payment = {
-      name: 'LogsightPayment',
-      currency: 'eur',
-      quantity: this.quantity,
-      amount: 999,
-      email: this.email,
-      priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
-      cancelUrl: 'http://localhost:4200/pages/integration',
-      successUrl: 'http://localhost:4200/pages/integration',
-    };
-    const stripe = await this.stripePromise;
-    this.integrationService.subscription(payment).subscribe(data => {
-      this.customerId = data.id;
-      stripe.redirectToCheckout({
-        sessionId: data.id
-      })
-    });
-  }
-
-  async stripeCustomerPortal() {
-    const stripe = await this.stripePromise;
-    this.integrationService.checkCustomerPortal().subscribe(data => {
-      window.open(data['url'], "_blank");
-    });
-  }
 
   onHighlight(e) {
     this.response = {

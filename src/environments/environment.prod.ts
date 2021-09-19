@@ -5,4 +5,5 @@
  */
 export const environment = {
   production: true,
+  kibanaUrl: "https://demo.logsight.ai/kibana/app/kibana" // # TODO CHANGE THIS TO "https://logsight.ai/kibana/app/kibana" FOR MAIN BRANCH
 };

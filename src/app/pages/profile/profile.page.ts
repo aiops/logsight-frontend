@@ -116,25 +116,25 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  async stripeCLickCheckout() {
-    const payment = {
-      name: 'LogsightPayment',
-      currency: 'eur',
-      quantity: this.quantity,
-      subscription: false,
-      email: this.email,
-      priceID: 'price_1J6LloIf2Ur5sxpSp9CvjWZr',
-      cancelUrl: 'https://demo.logsight.ai/pages/profile?payment=failed'.concat(this.key),
-      successUrl: 'https://demo.logsight.ai/pages/profile?payment=successful'.concat(this.key),
-    };
-    const stripe = await this.stripePromise;
-    this.integrationService.subscription(payment).subscribe(data => {
-      this.customerId = data.id;
-      stripe.redirectToCheckout({
-        sessionId: data.id
-      })
-    });
-  }
+  // async stripeCLickCheckout() {
+  //   const payment = {
+  //     name: 'LogsightPayment',
+  //     currency: 'eur',
+  //     quantity: this.quantity,
+  //     subscription: false,
+  //     email: this.email,
+  //     priceID: 'price_1J6LloIf2Ur5sxpSp9CvjWZr',
+  //     cancelUrl: 'https://demo.logsight.ai/pages/profile?payment=failed'.concat(this.key),
+  //     successUrl: 'https://demo.logsight.ai/pages/profile?payment=successful'.concat(this.key),
+  //   };
+  //   const stripe = await this.stripePromise;
+  //   this.integrationService.subscription(payment).subscribe(data => {
+  //     this.customerId = data.id;
+  //     stripe.redirectToCheckout({
+  //       sessionId: data.id
+  //     })
+  //   });
+  // }
 
 
 

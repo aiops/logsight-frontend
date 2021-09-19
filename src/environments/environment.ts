@@ -10,5 +10,5 @@
 
 export const environment = {
   production: false,
-
+  kibanaUrl: "http://localhost:5601/kibana/app/kibana#/"
 };

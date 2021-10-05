@@ -48,7 +48,7 @@
       <nb-card class="p-3 row-one" style="border: none">
         <div class="row no-gutters">
           <div class="col">
-            <h6><b>Integration types</b></h6>
+            <h6><b>Shipping logs</b></h6>
           </div>
         </div>
         <div class="row justify-content-center" style="margin-bottom: 10px">
@@ -131,7 +131,7 @@
             <tr *ngFor="let row of applications">
               <td>{{row.id}}</td>
               <td>{{row.name}}</td>
-              <td><i (click)="removeApplication(row.id)" [title]='"Delete application"'
+              <td style="text-align: left"><i (click)="removeApplication(row.id)" [title]='"Delete application"'
                      class="ml-3 fas fa-trash pointer"></i></td>
 
               <!--              <td>-->
@@ -161,9 +161,9 @@
             <h6>Python-SDK Usage</h6>
           </div>
           <div class="row">
-            <p class="dscr">To start sending logs from a Python script you need to install the Logsight Python-SDK:</p>
+            <p class="dscr">To start sending logs from a Python script you need to install the logsight.ai Python-SDK:</p>
             <pre><code
-              style="color: white">pip install git+ssh://git@github.com/aiops/logsight-python-sdk.git</code></pre>
+              style="color: white">pip install logsight-sdk-py</code></pre>
           </div>
         </div>
         <!--        </nb-card>-->
@@ -175,7 +175,7 @@
             <h6>Endpoint details</h6>
           </div>
           <div class="row">
-            <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with
+            <p class="dscr">To use the logsight.ai Python-SDK in your Python code, you need to initialize the logger with
               the following attributes: </p>
             <table class="table table-borderless">
               <tr>
@@ -193,17 +193,16 @@
         </div>
       </div>
 
-      <div class="row user_guidance">
-        <div class="col">
-          <div class="row">
-            <h6>Integration help?</h6>
-          </div>
-          <br>
-          <div class="row">
-                <p class="dscr">Are you interested in more details about logsight.ai? Feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+<div class="row user_guidance pt-2">
+            <div class="col">
+              <div class="row">
+                <h6>Integration help?</h6>
               </div>
-        </div>
-      </div>
+              <div class="row">
+                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+              </div>
+            </div>
+          </div>
 
     </ng-container>
 
@@ -216,74 +215,72 @@
             <h6>Filebeats Usage</h6>
           </div>
           <div class="row">
-            <p class="dscr">Logsight provides integration with Filebeat</p>
+            <p class="dscr">Filebeat simplifies the collection, parsing, and visualization of common log formats.
+To start sending logs from your system to logsight.ai via Filebeats you need to execute the following steps described in the docs:</p>
           </div>
         </div>
         <!--        </nb-card>-->
       </div>
-      <br>
-      <br>
+
       <div class="row user_guidance">
         <div class="col">
+<!--          <div class="row">-->
+<!--            <h6>Download the connector script</h6>-->
+<!--          </div>-->
           <div class="row">
-            <h6>Endpoint details</h6>
-          </div>
-          <div class="row">
-            <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with
-              the following attributes: </p>
-            <table class="table table-borderless">
-              <tr>
-                <th>PRIVATE_KEY</th>
-                <td>A private key which is used to validate your authenticity.</td>
-              </tr>
-              <tr>
-                <th>APP_NAME</th>
-                <td>The name of your application/service. For example, a company "x" wants to debug their test
-                  environment they might insert the “x_test”
-                </td>
-              </tr>
-            </table>
-          </div>
-
-          <div class="row">
-            <h6>Prerequisites</h6>
-            <p>Have Filebeat installed, for more information on how to install: <a
-              href="Have Filebeat installed, for more information on how to install: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html">https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html</a>
-            </p>
+            <a href="https://docs.logsight.ai/#/shipping_logs/filebeats"><p style="text-underline-color: white">Docs | Shipping logs via Filebeats</p></a>
+<!--            <table class="table table-borderless">-->
+<!--              <tr>-->
+<!--                <th>PRIVATE_KEY</th>-->
+<!--                <td>A private key which is used to validate your authenticity.</td>-->
+<!--              </tr>-->
+<!--              <tr>-->
+<!--                <th>APP_NAME</th>-->
+<!--                <td>The name of your application/service. For example, a company "x" wants to debug their test-->
+<!--                  environment they might insert the “x_test”-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </table>-->
           </div>
 
-          <div class="row">
-            <div class="col">
-              <div class="row">
-                <h6>Configuration</h6>
-              </div>
-              <div class="row">
-                Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable
-                Elastic output).
-                <br>
-                <br>
-                For more information about configuring Filebeat to use Logstash please refer to:
-                <br>
-                <br>
-                <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>
-                Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350
-                <br>
-                <br>
-                For more information about configuring Filebeat to use Logstash please refer to:
-                <br>
-                <br>
-              </div>
-            </div>
-          </div>
+<!--          <div class="row">-->
+<!--            <h6>Prerequisites</h6>-->
+<!--            <p>Have Filebeat installed, for more information on how to install: <a-->
+<!--              href="Have Filebeat installed, for more information on how to install: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html">https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html</a>-->
+<!--            </p>-->
+<!--          </div>-->
 
-          <div class="row user_guidance">
+<!--          <div class="row">-->
+<!--            <div class="col">-->
+<!--              <div class="row">-->
+<!--                <h6>Configuration</h6>-->
+<!--              </div>-->
+<!--              <div class="row">-->
+<!--                Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable-->
+<!--                Elastic output).-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                For more information about configuring Filebeat to use Logstash please refer to:-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>-->
+<!--                Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                For more information about configuring Filebeat to use Logstash please refer to:-->
+<!--                <br>-->
+<!--                <br>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+        <div class="row user_guidance pt-2">
             <div class="col">
               <div class="row">
                 <h6>Integration help?</h6>
               </div>
-              <br>
-             <div class="row">
-                <p class="dscr">Are you interested in more details about logsight.ai? Feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+              <div class="row">
+                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
               </div>
             </div>
           </div>
@@ -300,7 +297,7 @@
             <h6>REST API Usage</h6>
           </div>
           <div class="row">
-            <p class="dscr">Logsight exposes an API that allows you to send your logs from anywhere, here is how:</p>
+            <p class="dscr">logsight.ai exposes an API that allows you to send your logs from anywhere, here is how:</p>
           </div>
         </div>
         <!--        </nb-card>-->
@@ -335,28 +332,28 @@
           <div class="row">
             <table class="table table-borderless">
               <tr>
+                <th>log-messages</th>
+                <td>List of <b>Log</b> messages</td>
+              </tr>
+            </table>
+          </div>
+          <div class="row">
+            <h6>Log message body</h6>
+          </div>
+
+          <div class="row">
+            <table class="table table-borderless">
+              <tr>
                 <th>private-key</th>
-                <td>{{key}}</td>
+                <td>String, your account private key</td>
               </tr>
               <tr>
                 <th>app</th>
                 <td>String, name of the application you have created</td>
               </tr>
               <tr>
-                <th>log-messages</th>
-                <td>List of Log messages</td>
-              </tr>
-            </table>
-          </div>
-          <div class="row">
-            <h6>Log body</h6>
-          </div>
-
-          <div class="row">
-            <table class="table table-borderless">
-              <tr>
                 <th>timestamp</th>
-                <td>String, the timestamp of the log</td>
+                <td>String (optional), the timestamp of the log. If not specified the timestamp will be automatically added at ingest time.</td>
               </tr>
               <tr>
                 <th>level</th>
@@ -364,11 +361,15 @@
               </tr>
               <tr>
                 <th>message</th>
-                <td>String, the log message</td>
+                <td>String, the log message (payload)</td>
+              </tr>
+             <tr>
+                <th>tag</th>
+                <td>String (optional), version tag</td>
               </tr>
               <tr>
                 <th>Other fields</th>
-                <td>Related to the log message (e.g., class name)</td>
+                <td>Related to the log message (e.g., class name, IP addresses, etc.)</td>
               </tr>
             </table>
           </div>
@@ -377,20 +378,18 @@
           <div class="row user_guidance">
             <div class="row">
               <div class="col">
-                You can send logs in batches to optimize network calls. The using the "log-messages" key accepts a list
-                of log messages.
+                You can send logs in batches to optimize network calls.
               </div>
             </div>
           </div>
 
-          <div class="row user_guidance">
+          <div class="row user_guidance pt-2">
             <div class="col">
               <div class="row">
                 <h6>Integration help?</h6>
               </div>
-              <br>
               <div class="row">
-                <p class="dscr">Are you interested in more details about logsight.ai? Feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
               </div>
             </div>
           </div>
@@ -468,14 +467,13 @@
       </div>
 
 
-      <div class="row user_guidance">
+          <div class="row user_guidance pt-2">
             <div class="col">
               <div class="row">
                 <h6>Integration help?</h6>
               </div>
-              <br>
               <div class="row">
-                <p class="dscr">Are you interested in more details about logsight.ai? Feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
               </div>
             </div>
           </div>
@@ -504,7 +502,7 @@
     <ng-container *ngIf="rest">
       <h6>Example code</h6>
       <div>
-        <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_rest"
+        <pre><code style="background-color: transparent" [languages]="['json']" [highlight]="code_rest"
                    (highlighted)="onHighlight($event)"
                    [lineNumbers]="true"></code></pre>
       </div>

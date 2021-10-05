@@ -236,8 +236,9 @@ export class QualityPage implements OnInit, OnDestroy {
   computeLogQuality(){
     this.isSpinning = true
     this.qualityService.computeLogQuality(this.startDateTime, this.endDateTime).subscribe(resp => {
-    }, error => {
-      this.notificationService.error("Bad request, contact support!")
+      if (resp == "BAD_REQUEST"){
+        this.notificationService.error("Error", "Bad request, please choose valid time period, or contact support!")
+      }
     })
     }
 
@@ -255,14 +256,13 @@ export class QualityPage implements OnInit, OnDestroy {
   }
 
 
-    onDeletePredefinedTime(predefinedTime: PredefinedTime) {
+  onDeletePredefinedTime(predefinedTime: PredefinedTime) {
     this.dashboardService.deleteTimeRange(predefinedTime).subscribe(() => this.loadPredefinedTimes())
   }
 
   onSavePredefinedTime(predefinedTime: PredefinedTime) {
     this.dashboardService.createTimeRange(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
   }
-
 
   onSelectPredefinedTime(pt: PredefinedTime) {
     if (pt.dateTimeType == 'RELATIVE') {

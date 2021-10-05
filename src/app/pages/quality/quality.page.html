@@ -201,10 +201,8 @@
                       class="mr-2">{{row.actualLevel}}</span>
                 </td>
 
-                <td>
-                  <div style="overflow-y: hidden">
+                <td style="overflow-x: hidden">
                   <app-ad-banner [row]="row.variableHit"></app-ad-banner>
-                  </div>
                 </td>
 
                 <td>
@@ -298,5 +296,6 @@
 
 
 <ng-template #dateTimePicker>
-  <elastic-custom-datepicker (search)="onDateTimeSearch($event)"></elastic-custom-datepicker>
+    <elastic-custom-datepicker (search)="onDateTimeSearch($event)"
+                             (savePredefinedTime)="onSavePredefinedTime($event)"></elastic-custom-datepicker>
 </ng-template>

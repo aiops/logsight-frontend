@@ -20,8 +20,8 @@ export class GroupedVerticalBarChart2dComponent {
   legendTitle: string = '';
 
 
-  colorScheme = {
-    domain: ['#d94800']
+  @Input() colorScheme = {
+    domain: ['#d94800', '#00ff00']
   };
 
   // colorScheme = {

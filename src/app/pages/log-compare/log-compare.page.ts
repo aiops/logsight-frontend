@@ -153,6 +153,7 @@ export class LogComparePage {
     })
 
     this.barDataFirst$.subscribe(data => {
+      console.log("D:", data)
       if (data.length > 0){
       let firstDay = moment.utc(data[0].name, 'DD-MM-YYYY HH:mm')
       let lastDay = moment.utc(data[data.length-1].name, 'DD-MM-YYYY HH:mm')
@@ -169,6 +170,7 @@ export class LogComparePage {
         data[i].name = local.toString()
       }
       this.barDataFirst = data;
+      console.log("BDF:", this.barDataFirst)
             }
     })
 

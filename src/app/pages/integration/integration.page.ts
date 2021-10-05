@@ -30,10 +30,10 @@ export class IntegrationPage implements OnInit {
   public rest: boolean = true;
   public uploadFile: boolean = false;
   public showHideAppBtn: any = 'Show';
-  public pythonBtn: any = 'Python';
-  public filebeatBtn: any = 'Filebeat';
-  public loadDemoAppBtn: any = 'Sample Data';
-  public uploadBtn: any = 'Upload File';
+  public pythonBtn: any = 'Python SDK';
+  public filebeatBtn: any = 'Filebeat connectors';
+  public loadDemoAppBtn: any = 'Load sample';
+  public uploadBtn: any = 'Upload file';
   public restBtn: any = 'REST API';
   format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]+/;
   form = new FormGroup({
@@ -205,7 +205,11 @@ export class IntegrationPage implements OnInit {
   }
 
   private getPythonCode() {
-    return `import logging
+    return `Detailed description at
+https://docs.logsight.ai/#/sdk_api/quick_start
+
+
+import logging
 from logsight import LogsightLogger
 
 # Get an instance of Python standard logger.
@@ -293,6 +297,7 @@ logger.info("------------")`;
     ]
     }
     //curl command
+
     curl -X POST "https://logsight.ai/api_v1/data"
     -H "accept: application/json"
     -H "Content-Type: application/json"

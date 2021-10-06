@@ -103,7 +103,7 @@ export class IntegrationPage implements OnInit {
       .subscribe(resp => {
         this.notificationService.success("Log data uploaded successfully!")
       }, error => {
-        this.notificationService.error("Error: ", error.error.description)
+        this.notificationService.error("Error: ", error.error.detail)
       });
     this.formData = new FormData();
     this.ReqJson = {};
@@ -166,7 +166,7 @@ export class IntegrationPage implements OnInit {
           this.notificationService.success('Success', 'Application successfully created');
           this.form.reset()
         }, error => {
-          this.notificationService.error('Error', error.description)
+          this.notificationService.error('Error', error.detail)
         })
     } else {
       this.notificationService.error('Error', 'No key. Please log in.')

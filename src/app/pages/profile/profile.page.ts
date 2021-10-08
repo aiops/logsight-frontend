@@ -80,7 +80,7 @@ export class ProfilePage implements OnInit {
 
   changeQuantity(){
     var quantity = this.form.controls['name'].value
-    if (quantity > 1){
+    if (quantity >= 1){
       this.quantity = quantity
     }else{
       this.notificationService.error("The entry is not a valid number!")

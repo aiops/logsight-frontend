@@ -6,6 +6,7 @@ import {loadStripe} from "@stripe/stripe-js/pure";
 import {IntegrationService} from "../../@core/service/integration.service";
 import {NotificationsService} from "angular2-notifications";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'profile',
@@ -34,7 +35,7 @@ export class ProfilePage implements OnInit {
   units: string = 'GBs';
 
   stripePromise = loadStripe(
-    'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
+    environment.stripePkey);
 
   constructor(private router: Router, private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService, private route: ActivatedRoute) {
@@ -104,8 +105,8 @@ export class ProfilePage implements OnInit {
       subscription: true,
       email: this.email,
       priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
-      cancelUrl: 'https://demo.logsight.ai/pages/profile?payment=failed'.concat(this.key),
-      successUrl: 'https://demo.logsight.ai/pages/profile?payment=successful'.concat(this.key),
+      cancelUrl: environment.stripeCancelUrl.concat(this.key),
+      successUrl: environment.stripeSuccessUrl.concat(this.key),
     };
     const stripe = await this.stripePromise;
     this.integrationService.subscription(payment).subscribe(data => {

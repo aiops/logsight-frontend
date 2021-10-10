@@ -10,5 +10,8 @@
 
 export const environment = {
   production: false,
-  kibanaUrl: "http://localhost:5601/kibana/app/kibana#/"
+  kibanaUrl: "http://localhost:5601/kibana/app/kibana#/",
+  stripePkey: "pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp",
+  stripeCancelUrl: 'https://demo.logsight.ai/pages/profile?payment=failed',
+  stripeSuccessUrl: 'https://demo.logsight.ai/pages/profile?payment=successful'
 };

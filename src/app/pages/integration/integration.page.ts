@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../auth/authentication.service';
-import { NotificationsService } from 'angular2-notifications';
-import { Application } from '../../@core/common/application';
-import { IntegrationService } from '../../@core/service/integration.service';
-import { HighlightResult } from 'ngx-highlightjs';
-import { loadStripe } from '@stripe/stripe-js/pure';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthenticationService} from '../../auth/authentication.service';
+import {NotificationsService} from 'angular2-notifications';
+import {Application} from '../../@core/common/application';
+import {IntegrationService} from '../../@core/service/integration.service';
+import {HighlightResult} from 'ngx-highlightjs';
+import {loadStripe} from '@stripe/stripe-js/pure';
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {LogFileType} from "../../@core/common/log-file-type";
 
 @Component({
   selector: 'integration',
@@ -17,30 +20,40 @@ export class IntegrationPage implements OnInit {
   email: string;
   quantity: number;
   hasPaid: Boolean;
+  applicationId: number;
+  logFileType: String;
   applications: Application[] = [];
+  logFileTypes: LogFileType[] = [];
   public show: boolean = false;
   public python: boolean = false;
   public fileBeats: boolean = false;
   public rest: boolean = true;
+  public uploadFile: boolean = false;
   public showHideAppBtn: any = 'Show';
-  public pythonBtn: any = 'Python';
-  public filebeatBtn: any = 'Filebeat';
+  public pythonBtn: any = 'Python SDK';
+  public filebeatBtn: any = 'Filebeat connectors';
+  public loadDemoAppBtn: any = 'Load sample';
+  public uploadBtn: any = 'Upload file';
   public restBtn: any = 'REST API';
   format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]+/;
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });
 
+
+  public formData = new FormData();
+  ReqJson: any = {};
+
   response: HighlightResult;
   customerId = ''
   code_python = ''
   code_filebeats = ''
   code_rest = ''
-  stripePromise = loadStripe(
-    'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
+  code_upload = ''
+
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
-              private notificationService: NotificationsService) {
+              private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -49,9 +62,11 @@ export class IntegrationPage implements OnInit {
       this.email = user.email
       this.hasPaid = user.hasPaid
       this.loadApplications()
+      this.loadLogFileTypes()
       this.code_python = this.getPythonCode()
       this.code_filebeats = this.getFilebeatsCode()
       this.code_rest = this.getCodeRest()
+      this.code_upload = this.getCodeUpload()
     })
     this.quantity = 1
   }
@@ -65,22 +80,62 @@ export class IntegrationPage implements OnInit {
     }
   }
 
+  applicationSelected(appId: number) {
+    appId === 0 ? this.applicationId = null : this.applicationId = appId;
+  }
+
+  logFileTypeSelected(logFileType: string) {
+    logFileType === "" ? this.logFileType = null : this.logFileType = logFileType;
+  }
+
+
+  uploadFiles(file) {
+    this.formData = new FormData();
+    for (let i = 0; i < file.length; i++) {
+      this.formData.append("file", file[i], file[i]['name']);
+    }
+    this.notificationService.success("Click the upload button to send the log file.")
+  }
+
+
+  RequestUpload() {
+    this.http.post(`/api/applications/${this.applicationId}/uploadFile/${this.logFileType}`, this.formData)
+      .subscribe(resp => {
+        this.notificationService.success("Log data uploaded successfully!")
+      }, error => {
+        this.notificationService.error("Error: ", error.error.detail)
+      });
+    this.formData = new FormData();
+    this.ReqJson = {};
+    this.router.navigate(['/pages', 'dashboard'])
+  }
+
   onPythonBtn() {
     this.python = true
     this.fileBeats = false
     this.rest = false
+    this.uploadFile = false
   }
 
   onFileBeatBtn() {
     this.python = false
     this.fileBeats = true
     this.rest = false
+    this.uploadFile = false
+  }
+
+  onUploadBtn() {
+    this.python = false
+    this.fileBeats = false
+    this.rest = false
+    this.uploadFile = true
   }
 
   onRestBtn() {
     this.python = false
     this.fileBeats = false
     this.rest = true
+    this.uploadFile = false
   }
 
   plus() {
@@ -94,17 +149,24 @@ export class IntegrationPage implements OnInit {
 
   }
 
+  onLoadDemoApplications() {
+      this.integrationService.createDemoApplications().subscribe(
+        resp => { this.loadApplications() },
+        error => { this.notificationService.error("There was an error while loading sample data, please contact us!") }
+      )
+  }
+
   createApplication() {
     var app_name = this.form.controls['name'].value.toString()
 
     if (this.key) {
-      this.integrationService.createApplication({ name: this.form.controls['name'].value, key: this.key }).subscribe(
+      this.integrationService.createApplication({name: this.form.controls['name'].value, key: this.key}).subscribe(
         resp => {
           this.loadApplications();
           this.notificationService.success('Success', 'Application successfully created');
           this.form.reset()
         }, error => {
-          this.notificationService.error('Error', error.description)
+          this.notificationService.error('Error', error.detail)
         })
     } else {
       this.notificationService.error('Error', 'No key. Please log in.')
@@ -127,32 +189,10 @@ export class IntegrationPage implements OnInit {
     this.integrationService.loadApplications(this.key).subscribe(resp => this.applications = resp)
   }
 
-  async stripeCLick() {
-    const payment = {
-      name: 'LogsightPayment',
-      currency: 'eur',
-      quantity: this.quantity,
-      amount: 999,
-      email: this.email,
-      priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
-      cancelUrl: 'http://localhost:4200/pages/integration',
-      successUrl: 'http://localhost:4200/pages/integration',
-    };
-    const stripe = await this.stripePromise;
-    this.integrationService.subscription(payment).subscribe(data => {
-      this.customerId = data.id;
-      stripe.redirectToCheckout({
-        sessionId: data.id
-      })
-    });
+  loadLogFileTypes() {
+    this.integrationService.loadLogFileTypes().subscribe(resp => this.logFileTypes = resp)
   }
 
-  async stripeCustomerPortal() {
-    const stripe = await this.stripePromise;
-    this.integrationService.checkCustomerPortal().subscribe(data => {
-      window.open(data['url'], "_blank");
-    });
-  }
 
   onHighlight(e) {
     this.response = {
@@ -162,11 +202,14 @@ export class IntegrationPage implements OnInit {
       top: e.top,
       value: e.value
     }
-    console.log(this.response)
   }
 
   private getPythonCode() {
-    return `import logging
+    return `Detailed description at
+https://docs.logsight.ai/#/sdk_api/quick_start
+
+
+import logging
 from logsight import LogsightLogger
 
 # Get an instance of Python standard logger.
@@ -213,6 +256,32 @@ logger.info("------------")`;
         hosts: ["logsight.ai:12350"]`;
   }
 
+
+  private getCodeUpload(){
+    return `
+    1. JSON - native files should contain the following structure.
+    {
+    "logMessages": [
+      {
+        "private-key": "${this.key}",
+        "app": "string",
+        "timestamp": "string",
+        "level": "string",
+        "message": "string"
+      }
+    ]
+    }
+    }
+
+    2. JSON - logstash.
+    We currently support all file outputs from logstash
+
+    3. syslog - We support log files that follow the syslog format.
+    You can upload logs located in /var/log/syslog.
+    `
+  }
+
+
   private getCodeRest() {
     return `
     //json
@@ -228,6 +297,7 @@ logger.info("------------")`;
     ]
     }
     //curl command
+
     curl -X POST "https://logsight.ai/api_v1/data"
     -H "accept: application/json"
     -H "Content-Type: application/json"

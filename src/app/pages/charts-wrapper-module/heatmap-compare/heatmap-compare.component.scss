@@ -1,0 +1,12 @@
+.chart-parent {
+  display: grid;
+  height: 300px;
+}
+
+::ng-deep{
+.active {
+  .legend-label-text {
+    color: #fff !important;
+  }
+}
+}

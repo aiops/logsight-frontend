@@ -7,6 +7,8 @@ import {Application} from "../../@core/common/application";
 import {Router} from "@angular/router";
 import {interval} from "rxjs";
 import {TourService} from "ngx-ui-tour-md-menu";
+import {FileUploadValidators} from "@iplab/ngx-file-upload";
+import {HttpClient, HttpRequest} from "@angular/common/http";
 
 @Component({
   selector: 'quickstart',
@@ -25,12 +27,17 @@ export class QuickstartPage implements OnInit {
   applications: Application[] = [];
   next: number;
 
+
+  public formData = new FormData();
+  ReqJson: any = {};
+
   constructor(private fb: FormBuilder,
               private integrationService: IntegrationService,
               private authService: AuthenticationService,
               private notificationService: NotificationsService,
               private router: Router,
               private tourService: TourService) {
+
   }
 
 
@@ -44,6 +51,9 @@ export class QuickstartPage implements OnInit {
       this.email = user.email
     });
   }
+
+
+
 
 
   onFirstSubmit() {

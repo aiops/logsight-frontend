@@ -17,9 +17,12 @@
         <div *ngFor="let d of data; let i = index">
           <div *ngFor="let e of d.series; let j= index">
             <div *ngIf="model .name == e.name && model .series == d.name">
-              <p> Number of incidents:
-              {{e.count}}
-              </p>
+<!--              <p *ngIf="model .value > 0"> Number of incidents:-->
+<!--              {{e.count}}-->
+<!--              </p>-->
+<!--              <p *ngIf="model .value == 0"> Number of incidents:-->
+<!--              {{0}}-->
+<!--              </p>-->
               <p>
               Severity score:
               {{model .value}}

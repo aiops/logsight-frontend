@@ -5,6 +5,8 @@ import {HighlightResult} from "ngx-highlightjs";
 import {loadStripe} from "@stripe/stripe-js/pure";
 import {IntegrationService} from "../../@core/service/integration.service";
 import {NotificationsService} from "angular2-notifications";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'profile',
@@ -20,6 +22,9 @@ export class ProfilePage implements OnInit {
   hasPaid: Boolean;
   response: HighlightResult;
   paymentSuccessful: string = 'default'
+  form = new FormGroup({
+  name: new FormControl('', Validators.required),
+  });
   customerId = ''
   view: any[] = [400, 200];
   colorScheme = {
@@ -30,7 +35,7 @@ export class ProfilePage implements OnInit {
   units: string = 'GBs';
 
   stripePromise = loadStripe(
-    'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
+    environment.stripePkey);
 
   constructor(private router: Router, private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService, private route: ActivatedRoute) {
@@ -38,20 +43,14 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.getLoggedUser().subscribe(user => {
-      this.key = user.key
-      this.email = user.email
-      this.hasPaid = user.hasPaid
-      this.availableData = user.availableData
-      this.usedData = user.usedData
-    })
+    this.getUserData()
     this.quantity = 1
-
 
     this.route.queryParams
       .subscribe(params => {
         if (params["payment"]=='successful'.concat(this.key)){
           this.paymentSuccessful = 'true'
+          this.getUserData()
         }else if (params["payment"]=='failed'.concat(this.key)){
           this.paymentSuccessful = 'false'
         }
@@ -61,10 +60,33 @@ export class ProfilePage implements OnInit {
 
   }
 
+  getUserData(){
+    const roundTo = function(num: number, places: number) {
+      const factor = 10 ** places;
+      return Math.round(num * factor) / factor;
+        };
 
+      this.authService.getLoggedUser().subscribe(user => {
+      this.key = user.key
+      this.email = user.email
+      this.hasPaid = user.hasPaid
+      this.availableData = roundTo((user.availableData / 1000000), 1)
+      this.usedData = roundTo((user.usedData / 1000000), 1)
+    })
+  }
 
   plus() {
     this.quantity++;
+  }
+
+  changeQuantity(){
+    var quantity = this.form.controls['name'].value
+    if (quantity >= 1){
+      this.quantity = quantity
+    }else{
+      this.notificationService.error("The entry is not a valid number!")
+    }
+
   }
 
   minus() {
@@ -83,8 +105,8 @@ export class ProfilePage implements OnInit {
       subscription: true,
       email: this.email,
       priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
-      cancelUrl: 'https://logsight.ai/pages/profile?payment=failed'.concat(this.key),
-      successUrl: 'https://logsight.ai/pages/profile?payment=successful'.concat(this.key),
+      cancelUrl: environment.stripeCancelUrl.concat(this.key),
+      successUrl: environment.stripeSuccessUrl.concat(this.key),
     };
     const stripe = await this.stripePromise;
     this.integrationService.subscription(payment).subscribe(data => {
@@ -95,25 +117,25 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  async stripeCLickCheckout() {
-    const payment = {
-      name: 'LogsightPayment',
-      currency: 'eur',
-      quantity: this.quantity,
-      subscription: false,
-      email: this.email,
-      priceID: 'price_1J6LloIf2Ur5sxpSp9CvjWZr',
-      cancelUrl: 'https://logsight.ai/pages/profile?payment=failed'.concat(this.key),
-      successUrl: 'https://logsight.ai/pages/profile?payment=successful'.concat(this.key),
-    };
-    const stripe = await this.stripePromise;
-    this.integrationService.subscription(payment).subscribe(data => {
-      this.customerId = data.id;
-      stripe.redirectToCheckout({
-        sessionId: data.id
-      })
-    });
-  }
+  // async stripeCLickCheckout() {
+  //   const payment = {
+  //     name: 'LogsightPayment',
+  //     currency: 'eur',
+  //     quantity: this.quantity,
+  //     subscription: false,
+  //     email: this.email,
+  //     priceID: 'price_1J6LloIf2Ur5sxpSp9CvjWZr',
+  //     cancelUrl: 'https://demo.logsight.ai/pages/profile?payment=failed'.concat(this.key),
+  //     successUrl: 'https://demo.logsight.ai/pages/profile?payment=successful'.concat(this.key),
+  //   };
+  //   const stripe = await this.stripePromise;
+  //   this.integrationService.subscription(payment).subscribe(data => {
+  //     this.customerId = data.id;
+  //     stripe.redirectToCheckout({
+  //       sessionId: data.id
+  //     })
+  //   });
+  // }
 
 
 

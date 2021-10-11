@@ -21,6 +21,8 @@ import { DashboardService } from '../dashboard/dashboard.service';
 import { Application } from '../../@core/common/application';
 import { AuthenticationService } from '../../auth/authentication.service';
 import { IntegrationService } from '../../@core/service/integration.service';
+import { PredefinedTime } from '../../@core/common/predefined-time';
+import {Moment} from "moment";
 
 @Component({
   selector: 'incidents',
@@ -39,9 +41,10 @@ export class IncidentsPage implements OnInit, OnDestroy {
   applications: Application[] = [];
   heatmapHeightList = [];
   unique = [];
-  startDateTime = 'now-12h';
+  startDateTime = 'now-720m';
   endDateTime = 'now'
   heatmapHeight = '200px';
+  predefinedTimes: PredefinedTime[] = [];
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private route: ActivatedRoute,
@@ -57,9 +60,17 @@ export class IncidentsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadPredefinedTimes();
     this.route.queryParamMap.subscribe(queryParams => {
-      const startTime = queryParams.get('startTime')
-      const endTime = queryParams.get('endTime')
+
+      let startTime = queryParams.get('startTimeSpecific') ?? queryParams.get('startTime')
+      let endTime = queryParams.get('endTimeSpecific') ?? queryParams.get('endTime')
+      console.log(startTime, endTime)
+      if (startTime.toString().includes(":")){
+        startTime = moment(startTime,'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
+        endTime = moment(endTime,'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
+
+      }
       const applicationParam = queryParams.get('applicationId')
       const dateTimeType = queryParams.get('dateTimeType');
       this.applicationId = applicationParam ? +applicationParam : null
@@ -68,11 +79,10 @@ export class IncidentsPage implements OnInit, OnDestroy {
           this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
           this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
         } else {
-          this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSS').format('YYYY-MM-DDTHH:mm:ss.SSSSSS');
-          this.endDateTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSS').format('YYYY-MM-DDTHH:mm:ss.SSSSSS');
+          this.startDateTime = startTime;
+          this.endDateTime = endTime;
         }
       }
-      console.log(this.startDateTime, this.endDateTime)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
     });
@@ -91,7 +101,6 @@ export class IncidentsPage implements OnInit, OnDestroy {
                 }, dialogClass: 'model-full'
               });
             }, err => {
-              console.log(err)
               this.notificationService.error('Error', 'Error fetching data')
             })
         }
@@ -102,13 +111,18 @@ export class IncidentsPage implements OnInit, OnDestroy {
     ).subscribe(resp => {
       this.applications = resp;
       if (this.applications.length > 0) {
-        // this.applicationId = this.applications[0].id;
         this.applicationSelected(this.applicationId);
       }
     })
+
+
   }
 
-  toLocalTime(data){
+  loadPredefinedTimes() {
+    this.dashboardService.getAllTimeRanges().subscribe(resp => this.predefinedTimes = resp)
+  }
+
+  toLocalTime(data) {
     for (let i = 0; i < data.length; i++) {
       var date = moment.utc(data[i].timestamp, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
       var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
@@ -120,10 +134,10 @@ export class IncidentsPage implements OnInit, OnDestroy {
 
   private loadIncidentsTableData(startTime: string, endTime: string, applicationId: number | null) {
     this.incidentsService.loadIncidentsTableData(startTime, endTime, applicationId).subscribe(resp => {
-      resp["countAds"] = this.toLocalTime(resp["countAds"])
-      resp["newTemplates"] = this.toLocalTime(resp["newTemplates"])
-      resp["semanticCountAds"] = this.toLocalTime(resp["semanticCountAds"])
-      resp["semanticAd"] = this.toLocalTime(resp["semanticAd"])
+      resp['countAds'] = this.toLocalTime(resp['countAds'])
+      resp['newTemplates'] = this.toLocalTime(resp['newTemplates'])
+      resp['semanticCountAds'] = this.toLocalTime(resp['semanticCountAds'])
+      resp['semanticAd'] = this.toLocalTime(resp['semanticAd'])
       this.tableData = resp
     })
   }
@@ -131,27 +145,30 @@ export class IncidentsPage implements OnInit, OnDestroy {
   loadHeatmapData(startTime: string, endTime: string, applicationId: number | null) {
     return this.dashboardService.loadHeatmapData(startTime, endTime, applicationId).subscribe(
       data => {
-        for (let i = 0; i < data.data.length; i++){
+        for (let i = 0; i < data.data.length; i++) {
+
+          for (let j = 0; j < data.data[i].series.length; j++) {
+          data.data[i].series[j].extra = data.data[i].name
+        }
           var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-          var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('hh:mm A');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
           data.data[i].name = local.toString()
         }
-        for (let i = 0; i < data.data.length; i++){
-          for (let j = 0; j< data.data[i].series.length; j++){
+        for (let i = 0; i < data.data.length; i++) {
+          for (let j = 0; j < data.data[i].series.length; j++) {
             this.heatmapHeightList.push(data.data[i].series[j].name)
           }
         }
         this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
-        if (this.unique.length > 0){
-          if (50*(this.unique.length) < 350){
-            console.log(50*(this.unique.length))
-            this.heatmapHeight = (50*(this.unique.length+1)).toString() + "px"
-          }else {
-            this.heatmapHeight = "300px"
+        if (this.unique.length > 0) {
+          if (50 * (this.unique.length) < 350) {
+            this.heatmapHeight = (50 * (this.unique.length + 1)).toString() + 'px'
+          } else {
+            this.heatmapHeight = '300px'
           }
-        }else{
-          this.heatmapHeight = "150px"
+        } else {
+          this.heatmapHeight = '150px'
         }
         this.heatmapData = data.data;
       })
@@ -168,13 +185,13 @@ export class IncidentsPage implements OnInit, OnDestroy {
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
-      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.startDateTime = event.absoluteDateTime.startDateTime
+      this.endDateTime = event.absoluteDateTime.endDateTime
       this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     }
-    this.router.navigate([],
-      { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
+    // this.router.navigate([],
+    //   { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
   }
 
   openPopover() {
@@ -189,6 +206,71 @@ export class IncidentsPage implements OnInit, OnDestroy {
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
     this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+  }
+
+  onDeletePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.deleteTimeRange(predefinedTime).subscribe(() => this.loadPredefinedTimes())
+  }
+
+  onSavePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.createTimeRange(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+  }
+
+  onSelectPredefinedTime(pt: PredefinedTime) {
+    if (pt.dateTimeType == 'RELATIVE') {
+      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.startTime })
+    } else {
+      this.onDateTimeSearch({
+        absoluteTimeChecked: true, absoluteDateTime: {
+          startDateTime: pt.startTime,
+          endDateTime: pt.endTime
+        }
+      })
+    }
+  }
+
+
+  onHeatMapSelect(data: any) {
+    try {
+      var timeDiff = this.getTimeDiff()
+    }catch (e) {
+    }
+
+    if (!timeDiff){
+      timeDiff = 1
+    }
+    const dateTime = data.extra
+    const date = dateTime.split(' ')[0].split('-');
+    const time = dateTime.split(' ')[1].split(':');
+    const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+
+    this.startDateTime = startDateTime.format('YYYY-MM-DDTHH:mm') + ":00"
+    this.endDateTime = startDateTime.add(timeDiff, 'minutes').format('YYYY-MM-DDTHH:mm') + ":00"
+
+    this.loadHeatmapData(this.startDateTime, this.endDateTime, data.id)
+    this.loadIncidentsTableData(this.startDateTime, this.endDateTime, data.id)
+  }
+
+  getTimeDiff() {
+    let timeList = []
+    let indx = []
+    for(let i = 0; i < this.heatmapData.length; i++){
+      if (this.heatmapData[i].series.length){
+        indx.push(i)
+        timeList.push(this.heatmapData[i].series[0].extra)
+      }
+    }
+    let date = timeList[0].split(' ')[0].split('-');
+    let time = timeList[0].split(' ')[1].split(':');
+    const firstTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+    date = timeList[1].split(' ')[0].split('-');
+    time = timeList[1].split(' ')[1].split(':');
+    const secondTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+      +time[1]);
+    return (secondTime.diff(firstTime, "minutes") / indx[1] - indx[0])
+
   }
 
   ngOnDestroy(): void {

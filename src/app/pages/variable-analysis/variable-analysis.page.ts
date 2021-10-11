@@ -15,6 +15,9 @@ import { TopNTemplatesDataMerged } from '../../@core/common/top-n-templates-data
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
+import { PredefinedTime } from '../../@core/common/predefined-time';
+import { DashboardService } from '../dashboard/dashboard.service';
+import {rgb} from "d3";
 
 @Component({
   selector: 'variable-analysis',
@@ -38,10 +41,13 @@ export class VariableAnalysisPage implements OnInit {
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   openDatePicker = false;
-  startDateTime = 'now-12h';
+  startDateTime = 'now-720m';
   endDateTime = 'now'
   private destroy$: Subject<void> = new Subject<void>();
-
+  predefinedTimes: PredefinedTime[] = [];
+      colorScheme = {
+    domain: ['#00ff00']
+  };
   constructor(private variableAnalysisService: VariableAnalysisService,
               private integrationService: IntegrationService,
               private authService: AuthenticationService,
@@ -49,7 +55,8 @@ export class VariableAnalysisPage implements OnInit {
               private messagingService: MessagingService,
               private dialogService: NbDialogService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private dashboardService: DashboardService) {
   }
 
   ngOnInit(): void {
@@ -90,6 +97,8 @@ export class VariableAnalysisPage implements OnInit {
           })
       }
     })
+
+    this.loadPredefinedTimes();
   }
 
   subscribeQueryParams() {
@@ -106,7 +115,7 @@ export class VariableAnalysisPage implements OnInit {
           this.endDateTime = endTime;
         }
       } else {
-        this.startDateTime = 'now-12h'
+        this.startDateTime = 'now-720m'
         this.endDateTime = 'now'
       }
       this.applicationSelected(this.selectedApplicationId);
@@ -114,13 +123,12 @@ export class VariableAnalysisPage implements OnInit {
   }
 
   loadVariableAnalysisData(search: string | null = null) {
-    console.log('asd', this.startDateTime, this.endDateTime)
     this.variableAnalysisService.loadData(this.selectedApplicationId, this.startDateTime, this.endDateTime,
       search).subscribe(
       resp => {
-        for (let i = 0; i < resp.length; i++){
+        for (let i = 0; i < resp.length; i++) {
           var date = moment.utc(resp[i].timestamp, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
-          var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm:ss.SSS');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
           var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('DD-MM-YYYY HH:mm:ss.SSS');
           resp[i].timestamp = local.toString()
         }
@@ -139,10 +147,10 @@ export class VariableAnalysisPage implements OnInit {
 
     this.variableAnalysisService.getLogCountLineChart(this.selectedApplicationId, this.startDateTime,
       this.endDateTime).subscribe(resp => {
-      for (let i = 0; i < resp[0].series.length; i++){
+      for (let i = 0; i < resp[0].series.length; i++) {
         var date = moment.utc(resp[0].series[i].name, 'DD-MM-YYYY HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm:ss.SSS');
-        var stillUtc = moment.utc(date,'DD-MM-YYYY HH:mm:ss.SSS');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('HH:mm A');
+        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('MMM DD HH:mm');
         resp[0].series[i].name = local.toString()
       }
       this.logCountLineChart = resp
@@ -154,10 +162,22 @@ export class VariableAnalysisPage implements OnInit {
       this.topNTemplatesOlder = resp.older;
       this.templatesRowMerged = [];
       for (var _i = 0; _i < this.topNTemplatesNow.length; _i++) {
-        this.templatesRowMerged.push({
-          new: this.topNTemplatesNow[_i],
-          old: this.topNTemplatesOlder[_i]
+        if(this.topNTemplatesOlder[_i]){
+            this.templatesRowMerged.push({
+                new: this.topNTemplatesNow[_i],
+                old: this.topNTemplatesOlder[_i]
         });
+        }else{
+          let tmp = this.topNTemplatesNow[_i]
+          tmp.count = 0
+          tmp.percentage = 0
+          this.templatesRowMerged.push({
+                new: this.topNTemplatesNow[_i],
+                old: tmp
+        });
+
+        }
+
       }
     });
   }
@@ -171,8 +191,8 @@ export class VariableAnalysisPage implements OnInit {
       this.endDateTime = 'now'
       dateTimeType = 'relative';
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = event.absoluteDateTime.startDateTime.toISOString()
-      this.endDateTime = event.absoluteDateTime.endDateTime.toISOString()
+      this.startDateTime = event.absoluteDateTime.startDateTime;
+      this.endDateTime = event.absoluteDateTime.endDateTime;
     }
     this.applicationSelected(this.selectedApplicationId)
     this.router.navigate([],
@@ -184,6 +204,31 @@ export class VariableAnalysisPage implements OnInit {
     this.openDatePicker = !this.openDatePicker
     if (!this.openDatePicker) {
       this.popover.hide();
+    }
+  }
+
+  loadPredefinedTimes() {
+    this.dashboardService.getAllTimeRanges().subscribe(resp => this.predefinedTimes = resp)
+  }
+
+  onDeletePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.deleteTimeRange(predefinedTime).subscribe(() => this.loadPredefinedTimes())
+  }
+
+  onSavePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.createTimeRange(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+  }
+
+  onSelectPredefinedTime(pt: PredefinedTime) {
+    if (pt.dateTimeType == 'RELATIVE') {
+      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.startTime })
+    } else {
+      this.onDateTimeSearch({
+        absoluteTimeChecked: true, absoluteDateTime: {
+          startDateTime: pt.startTime,
+          endDateTime: pt.endTime
+        }
+      })
     }
   }
 

@@ -1,11 +1,11 @@
 <div class="row" style="width: 100%; height: 100%;  padding-right: 5%; padding-left: 5%">
 
-  <div class="col-md-3" tourAnchor="anchorApplications"  style="background-color: #222b45; height: 100%">
+  <div class="col-md-3" tourAnchor="anchorApplications" style="background-color: #222b45; height: 100%">
 
     <div class="row user_info">
       <!--      <nb-card class="p-3 row-one">-->
       <div class="col">
-        <h5><b>User info</b></h5>
+        <h6><b>User info</b></h6>
       </div>
       <div class="row no-gutters p-3 row-one">
         <div class="col" align="center">
@@ -22,51 +22,70 @@
       <!--        </div>-->
       <!--      </nb-card>-->
     </div>
-<!--    <nb-card>-->
-<!--      <nb-card-header>Select billing plan</nb-card-header>-->
-<!--      <nb-card-body  align="center">-->
+    <!--    <nb-card>-->
+    <!--      <nb-card-header>Select billing plan</nb-card-header>-->
+    <!--      <nb-card-body  align="center">-->
 
-<!--        <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>-->
+    <!--        <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>-->
 
-<!--        <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>-->
-<!--        <input nbInput  style="width: 60%" type="text" [value]="quantity">-->
-<!--        <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>-->
-<!--        <p>Total cost per month: {{quantity * 2}}.00 Euro</p>-->
-<!--        <div *ngIf="!hasPaid">-->
-<!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>-->
-<!--        </div>-->
-<!--        <div *ngIf="hasPaid">-->
-<!--          <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE SUBSCRIPTION</button>-->
-<!--        </div>-->
-<!--        <div style="margin-top: 10px">-->
-<!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE SUBSCRIPTION</button>-->
-<!--        </div>-->
-<!--      </nb-card-body>-->
+    <!--        <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>-->
+    <!--        <input nbInput  style="width: 60%" type="text" [value]="quantity">-->
+    <!--        <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>-->
+    <!--        <p>Total cost per month: {{quantity * 2}}.00 Euro</p>-->
+    <!--        <div *ngIf="!hasPaid">-->
+    <!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">SUBSCRIBE</button>-->
+    <!--        </div>-->
+    <!--        <div *ngIf="hasPaid">-->
+    <!--          <button nbButton style="width: 90%;" shape="round" (click)="stripeCLick()">UPDATE SUBSCRIPTION</button>-->
+    <!--        </div>-->
+    <!--        <div style="margin-top: 10px">-->
+    <!--        <button nbButton style="width: 90%;" shape="round" (click)="stripeCustomerPortal()">MANAGE SUBSCRIPTION</button>-->
+    <!--        </div>-->
+    <!--      </nb-card-body>-->
 
-<!--    </nb-card>-->
+    <!--    </nb-card>-->
     <div class="row integration_types">
       <nb-card class="p-3 row-one" style="border: none">
         <div class="row no-gutters">
           <div class="col">
-            <h5><b>Integration types</b></h5>
+            <h6><b>Shipping logs</b></h6>
           </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" style="margin-bottom: 10px">
+                    <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
+          <button nbButton shape="round" style="text-transform: none" class="demo-app-btn" type="button"
+              (click)="onLoadDemoApplications()">
+        {{loadDemoAppBtn}}
+      </button>
+    </div>
+
           <div class=".col-6 .col-md-4">
-            <button nbButton shape="round" style="text-transform: none" class="rest-btn" type="button" (click)="onRestBtn()">
+            <button nbButton shape="round" style="text-transform: none" class="rest-btn" type="button"
+                    (click)="onRestBtn()">
               {{restBtn}}
             </button>
           </div>
-          <div class=".col-6 .col-md-4">
-            <button nbButton shape="round" style="text-transform: none" class="python-btn" type="button" (click)="onPythonBtn()">
+          <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
+            <button nbButton shape="round" style="text-transform: none" class="python-btn" type="button"
+                    (click)="onPythonBtn()">
               {{pythonBtn}}
             </button>
           </div>
-          <div class=".col-6 .col-md-4">
-            <button nbButton shape="round" style="text-transform: none" class="filebeat-btn" type="button" (click)="onFileBeatBtn()">
+          <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
+            <button nbButton shape="round" style="text-transform: none" class="filebeat-btn" type="button"
+                    (click)="onFileBeatBtn()">
               {{filebeatBtn}}
             </button>
           </div>
+
+          <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
+            <button nbButton shape="round" style="text-transform: none" class="upload-btn" type="button"
+                    (click)="onUploadBtn()">
+              {{uploadBtn}}
+            </button>
+          </div>
+
+
 
         </div>
       </nb-card>
@@ -76,7 +95,7 @@
       <nb-card class="p-3 row-one" style="border: none">
         <div class="row no-gutters">
           <div class="col">
-            <h5 class="mb-3">Manage applications</h5>
+            <h6 class="mb-3">Manage applications</h6>
           </div>
         </div>
         <div class="row p-3">
@@ -112,7 +131,7 @@
             <tr *ngFor="let row of applications">
               <td>{{row.id}}</td>
               <td>{{row.name}}</td>
-              <td><i (click)="removeApplication(row.id)" [title]='"Delete application"'
+              <td style="text-align: left"><i (click)="removeApplication(row.id)" [title]='"Delete application"'
                      class="ml-3 fas fa-trash pointer"></i></td>
 
               <!--              <td>-->
@@ -128,6 +147,9 @@
         </div>
       </nb-card>
     </div>
+
+
+
   </div>
 
   <div class="col" style="margin-left: 50px">
@@ -136,12 +158,12 @@
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h5>Python-SDK Usage</h5>
+            <h6>Python-SDK Usage</h6>
           </div>
           <div class="row">
-            <p class="dscr">To start sending logs from a Python script you need to install the Logsight Python-SDK:</p>
+            <p class="dscr">To start sending logs from a Python script you need to install the logsight.ai Python-SDK:</p>
             <pre><code
-              style="color: white">pip install git+ssh://git@github.com/aiops/logsight-python-sdk.git</code></pre>
+              style="color: white">pip install logsight-sdk-py</code></pre>
           </div>
         </div>
         <!--        </nb-card>-->
@@ -150,10 +172,10 @@
       <div class="row user_guidance">
         <div class="col">
           <div class="row">
-            <h5>Endpoint details</h5>
+            <h6>Endpoint details</h6>
           </div>
           <div class="row">
-            <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with
+            <p class="dscr">To use the logsight.ai Python-SDK in your Python code, you need to initialize the logger with
               the following attributes: </p>
             <table class="table table-borderless">
               <tr>
@@ -171,16 +193,16 @@
         </div>
       </div>
 
-      <div class="row user_guidance">
-        <div class="col">
-          <div class="row">
-            <h5>Integration help?</h5>
+<div class="row user_guidance pt-2">
+            <div class="col">
+              <div class="row">
+                <h6>Integration help?</h6>
+              </div>
+              <div class="row">
+                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+              </div>
+            </div>
           </div>
-          <div class="row">
-            <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>
-          </div>
-        </div>
-      </div>
 
     </ng-container>
 
@@ -190,76 +212,75 @@
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h5>Filebeats Usage</h5>
+            <h6>Filebeats Usage</h6>
           </div>
           <div class="row">
-            <p class="dscr">Logsight provides integration with Filebeat</p>
+            <p class="dscr">Filebeat simplifies the collection, parsing, and visualization of common log formats.
+To start sending logs from your system to logsight.ai via Filebeats you need to execute the following steps described in the docs:</p>
           </div>
         </div>
         <!--        </nb-card>-->
       </div>
-      <br>
-      <br>
+
       <div class="row user_guidance">
         <div class="col">
+<!--          <div class="row">-->
+<!--            <h6>Download the connector script</h6>-->
+<!--          </div>-->
           <div class="row">
-            <h5>Endpoint details</h5>
-          </div>
-          <div class="row">
-            <p class="dscr">To use the Logsight Python-SDK in your Python code, you need to initialize the logger with
-              the following attributes: </p>
-            <table class="table table-borderless">
-              <tr>
-                <th>PRIVATE_KEY</th>
-                <td>A private key which is used to validate your authenticity.</td>
-              </tr>
-              <tr>
-                <th>APP_NAME</th>
-                <td>The name of your application/service. For example, a company "x" wants to debug their test
-                  environment they might insert the “x_test”
-                </td>
-              </tr>
-            </table>
+            <a href="https://docs.logsight.ai/#/shipping_logs/filebeats"><p style="text-underline-color: white">Docs | Shipping logs via Filebeats</p></a>
+<!--            <table class="table table-borderless">-->
+<!--              <tr>-->
+<!--                <th>PRIVATE_KEY</th>-->
+<!--                <td>A private key which is used to validate your authenticity.</td>-->
+<!--              </tr>-->
+<!--              <tr>-->
+<!--                <th>APP_NAME</th>-->
+<!--                <td>The name of your application/service. For example, a company "x" wants to debug their test-->
+<!--                  environment they might insert the “x_test”-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </table>-->
           </div>
 
-          <div class="row">
-            <h5>Prerequisites</h5>
-            <p>Have Filebeat installed, for more information on how to install: <a
-              href="Have Filebeat installed, for more information on how to install: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html">https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html</a>
-            </p>
-          </div>
+<!--          <div class="row">-->
+<!--            <h6>Prerequisites</h6>-->
+<!--            <p>Have Filebeat installed, for more information on how to install: <a-->
+<!--              href="Have Filebeat installed, for more information on how to install: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html">https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html</a>-->
+<!--            </p>-->
+<!--          </div>-->
 
-          <div class="row">
-            <div class="col">
-            <div class="row">
-              <h5>Configuration</h5>
-            </div>
-            <div class="row">
-              Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable
-                    Elastic output).
-              <br>
-              <br>
-              For more information about configuring Filebeat to use Logstash please refer to:
-              <br>
-              <br>
-              <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>
-              Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350
-              <br>
-              <br>
-              For more information about configuring Filebeat to use Logstash please refer to:
-              <br>
-              <br>
-            </div>
-          </div>
-          </div>
+<!--          <div class="row">-->
+<!--            <div class="col">-->
+<!--              <div class="row">-->
+<!--                <h6>Configuration</h6>-->
+<!--              </div>-->
+<!--              <div class="row">-->
+<!--                Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable-->
+<!--                Elastic output).-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                For more information about configuring Filebeat to use Logstash please refer to:-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>-->
+<!--                Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                For more information about configuring Filebeat to use Logstash please refer to:-->
+<!--                <br>-->
+<!--                <br>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="row user_guidance">
+        <div class="row user_guidance pt-2">
             <div class="col">
               <div class="row">
-                <h5>Integration help?</h5>
+                <h6>Integration help?</h6>
               </div>
               <div class="row">
-                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>
+                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
               </div>
             </div>
           </div>
@@ -273,10 +294,10 @@
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h5>REST API Usage</h5>
+            <h6>REST API Usage</h6>
           </div>
           <div class="row">
-            <p class="dscr">Logsight exposes an API that allows you to send your logs from anywhere, here is how:</p>
+            <p class="dscr">logsight.ai exposes an API that allows you to send your logs from anywhere, here is how:</p>
           </div>
         </div>
         <!--        </nb-card>-->
@@ -286,7 +307,7 @@
       <div class="row user_guidance">
         <div class="col">
           <div class="row">
-            <h5>Endpoint details</h5>
+            <h6>Endpoint details</h6>
           </div>
           <div class="row">
             <table class="table table-borderless">
@@ -306,45 +327,49 @@
           </div>
 
           <div class="row">
-            <h5>Post body</h5>
+            <h6>Post body</h6>
           </div>
           <div class="row">
             <table class="table table-borderless">
               <tr>
+                <th>log-messages</th>
+                <td>List of <b>Log</b> messages</td>
+              </tr>
+            </table>
+          </div>
+          <div class="row">
+            <h6>Log message body</h6>
+          </div>
+
+          <div class="row">
+            <table class="table table-borderless">
+              <tr>
                 <th>private-key</th>
-                <td>{{key}}</td>
+                <td>String, your account private key</td>
               </tr>
               <tr>
                 <th>app</th>
                 <td>String, name of the application you have created</td>
               </tr>
               <tr>
-                <th>log-messages</th>
-                <td>List of Log messages</td>
-              </tr>
-            </table>
-          </div>
-          <div class="row">
-            <h5>Log body</h5>
-          </div>
-
-          <div class="row">
-            <table class="table table-borderless">
-              <tr>
                 <th>timestamp</th>
-                <td>String, the timestamp of the log</td>
+                <td>String (optional), the timestamp of the log. If not specified the timestamp will be automatically added at ingest time.</td>
               </tr>
               <tr>
                 <th>level</th>
                 <td>String, the log level (e.g., INFO, WARNING, ERROR)</td>
               </tr>
               <tr>
-                <th>level</th>
-                <td>String, the log level</td>
+                <th>message</th>
+                <td>String, the log message (payload)</td>
+              </tr>
+             <tr>
+                <th>tag</th>
+                <td>String (optional), version tag</td>
               </tr>
               <tr>
                 <th>Other fields</th>
-                <td>Related to the log message (e.g., class name)</td>
+                <td>Related to the log message (e.g., class name, IP addresses, etc.)</td>
               </tr>
             </table>
           </div>
@@ -353,18 +378,18 @@
           <div class="row user_guidance">
             <div class="row">
               <div class="col">
-            You can send logs in batches to optimize network calls. The using the "log-messages" key accepts a list of log messages.
-              </div>
+                You can send logs in batches to optimize network calls.
               </div>
             </div>
+          </div>
 
-          <div class="row user_guidance">
+          <div class="row user_guidance pt-2">
             <div class="col">
               <div class="row">
-                <h5>Integration help?</h5>
+                <h6>Integration help?</h6>
               </div>
               <div class="row">
-                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>
+                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
               </div>
             </div>
           </div>
@@ -372,33 +397,138 @@
         </div>
       </div>
     </ng-container>
+
+
+    <ng-container *ngIf="uploadFile">
+      <div class="row description">
+        <!--      <nb-card class="p-2 rows" style="width: 100%">-->
+        <div class="col">
+          <div class="row">
+            <h6>Upload log file usage</h6>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+
+      <div class="col-sm">
+        <div class="row">
+          <p>Choose the application and your log file for which you want to upload data.</p>
+        </div>
+        <div class="row">
+          <div class="col-sm text-left">
+            <nb-select class="period-select" [(selected)]="this.applicationId"
+                       (selectedChange)="applicationSelected($event)"
+                       placeholder="Select application">
+              <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
+                {{ app.name }}
+              </nb-option>
+            </nb-select>
+          </div>
+          <div class="col-sm text-right">
+            <nb-select class="period-select" [(selected)]="this.logFileType"
+                       (selectedChange)="logFileTypeSelected($event)"
+                       placeholder="Select log file type">
+              <nb-option *ngFor="let fileType of logFileTypes" [value]="fileType.type">
+                {{ fileType.renderType }}
+              </nb-option>
+            </nb-select>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <br>
+
+      <div class="row user_guidance">
+
+        <div class="col-sm" align="center">
+          <div class="form-group">
+            <br/> <input nbInput size="giant" style="text-align: left" fullWidth status="basic" type="file" id="file"
+                         (change)="uploadFiles($event.target.files)">
+          </div>
+
+          <button nbButton size="small" style="text-transform: none" status="basic" shape="round" type="button"
+                  (click)="RequestUpload()">Upload logs
+          </button>
+        </div>
+
+        <!--          <div class="row user_guidance">-->
+        <!--            <div class="col">-->
+        <!--              <div class="row">-->
+        <!--                <h6>Integration help?</h6>-->
+        <!--              </div>-->
+        <!--              <div class="row">-->
+        <!--                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+
+      </div>
+
+
+          <div class="row user_guidance pt-2">
+            <div class="col">
+              <div class="row">
+                <h6>Integration help?</h6>
+              </div>
+              <div class="row">
+                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+              </div>
+            </div>
+          </div>
+    </ng-container>
+
+
   </div>
 
   <div class="col" style="margin-left: 50px">
-  <ng-container *ngIf="python">
-      <h5>Example code</h5>
+    <ng-container *ngIf="python">
+      <h6>Example code</h6>
       <div>
         <pre><code style="background-color: transparent" [highlight]="code_python" (highlighted)="onHighlight($event)"
                    [lineNumbers]="true"></code></pre>
       </div>
-  </ng-container>
+    </ng-container>
 
-  <ng-container *ngIf="fileBeats">
-      <h5>Example code</h5>
+    <ng-container *ngIf="fileBeats">
+      <h6>Example code</h6>
       <div>
         <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_filebeats"
                    (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
       </div>
-  </ng-container>
+    </ng-container>
 
-  <ng-container *ngIf="rest">
-      <h5>Example code</h5>
+    <ng-container *ngIf="rest">
+      <h6>Example code</h6>
       <div>
-        <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_rest" (highlighted)="onHighlight($event)"
+        <pre><code style="background-color: transparent" [languages]="['json']" [highlight]="code_rest"
+                   (highlighted)="onHighlight($event)"
                    [lineNumbers]="true"></code></pre>
       </div>
-  </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="uploadFile">
+      <h6>Example files</h6>
+      <div>
+        <pre><code style="background-color: transparent" [languages]="['json']" [highlight]="code_upload"
+                   (highlighted)="onHighlight($event)"
+                   [lineNumbers]="true"></code></pre>
+<!--        <a href="../../../assets/data/json-native.json" download="JSON-native">Download</a>-->
+<!--        <a href="../../../assets/data/json-native.json" download="JSON-native">Download</a>-->
+<!--        <a href="../../../assets/data/json-native.json" download="JSON-native">Download</a>-->
+      </div>
+    </ng-container>
   </div>
+
+
+  <!--  <div class="col" style="margin-left: 50px">-->
+  <!--  <ng-container *ngIf="uploadFile">-->
+  <!--      <h6>Upload log file</h6>-->
+
+  <!--  </ng-container>-->
+
+  <!--  </div>-->
 </div>
 
 
@@ -406,7 +536,7 @@
 <!--  <nb-card class="p-3" style="width: 100%">-->
 <!--    <div class="row">-->
 <!--      <div class="col-md-8">-->
-<!--        <h5 class="mb-3">Create new application</h5>-->
+<!--        <h6 class="mb-3">Create new application</h6>-->
 <!--        <form class="col-lg-6 col-lg-8 col-sm-12 pl-0" [formGroup]="form" (submit)="createApplication()"-->
 <!--              aria-labelledby="title">-->
 <!--          <div class="form-control-group">-->
@@ -440,7 +570,7 @@
 <!--  <nb-card class="p-3" style="width: 100%">-->
 <!--    <div class="row">-->
 <!--      <div class="col-md-6">-->
-<!--        <h5 class="mb-3">Applications</h5>-->
+<!--        <h6 class="mb-3">Applications</h6>-->
 <!--        <table class="table table-striped">-->
 <!--          <thead>-->
 <!--          <tr>-->

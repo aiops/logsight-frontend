@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from '../auth/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { timeout } from 'rxjs/operators';
-
+import * as AOS from 'aos';
 @Component({
-  selector: 'landing',
-  styleUrls: ['./assets/css/animate.css', './assets/css/owl.carousel.css', './assets/css/owl.theme.css',
-    './assets/css/style.css'],
+  selector: 'landing-page',
+  styleUrls: ['./assets/css/style.css', './assets/vendor/bootstrap-icons/bootstrap-icons.css',
+    './assets/vendor/aos/aos.css', './assets/vendor/remixicon/remixicon.css',
+    './assets/vendor/swiper/swiper-bundle.min.css', './assets/vendor/glightbox/css/glightbox.css', 'landing-page.css'],
   templateUrl: './landing.page.html',
 })
-export class LandingPage implements OnInit {
+export class LandingPage implements OnInit, AfterViewInit {
 
   form = new FormGroup({
     email: new FormControl('', Validators.required),
@@ -30,6 +30,7 @@ export class LandingPage implements OnInit {
     if (el) {
       el.style['display'] = 'none';
     }
+    AOS.init();
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -55,7 +56,7 @@ export class LandingPage implements OnInit {
 
   onSignUp() {
     localStorage.removeItem('token');
-    this.authService.registerDemo(this.form.value).subscribe(resp => {
+    this.authService.register(this.form.value).subscribe(resp => {
         this.notificationService.success('Success',
           'You are successfully registered. Please check your email to activate')
         this.router.navigate(['/auth/login'])
@@ -69,14 +70,53 @@ export class LandingPage implements OnInit {
   redirectToLogin() {
     this.router.navigate(['/auth/login'])
   }
+
   redirectToImpressum() {
     this.router.navigate(['impressum'])
   }
+
   redirectToTermsAndConditions() {
     this.router.navigate(['terms-conditions'])
   }
+
   redirectToPrivacyAndPolicy() {
     this.router.navigate(['privacy-policy'])
+  }
+
+  ngAfterViewInit(): void {
+    document.addEventListener('DOMContentLoaded', function () {
+      // make it as accordion for smaller screens
+      if (window.innerWidth < 992) {
+
+        // close all inner dropdowns when parent is closed
+        document.querySelectorAll('.navbar .dropdown').forEach(function (everydropdown) {
+          everydropdown.addEventListener('hidden.bs.dropdown', function () {
+            // after dropdown is hidden, then find all submenus
+            this.querySelectorAll('.submenu').forEach(function (everysubmenu) {
+              // hide every submenu as well
+              everysubmenu.style.display = 'none';
+            });
+          })
+        });
+
+        document.querySelectorAll('.dropdown-menu a').forEach(function (element) {
+          element.addEventListener('click', function (e) {
+            let nextEl = this.nextElementSibling;
+            if (nextEl && nextEl.classList.contains('submenu')) {
+              // prevent opening link if link needs to open dropdown
+              e.preventDefault();
+              if (nextEl.style.display == 'block') {
+                nextEl.style.display = 'none';
+              } else {
+                nextEl.style.display = 'block';
+              }
+
+            }
+          });
+        })
+      }
+      // end if innerWidth
+    });
   }
 }
 

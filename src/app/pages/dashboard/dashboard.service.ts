@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../@core/service/api.service';
+import { Observable } from 'rxjs/Observable';
+import { PredefinedTime } from '../../@core/common/predefined-time';
 
 @Injectable()
 export class DashboardService {
@@ -27,7 +29,23 @@ export class DashboardService {
     return this.apiService.get(`/api/charts/log_level_stacked_line_chart?startTime=${startTime}&endTime=${endTime}`);
   }
 
-  loadTopKIncidentsData(startTime: string, endTime: string) {
-    return this.apiService.get(`/api/incidents/top_k_incidents?startTime=${startTime}&endTime=${endTime}`);
+  loadTopKIncidentsData(startTime: string, endTime: string, numberOfIncidents: number) {
+    return this.apiService.get(`/api/incidents/top_k_incidents?startTime=${startTime}&endTime=${endTime}&numberOfIncidents=${numberOfIncidents}`);
+  }
+
+  getAllTimeRanges(): Observable<PredefinedTime[]> {
+    return this.apiService.get(`/api/user/time_ranges`);
+  }
+
+  deleteTimeRange(predefinedTime: PredefinedTime) {
+    return this.apiService.post(`/api/user/time_ranges/range/delete`, predefinedTime);
+  }
+
+  createTimeRange(predefinedTime: PredefinedTime) {
+    return this.apiService.post(`/api/user/time_ranges/range`, predefinedTime);
+  }
+
+  createPredefinedTimeRange() {
+    return this.apiService.post(`/api/user/time_ranges/predefined`, null);
   }
 }

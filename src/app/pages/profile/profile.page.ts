@@ -104,7 +104,7 @@ export class ProfilePage implements OnInit {
       quantity: this.quantity,
       subscription: true,
       email: this.email,
-      priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
+      priceID: environment.stripePriceId,
       cancelUrl: environment.stripeCancelUrl.concat(this.key),
       successUrl: environment.stripeSuccessUrl.concat(this.key),
     };

@@ -18,7 +18,7 @@ export class KibanaPage implements OnInit {
   email: string;
   reloadNum: number;
   environment = environment
-  private kibanaUrl: SafeResourceUrl;
+  kibanaUrl: SafeResourceUrl;
   constructor(private authService: AuthenticationService, private apiService: ApiService, public sanitizer:DomSanitizer) {
     this.curSec = 0;
     this.reloadNum = 0;

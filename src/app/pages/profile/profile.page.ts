@@ -7,6 +7,8 @@ import {IntegrationService} from "../../@core/service/integration.service";
 import {NotificationsService} from "angular2-notifications";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {environment} from "../../../environments/environment";
+import {Browser} from "leaflet";
+import win = Browser.win;
 
 @Component({
   selector: 'profile',
@@ -31,11 +33,13 @@ export class ProfilePage implements OnInit {
     domain: ['#00ff00', '#ff0000', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
   cardColor: string = '#ffffff';
-
   units: string = 'GBs';
 
-  stripePromise = loadStripe(
-    environment.stripePkey);
+  pKey: string = "";
+  cancelUrl: string = "";
+  successUrl: string = "";
+  priceId: string = "";
+  stripePromise;
 
   constructor(private router: Router, private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService, private route: ActivatedRoute) {
@@ -45,6 +49,21 @@ export class ProfilePage implements OnInit {
   ngOnInit(): void {
     this.getUserData()
     this.quantity = 1
+
+    if (window.location.href.toString().includes("demo")){
+      this.pKey = environment.stripePkeyDemo
+      this.cancelUrl = environment.stripeCancelUrlDemo
+      this.successUrl = environment.stripeSuccessUrlDemo
+      this.priceId = environment.stripePriceIdDemo
+    }else {
+      this.pKey = environment.stripePkey
+      this.cancelUrl = environment.stripeCancelUrl
+      this.successUrl = environment.stripeSuccessUrl
+      this.priceId = environment.stripePriceId
+    }
+
+    this.stripePromise = loadStripe(
+    this.pKey);
 
     this.route.queryParams
       .subscribe(params => {
@@ -104,9 +123,9 @@ export class ProfilePage implements OnInit {
       quantity: this.quantity,
       subscription: true,
       email: this.email,
-      priceID: environment.stripePriceId,
-      cancelUrl: environment.stripeCancelUrl.concat(this.key),
-      successUrl: environment.stripeSuccessUrl.concat(this.key),
+      priceID: this.priceId,
+      cancelUrl: this.cancelUrl.concat(this.key),
+      successUrl: this.successUrl.concat(this.key),
     };
     const stripe = await this.stripePromise;
     this.integrationService.subscription(payment).subscribe(data => {

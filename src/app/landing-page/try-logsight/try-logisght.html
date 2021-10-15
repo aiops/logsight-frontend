@@ -1,0 +1,70 @@
+<main id="main" xmlns="http://www.w3.org/1999/html">
+  <section id="about" class="about">
+
+    <div class="container" data-aos="fade-up">
+
+      <div class="row gx-0">
+
+        <div class="col-lg-12 d-flex flex-column justify-content-center" data-aos="fade-up">
+          <div class="content">
+            <h1>Try Logsight</h1>
+            <br>
+            <div class="row">
+              <div class="col-lg-6 mt-6 mt-lg-0">
+                <div class="box">
+                  <h3>Upload files</h3>
+                  <p>Here you can try how Logsight really works just by uploading a file</p>
+                  <form id="file-upload-form" class="uploader" >
+                    <input nbInput size="giant" style="text-align: left" fullWidth status="basic " type="file" id="file-upload"  (change)="uploadFiles($event.target.files)">
+                    <label for="file-upload" id="file-drag">
+                      <img id="file-image" src="#" alt="Preview" class="hidden">
+                      <div id="start">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                        <div>Select a file or drag here</div>
+                        <div id="file-upload-btn" class="upload">Select a file</div>
+                      </div>
+                    </label>
+                  </form>
+<!--                  <div class ="upload">-->
+<!--                    <button class="upload" (click)="RequestUpload()">{{!fileNotUploaded ? 'Upload' : 'Delete from memory'}}-->
+<!--                    </button>-->
+<!--                  </div>-->
+                </div>
+                </div>
+              <div class="col-lg-6 mt-6 mt-lg-0">
+                <div class="box" >
+                  <h3>Design for: not yet defined </h3>
+                  <p>Here you can: </p>
+
+<!--                  <ng-container *ngIf="uploadFile">-->
+<!--                    <div class="row description">-->
+<!--                      <div class="col">-->
+<!--                        <div class="row">-->
+<!--                          <h6>Upload log file usage</h6>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <br>-->
+<!--                    <br>-->
+<!--                  </ng-container>-->
+
+<!--                  <div class="col-sm text-right">-->
+<!--                    <nb-select class="period-select" [(selected)]="this.logFileType"-->
+<!--                               (selectedChange)="logFileTypeSelected($event)"-->
+<!--                               placeholder="Select log file type">-->
+<!--                      <nb-option *ngFor="let fileType of logFileTypes" [value]="fileType.type">-->
+<!--                      </nb-option>-->
+<!--                    </nb-select>-->
+<!--                  </div>-->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><!-- End About Section -->
+
+  <!-- ======= Values Section ======= -->
+</main>

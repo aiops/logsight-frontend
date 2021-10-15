@@ -71,6 +71,9 @@ export class LandingPage implements OnInit, AfterViewInit {
     this.router.navigate(['/auth/login'])
   }
 
+  redirectToTryLogsight() {
+    this.router.navigate(['try-logsight'])
+  }
   redirectToImpressum() {
     this.router.navigate(['impressum'])
   }

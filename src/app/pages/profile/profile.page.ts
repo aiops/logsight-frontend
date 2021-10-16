@@ -6,6 +6,9 @@ import {loadStripe} from "@stripe/stripe-js/pure";
 import {IntegrationService} from "../../@core/service/integration.service";
 import {NotificationsService} from "angular2-notifications";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {environment} from "../../../environments/environment";
+import {Browser} from "leaflet";
+import win = Browser.win;
 
 @Component({
   selector: 'profile',
@@ -30,11 +33,13 @@ export class ProfilePage implements OnInit {
     domain: ['#00ff00', '#ff0000', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
   cardColor: string = '#ffffff';
-
   units: string = 'GBs';
 
-  stripePromise = loadStripe(
-    'pk_test_51ILUOvIf2Ur5sxpSWO3wEhlDoyIWLbsXHYlZWqAGYinErMW59auHgqli7ASHJ7Qp7XyRFZjrTEAWWUbRBm3qt4eb00ByhhRPPp');
+  pKey: string = "";
+  cancelUrl: string = "";
+  successUrl: string = "";
+  priceId: string = "";
+  stripePromise;
 
   constructor(private router: Router, private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService, private route: ActivatedRoute) {
@@ -44,6 +49,21 @@ export class ProfilePage implements OnInit {
   ngOnInit(): void {
     this.getUserData()
     this.quantity = 1
+
+    if (window.location.href.toString().includes("demo")){
+      this.pKey = environment.stripePkeyDemo
+      this.cancelUrl = environment.stripeCancelUrlDemo
+      this.successUrl = environment.stripeSuccessUrlDemo
+      this.priceId = environment.stripePriceIdDemo
+    }else {
+      this.pKey = environment.stripePkey
+      this.cancelUrl = environment.stripeCancelUrl
+      this.successUrl = environment.stripeSuccessUrl
+      this.priceId = environment.stripePriceId
+    }
+
+    this.stripePromise = loadStripe(
+    this.pKey);
 
     this.route.queryParams
       .subscribe(params => {
@@ -80,7 +100,7 @@ export class ProfilePage implements OnInit {
 
   changeQuantity(){
     var quantity = this.form.controls['name'].value
-    if (quantity > 1){
+    if (quantity >= 1){
       this.quantity = quantity
     }else{
       this.notificationService.error("The entry is not a valid number!")
@@ -103,9 +123,9 @@ export class ProfilePage implements OnInit {
       quantity: this.quantity,
       subscription: true,
       email: this.email,
-      priceID: 'price_1J2tf6If2Ur5sxpSCxAVA2eW',
-      cancelUrl: 'https://demo.logsight.ai/pages/profile?payment=failed'.concat(this.key),
-      successUrl: 'https://demo.logsight.ai/pages/profile?payment=successful'.concat(this.key),
+      priceID: this.priceId,
+      cancelUrl: this.cancelUrl.concat(this.key),
+      successUrl: this.successUrl.concat(this.key),
     };
     const stripe = await this.stripePromise;
     this.integrationService.subscription(payment).subscribe(data => {

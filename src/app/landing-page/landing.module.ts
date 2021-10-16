@@ -6,15 +6,21 @@ import { TermsconditionsComponent } from './terms-and-conditions/termsconditions
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { ImpressumComponent } from './Impressum/impressum.component';
 import {SwiperModule} from "swiper/angular";
+import {TryLogsightComponent} from "./try-logsight/try-logsight";
+import {NbCardModule, NbSelectModule} from "@nebular/theme";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
-  imports: [
-    LandingRoutingModule,
-    ReactiveFormsModule,
-    SwiperModule,
-  ],
+    imports: [
+        LandingRoutingModule,
+        ReactiveFormsModule,
+        SwiperModule,
+        NbSelectModule,
+        NbCardModule,
+        MatIconModule,
+    ],
   declarations: [
-    LandingComponent, TermsconditionsComponent, PrivacyPolicyComponent, ImpressumComponent
+    LandingComponent, TermsconditionsComponent, PrivacyPolicyComponent, ImpressumComponent, TryLogsightComponent
   ]
 })
 export class LandingModule {

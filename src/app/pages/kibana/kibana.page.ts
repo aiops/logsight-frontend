@@ -54,9 +54,9 @@ export class KibanaPage implements OnInit {
       this.kibanaUrl = this.sanitizer.bypassSecurityTrustResourceUrl(environment.kibanaUrl)
     }
 
-    this.apiService.get(`/api/applications/update_kibana_patterns`).subscribe(resp => {
-
-    });
+    // this.apiService.get(`/api/applications/update_kibana_patterns`).subscribe(resp => {
+    //
+    // });
 
   }
 }

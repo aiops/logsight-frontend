@@ -20,7 +20,7 @@ const routes: Routes = [{
       component: ImpressumComponent
     },
     {
-      path: 'try-logsight',
+      path: 'logsight-lite',
       component: TryLogsightComponent
     },
     {

@@ -92,7 +92,7 @@ export class VariableAnalysisPage implements OnInit {
               }, dialogClass: 'model-full'
             });
           }, err => {
-            console.log(err)
+
             this.notificationService.error('Error', 'Error fetching data')
           })
       }

@@ -7,21 +7,24 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { ImpressumComponent } from './Impressum/impressum.component';
 import {SwiperModule} from "swiper/angular";
 import {TryLogsightComponent} from "./try-logsight/try-logsight";
-import {NbCardModule, NbSelectModule} from "@nebular/theme";
+import {NbCardModule, NbIconModule, NbSelectModule, NbSpinnerModule} from "@nebular/theme";
 import {MatIconModule} from "@angular/material/icon";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
-    imports: [
-        LandingRoutingModule,
-        ReactiveFormsModule,
-        SwiperModule,
-        NbSelectModule,
-        NbCardModule,
-        MatIconModule,
-    ],
+  imports: [
+    LandingRoutingModule,
+    ReactiveFormsModule,
+    SwiperModule,
+    MatIconModule,
+    CommonModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbSelectModule,
+  ],
   declarations: [
     LandingComponent, TermsconditionsComponent, PrivacyPolicyComponent, ImpressumComponent, TryLogsightComponent
-  ]
+  ],
 })
 export class LandingModule {
 }

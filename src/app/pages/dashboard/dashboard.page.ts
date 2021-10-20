@@ -293,7 +293,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   viewDetails(startTime: string, endTime: string, applicationId: number) {
-    console.log("SS:", startTime, endTime)
+
     this.navigateToIncidentsPage(startTime, endTime, applicationId)
   }
 

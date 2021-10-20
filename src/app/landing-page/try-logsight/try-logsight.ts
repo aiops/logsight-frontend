@@ -5,6 +5,9 @@ import { LoginService } from '../../auth/login.service';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {LogFileType} from "../../@core/common/log-file-type";
+import {ApiService} from "../../@core/service/api.service";
+import {UserLoginFormId} from "../../@core/common/auth/userLoginFormId";
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -19,51 +22,99 @@ export class TryLogsightComponent implements OnInit {
 
   logFileType: String;
   logFileTypes: LogFileType[] = [];
-  public uploadBtn: any = 'Upload file';
-  public uploadFile: boolean = false;
-  code_upload = ''
+  uploadFile = false;
   fileName = '';
+  fileList = [];
+  isSpinning = false;
   fileNotUploaded: Boolean = true;
   public formData = new FormData();
+  form = new FormGroup({
+    email: new FormControl('', Validators.required),
+    password: new FormControl('demo')
+  });
+  formLogFileType = new FormGroup({logTypeControl: new FormControl('Choose')})
+  message = '';
+  kibanaUrl = '';
+  emailCheck = false;
+  loginForm: UserLoginFormId = {
+          id: 0,
+          password: ""
+        }
   ReqJson: any = {};
   fileToUpload: File | null = null;
 
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
-              private router: Router,
-              fb: FormBuilder, private http:HttpClient) {
+              private apiService: ApiService) {
+
   }
 
   ngOnInit(): void {
-    this.code_upload = this.getCodeUpload()
+    this.loadLogFileTypes()
+    if (this.formLogFileType != null){
+      this.formLogFileType?.get("logTypeControl").valueChanges.subscribe(value => {
+        this.logFileType = value
+    })
+    }
+
+
   }
 
-  logFileTypeSelected(logFileType: string) {
-    logFileType === "" ? this.logFileType = null : this.logFileType = logFileType;
+  loadLogFileTypes() {
+    this.loadFileTypes().subscribe(resp =>{
+      this.logFileTypes = resp
+      console.log(this.logFileType)
+    }
+    )
   }
+
+  loadFileTypes(): Observable<LogFileType[]> {
+    return this.apiService.get(`/api/applications/logFileFormats`)
+  }
+
 
   uploadFiles(file) {
     this.formData = new FormData();
     for (let i = 0; i < file.length; i++) {
       this.formData.append("file", file[i], file[i]['name']);
+      this.fileList.push(file[i]['name'])
     }
-    this.notificationService.success("Click the upload button to send the log file.")
+    this.notificationService.success("File attached successfully!")
   }
 
-  // fileUpload(files: FileList){
-  //   this.fileToUpload = files.item(0);
-  // }
 
-  RequestUpload() {
-    // this.http.post(`/api/applications/${this.applicationId}/uploadFile/${this.logFileType}`, this.formData)
-    //   .subscribe(resp => {
-    //     this.notificationService.success("Log data uploaded successfully!")
-    //   }, error => {
-    //     this.notificationService.error("Error: ", error.error.detail)
-    //   });
-    // this.formData = new FormData();
-    // this.ReqJson = {};
-    // this.router.navigate(['/pages', 'dashboard'])
+  onGetInsights() {
+
+    if (this.fileList.length > 0 && this.logFileType != null && this.form.value.email.length > 0){
+
+
+    this.isSpinning = true;
+    this.apiService.post(`/api/fast_try/${this.form.value.email}/${this.logFileType}/upload`, this.formData)
+      .subscribe(resp => {
+        this.notificationService.success("Log data uploaded successfully!")
+        this.loginForm.password = resp.password
+        this.loginForm.id = resp.id
+        this.kibanaUrl = resp.kibanaPersonalUrl
+        this.apiService.post("/api/auth/kibana/login",
+          '{"key":"'+ resp.key + '"}').subscribe(data =>{
+        })
+        this.authService.loginId(this.loginForm).subscribe(user => {
+          this.isSpinning = false;
+          this.emailCheck = true;
+        }, err => {
+
+          this.notificationService.error('Error', 'Incorrect or not activated email')
+        });
+
+      }, error => {
+        this.notificationService.error("Error: ", error.error.detail)
+      });
+
+    this.formData = new FormData();
+    this.ReqJson = {};
+     }else{
+      this.notificationService.error("Please check the mandatory fields! Select log file type, log file, and email address!")
+    }
   }
 
   ngAfterViewInit() {
@@ -88,27 +139,4 @@ export class TryLogsightComponent implements OnInit {
     this.uploadFile = true
   }
 
-  private getCodeUpload(){
-    return `
-    1. JSON - native files should contain the following structure.
-    {
-    "logMessages": [
-      {
-        "private-key": "", //$ {this.key}
-        "app": "string",
-        "timestamp": "string",
-        "level": "string",
-        "message": "string"
-      }
-    ]
-    }
-    }
-
-    2. JSON - logstash.
-    We currently support all file outputs from logstash
-
-    3. syslog - We support log files that follow the syslog format.
-    You can upload logs located in /var/log/syslog.
-    `
-  }
 }

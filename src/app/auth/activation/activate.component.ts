@@ -75,19 +75,18 @@ export class ActivateComponent implements OnInit {
               resp => {
               },
               error => {
-                console.log(error)
               }
             )
             this.integrationService.createDemoApplications().subscribe(
               resp => {
               },
               error => {
-                console.log(error)
+
               }
             )
             this.startTimer(10)
           }, err => {
-            console.log('login error', err)
+
             this.notificationService.error('Error', 'Incorrect or not activated email')
           })
         }, error => {

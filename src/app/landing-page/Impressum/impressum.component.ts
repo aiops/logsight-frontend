@@ -78,7 +78,7 @@ export class ImpressumComponent implements OnInit {
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/quickstart'])
       }, err => {
-        console.log('login error', err)
+
         this.notificationService.error('Error', 'Incorrect email or password')
       }
     )
@@ -110,7 +110,7 @@ export class ImpressumComponent implements OnInit {
       this.contactForm.reset();
       this.disabledSubmitButton = true;
     }, (error: any) => {
-      console.log('Error', error);
+
     });
   }
 

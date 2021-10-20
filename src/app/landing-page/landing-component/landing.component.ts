@@ -55,7 +55,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/quickstart'])
       }, err => {
-        console.log('login error', err)
+
         this.notificationService.error('Error', 'Incorrect email or password')
       }
     )
@@ -68,7 +68,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
           this.notificationService.success('Success',
             'You are successfully registered. Please check your email to activate')
         }, err => {
-          console.log('login error', err)
+
           this.notificationService.error('Error', 'User already exists, please sign in!')
         }
       ))

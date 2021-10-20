@@ -53,6 +53,6 @@ export class HeatmapCompareComponent {
   // }
 
   onSelect(data): void {
-    console.log('onSelect', data)
+
   }
 }

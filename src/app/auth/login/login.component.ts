@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
         this.authService.loginId(loginForm).subscribe(user => {
           this.router.navigate(['/pages/dashboard'])
         }, err => {
-          console.log('login error', err)
+
           this.notificationService.error('Error', 'Incorrect or not activated email')
         })
       }
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     this.authService.requestLoginLink(this.form.value).subscribe(resp => {
         this.notificationService.success('Success', 'Please check your email for a login link!')
       }, err => {
-        console.log('login error', err)
+
         this.notificationService.error('Error', 'Incorrect or not activated email')
       }
     )

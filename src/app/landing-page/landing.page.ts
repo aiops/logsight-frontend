@@ -48,7 +48,7 @@ export class LandingPage implements OnInit, AfterViewInit {
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/quickstart'])
       }, err => {
-        console.log('login error', err)
+
         this.notificationService.error('Error', 'Incorrect email or password')
       }
     )
@@ -61,7 +61,7 @@ export class LandingPage implements OnInit, AfterViewInit {
           'You are successfully registered. Please check your email to activate')
         this.router.navigate(['/auth/login'])
       }, err => {
-        console.log('login error', err)
+
         this.notificationService.error('Error', 'User already exists, please sign in!')
       }
     )
@@ -71,6 +71,9 @@ export class LandingPage implements OnInit, AfterViewInit {
     this.router.navigate(['/auth/login'])
   }
 
+  redirectToTryLogsight() {
+    this.router.navigate(['logsight-lite'])
+  }
   redirectToImpressum() {
     this.router.navigate(['impressum'])
   }

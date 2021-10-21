@@ -4,6 +4,7 @@ import {AuthenticationService} from "../../auth/authentication.service";
 import {ApiService} from "../../@core/service/api.service";
 import {HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'kibana',
@@ -17,11 +18,11 @@ export class KibanaPage implements OnInit {
   email: string;
   reloadNum: number;
   environment = environment
-
-  constructor(private authService: AuthenticationService, private apiService: ApiService) {
+  kibanaUrl: SafeResourceUrl;
+  constructor(private authService: AuthenticationService, private apiService: ApiService, public sanitizer:DomSanitizer) {
     this.curSec = 0;
     this.reloadNum = 0;
-    this.environment = environment
+    this.environment = environment;
   }
 
 
@@ -47,7 +48,15 @@ export class KibanaPage implements OnInit {
   // }
 
   ngOnInit(): void {
+    if (window.location.href.toString().includes("demo")){
+      this.kibanaUrl = this.sanitizer.bypassSecurityTrustResourceUrl(environment.kibanaUrlDemo)
+    } else {
+      this.kibanaUrl = this.sanitizer.bypassSecurityTrustResourceUrl(environment.kibanaUrl)
+    }
 
+    // this.apiService.get(`/api/applications/update_kibana_patterns`).subscribe(resp => {
+    //
+    // });
 
   }
 }

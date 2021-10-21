@@ -65,7 +65,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
 
       let startTime = queryParams.get('startTimeSpecific') ?? queryParams.get('startTime')
       let endTime = queryParams.get('endTimeSpecific') ?? queryParams.get('endTime')
-      console.log(startTime, endTime)
+
       if (startTime.toString().includes(":")){
         startTime = moment(startTime,'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
         endTime = moment(endTime,'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')

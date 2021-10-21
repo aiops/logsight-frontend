@@ -46,7 +46,7 @@ export class AuthenticationService {
       .pipe(
         map(user => !!user),
         catchError(error => {
-          console.log('error', error);
+
           localStorage.removeItem('token')
           return of(false);
         })

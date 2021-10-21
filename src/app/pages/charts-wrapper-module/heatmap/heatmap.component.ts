@@ -55,6 +55,6 @@ export class HeatmapComponent {
   // }
 
   onSelect(data): void {
-    console.log('onSelect', data)
+
   }
 }

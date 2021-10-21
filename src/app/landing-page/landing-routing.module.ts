@@ -5,6 +5,7 @@ import { ImpressumComponent } from './Impressum/impressum.component';
 import { LandingComponent } from './landing-component/landing.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsconditionsComponent } from './terms-and-conditions/termsconditions.component';
+import { TryLogsightComponent} from "./try-logsight/try-logsight";
 
 const routes: Routes = [{
   path: '',
@@ -17,6 +18,10 @@ const routes: Routes = [{
     {
       path: 'impressum',
       component: ImpressumComponent
+    },
+    {
+      path: 'quickstart',
+      component: TryLogsightComponent
     },
     {
       path: 'privacy-policy',

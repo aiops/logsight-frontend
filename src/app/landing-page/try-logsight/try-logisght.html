@@ -42,7 +42,10 @@
                          src="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt8b679e63f2b49b27/5d082d93877575d0584761c0/logo-logstash-32-color.svg">
 
                     <div *ngIf="fileList.length == 0"> <p style="color: #454cad; font-weight: 500">Click anywhere to select your log file for upload.</p></div>
-                    <input nbInput size="giant" style="text-align: left" fullWidth status="basic" type="file" id="file"
+                      <div *ngIf="fileList.length == 0"> <p style="color: #8d8fa6; font-weight: 400; font-size: 16px">Select <b>Syslog</b> file type and upload<br> <code>/var/log/syslog</code> in Linux distributions<br> <code>/private/var/log/system.log</code> in MacOS</p></div>
+                      <div *ngIf="fileList.length == 0"> <p style="color: #8d8fa6; font-weight: 400; font-size: 16px">Select <b>Logstash</b> file type and upload<br> <i>any logstash formated log file</i></p></div>
+
+                      <input nbInput size="giant" style="text-align: left" fullWidth status="basic" type="file" id="file"
                            (change)="uploadFiles($event.target.files)">
                     <div>
                     <nb-icon *ngIf="fileList.length > 0" style="width: 1rem" icon="file-text-outline"

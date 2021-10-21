@@ -72,7 +72,7 @@ export class LandingPage implements OnInit, AfterViewInit {
   }
 
   redirectToTryLogsight() {
-    this.router.navigate(['logsight-lite'])
+    this.router.navigate(['quickstart'])
   }
   redirectToImpressum() {
     this.router.navigate(['impressum'])

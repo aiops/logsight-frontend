@@ -87,14 +87,14 @@
                               bottom: 40%;
                               transform: translate(50%,50%);
                               position: absolute;">
-                      <div style="color: #012970; font-weight: 600">The AI systems are processing your logs! It may take up to a minute ...</div>
+<!--                      <div style="color: #012970; font-weight: 600">The AI systems are processing your logs! It may take up to a minute ...</div>-->
                     </div>
 
                     <div  *ngIf="isSpinning == false && emailCheck == true" style="right: 50%;
                               bottom: 50%;
                               transform: translate(50%,50%);
                               position: absolute;">
-                      <div style="color: #012970; font-weight: 600; font-size: 20px">Your results are ready! Please check your email.</div>
+                      <div style="color: #012970; font-weight: 600; font-size: 20px">The AI systems are processing your logs! <br> It may take up to a minute. <br> You will receive an email with the result. </div>
                     </div>
 
                   </label>

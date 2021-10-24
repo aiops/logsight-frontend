@@ -34,21 +34,43 @@ export class LoginComponent implements OnInit {
     }
 
     this.route.params.subscribe(params => {
+      let redirectUrl: string;
       if (params.id && params.password) {
         const loginForm: UserLoginFormId = {
           id: params.id,
           password: params.password
         }
         this.authService.loginId(loginForm).subscribe(user => {
-          this.router.navigate(['/pages/dashboard'])
-        }, err => {
+           this.route.queryParamMap.subscribe(
+        queryParams => {
+          if (queryParams.has("redirect")){
+            redirectUrl = '/pages/kibana'
+          //   this.apiService.post("/api/auth/kibana/login",
+          // '{"key":"'+ user.key + '"}').subscribe(async data => {
+          //   })
+          }else{
+            redirectUrl = '/pages/dashboard'
+          }
+        // this.delay(3000, redirectUrl)
+          this.router.navigate([redirectUrl])
+        }
+      )
 
+        }, err => {
           this.notificationService.error('Error', 'Incorrect or not activated email')
         })
       }
     }, error => {
     })
   }
+
+//   delay(ms: number, redirectUrl: string) {
+//     return new Promise( resolve => {
+//       setTimeout(()=>{
+//         this.router.navigate([redirectUrl])
+//       }, ms)
+//     } );
+// }
 
   onLogin() {
     localStorage.removeItem('token')

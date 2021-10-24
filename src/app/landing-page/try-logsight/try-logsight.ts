@@ -109,8 +109,10 @@ export class TryLogsightComponent implements OnInit {
         }, err => {
           this.notificationService.error('Error', 'Incorrect or not activated email')
         });
+
         // this.isSpinning = false;
         //   this.emailCheck = true;
+
       }, error => {
         this.notificationService.error("Error: ", "Please ensure that your log file corresponds to the selected log type!")
       });

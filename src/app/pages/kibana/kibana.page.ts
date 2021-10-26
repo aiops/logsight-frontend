@@ -5,11 +5,13 @@ import {ApiService} from "../../@core/service/api.service";
 import {HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+
 import {UserActivateForm} from "../../@core/common/auth/userActivateForm";
 import {UserLoginFormId} from "../../@core/common/auth/userLoginFormId";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../../auth/login.service";
 import {NotificationsService} from "angular2-notifications";
+
 
 @Component({
   selector: 'kibana',
@@ -25,6 +27,7 @@ export class KibanaPage implements OnInit {
   environment = environment
   kibanaUrl: SafeResourceUrl;
 
+
   loginForm: UserLoginFormId = {
           id: 0,
           password: ""
@@ -32,6 +35,7 @@ export class KibanaPage implements OnInit {
 
   constructor(private authService: LoginService, private apiService: ApiService, public sanitizer:DomSanitizer, private router: Router,
     private route: ActivatedRoute, private notificationService: NotificationsService) {
+
     this.curSec = 0;
     this.reloadNum = 0;
     this.environment = environment;

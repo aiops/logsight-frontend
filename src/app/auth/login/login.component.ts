@@ -5,6 +5,7 @@ import {NotificationsService} from 'angular2-notifications';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from "../../@core/service/api.service";
 import {UserLoginFormId} from "../../@core/common/auth/userLoginFormId";
+import {NbThemeService} from "@nebular/theme";
 
 @Component({
   selector: 'login',
@@ -15,6 +16,10 @@ export class LoginComponent implements OnInit {
 
   form = new FormGroup({
     email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.compose([
+		Validators.required,
+		Validators.minLength(8)
+	]))
   });
 
   constructor(
@@ -22,46 +27,49 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationsService,
     private router: Router,
     private apiService: ApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private themeService: NbThemeService
   ) {
   }
 
   ngOnInit(): void {
     //hack code to stop spinner
+    this.themeService.changeTheme("default");
     const el = document.getElementById('nb-global-spinner');
     if (el) {
       el.style['display'] = 'none';
     }
 
-    this.route.params.subscribe(params => {
-      let redirectUrl: string;
-      if (params.id && params.password) {
-        const loginForm: UserLoginFormId = {
-          id: params.id,
-          password: params.password
-        }
-        this.authService.loginId(loginForm).subscribe(user => {
-           this.route.queryParamMap.subscribe(
-        queryParams => {
-          if (queryParams.has("redirect")){
-            redirectUrl = '/pages/kibana'
-          //   this.apiService.post("/api/auth/kibana/login",
-          // '{"key":"'+ user.key + '"}').subscribe(async data => {
-          //   })
-          }else{
-            redirectUrl = '/pages/dashboard'
-          }
-        // this.delay(3000, redirectUrl)
-          this.router.navigate([redirectUrl])
-        }
-      )
+    // this.route.params.subscribe(params => {
+    //   let redirectUrl: string;
+    //   if (params.id && params.password) {
+    //     const loginForm: UserLoginFormId = {
+    //       id: params.id,
+    //       password: params.password
+    //     }
+    //     this.authService.loginId(loginForm).subscribe(user => {
+    //        this.route.queryParamMap.subscribe(
+    //     queryParams => {
+    //       if (queryParams.has("redirect")){
+    //         redirectUrl = '/pages/kibana'
+    //       //   this.apiService.post("/api/auth/kibana/login",
+    //       // '{"key":"'+ user.key + '"}').subscribe(async data => {
+    //       //   })
+    //       }else{
+    //         redirectUrl = '/pages/dashboard'
+    //       }
+    //     // this.delay(3000, redirectUrl)
+    //       this.router.navigate([redirectUrl])
+    //     }
+    //   )
+    //
+    //     }, err => {
+    //       this.notificationService.error('Error', 'Incorrect or not activated email')
+    //     })
+    //   }
+    // }, error => {
+    // })
 
-        }, err => {
-          this.notificationService.error('Error', 'Incorrect or not activated email')
-        })
-      }
-    }, error => {
-    })
   }
 
 //   delay(ms: number, redirectUrl: string) {
@@ -74,10 +82,31 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     localStorage.removeItem('token')
-    this.authService.requestLoginLink(this.form.value).subscribe(resp => {
-        this.notificationService.success('Success', 'Please check your email for a login link!')
-      }, err => {
+    this.authService.login(this.form.value).subscribe(resp => {
+        this.notificationService.success('Success', 'Login successful.')
 
+      this.route.queryParamMap.subscribe(
+        queryParams => {
+          let redirectUrl = ""
+          if (queryParams.has("redirect")){
+            redirectUrl = "/pages/kibana"
+          //   this.apiService.post("/api/auth/kibana/login",
+          // '{"key":"'+ user.key + '"}').subscribe(async data => {
+          //   })
+          }else{
+            redirectUrl = "/pages/dashboard"
+          }
+        // this.delay(3000, redirectUrl)
+          this.router.navigate([redirectUrl]).then(() => {
+  });
+        }
+      )
+
+
+      // this.router.navigate(['/pages/dashboard'])
+
+      // this.router.navigate(['/pages/dashboard'])
+      }, err => {
         this.notificationService.error('Error', 'Incorrect or not activated email')
       }
     )

@@ -9,6 +9,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {environment} from "../../../environments/environment";
 import {Browser} from "leaflet";
 import win = Browser.win;
+import {LoginService} from "../../auth/login.service";
+import {ChangePasswordForm} from "../../@core/common/auth/changePasswordForm";
+import {error} from "protractor";
 
 @Component({
   selector: 'profile',
@@ -24,6 +27,13 @@ export class ProfilePage implements OnInit {
   hasPaid: Boolean;
   response: HighlightResult;
   paymentSuccessful: string = 'default'
+  isMatching = true;
+  formPassword = new FormGroup({
+      key: new FormControl(''),
+      password: new FormControl('', Validators.minLength(8)),
+      passwordRetry: new FormControl('', Validators.minLength(8))
+  });
+
   form = new FormGroup({
   name: new FormControl('', Validators.required),
   });
@@ -42,7 +52,7 @@ export class ProfilePage implements OnInit {
   stripePromise;
 
   constructor(private router: Router, private integrationService: IntegrationService, private authService: AuthenticationService,
-              private notificationService: NotificationsService, private route: ActivatedRoute) {
+              private notificationService: NotificationsService, private route: ActivatedRoute, private loginService: LoginService) {
 
   }
 
@@ -106,6 +116,22 @@ export class ProfilePage implements OnInit {
       this.notificationService.error("The entry is not a valid number!")
     }
 
+  }
+
+  changePassword(){
+    let newPassword = this.formPassword.value.password
+    let newPasswordRetry = this.formPassword.value.passwordRetry
+    this.formPassword.get("key").setValue(this.key)
+    if (newPassword != newPasswordRetry){
+      this.isMatching = false
+    }else{
+      this.isMatching = true
+      this.loginService.changePassword(this.formPassword.value).subscribe(resp => {
+        this.notificationService.success("Success", "The password was successfully updated.")
+      }, error =>{
+        this.notificationService.error("Error", "The password was not updated. Please try again.")
+      })
+    }
   }
 
   minus() {

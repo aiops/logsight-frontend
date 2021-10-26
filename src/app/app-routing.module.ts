@@ -45,7 +45,7 @@ export const routes: Routes = [
         component: RegisterComponent,
       },
       {
-        path: 'activate/:id/:key/:password',
+        path: 'activate/:id/:key',
         component: ActivateComponent
       },
       {

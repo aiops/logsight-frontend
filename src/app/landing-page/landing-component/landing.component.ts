@@ -25,7 +25,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
     password: new FormControl('demo')
   });
   message = '';
-
+  isSpinning = false;
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
               private router: Router) {
@@ -63,15 +63,15 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   onSignUp() {
     localStorage.removeItem('token')
-    this.router.navigate(['/auth/login']).then(r =>
-      this.authService.register(this.form.value).subscribe(resp => {
-          this.notificationService.success('Success',
-            'You are successfully registered. Please check your email to activate')
-        }, err => {
-
-          this.notificationService.error('Error', 'User already exists, please sign in!')
-        }
-      ))
+    this.router.navigate(['/auth/register'], { queryParams: { email: this.form.value.email } })
+      // this.authService.register(this.form.value).subscribe(resp => {
+      //     this.notificationService.success('Success',
+      //       'You are successfully registered. Please check your email to activate')
+      //   }, err => {
+      //
+      //     this.notificationService.error('Error', 'User already exists, please sign in!')
+      //   }
+      // )
   }
 
   redirectToLogin() {

@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private breakpointService: NbMediaBreakpointsService,
               private authService: AuthenticationService,
               private tourService: TourService,
-              private apiService: ApiService) {
+              private apiService: ApiService,) {
 
               this.tourService.initialize([
                 {
@@ -169,6 +169,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
             }
   ngOnInit() {
+    this.themeService.changeTheme("dark")
     this.curSec = 0;
     this.authService.getLoggedUser().subscribe(user => {
       this.key = user.key

@@ -10,6 +10,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ActivateComponent } from './auth/activation/activate.component';
 import { AuthenticationGuard } from './auth/authentication-guard';
+import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
 
 export const routes: Routes = [
   {
@@ -45,12 +46,16 @@ export const routes: Routes = [
         component: RegisterComponent,
       },
       {
-        path: 'activate/:id/:key/:password',
+        path: 'activate/:id/:key',
         component: ActivateComponent
       },
       {
         path: 'logout',
         component: NbLogoutComponent,
+      },
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
       },
       {
         path: 'request-password',

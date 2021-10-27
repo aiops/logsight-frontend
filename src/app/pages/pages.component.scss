@@ -1,4 +1,19 @@
 @import '../@theme/styles/themes';
+//#151a30;#222b45; #101426;
+
+//::ng-deep .nb-theme-dark nb-layout .layout{
+//  background-color: #151a30 !important;
+//}
+//
+//::ng-deep .nb-theme-dark nb-card-body
+//{
+//  background-color: #222b45 !important;
+//
+//}
+//
+//::ng-deep .nb-theme-dark nb-card {
+//  border: 0.0625rem solid #101426 !important;
+//}
 
 @include nb-install-component() {
   ::ng-deep router-outlet + * {

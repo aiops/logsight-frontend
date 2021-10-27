@@ -97,22 +97,22 @@ export class TryLogsightComponent implements OnInit {
     this.apiService.post(`/api/fast_try/${this.form.value.email}/${this.logFileType}/upload`, this.formData)
       .subscribe(resp => {
         this.notificationService.success("Log data uploaded successfully!")
-        this.loginForm.password = resp.password
+        // this.loginForm.password = resp.password
         this.loginForm.id = resp.id
         this.kibanaUrl = resp.kibanaPersonalUrl
         this.apiService.post("/api/auth/kibana/login",
           '{"key":"'+ resp.key + '"}').subscribe(data =>{
         })
-        this.authService.loginId(this.loginForm).subscribe(user => {
-          this.isSpinning = false;
-          this.emailCheck = true;
-        }, err => {
-          this.notificationService.error('Error', 'Incorrect or not activated email')
-        });
-
+        this.isSpinning = false;
+        this.emailCheck = true;
+        // this.authService.loginId(this.loginForm).subscribe(user => {
+        //   this.isSpinning = false;
+        //   this.emailCheck = true;
+        // }, err => {
+        //   this.notificationService.error('Error', 'Incorrect or not activated email')
+        // });
         // this.isSpinning = false;
         //   this.emailCheck = true;
-
       }, error => {
         this.notificationService.error("Error: ", "Please ensure that your log file corresponds to the selected log type!")
       });

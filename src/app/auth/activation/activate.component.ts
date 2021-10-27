@@ -8,6 +8,7 @@ import {UserActivateForm} from "../../@core/common/auth/userActivateForm";
 import {DashboardService} from "../../pages/dashboard/dashboard.service";
 import {IntegrationService} from "../../@core/service/integration.service";
 import {UserLoginFormId} from "../../@core/common/auth/userLoginFormId";
+import {NbThemeService} from "@nebular/theme";
 
 @Component({
   selector: 'activate',
@@ -30,7 +31,8 @@ export class ActivateComponent implements OnInit {
     private integrationService: IntegrationService,
     private notificationService: NotificationsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private themeService: NbThemeService
   ) {
   }
 
@@ -42,7 +44,7 @@ export class ActivateComponent implements OnInit {
       this.curSec = sec;
       if (this.curSec === seconds) {
         sub.unsubscribe();
-        this.router.navigate(['/pages/dashboard'])
+        this.router.navigate(['/auth/login'])
       }
     });
   }
@@ -54,47 +56,51 @@ export class ActivateComponent implements OnInit {
       el.style['display'] = 'none';
     }
 
+    this.themeService.changeTheme("default")
     this.route.params.subscribe(params => {
-      if (params.id && params.key && params.password) {
+      if (params.id && params.key) {
         const activateForm: UserActivateForm = {
           id: params.id,
           key: params.key
         }
-        const loginForm: UserLoginFormId = {
-          id: params.id,
-          password: params.password
-        }
+        // const loginForm: UserLoginFormId = {
+        //   id: params.id,
+        //   password: params.password
+        // }
         this.authService.activate(activateForm).subscribe(user => {
           this.user = user
           this.activationSuccess = true;
           this.loading = false
           this.email = this.user.email
-          this.authService.loginId(loginForm).subscribe(resp => {
-            this.status = "activate"
-            this.dashboardService.createPredefinedTimeRange().subscribe(
-              resp => {
-              },
-              error => {
-              }
-            )
-            this.integrationService.createDemoApplications().subscribe(
-              resp => {
-              },
-              error => {
+          this.status = "activate"
+          this.startTimer(5)
+          // this.authService.loginId(loginForm).subscribe(resp => {
+          //
+          //   this.dashboardService.createPredefinedTimeRange().subscribe(
+          //     resp => {
+          //     },
+          //     error => {
+          //     }
+          //   )
+          //   this.integrationService.createDemoApplications().subscribe(
+          //     resp => {
+          //     },
+          //     error => {
+          //
+          //     }
+          //   )
 
-              }
-            )
-            this.startTimer(10)
-          }, err => {
-
-            this.notificationService.error('Error', 'Incorrect or not activated email')
-          })
+          // }, err => {
+          //
+          //   this.notificationService.error('Error', 'Incorrect or not activated email')
+          // })
+        this.notificationService.success("Success", "User activated. Please login.")
+        // this.router.navigate(['/auth/login'])
         }, error => {
           this.notificationService.error(
             "Error",
-            "User already activated. Please login."
+            "An error occurred. User does not exist, please sign up."
           )
-          this.router.navigate(['/auth/login'])
         })
       }
     }, error => {

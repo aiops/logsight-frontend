@@ -9,19 +9,17 @@ import {NbThemeService} from "@nebular/theme";
 
 @Component({
   selector: 'login',
-  styleUrls: ['./login.component.scss'],
-  templateUrl: './login.component.html',
+  styleUrls: ['./forgot-password.component.scss'],
+  templateUrl: './forgot-password.component.html',
 })
-export class LoginComponent implements OnInit {
+export class ForgotPasswordComponent implements OnInit {
 
   form = new FormGroup({
     email: new FormControl('', Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')),
-    password: new FormControl('', Validators.compose([
-		Validators.required,
-		Validators.minLength(8)
-	]))
   });
-
+  isEmailSent = false;
+  emailNotFound = false;
+  isSpinning = false;
   constructor(
     private authService: LoginService,
     private notificationService: NotificationsService,
@@ -80,34 +78,17 @@ export class LoginComponent implements OnInit {
 //     } );
 // }
 
-  onLogin() {
+  onResetPassword() {
+    this.isSpinning = true
     localStorage.removeItem('token')
-    this.authService.login(this.form.value).subscribe(resp => {
-        this.notificationService.success('Success', 'Login successful.')
-
-      this.route.queryParamMap.subscribe(
-        queryParams => {
-          let redirectUrl = ""
-          if (queryParams.has("redirect")){
-            redirectUrl = "/pages/kibana"
-          //   this.apiService.post("/api/auth/kibana/login",
-          // '{"key":"'+ user.key + '"}').subscribe(async data => {
-          //   })
-          }else{
-            redirectUrl = "/pages/dashboard"
-          }
-        // this.delay(3000, redirectUrl)
-          this.router.navigate([redirectUrl]).then(() => {
-  });
-        }
-      )
-
-
-      // this.router.navigate(['/pages/dashboard'])
-
-      // this.router.navigate(['/pages/dashboard'])
-      }, err => {
-        this.notificationService.error('Error', 'Incorrect or not activated email')
+    this.authService.resetPassword(this.form.value.email).subscribe(resp => {
+      this.isEmailSent = true;
+      this.isSpinning = false;
+    this.notificationService.success('Success', 'New password was sent to your email.')
+   }, err => {
+      this.emailNotFound = true;
+      this.isSpinning = false;
+        this.notificationService.error('Error', 'User not found. Incorrect or not activated email.', )
       }
     )
   }

@@ -18,8 +18,19 @@
       <form [formGroup]="formPassword" (submit)="changePassword()" aria-labelledby="title">
               <div class="row">
                 <div class="col-lg-12 col-xl-6" style="margin-top: 3px">
+                  <input nbInput class="mr-2" type="password" formControlName="oldPassword" id="formOldPassword"
+                         placeholder="Enter your old password" [required]="true"
+                         [attr.aria-invalid]="formPassword.invalid && formPassword.touched ? true : null">
+                  <ng-container *ngIf="formPassword.controls['oldPassword'].invalid && formPassword.touched">
+                    <p class="error-message" style="color: white" *ngIf="formPassword.controls['oldPassword'].errors?.minlength">
+                      Password length should be minimum of 8 characters.
+                    </p>
+                  </ng-container>
+                  <br>
+                  <br>
+
                   <input nbInput class="mr-2" type="password" formControlName="password" id="formPassword"
-                         placeholder="Enter new password" [required]="true"
+                         placeholder="Enter the new password" [required]="true"
                          [attr.aria-invalid]="formPassword.invalid && formPassword.touched ? true : null">
                   <ng-container *ngIf="formPassword.controls['password'].invalid && formPassword.touched">
                     <p class="error-message" style="color: white" *ngIf="formPassword.controls['password'].errors?.minlength">
@@ -28,8 +39,8 @@
                   </ng-container>
                   <br>
                   <br>
-                  <input nbInput class="mr-2" type="password" formControlName="passwordRetry" id="formPassword"
-                         placeholder="Repeat password" [required]="true"
+                  <input nbInput class="mr-2" type="password" formControlName="passwordRetry" id="formRetryPassword"
+                         placeholder="Repeat the new password" [required]="true"
                          [attr.aria-invalid]="formPassword.invalid && formPassword.touched ? true : null">
                   <ng-container *ngIf="formPassword.touched">
                     <p class="error-message" style="color: white" *ngIf="formPassword.controls['passwordRetry'].errors?.minlength">

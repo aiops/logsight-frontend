@@ -33,9 +33,10 @@ import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 import { TourMatMenuModule } from 'ngx-ui-tour-md-menu';
 import { MatCardModule } from '@angular/material/card';
 import { TooltipModule } from '@swimlane/ngx-charts';
+import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent, ForgotPasswordComponent],
   imports: [
     BrowserModule,
     FormsModule,

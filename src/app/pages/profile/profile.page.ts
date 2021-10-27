@@ -30,6 +30,7 @@ export class ProfilePage implements OnInit {
   isMatching = true;
   formPassword = new FormGroup({
       key: new FormControl(''),
+      oldPassword: new FormControl('', Validators.minLength(8)),
       password: new FormControl('', Validators.minLength(8)),
       passwordRetry: new FormControl('', Validators.minLength(8))
   });
@@ -129,7 +130,7 @@ export class ProfilePage implements OnInit {
       this.loginService.changePassword(this.formPassword.value).subscribe(resp => {
         this.notificationService.success("Success", "The password was successfully updated.")
       }, error =>{
-        this.notificationService.error("Error", "The password was not updated. Please try again.")
+        this.notificationService.error("Error", "Incorrect old password.")
       })
     }
   }

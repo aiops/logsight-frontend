@@ -25,6 +25,10 @@ export class LoginService {
     return this.apiService.post('/api/auth/change_password', changePasswordForm);
   }
 
+  resetPassword(email: string): any {
+    return this.apiService.post('/api/auth/reset_password', {"email": email});
+  }
+
   loginId(loginForm: UserLoginFormId): any {
     return this.apiService.post('/api/auth/login_id', loginForm);
   }

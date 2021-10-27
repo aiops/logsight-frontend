@@ -74,9 +74,10 @@ export class RegisterComponent implements OnInit {
         this.notificationService.success('Success',
           'You are successfully registered. Please check your email to activate and then login')
       this.formSubmitted = true;
-      this.startTimer(5)
+      // this.startTimer(5)
       }, err => {
         this.notificationService.error('Error', 'User already exists, please login!')
+      this.router.navigate(['/auth/login'])
       }
     )
   }

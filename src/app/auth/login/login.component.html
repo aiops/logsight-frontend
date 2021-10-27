@@ -1,19 +1,20 @@
+
 <div class="logo" style="padding-left: 40px">
 <a class="navbar-brand title"href="#"><img alt="logo" src="assets/img/logol.png" height="60" /></a>
 </div>
-<div style="color: #013b54; font-size: 18px; font-weight: 600">Account login</div>
+<div style="color: #013b54; font-size: 18px; font-weight: 600">Login</div>
 <br>
 <form [formGroup]="form" (submit)="onLogin()" aria-labelledby="title">
   <div class="form-control-group">
     <label class="label" for="email"></label>
-    <input style="height: 3.5rem"
+    <input style="height: 3.5rem; text-align: left;"
            fullWidth
            type="email"
            class="form-control"
            formControlName="email"
            id="email"
            pattern=".+@.+\..+"
-           placeholder="Email address"
+           placeholder="Enter your email"
            autofocus
            class="form-control"
            [required]="true"
@@ -34,7 +35,7 @@
            class="form-control"
            formControlName="password"
            id="password"
-           placeholder="Password"
+           placeholder="Enter your password"
            autofocus
            [required]="true"
            [attr.aria-invalid]="form.invalid && form.touched ? true : null">

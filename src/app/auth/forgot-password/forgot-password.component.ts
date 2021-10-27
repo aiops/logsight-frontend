@@ -87,6 +87,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.notificationService.success('Success', 'New password was sent to your email.')
    }, err => {
       this.emailNotFound = true;
+      this.isSpinning = false;
         this.notificationService.error('Error', 'User not found. Incorrect or not activated email.', )
       }
     )

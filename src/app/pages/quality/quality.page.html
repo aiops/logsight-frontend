@@ -49,28 +49,26 @@
 
 <div class="row" style="height: 200px; text-align: center">
 
-<!--<div class="col-sm">-->
-<!--  <h5 style="font-weight: 600">Overall log quality-->
-<!--    <nb-icon icon="info-outline"-->
-<!--             nbTooltip="Log quality tooltip"-->
-<!--             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>-->
-<!--  </h5>-->
-<!--  <ngx-gauge class="reading-block" [type]="gaugeType"-->
-<!--         [value]="gaugeTypeOverall"-->
-<!--         [label]="''"-->
-<!--             [size]="150"-->
-<!--         [append]="gaugeAppendText"-->
-<!--         [thresholds]="thresholdConfigLogLevel"-->
-<!--         backgroundColor="#FFE5E5FF"-->
-<!--         [thick]="15">-->
-<!--</ngx-gauge>-->
-<!--</div>-->
-<div class="col-sm" tourAnchor="qualityLogLevel">
+<div class="col-sm-6" tourAnchor="qualityLogLevel">
+  <div class="row">
+    <div class="col-sm">
   <h6 style="font-weight: 600; text-align: center">Log level quality
     <nb-icon icon="info-outline"
              nbTooltip="Log level quality represents the trustworthiness of the system logs, regarding their log levels. For example logging a message as INFO, if in reality is ERROR makes troubleshooting more difficult!"
              nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
   </h6>
+    </div>
+    <div class="col-sm">
+    <h6 style="font-weight: 600">Linguistic quality
+    <nb-icon icon="info-outline"
+             nbTooltip="Log messages need to be written correctly. The linguistic quality represents a score of how good or bad a log message is written in terms of the readability and meaning"
+             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+  </h6>
+    </div>
+
+    </div>
+  <div class="row">
+    <div class="col-sm">
   <ngx-gauge class="reading-block" [type]="gaugeType"
          [value]="gaugeTypeLogLevel"
          [label]="''"
@@ -81,28 +79,55 @@
          backgroundColor="#FFE5E5FF"
          [thick]="15">
 </ngx-gauge>
-</div>
+      </div>
 
-<div class="col-sm" tourAnchor="qualityLinguistic">
-  <h6 style="font-weight: 600">Linguistic quality
-    <nb-icon icon="info-outline"
-             nbTooltip="Log messages need to be written correctly. The linguistic quality represents a score of how good or bad a log message is written in terms of the readability and meaning"
-             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-  </h6>
-  <ngx-gauge class="reading-block" [type]="gaugeType"
+    <div class="col-sm">
+      <ngx-gauge class="reading-block" [type]="gaugeType"
          [value]="gaugeTypeLinguistic"
              [size]="150"
          [label]="''"
          [append]="gaugeAppendText"
-         [animate]="true"
+         [animate]="false"
          [thresholds]="thresholdConfigLogLevel"
          backgroundColor="#FFE5E5FF"
          [thick]="15">
 </ngx-gauge>
+    </div>
+
+    </div>
+</div>
+
+<!--<div class="col-sm-3" tourAnchor="qualityLinguistic">-->
+<!--  <h6 style="font-weight: 600">Linguistic quality-->
+<!--    <nb-icon icon="info-outline"-->
+<!--             nbTooltip="Log messages need to be written correctly. The linguistic quality represents a score of how good or bad a log message is written in terms of the readability and meaning"-->
+<!--             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>-->
+<!--  </h6>-->
+<!--  <ngx-gauge class="reading-block" [type]="gaugeType"-->
+<!--         [value]="gaugeTypeLinguistic"-->
+<!--             [size]="150"-->
+<!--         [label]="''"-->
+<!--         [append]="gaugeAppendText"-->
+<!--         [animate]="true"-->
+<!--         [thresholds]="thresholdConfigLogLevel"-->
+<!--         backgroundColor="#FFE5E5FF"-->
+<!--         [thick]="15">-->
+<!--</ngx-gauge>-->
+<!--</div>-->
+
+<div class="col-sm-6" tourAnchor="qualityLinguistic">
+<h6 style="font-weight: 600">Quality Ranking
+  <nb-icon icon="info-outline"
+           nbTooltip="Check your project ranking among other famous projects."
+           nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+</h6>
+<div *ngIf="logLevelData.length > 0" style="height: 400px">
+<ngx-charts-bar-horizontal style="fill: white" [yAxis]="true" [xAxis]="true" [scheme]="colorScheme" [results]="qualityCompareData"></ngx-charts-bar-horizontal>
+</div>
 </div>
 </div>
 
-          <div class="scrollable" style="padding-left: 5%; padding-right: 5%; text-align: center; height: 250px">
+          <div class="scrollable col-sm-6" style="text-align: center; height: 250px">
             <ng-scrollbar>
             <table class="table table-striped table-borderless">
               <thead>

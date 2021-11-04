@@ -25,6 +25,7 @@ import {LogQualityTableData} from "../../@core/common/log-quality-table-data";
 import {LogQualityOverview} from "../../@core/common/log-quality-overview";
 import { DecimalPipe,formatNumber } from '@angular/common';
 import {PredefinedTime} from "../../@core/common/predefined-time";
+import {compareData} from "./compareData";
 
 @Component({
   selector: 'quality',
@@ -33,8 +34,13 @@ import {PredefinedTime} from "../../@core/common/predefined-time";
   encapsulation: ViewEncapsulation.None
 })
 export class QualityPage implements OnInit, OnDestroy {
+
+  colorScheme = {
+    domain: []
+  };
   heatmapData = [];
   logLevelData = [];
+  qualityCompareData = [];
   tableData: LogQualityOverview;
   linguisticData = [];
   options = options.timelineChart()
@@ -61,7 +67,7 @@ export class QualityPage implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   predefinedTimes: PredefinedTime[] = [];
 
-  gaugeType = "arch";
+  gaugeType = "full";
   gaugeValue = 28.3;
   gaugeLabel = "Log quality";
   gaugeAppendText = "%";
@@ -123,14 +129,25 @@ export class QualityPage implements OnInit, OnDestroy {
       this.gaugeTypeLogLevel = 0
       this.gaugeTypeOverall = 0
       this.gaugeTypeLinguistic = 0
-
+      this.colorScheme.domain = []
+      this.qualityCompareData = Object.assign([], compareData);
       for (let i=0; i < resp.length; i++){
         resp[i].logLevelScore = roundTo(resp[i].logLevelScore, 2)
         resp[i].linguisticPrediction = roundTo(resp[i].linguisticPrediction, 2)
         this.gaugeTypeLogLevel = this.gaugeTypeLogLevel + resp[i].logLevelScore
         this.gaugeTypeLinguistic = this.gaugeTypeLinguistic + resp[i].linguisticPrediction
+        this.qualityCompareData.push({"name":resp[i].key, "value": roundTo(resp[i].logLevelScore * 100, 2), "color": '#7CD0FF82'})
+        // this.colorScheme.domain.push('#989832')
         this.gaugeTypeOverall = this.gaugeTypeOverall + (resp[i].logLevelScore + resp[i].linguisticPrediction) / 2
       }
+      this.qualityCompareData.sort((a, b) => a.value - b.value)
+      console.log(this.qualityCompareData)
+      for(let i in this.qualityCompareData){
+        this.colorScheme.domain.push(this.qualityCompareData[i].color)
+      }
+      console.log(this.colorScheme)
+
+
       this.gaugeTypeLogLevel = Math.round(this.gaugeTypeLogLevel * 100 / resp.length)
       this.gaugeTypeLinguistic = Math.round(this.gaugeTypeLinguistic * 100 / resp.length)
       this.gaugeTypeOverall = Math.round(this.gaugeTypeOverall * 100 / resp.length)

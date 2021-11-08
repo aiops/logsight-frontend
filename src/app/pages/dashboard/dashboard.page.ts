@@ -11,12 +11,15 @@ import { AuthenticationService } from '../../auth/authentication.service';
 import { debounceTime, map, retry, share, skip, switchMap, takeUntil, timeout } from 'rxjs/operators';
 import { Application } from '../../@core/common/application';
 import { IntegrationService } from '../../@core/service/integration.service';
-import { Observable, Subject, timer, combineLatest } from 'rxjs';
+import {Observable, Subject, timer, combineLatest, Subscription} from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment'
 import { TourService } from 'ngx-ui-tour-md-menu';
 import { PredefinedTime } from '../../@core/common/predefined-time';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {element} from "protractor";
+import {dataService} from "../charts-wrapper-module/pie-chart/data.service";
+//import {dataService} from "../charts-wrapper-module/pie-chart/data.service";
 
 @Component({
   selector: 'dashboard',
@@ -25,6 +28,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class DashboardPage implements OnInit, OnDestroy {
   heatmapData = [];
+  pieData = [] ;
+  element_name = "";
+  colorSubscription: Subscription;
   pieChartData = [];
   stackedChartData = [];
   barDatabarData = [];
@@ -60,7 +66,8 @@ export class DashboardPage implements OnInit, OnDestroy {
               private dialogService: NbDialogService,
               private authService: AuthenticationService,
               private integrationService: IntegrationService,
-              private tourService: TourService) {
+              private tourService: TourService,
+              private colorService: dataService) {
 
     this.heatmapData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
       switchMap(() => this.loadHeatmapData(this.startDateTime, this.endDateTime)),
@@ -71,7 +78,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.pieChartData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
       switchMap(() => this.loadPieChartData(this.startDateTime, this.endDateTime)),
       share(),
-      takeUntil(this.stopPolling)
+      takeUntil(this.stopPolling),
     );
 
     this.stackedAreaChartData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
@@ -125,7 +132,21 @@ export class DashboardPage implements OnInit, OnDestroy {
 
     this.pieChartData$.subscribe(data => {
       this.pieChartData = data.data;
+      this.pieChartData.forEach(element => {
+        this.element_name = element.name.toLowerCase()
+        if(this.element_name=="info" || this.element_name=="fine") {
+          this.pieData.push('#00ff00')
+        } else if(this.element_name=="warn" || this.element_name=="warning") {
+          this.pieData.push('#d9bc00')
+        } else if(this.element_name=="err" || this.element_name=="error" || this.element_name=="critical"){
+          this.pieData.push('#ff0000')
+        } else {
+          this.pieData.push('#8338ec')
+        }
+      })
+      this.colorService.changeColor(this.pieData)
     })
+
 
     this.stackedAreaChartData$.subscribe(data => {
       for (let i = 0; i < data.data.length; i++) {
@@ -293,7 +314,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   viewDetails(startTime: string, endTime: string, applicationId: number) {
-    console.log("SS:", startTime, endTime)
+
     this.navigateToIncidentsPage(startTime, endTime, applicationId)
   }
 

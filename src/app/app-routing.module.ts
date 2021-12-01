@@ -13,11 +13,23 @@ import { AuthenticationGuard } from './auth/authentication-guard';
 import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
 
 export const routes: Routes = [
+  // {
+  //   path: '',
+  //   loadChildren: () => import('./landing-page/landing.module')
+  //     .then(m => m.LandingModule),
+  // },
+
   {
     path: '',
-    loadChildren: () => import('./landing-page/landing.module')
-      .then(m => m.LandingModule),
+    component: NbAuthComponent,
+    children: [
+      {
+        path: '',
+        component: LoginComponent,
+      }]
   },
+
+
   {
     path: 'pages',
     canActivate: [AuthenticationGuard],

@@ -160,17 +160,18 @@ export class DashboardPage implements OnInit, OnDestroy {
     })
 
     this.barData$.subscribe(data => {
+      console.log(data)
       for (let i = 0; i < data.length; i++) {
         var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
         var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
         data[i].name = local.toString()
-        if (data[i].series.length == 1){
-          data[i].series[0].name = 'Anomaly'
-          data[i].series[0].value = 0
-        }else if(data[i].series.length > 1) {
-          data[i].series = [data[i].series[1]]
-        }
+        // if (data[i].series.length == 1){
+        //   data[i].series[0].name = 'Anomaly'
+        //   data[i].series[0].value = 0
+        // }else if(data[i].series.length > 1) {
+        //   data[i].series = [data[i].series[1]]
+        // }
 
       }
 

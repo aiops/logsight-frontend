@@ -4,15 +4,10 @@
 
     <div class="row user_info">
       <!--      <nb-card class="p-3 row-one">-->
-      <div class="col">
-        <h6><b>User info</b></h6>
-      </div>
       <div class="row no-gutters p-3 row-one">
         <div class="col" align="center">
-          <p class="mb-3">Username:</p>
-          <p class="mb-3"><b>{{email}}</b></p>
-          <p class="mb-3">private-key:</p>
-          <p class="mb-3"><b>{{key}}</b></p>
+          <p class="mb-3">Ingestion <b>private-key</b></p>
+          <p class="mb-3"><samp>{{key}}</samp></p>
         </div>
       </div>
       <!--        <div class="row">-->
@@ -46,18 +41,18 @@
     <!--    </nb-card>-->
     <div class="row integration_types">
       <nb-card class="p-3 row-one" style="border: none">
-        <div class="row no-gutters">
-          <div class="col">
-            <h6><b>Shipping logs</b></h6>
-          </div>
-        </div>
-        <div class="row justify-content-center" style="margin-bottom: 10px">
-                    <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
-<!--          <button nbButton shape="round" style="text-transform: none" class="demo-app-btn" type="button"-->
-<!--              (click)="onLoadDemoApplications()">-->
-<!--        {{loadDemoAppBtn}}-->
-<!--      </button>-->
-    </div>
+<!--        <div class="row no-gutters">-->
+<!--          <div class="col">-->
+<!--            <h6><b>Shipping logs</b></h6>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div class="row justify-content-center">
+<!--                    <div class=".col-6 .col-md-4" style="margin-bottom: 10px">-->
+<!--&lt;!&ndash;          <button nbButton shape="round" style="text-transform: none" class="demo-app-btn" type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;              (click)="onLoadDemoApplications()">&ndash;&gt;-->
+<!--&lt;!&ndash;        {{loadDemoAppBtn}}&ndash;&gt;-->
+<!--&lt;!&ndash;      </button>&ndash;&gt;-->
+<!--    </div>-->
 
           <div class=".col-6 .col-md-4">
             <button nbButton shape="round" style="text-transform: none" class="rest-btn" type="button"
@@ -72,9 +67,9 @@
             </button>
           </div>
           <div class=".col-6 .col-md-4" style="margin-bottom: 10px">
-            <button nbButton shape="round" style="text-transform: none" class="filebeat-btn" type="button"
-                    (click)="onFileBeatBtn()">
-              {{filebeatBtn}}
+            <button nbButton shape="round" style="text-transform: none" class="docker-btn" type="button"
+                    (click)="onDockerBtn()">
+              {{dockerBtn}}
             </button>
           </div>
 
@@ -152,7 +147,7 @@
 
   </div>
 
-  <div class="col" style="margin-left: 50px">
+  <div class="col-4" style="margin-left: 50px">
     <ng-container *ngIf="python">
       <div class="row description">
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
@@ -207,12 +202,12 @@
     </ng-container>
 
 
-    <ng-container *ngIf="fileBeats">
+    <ng-container *ngIf="docker">
       <div class="row description">
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h6>Filebeats Usage</h6>
+            <h6>Docker Usage</h6>
           </div>
           <div class="row">
             <p class="dscr">Filebeat simplifies the collection, parsing, and visualization of common log formats.
@@ -229,50 +224,10 @@ To start sending logs from your system to logsight.ai via Filebeats you need to 
 <!--          </div>-->
           <div class="row">
             <a href="https://docs.logsight.ai/#/shipping_logs/filebeats"><p style="text-underline-color: white">Docs | Shipping logs via Filebeats</p></a>
-<!--            <table class="table table-borderless">-->
-<!--              <tr>-->
-<!--                <th>PRIVATE_KEY</th>-->
-<!--                <td>A private key which is used to validate your authenticity.</td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th>APP_NAME</th>-->
-<!--                <td>The name of your application/service. For example, a company "x" wants to debug their test-->
-<!--                  environment they might insert the “x_test”-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--            </table>-->
+
           </div>
 
-<!--          <div class="row">-->
-<!--            <h6>Prerequisites</h6>-->
-<!--            <p>Have Filebeat installed, for more information on how to install: <a-->
-<!--              href="Have Filebeat installed, for more information on how to install: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html">https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html</a>-->
-<!--            </p>-->
-<!--          </div>-->
 
-<!--          <div class="row">-->
-<!--            <div class="col">-->
-<!--              <div class="row">-->
-<!--                <h6>Configuration</h6>-->
-<!--              </div>-->
-<!--              <div class="row">-->
-<!--                Open your Filebeat configuration file and configure it to use Logstash (Make sure you disable-->
-<!--                Elastic output).-->
-<!--                <br>-->
-<!--                <br>-->
-<!--                For more information about configuring Filebeat to use Logstash please refer to:-->
-<!--                <br>-->
-<!--                <br>-->
-<!--                <a href="https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html">https://www.elastic.co/guide/en/beats/filebeat/current/config-filebeat-logstash.html</a>-->
-<!--                Point your Filebeat to output to Coralogix Logstash server: logsight.ai:12350-->
-<!--                <br>-->
-<!--                <br>-->
-<!--                For more information about configuring Filebeat to use Logstash please refer to:-->
-<!--                <br>-->
-<!--                <br>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
 
         <div class="row user_guidance pt-2">
             <div class="col">
@@ -294,26 +249,25 @@ To start sending logs from your system to logsight.ai via Filebeats you need to 
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h6>REST API Usage</h6>
+            <h4>REST API</h4>
           </div>
           <div class="row">
-            <p class="dscr">logsight.ai exposes an API that allows you to send your logs from anywhere, here is how:</p>
+            <p class="dscr">logsight.ai exposes an API that allows you to send your logs from any platform. We automatically parse and analyze your logs and provide actionable insights.</p>
           </div>
         </div>
         <!--        </nb-card>-->
       </div>
-      <br>
-      <br>
       <div class="row user_guidance">
         <div class="col">
           <div class="row">
-            <h6>Endpoint details</h6>
+            <h6>Authorization</h6>
           </div>
           <div class="row">
-            <table class="table table-borderless">
+            <p class="dscr">You need to obtain authorization token via sending POST request with the following parameters:</p>
+            <table class="table table-bordered">
               <tr>
                 <th>URL</th>
-                <td>https://logsight.ai/api_v1</td>
+                <td>http://localhost:4200/api/auth/login</td>
               </tr>
               <tr>
                 <th>HTTP method</th>
@@ -330,58 +284,101 @@ To start sending logs from your system to logsight.ai via Filebeats you need to 
             <h6>Post body</h6>
           </div>
           <div class="row">
-            <table class="table table-borderless">
+            <table class="table table-bordered">
               <tr>
-                <th>log-messages</th>
-                <td>List of <b>Log</b> messages</td>
+                <th>email</th>
+                <td>{{email}}</td>
+              </tr>
+              <tr>
+                <th>password</th>
+                <td>your password</td>
               </tr>
             </table>
           </div>
+
           <div class="row">
-            <h6>Log message body</h6>
+            <p class="dscr">This post request returns JSON in the following format:</p>
+            <table class="table table-bordered">
+              <tr>
+                <th>token</th>
+                <td>token string</td>
+              </tr>
+            </table>
           </div>
 
           <div class="row">
-            <table class="table table-borderless">
-              <tr>
-                <th>private-key</th>
-                <td>String, your account private key</td>
-              </tr>
-              <tr>
-                <th>app</th>
-                <td>String, name of the application you have created</td>
-              </tr>
-              <tr>
-                <th>timestamp</th>
-                <td>String (optional), the timestamp of the log. If not specified the timestamp will be automatically added at ingest time.</td>
-              </tr>
-              <tr>
-                <th>level</th>
-                <td>String, the log level (e.g., INFO, WARNING, ERROR)</td>
-              </tr>
-              <tr>
-                <th>message</th>
-                <td>String, the log message (payload)</td>
-              </tr>
+            <h6>Ingesting single or batch of log messages</h6>
+          </div>
+
+          <div class="row">
+            <p class="dscr">Send POST requests to the following URL:</p>
+            <table class="table table-bordered">
              <tr>
-                <th>tag</th>
-                <td>String (optional), version tag</td>
+                <th>URL</th>
+                <td>http://localhost:4200/<br>api/logs/{{key}}/APP/send_logs</td>
               </tr>
               <tr>
-                <th>Other fields</th>
-                <td>Related to the log message (e.g., class name, IP addresses, etc.)</td>
+                <th>HTTP method</th>
+                <td>POST</td>
+              </tr>
+              <tr>
+                <th>Content type</th>
+                <td>text\plain</td>
+              </tr>
+              <tr>
+                <th>Authorization</th>
+                <td>Bearer token</td>
               </tr>
             </table>
+            <p class="dscr">APP is application name set by the user, which can contain lowercase letters, numbers, and underscores.</p>
+            <p class="dscr">The body of the POST request is a text, which is a list of log messages as below.</p>
+            <br>
+            <code style="background-color: transparent" >
+            [{{'"Sep 17 07:36:37 alexXPS NetworkManager[1441]: info [1631856997.3412] dhcp4 (wlp58s0): dhclient started with pid 9617",'}}
+            <br>
+            {{'"Sep 17 07:37:22 admin NetworkManager[1441]: warn [1631857042.3363] dhcp4 (wlp58s0): request timed out"'}}]
+            </code>
           </div>
-
-
           <div class="row user_guidance">
             <div class="row">
               <div class="col">
-                You can send logs in batches to optimize network calls.
+                <br>
+                <p class="dscr">You can send logs in batches to optimize network calls.</p>
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <h6>Ingesting log files</h6>
+          </div>
+
+          <div class="row">
+            <p class="dscr">Send POST requests to the following URL:</p>
+            <table class="table table-bordered">
+             <tr>
+                <th>URL</th>
+                <td>http://localhost:4200/<br>api/logs/{{key}}/APP/upload_file</td>
+              </tr>
+              <tr>
+                <th>HTTP method</th>
+                <td>POST</td>
+              </tr>
+              <tr>
+                <th>Authorization</th>
+                <td>Bearer token</td>
+              </tr>
+            </table>
+            <p class="dscr">APP is application name set by the user, which can contain lowercase letters, numbers, and underscores.</p>
+            <p class="dscr">The body of the POST request is a log file.</p>
+
+            <table class="table table-bordered">
+             <tr>
+                <th>File</th>
+                <td>Any log file</td>
+              </tr>
+            </table>
+          </div>
+
 
           <div class="row user_guidance pt-2">
             <div class="col">
@@ -389,7 +386,7 @@ To start sending logs from your system to logsight.ai via Filebeats you need to 
                 <h6>Integration help?</h6>
               </div>
               <div class="row">
-                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to <a href="mailto:service@logsight.ai">contact us 24/7.</a></p>
+                <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at <a href="https://docs.logsight.ai">Docs | logsight.ai </a>, or feel free to contact us <a href="mailto:service@logsight.ai">via email</a> or <a href="https://tawk.to/chat/61824e206bb0760a4940e874/1fjig2bmu"   target="_blank" rel="noopener noreferrer"> live chat</a>. </p>
               </div>
             </div>
           </div>
@@ -404,7 +401,7 @@ To start sending logs from your system to logsight.ai via Filebeats you need to 
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col">
           <div class="row">
-            <h6>Upload log file usage</h6>
+            <h4>Upload log files</h4>
           </div>
         </div>
       </div>
@@ -416,21 +413,12 @@ To start sending logs from your system to logsight.ai via Filebeats you need to 
           <p>Choose the application and your log file for which you want to upload data.</p>
         </div>
         <div class="row">
-          <div class="col-sm text-left">
-            <nb-select class="period-select" [(selected)]="this.applicationId"
+          <div class="col-sm">
+            <nb-select fullWidth class="period-select" [(selected)]="this.applicationId"
                        (selectedChange)="applicationSelected($event)"
                        placeholder="Select application">
               <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
                 {{ app.name }}
-              </nb-option>
-            </nb-select>
-          </div>
-          <div class="col-sm text-right">
-            <nb-select class="period-select" [(selected)]="this.logFileType"
-                       (selectedChange)="logFileTypeSelected($event)"
-                       placeholder="Select log file type">
-              <nb-option *ngFor="let fileType of logFileTypes" [value]="fileType.type">
-                {{ fileType.renderType }}
               </nb-option>
             </nb-select>
           </div>
@@ -478,11 +466,9 @@ To start sending logs from your system to logsight.ai via Filebeats you need to 
             </div>
           </div>
     </ng-container>
-
-
   </div>
 
-  <div class="col" style="margin-left: 50px">
+  <div class="col-4" style="margin-left: 50px">
     <ng-container *ngIf="python">
       <h6>Example code</h6>
       <div>
@@ -491,10 +477,10 @@ To start sending logs from your system to logsight.ai via Filebeats you need to 
       </div>
     </ng-container>
 
-    <ng-container *ngIf="fileBeats">
+    <ng-container *ngIf="docker">
       <h6>Example code</h6>
       <div>
-        <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_filebeats"
+        <pre><code style="background-color: transparent" [languages]="['yaml']" [highlight]="code_docker"
                    (highlighted)="onHighlight($event)" [lineNumbers]="true"></code></pre>
       </div>
     </ng-container>
@@ -509,7 +495,7 @@ To start sending logs from your system to logsight.ai via Filebeats you need to 
     </ng-container>
 
     <ng-container *ngIf="uploadFile">
-      <h6>Example files</h6>
+      <h6>Files</h6>
       <div>
         <pre><code style="background-color: transparent" [languages]="['json']" [highlight]="code_upload"
                    (highlighted)="onHighlight($event)"

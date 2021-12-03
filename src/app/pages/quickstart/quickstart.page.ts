@@ -69,7 +69,7 @@ export class QuickstartPage implements OnInit {
   }
 
   onCardClick(){
-    this.router.navigate(['/pages/integration'])
+    this.router.navigate(['/pages/ingest_logs'])
   }
 
   startTimer(seconds: number) {

@@ -94,6 +94,13 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.authService.getLoggedUser().pipe(
+      switchMap(user => this.integrationService.loadApplications(user.key))
+    ).subscribe(resp => this.applications = resp)
+    // if (this.applications.length == 0){
+    //   this.router.navigate(['/pages','ingest_logs'])
+    // }
     this.heatmapData$.subscribe(data => {
       for (let i = 0; i < data.data.length; i++) {
         for (let j = 0; j < data.data[i].series.length; j++) {
@@ -178,9 +185,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       this.barData = data;
     })
 
-    this.authService.getLoggedUser().pipe(
-      switchMap(user => this.integrationService.loadApplications(user.key))
-    ).subscribe(resp => this.applications = resp)
+
 
     this.messagingService.getVariableAnalysisTemplate()
       .pipe(takeUntil(this.destroy$), map(it => it['item']))

@@ -25,7 +25,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Send logs',
     icon: 'link-outline',
-    link: '/pages/integration',
+    link: '/pages/ingest_logs',
   },
   {
     title: 'Kibana',

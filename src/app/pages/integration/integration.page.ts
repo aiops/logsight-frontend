@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 import {LogFileType} from "../../@core/common/log-file-type";
 
 @Component({
-  selector: 'integration',
+  selector: 'ingest_logs',
   styleUrls: ['./integration.page.scss'],
   templateUrl: './integration.page.html',
 })
@@ -24,16 +24,17 @@ export class IntegrationPage implements OnInit {
   logFileType: String;
   applications: Application[] = [];
   logFileTypes: LogFileType[] = [];
+  applicationName: String;
   public show: boolean = false;
   public python: boolean = false;
-  public fileBeats: boolean = false;
+  public docker: boolean = false;
   public rest: boolean = true;
   public uploadFile: boolean = false;
   public showHideAppBtn: any = 'Show';
   public pythonBtn: any = 'Python SDK';
-  public filebeatBtn: any = 'Filebeat connectors';
+  public dockerBtn: any = 'Docker';
   public loadDemoAppBtn: any = 'Load sample';
-  public uploadBtn: any = 'Upload file';
+  public uploadBtn: any = 'Upload log file';
   public restBtn: any = 'REST API';
   format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]+/;
   form = new FormGroup({
@@ -47,7 +48,7 @@ export class IntegrationPage implements OnInit {
   response: HighlightResult;
   customerId = ''
   code_python = ''
-  code_filebeats = ''
+  code_docker = ''
   code_rest = ''
   code_upload = ''
 
@@ -64,7 +65,7 @@ export class IntegrationPage implements OnInit {
       this.loadApplications()
       this.loadLogFileTypes()
       this.code_python = this.getPythonCode()
-      this.code_filebeats = this.getFilebeatsCode()
+      this.code_docker = this.getDockerCode()
       this.code_rest = this.getCodeRest()
       this.code_upload = this.getCodeUpload()
     })
@@ -81,6 +82,11 @@ export class IntegrationPage implements OnInit {
   }
 
   applicationSelected(appId: number) {
+    this.applications.forEach(it => {
+      if (appId == it.id){
+        this.applicationName = it.name
+      }
+    })
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
   }
 
@@ -99,7 +105,7 @@ export class IntegrationPage implements OnInit {
 
 
   RequestUpload() {
-    this.http.post(`/api/applications/${this.applicationId}/uploadFile/${this.logFileType}`, this.formData)
+    this.http.post(`/api/logs/${this.key}/${this.applicationName}/upload_file`, this.formData)
       .subscribe(resp => {
         this.notificationService.success("Log data uploaded successfully!")
       }, error => {
@@ -112,28 +118,28 @@ export class IntegrationPage implements OnInit {
 
   onPythonBtn() {
     this.python = true
-    this.fileBeats = false
+    this.docker = false
     this.rest = false
     this.uploadFile = false
   }
 
-  onFileBeatBtn() {
+  onDockerBtn() {
     this.python = false
-    this.fileBeats = true
+    this.docker = true
     this.rest = false
     this.uploadFile = false
   }
 
   onUploadBtn() {
     this.python = false
-    this.fileBeats = false
+    this.docker = false
     this.rest = false
     this.uploadFile = true
   }
 
   onRestBtn() {
     this.python = false
-    this.fileBeats = false
+    this.docker = false
     this.rest = true
     this.uploadFile = false
   }
@@ -240,7 +246,7 @@ logger.info("Hello World!")
 logger.info("------------")`;
   }
 
-  private getFilebeatsCode() {
+  private getDockerCode() {
     return `
     filebeat.inputs:
       - type: log
@@ -259,58 +265,39 @@ logger.info("------------")`;
 
   private getCodeUpload(){
     return `
-    1. JSON - native files should contain the following structure.
-    {
-    "logMessages": [
-      {
-        "private-key": "${this.key}",
-        "app": "string",
-        "timestamp": "string",
-        "level": "string",
-        "message": "string"
-      }
-    ]
-    }
-    }
-
-    2. JSON - logstash.
-    We currently support all file outputs from logstash
-
-    3. syslog - We support log files that follow the syslog format.
-    You can upload logs located in /var/log/syslog.
+logsight.ai supports ingestion and automatic parsing
+of large variety of log files.
     `
   }
 
 
   private getCodeRest() {
     return `
-    //json
-    {
-    "logMessages": [
-      {
-        "private-key": "${this.key}",
-        "app": "string",
-        "timestamp": "string",
-        "level": "string",
-        "message": "string"
-      }
-    ]
-    }
-    //curl command
+//sending log messages
 
-    curl -X POST "https://logsight.ai/api_v1/data"
-    -H "accept: application/json"
-    -H "Content-Type: application/json"
-    -d "{ \"logMessages\":
-    [ { \"private-key\": \"${this.key}\",
-        \"app\": \"string\",
-        \"timestamp\": \"string\",
-        \"level\": \"string\",
-         \"message\": \"string\"
-      }
-    ]
-    }"
-    `
+//get authorization token
+
+curl -X POST
+-H 'Content-Type: application/json'
+--data '{"email": "info@logsight.ai",
+ "password": "superPassword"}'
+ http://localhost:4200/api/auth/login
+
+//send log messages in a batch
+curl --location --request POST
+'http://localhost:4200/logs/`+this.key+`
+/APP/send_logs'
+--header 'Authorization: Bearer token_example'
+--header 'Content-Type: text/plain'
+--data-raw '["This is a log message",
+"This is another log message"]'
+
+//send log files
+curl -X POST
+-H "Authorization: Bearer example_token"
+-F "file=@/home/user/test.log"
+http://localhost:4200/api/logs/
+`+this.key+`/APP/upload_file`
   }
 
   removeApplication(id: number) {

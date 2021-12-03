@@ -163,7 +163,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                   anchorId: 'anchorApplications',
                   content: 'Finally, here you can manage your applications. We offer creation of new applications, deletion, and of course easy steps for integration. Start sending data in less than 5 minutes !',
                   enableBackdrop: true,
-                  route: '/pages/integration'
+                  route: '/pages/ingest_logs'
                 }
                 ]);
 
@@ -287,6 +287,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Send logs',
     icon: 'link-outline',
-    link: '/pages/integration',
+    link: '/pages/ingest_logs',
   }
 ]

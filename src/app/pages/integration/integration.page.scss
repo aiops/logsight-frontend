@@ -1,6 +1,23 @@
 th, td {
   color: white;
 }
+th {
+  font-weight: 570;
+  width: 20%;
+}
+
+table td ,table th{
+    border: 1px solid gray !important;
+}
+
+
+table td:first-child {
+    border-left: none;
+}
+
+table td:last-child {
+    border-right: none;
+}
 
 html, body {
   height: 100vh;
@@ -13,6 +30,11 @@ html, body {
   margin-right: 5px;
 }
 
+
+.dscr {
+  font-weight: 500;
+  color: #ffffff;
+}
 // Columns and rows
 
 .row-one {
@@ -50,7 +72,7 @@ html, body {
   margin-right: 5px;
 }
 
-.filebeat-btn {
+.docker-btn {
   // background-image: url('../../../assets/icons/03a.svg') !important;
   border-radius: 50%;
   margin-right: 5px;

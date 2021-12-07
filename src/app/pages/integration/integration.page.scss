@@ -7,7 +7,18 @@ th {
 }
 
 table td ,table th{
-    border: 1px solid gray !important;
+    border: 1px solid #222b45 !important;
+}
+
+nb-list-item {
+  font-weight: 550;
+  font-size: 14px;
+}
+
+nb-list-item:hover {
+  cursor: pointer;
+  font-weight: 650;
+  font-size: 16px;
 }
 
 

@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 import {LogFileType} from "../../@core/common/log-file-type";
 
 @Component({
-  selector: 'ingest_logs',
+  selector: 'integration',
   styleUrls: ['./integration.page.scss'],
   templateUrl: './integration.page.html',
 })

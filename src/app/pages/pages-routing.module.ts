@@ -34,7 +34,7 @@ const routes: Routes = [{
         .then(m => m.IncidentsModule),
     },
     {
-      path: 'ingest_logs',
+      path: 'integration',
       loadChildren: () => import('./integration/integration.module')
         .then(m => m.IntegrationModule),
     },

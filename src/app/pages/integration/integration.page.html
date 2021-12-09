@@ -126,7 +126,8 @@
               </div>
             </form>
           </div>
-
+                  </div>
+          <div class="row">
           <nb-list *ngIf="applications.length > 0">
             <nb-list-item *ngFor="let row of applications">
             <tr class="col">
@@ -142,34 +143,12 @@
             </tr>
               </nb-list-item>
           </nb-list>
+</div>
 
-<!--          <table class="mt-3 table table-striped table-borderless" *ngIf="applications.length > 0">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--              <th style="width: 15%">Id</th>-->
-<!--              <th style="width: 80%">Name</th>-->
-<!--              <th style="width: 10%"></th>-->
-<!--              &lt;!&ndash;              <th scope="col">Status</th>&ndash;&gt;-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr *ngFor="let row of applications">-->
-<!--              <td>{{row.id}}</td>-->
-<!--              <td>{{row.name}}</td>-->
-<!--              <td style="text-align: left"><i (click)="removeApplication(row.id)" [title]='"Delete application"'-->
-<!--                     class="ml-3 fas fa-trash pointer"></i></td>-->
-
-<!--              &lt;!&ndash;              <td>&ndash;&gt;-->
-<!--              &lt;!&ndash;                <i [title]="row.status" *ngIf="row.status == 'IN_PROGRESS'" class="ml-3 fas fa-spinner fa-spin"></i>&ndash;&gt;-->
-<!--              &lt;!&ndash;                <i [title]="row.status" *ngIf="row.status == 'ACTIVE'" class="ml-3 fas fa-check-circle"></i>&ndash;&gt;-->
-<!--              &lt;!&ndash;              </td>&ndash;&gt;-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--          </table>-->
           <div class="text-center">
             <p class="mt-3" *ngIf="applications.length == 0"><i>No current applications</i></p>
           </div>
-        </div>
+
       </nb-card>
     </div>
 

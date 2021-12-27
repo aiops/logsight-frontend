@@ -16,6 +16,16 @@ export class RegisterComponent implements OnInit {
   progressValue = 0
   email = ""
   curSec = 0
+
+  loginForm = new FormGroup({
+    email: new FormControl('', Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')),
+    password: new FormControl('', Validators.compose([
+		Validators.required,
+		Validators.minLength(8)
+	]))
+  });
+
+
   form = new FormGroup({
     email: new FormControl('', Validators.compose([
 		Validators.required,
@@ -41,45 +51,41 @@ export class RegisterComponent implements OnInit {
     if (el) {
       el.style['display'] = 'none';
     }
+    this.form.get("email").setValue("client_admin@logsight.ai")
+    this.form.get("password").setValue("samplepass")
+    this.form.get("retryPassword").setValue("samplepass")
+    this.loginForm.get("email").setValue("client_admin@logsight.ai")
+    this.loginForm.get("password").setValue("samplepass")
 
-    this.route.queryParamMap.subscribe(queryParams => {
-      this.form.get("email").setValue(queryParams.get("email"))
-    });
+    this.onSignUp()
     this.themeService.changeTheme("default");
   }
 
-  // onRegister() {
-  //   this.authService.register(this.form.value).subscribe(resp => {
-  //       this.notificationService.success('Success', 'You are successfully registered')
-  //       this.router.navigate(['/auth/login'])
-  //     }
-  //   )
-  // }
-  startTimer(seconds: number) {
-    const timer$ = interval(1000);
-
-    const sub = timer$.subscribe((sec) => {
-      this.progressValue = Number((sec * 100 / seconds).toPrecision(1));
-      this.curSec = sec;
-      if (this.curSec === seconds) {
-        sub.unsubscribe();
-        this.router.navigate(['/'])
-      }
-    });
-  }
   onSignUp() {
     this.isSpinning = true;
+
     this.authService.register(this.form.value).subscribe(resp => {
       this.isSpinning = false;
-        this.notificationService.success('Success',
-          'You are successfully registered. Please check your email to activate and then login')
       this.formSubmitted = true;
-      // this.startTimer(5)
+      this.authService.login(this.loginForm.value).subscribe(resp => {
+        this.router.navigate(['/pages/dashboard'])
+      })
       }, err => {
-        this.notificationService.error('Error', 'User already exists, please login!')
-      this.router.navigate(['/auth/login'])
-      }
-    )
+        console.log("AS")
+      localStorage.removeItem('token')
+        this.authService.login(this.loginForm.value).subscribe(resp => {
+        this.router.navigate(['/pages/dashboard'])
+        }, err => {
+          console.log("AA:", err)
+        }
+      )
+      }, () => {
+      console.log("ASD")
+      this.authService.login(this.loginForm.value).subscribe(resp => {
+        this.router.navigate(['/pages/dashboard'])
+      }, err => {
+          console.log("AA:", err)
+        })
+    })
   }
-
 }

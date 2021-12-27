@@ -9,7 +9,7 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
-      path: 'quickstart',
+      path: 'send-logs',
       loadChildren: () => import('./quickstart/quickstart.module')
         .then(m => m.QuickstartModule),
     },
@@ -34,9 +34,13 @@ const routes: Routes = [{
         .then(m => m.IncidentsModule),
     },
     {
-      path: 'integration',
-      loadChildren: () => import('./integration/integration.module')
-        .then(m => m.IntegrationModule),
+      path: 'file-upload',
+      loadChildren: () => import('./file-upload/file-upload.module')
+        .then(m => m.FileUploadModule),
+    },{
+      path: 'sample-data',
+      loadChildren: () => import('./sample-data/sample-data.module')
+        .then(m => m.SampleDataModule),
     },
     {
       path: 'variable-analysis',

@@ -3,12 +3,12 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
 import {
-  NbButtonModule,
-  NbCardModule,
-  NbIconModule,
-  NbInputModule,
-  NbPopoverModule,
-  NbTooltipModule
+    NbButtonModule,
+    NbCardModule,
+    NbIconModule,
+    NbInputModule,
+    NbPopoverModule, NbSelectModule,
+    NbTooltipModule
 } from '@nebular/theme';
 import { DashboardPage } from './dashboard.page';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -38,7 +38,8 @@ import {NgScrollbarModule} from "ngx-scrollbar";
         NbTooltipModule,
         ReactiveFormsModule,
         NbInputModule,
-        NgScrollbarModule
+        NgScrollbarModule,
+        NbSelectModule
     ],
   declarations: [
     DashboardPage,

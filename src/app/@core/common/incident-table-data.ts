@@ -5,4 +5,5 @@ export interface IncidentTableData {
   semanticCountAds: VariableAnalysisHit[],
   newTemplates: VariableAnalysisHit[]
   semanticAd: VariableAnalysisHit[],
+  logData: VariableAnalysisHit[],
 }

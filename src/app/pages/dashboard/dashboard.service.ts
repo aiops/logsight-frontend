@@ -17,20 +17,34 @@ export class DashboardService {
       `/api/charts/system_overview_heatmap?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
   }
 
-  loadBarData(startTime: string, endTime: string) {
-    return this.apiService.get(`/api/charts/dashboard_bar_anomalies?startTime=${startTime}&endTime=${endTime}`);
+  loadBarData(startTime: string, endTime: string, applicationId: number) {
+    let applicationParam = '';
+    if (applicationId) {
+      applicationParam = `&applicationId=${applicationId}`
+    }
+    return this.apiService.get(`/api/charts/dashboard_bar_anomalies?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
   }
 
-  loadPieChartData(startTime: string, endTime: string) {
-    return this.apiService.get(`/api/charts/log_level_advanced_pie_chart?startTime=${startTime}&endTime=${endTime}`);
+  loadPieChartData(startTime: string, endTime: string, applicationId: number) {
+    let applicationParam = '';
+    if (applicationId) {
+      applicationParam = `&applicationId=${applicationId}`
+    }
+
+    return this.apiService.get(`/api/charts/log_level_advanced_pie_chart?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
   }
 
   loadStackedChartData(startTime: string, endTime: string) {
     return this.apiService.get(`/api/charts/log_level_stacked_line_chart?startTime=${startTime}&endTime=${endTime}`);
   }
 
-  loadTopKIncidentsData(startTime: string, endTime: string, numberOfIncidents: number) {
-    return this.apiService.get(`/api/incidents/top_k_incidents?startTime=${startTime}&endTime=${endTime}&numberOfIncidents=${numberOfIncidents}`);
+  loadTopKIncidentsData(startTime: string, endTime: string, numberOfIncidents: number, applicationId: number) {
+    let applicationParam = '';
+    if (applicationId) {
+      applicationParam = `&applicationId=${applicationId}`
+    }
+
+    return this.apiService.get(`/api/incidents/top_k_incidents?startTime=${startTime}&endTime=${endTime}&numberOfIncidents=${numberOfIncidents}${applicationParam}`);
   }
 
   getAllTimeRanges(): Observable<PredefinedTime[]> {

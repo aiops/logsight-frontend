@@ -33,6 +33,8 @@ import {Moment} from "moment";
 export class IncidentsPage implements OnInit, OnDestroy {
   heatmapData = [];
   tableData: IncidentTableData;
+  hasError = false;
+  barData = [];
   options = options.timelineChart()
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
@@ -62,9 +64,9 @@ export class IncidentsPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadPredefinedTimes();
     this.route.queryParamMap.subscribe(queryParams => {
-
-      let startTime = queryParams.get('startTimeSpecific') ?? queryParams.get('startTime')
-      let endTime = queryParams.get('endTimeSpecific') ?? queryParams.get('endTime')
+      let selectedTime = JSON.parse(localStorage.getItem("selectedTime"))
+      let startTime =  queryParams.get('startTimeSpecific') ?? selectedTime['startTime'] ?? queryParams.get('startTime')
+      let endTime =  queryParams.get('endTimeSpecific') ?? selectedTime['endTime'] ?? queryParams.get('endTime')
 
       if (startTime.toString().includes(":")){
         startTime = moment(startTime,'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
@@ -84,7 +86,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
         }
       }
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
-      this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId)
     });
 
     this.messagingService.getVariableAnalysisTemplate()
@@ -128,6 +130,10 @@ export class IncidentsPage implements OnInit, OnDestroy {
       var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
       var local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('DD-MM-YYYY HH:mm:ss.SSS');
       data[i].timestamp = local.toString()
+      if (data[i].actualLevel == 'ERROR' || data[i].actualLevel == 'CRITICAL' || data[i].actualLevel == 'SEVERE'){
+        this.hasError = true
+      }
+
     }
     return data
   }
@@ -138,7 +144,21 @@ export class IncidentsPage implements OnInit, OnDestroy {
       resp['newTemplates'] = this.toLocalTime(resp['newTemplates'])
       resp['semanticCountAds'] = this.toLocalTime(resp['semanticCountAds'])
       resp['semanticAd'] = this.toLocalTime(resp['semanticAd'])
+      resp['logData'] = this.toLocalTime(resp['logData'])
       this.tableData = resp
+    })
+  }
+
+
+  loadBarData(startTime: string, endTime: string, applicationId: number | null) {
+    return this.dashboardService.loadBarData(startTime, endTime, applicationId).subscribe(data => {
+      for (let i = 0; i < data.length; i++) {
+        var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
+        data[i].name = local.toString()
+      }
+      this.barData = data;
     })
   }
 
@@ -182,14 +202,15 @@ export class IncidentsPage implements OnInit, OnDestroy {
       dateTimeType = 'relative'
       this.startDateTime = event.relativeDateTime
       this.endDateTime = 'now'
-      this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     } else if (event.absoluteTimeChecked) {
       this.startDateTime = event.absoluteDateTime.startDateTime
       this.endDateTime = event.absoluteDateTime.endDateTime
-      this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+      this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId)
       this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
     }
+    localStorage.setItem("selectedTime", JSON.stringify({ startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType }))
     // this.router.navigate([],
     //   { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
   }
@@ -205,7 +226,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
   applicationSelected(appId: number) {
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
     this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
-    this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
+    this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId)
   }
 
   onDeletePredefinedTime(predefinedTime: PredefinedTime) {
@@ -248,7 +269,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
     this.startDateTime = startDateTime.format('YYYY-MM-DDTHH:mm') + ":00"
     this.endDateTime = startDateTime.add(timeDiff, 'minutes').format('YYYY-MM-DDTHH:mm') + ":00"
 
-    this.loadHeatmapData(this.startDateTime, this.endDateTime, data.id)
+    this.loadBarData(this.startDateTime, this.endDateTime, data.id)
     this.loadIncidentsTableData(this.startDateTime, this.endDateTime, data.id)
   }
 

@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
     if (el) {
       el.style['display'] = 'none';
     }
+    this.onLogin()
 
     // this.route.params.subscribe(params => {
     //   let redirectUrl: string;
@@ -81,10 +82,10 @@ export class LoginComponent implements OnInit {
 // }
 
   onLogin() {
+    this.form.get("email").setValue("clientadmin@logsight.ai")
+    this.form.get("password").setValue("samplepassword")
     localStorage.removeItem('token')
     this.authService.login(this.form.value).subscribe(resp => {
-        this.notificationService.success('Success', 'Login successful.')
-
       this.route.queryParamMap.subscribe(
         queryParams => {
           let redirectUrl = ""
@@ -94,7 +95,7 @@ export class LoginComponent implements OnInit {
           // '{"key":"'+ user.key + '"}').subscribe(async data => {
           //   })
           }else{
-            redirectUrl = "/pages/dashboard"
+            redirectUrl = "/pages/send-logs"
           }
         // this.delay(3000, redirectUrl)
           this.router.navigate([redirectUrl]).then(() => {

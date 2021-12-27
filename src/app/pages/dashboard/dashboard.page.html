@@ -7,10 +7,38 @@
           (click)="openPopover()"
           nbPopoverTrigger="noop" size="small" shape="round"><i class="fa fa-calendar"></i></button>
 </div>
-
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
-<div class="row" style="padding-left: 5%;padding-right: 5%">
-  <div class="col-3" tourAnchor="anchorLogLevels">
+
+<div class="row" style="padding-left: 5%;padding-right: 5%; overflow-y:auto">
+<div class="col" tourAnchor="anchorSystemOverview" >
+  <h6 style="font-weight: 600">Application overview
+    <nb-icon icon="info-outline"
+             nbTooltip="Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!"
+             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+
+<nb-select class="period-select pl-3 col-md-2"
+               placeholder="Select application" (selectedChange)="applicationSelected($event)">
+        <nb-option [value]="0"><div class="col-9">All applications</div></nb-option>
+      <nb-option *ngFor="let app of applications" [value]="app.id" [nbSort]="app.name">
+          <div class="col-9">{{ app.name }}</div>
+        <div class="col-auto"><i (click)="removeApplication(app.id)" [title]='"Delete application"'
+                     class="ml-3 fas  fa-trash pointer"></i></div>
+      </nb-option>
+
+    </nb-select>
+  </h6>
+    <div class="pb-2" style="overflow-y:auto; height: 300px">
+    <ng-scrollbar>
+  <chart-heatmap [heatmapHeight]="heatmapHeight" [data]="heatmapData"
+                 (select)="onHeatMapSelect($event)"></chart-heatmap>
+  </ng-scrollbar>
+        </div>
+</div>
+
+
+<div class="col-5">
+    <div class="row">
+  <div class="col" tourAnchor="anchorLogLevels">
     <h6 style="font-weight: 600">Log levels
       <nb-icon icon="info-outline"
                nbTooltip="A log level is information about the severity of a given log message is. It is a powerful way of distinguishing log events from each other. If the log levels are used properly, then troubleshooting becomes easier."
@@ -18,42 +46,29 @@
     </h6>
     <piechart [data]="pieChartData" [colorScheme]="colorPieData"></piechart>
   </div>
+</div>
 
-<!--    <div class="col-4" tourAnchor="anchorLogLevelDistribution">-->
-<!--    <h6 style="font-weight: 600">Log level distribution-->
-<!--      <nb-icon icon="info-outline"-->
-<!--               nbTooltip="Log level evolution through time. If you notice any strange changes, it might be an indication of a problem!"-->
-<!--               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>-->
-<!--    </h6>-->
-<!--    <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>-->
-<!--  </div>-->
-
-  <div class="col-9" tourAnchor="anchorCognitiveAnomalies">
-    <h6 style="font-weight: 600">Cognitive anomalies
+        <div class="row">
+  <div class="col" tourAnchor="anchorCognitiveAnomalies">
+    <h6 style="font-weight: 600">Threats
       <nb-icon icon="info-outline"
                nbTooltip="Cognitive anomalies are identified log messages that have negative semantic meaning in software systems. The AI system in the background distinguishes normal and anomaly log messages based on a model that is trained on millions of log messages."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
     </h6>
     <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
   </div>
-
-
-
 </div>
+
+    </div>
+
+
+    </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
-<div style="padding-left: 5%;padding-right: 5%; overflow-y:auto; height: 250px" tourAnchor="anchorSystemOverview" >
-    <ng-scrollbar>
-  <h6 style="font-weight: 600">Application overview
-    <nb-icon icon="info-outline"
-             nbTooltip="Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!"
-             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-  </h6>
-  <chart-heatmap [heatmapHeight]="heatmapHeight" [data]="heatmapData"
-                 (select)="onHeatMapSelect($event)"></chart-heatmap>
-  </ng-scrollbar>
-</div>
-<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
-<div style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorTopIncidents" align="left">
+
+
+<div class="row" style="padding-left: 5%;padding-right: 5%">
+
+<div tourAnchor="anchorTopIncidents" style="width: 100%">
   <div class="row" style="margin-bottom: 20px">
     <div class="col" style="text-align: left">
   <h6 style="font-weight: 600">Top {{numberOfIncidents}} incidents
@@ -64,7 +79,7 @@
       </div>
     <div class="col" style="text-align: right">
     <form [formGroup]="numberOfIncidentsFormGroup" (submit)="changeTopKIncidents()">
-    <label class="mr-2" for="numberOfIncidents">Number of incidents: </label>
+    <label class="mr-2" for="numberOfIncidents">Select the number of incidents: </label>
     <input type="number" style="width: 100px" class="mr-2" nbInput formControlName="numberOfIncidents"
            id="numberOfIncidents"
            placeholder="Choose number of incidents"/>
@@ -72,9 +87,9 @@
   </form>
       </div>
     </div>
-  <nb-card>
+  <nb-card style="max-height: 500px">
     <nb-card-body>
-      <div class="col-lg-12">
+      <div class="col-12">
 
         <div *ngFor="let topKIncident of topKIncidents">
           <!--scAnomalies-->
@@ -677,6 +692,11 @@
     </nb-card-body>
   </nb-card>
 </div>
+
+</div>
+<!--<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">-->
+
+
 <ng-template #dateTimePicker>
   <elastic-custom-datepicker (search)="onDateTimeSearch($event)"
                              (savePredefinedTime)="onSavePredefinedTime($event)">

@@ -7,10 +7,9 @@
         <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col-sm">
           <div class="row">
-            <h4>Use sample data</h4>
-          <p>The sample data contains logs from Apache Hadoop. The logs are snapshot of the system that engineers used to find and fix software bugs.</p>
+            <h4>Upload log files</h4>
+          <p>We automatically parse log file formats. Upload your logs to check bugs and provide insights!</p>
             <br>
-            <p>Load the data and check how logsight is able to find the bugs and provide insights!</p>
             </div>
         </div>
       </div>
@@ -20,9 +19,13 @@
       <div class="row user_guidance">
 
         <div class="col-sm" align="center">
-          <div *ngIf="!isSpinning" style="width: 50%">
-          <button  nbButton size="giant" style="text-transform: none" status="basic" shape="round" type="button"
-                  (click)="requestSampleData()">Load sample data
+          <div class="form-group">
+            <input nbInput size="giant" shape="round" fullWidth status="basic" type="file" id="file"
+                         (change)="uploadFiles($event.target.files)">
+          </div>
+          <div *ngIf="!isSpinning">
+          <button  nbButton size="large" style="text-transform: none" status="basic" shape="round" type="button"
+                  (click)="requestUpload()">Upload logs
           </button>
             </div>
 

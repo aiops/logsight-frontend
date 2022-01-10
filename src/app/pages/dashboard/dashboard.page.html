@@ -1,3 +1,9 @@
+
+<div id="nb-global-spinner" class="spinner">
+    <div class="blob blob-0"></div>
+  <div class="blob blob-1"></div>
+  </div>
+
 <div class="row" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
   <predefined-times [predefinedTimes]="predefinedTimes" (deletePredefinedTime)="onDeletePredefinedTime($event)"
                     (selectPredefinedTime)="onSelectPredefinedTime($event)">
@@ -90,7 +96,7 @@
   <nb-card style="max-height: 500px">
     <nb-card-body>
       <div class="col-12">
-
+        <div *ngIf="topKIncidents.length == 0">No incidents detected until now ...</div>
         <div *ngFor="let topKIncident of topKIncidents">
           <!--scAnomalies-->
           <ng-container *ngIf="topKIncident.scAnomalies.length > 0">
@@ -702,3 +708,4 @@
                              (savePredefinedTime)="onSavePredefinedTime($event)">
   </elastic-custom-datepicker>
 </ng-template>
+

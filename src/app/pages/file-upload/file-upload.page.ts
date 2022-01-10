@@ -107,11 +107,6 @@ export class FileUploadPage implements OnInit {
   requestUpload() {
     this.isSpinning = true
     if(this.applicationName){
-    try {
-      this.createApplication(this.applicationName)
-    }catch (e) {
-      console.log(e)
-    }
     this.http.post(`/api/logs/${this.key}/${this.applicationName}/upload_file`, this.formData)
       .subscribe(resp => {
         this.notificationService.success("Log data uploaded successfully!")

@@ -74,31 +74,31 @@ export class DashboardPage implements OnInit, OnDestroy {
               private tourService: TourService,
               private colorService: dataService) {
 
-    this.heatmapData$ = combineLatest([timer(1, 100000), this.reload$]).pipe(
+    this.heatmapData$ = combineLatest([timer(1, 5000), this.reload$]).pipe(
       switchMap(() => this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.pieChartData$ = combineLatest([timer(1, 100000), this.reload$]).pipe(
+    this.pieChartData$ = combineLatest([timer(1, 5000), this.reload$]).pipe(
       switchMap(() => this.loadPieChartData(this.startDateTime, this.endDateTime, this.applicationId)),
       share(),
       takeUntil(this.stopPolling),
     );
 
-    this.stackedAreaChartData$ = combineLatest([timer(1, 100000), this.reload$]).pipe(
+    this.stackedAreaChartData$ = combineLatest([timer(1, 5000), this.reload$]).pipe(
       switchMap(() => this.loadStackedAreaChartData(this.startDateTime, this.endDateTime)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.topKIncidents$ = combineLatest([timer(1, 100000), this.reload$]).pipe(
+    this.topKIncidents$ = combineLatest([timer(1, 5000), this.reload$]).pipe(
       switchMap(() => this.loadTopKIncidents(this.startDateTime, this.endDateTime, this.numberOfIncidents, this.applicationId)),
       share(),
       takeUntil(this.stopPolling)
     );
 
-    this.barData$ = combineLatest([timer(1, 100000), this.reload$]).pipe(
+    this.barData$ = combineLatest([timer(1, 5000), this.reload$]).pipe(
       switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId)),
       share(),
       takeUntil(this.stopPolling)
@@ -106,7 +106,8 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-  setTimeout(_ => this.reload$.next(), 5000); //hack to start first refresh
+    setTimeout(_ => this.reload$.next(), 5000); //hack to start first refresh
+    setTimeout(_ => this.cancelGlobalSpinner(), 20000)
     this.authService.getLoggedUser().pipe(
       switchMap(user => this.integrationService.loadApplications(user.key))
     ).subscribe(resp => this.applications = resp)
@@ -118,6 +119,11 @@ export class DashboardPage implements OnInit, OnDestroy {
       this.user = user
     })
     this.heatmapData$.subscribe(data => {
+      if (data && data.data.length > 0){
+        const el = document.getElementById('nb-global-spinner');
+        if (el) {
+          el.style['display'] = 'none';
+        }
       for (let i = 0; i < data.data.length; i++) {
         for (let j = 0; j < data.data[i].series.length; j++) {
           data.data[i].series[j].extra = data.data[i].name
@@ -144,9 +150,12 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.heatmapHeight = '150px'
       }
       this.heatmapData = data.data;
+    } }, error => {
+      console.log(error)
     })
 
     this.pieChartData$.subscribe(data => {
+      if (data){
       this.pieData = []
       this.pieChartData = data.data;
       this.pieChartData.forEach(element => {
@@ -162,10 +171,15 @@ export class DashboardPage implements OnInit, OnDestroy {
         }
       })
       this.colorPieData = {domain:this.pieData}
+    }
+      }, error => {
+      console.log(error)
     })
 
 
     this.stackedAreaChartData$.subscribe(data => {
+      if (data){
+
       for (let i = 0; i < data.data.length; i++) {
         for (let j = 0; j < data.data[i].series.length; j++) {
           var date = moment.utc(data.data[i].series[j].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
@@ -175,9 +189,14 @@ export class DashboardPage implements OnInit, OnDestroy {
         }
       }
       this.stackedChartData = data.data;
+    }      }, error => {
+      console.log(error)
     })
 
     this.topKIncidents$.subscribe(data => {
+      if(data){
+
+
       this.topKIncidents = data.map(it => {
         const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
         const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
@@ -195,9 +214,14 @@ export class DashboardPage implements OnInit, OnDestroy {
           countAD
         }
       });
+    } }, error => {
+      console.log(error)
     })
 
     this.barData$.subscribe(data => {
+      if (data){
+
+
       for (let i = 0; i < data.length; i++) {
         var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
         var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
@@ -206,6 +230,8 @@ export class DashboardPage implements OnInit, OnDestroy {
       }
 
       this.barData = data;
+    } }, error => {
+      console.log(error)
     })
 
 
@@ -260,12 +286,19 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.reload$.next()
       }
     })
-
+    this.reload$.next()
     this.loadPredefinedTimes();
   }
 
   loadPredefinedTimes() {
     this.dashboardService.getAllTimeRanges().subscribe(resp => this.predefinedTimes = resp)
+  }
+
+  cancelGlobalSpinner(){
+    const el = document.getElementById('nb-global-spinner');
+        if (el) {
+          el.style['display'] = 'none';
+        }
   }
 
   startTour() {
@@ -431,11 +464,6 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   applicationSelected(appId: number) {
     appId === 0 ? this.applicationId = null : this.applicationId = appId;
-    this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)
-    this.loadPieChartData(this.startDateTime, this.endDateTime, this.applicationId)
-    this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId)
-    this.loadTopKIncidents(this.startDateTime, this.endDateTime, this.numberOfIncidents, this.applicationId)
-
     this.reload$.next()
   }
 

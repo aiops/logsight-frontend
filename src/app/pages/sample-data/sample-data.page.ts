@@ -10,6 +10,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {LogFileType} from "../../@core/common/log-file-type";
 import {interval} from "rxjs";
+import {TourService} from "ngx-ui-tour-md-menu";
 
 @Component({
   selector: 'sample-data',
@@ -54,7 +55,7 @@ export class SampleDataPage implements OnInit {
   code_upload = ''
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
-              private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
+              private notificationService: NotificationsService, private http: HttpClient, private router: Router, private tourService: TourService) {
   }
 
   ngOnInit(): void {
@@ -112,6 +113,7 @@ export class SampleDataPage implements OnInit {
       .subscribe(resp => {
         this.isSpinning = false
         this.router.navigate(['/pages', 'dashboard'])
+        this.tourService.start()
       }, error => {
         this.notificationService.error("Error: ", error)
       });

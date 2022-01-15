@@ -88,22 +88,20 @@
                   </div>
 
                   <div class="row pt-2 pl-4">
-                      <div class="d-inline-block custom-control custom-radio mr-1">
-                          <input type="radio" class="custom-control-input" name="release" id="release_radio1">
-                          <label class="custom-control-label" for="release_radio1">10m</label>
-                      </div>
-                      <div class="d-inline-block custom-control custom-radio mr-1">
-                          <input type="radio" class="custom-control-input" name="release" id="release_radio2" checked>
-                          <label class="custom-control-label" for="release_radio2">15m</label>
-                      </div>
-                      <div class="d-inline-block custom-control custom-radio mr-1">
-                          <input type="radio" class="custom-control-input" name="release" id="release_radio3">
-                          <label class="custom-control-label" for="release_radio3">30m</label>
-                      </div>
-                      <div class="d-inline-block custom-control custom-radio mr-1">
-                          <input type="radio" class="custom-control-input" name="release" id="release_radio4" disabled>
-                          <label class="custom-control-label" for="release_radio4">auto</label>
-                      </div>
+
+                    <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
+                        <nb-radio value="10m">10m</nb-radio>
+                    </nb-radio-group>
+                     <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
+                        <nb-radio value="15m">15m</nb-radio>
+                    </nb-radio-group>
+                     <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
+                        <nb-radio value="30m">30m</nb-radio>
+                    </nb-radio-group>
+                    <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
+                        <nb-radio value="525960m">All data</nb-radio>
+                    </nb-radio-group>
+
                  </div>
                 </div>
               </div>

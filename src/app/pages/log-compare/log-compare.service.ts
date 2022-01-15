@@ -15,14 +15,14 @@ export class LogCompareService {
     return this.apiService.get(`/api/log_compare/load_versions?${applicationParam}`);
   }
 
-  computeLogCompare(applicationId: number, baselineTagId: string, compareTagId: string){
+  computeLogCompare(applicationId: number, baselineTagId: string, compareTagId: string, selectedRadioOption: string){
     let applicationParam = '';
     if (applicationId) {
       applicationParam = `&applicationId=${applicationId}`
     }
 
     return this.apiService.get(`/api/log_compare/compute_log_compare?${applicationParam}
-    &baselineTag=${baselineTagId}&compareTag=${compareTagId}`);
+    &baselineTag=${baselineTagId}&compareTag=${compareTagId}&selectedTime=${selectedRadioOption}`);
   }
 
   getLogCountBar(applicationId: number, startTime: string, endTime: string, tag: string): Observable<any> {

@@ -63,6 +63,8 @@ export class LogComparePage{
     domain: ['#8bb4ff']
   };
 
+  selectedRadioOption = '15m'
+
   compareTagId: string;
   heatmapHeightList = [];
   unique = [];
@@ -337,10 +339,14 @@ export class LogComparePage{
   }
 
 
+    radioChange(event){
+      this.selectedRadioOption = event
+      console.log(this.selectedRadioOption)
+    }
 
   computeLogCompare(){
     this.isSpinning = true
-    this.logCompareService.computeLogCompare(this.applicationId, this.baselineTagId, this.compareTagId).subscribe(resp => {
+    this.logCompareService.computeLogCompare(this.applicationId, this.baselineTagId, this.compareTagId, this.selectedRadioOption).subscribe(resp => {
         this.tableDataUnified = resp
       this.isSpinning = false
 

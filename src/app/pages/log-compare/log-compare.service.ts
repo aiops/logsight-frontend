@@ -16,13 +16,26 @@ export class LogCompareService {
   }
 
   computeLogCompare(applicationId: number, baselineTagId: string, compareTagId: string){
-    return this.apiService.get(`/api/log_compare/compute_log_compare?applicationId=${applicationId}
-    &baselineTagId=${baselineTagId}&compareTagId=${compareTagId}`);
+    let applicationParam = '';
+    if (applicationId) {
+      applicationParam = `&applicationId=${applicationId}`
+    }
+
+    return this.apiService.get(`/api/log_compare/compute_log_compare?${applicationParam}
+    &baselineTag=${baselineTagId}&compareTag=${compareTagId}`);
   }
 
   getLogCountBar(applicationId: number, startTime: string, endTime: string, tag: string): Observable<any> {
     return this.apiService.get(
       `/api/log_compare/bar_plot_count?startTime=${startTime}&endTime=${endTime}&applicationId=${applicationId}&tag=${tag}`)
+  }
+
+  loadBarData(startTime: string, endTime: string, applicationId: number) {
+    let applicationParam = '';
+    if (applicationId) {
+      applicationParam = `&applicationId=${applicationId}`
+    }
+    return this.apiService.get(`/api/charts/dashboard_bar_anomalies?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
   }
 
   getCognitiveBarData(applicationId: number, startTime: string, endTime: string, baselineTagId: string, compareTagId: string, newTemplates: string) {

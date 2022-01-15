@@ -33,7 +33,7 @@ import { TourMatMenuModule } from 'ngx-ui-tour-md-menu';
 import { MatCardModule } from '@angular/material/card';
 import { TooltipModule } from '@swimlane/ngx-charts';
 import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
-
+import $ from 'jquery'
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent, ActivateComponent, ForgotPasswordComponent],
   imports: [

@@ -69,6 +69,7 @@
     "intl": "1.2.5",
     "ionicons": "2.0.1",
     "jquery": "^3.6.0",
+    "jquery-sparkline": "^2.4.0",
     "leaflet": "1.2.0",
     "mdb-ui-kit": "^3.9.0",
     "nebular-icons": "1.1.0",

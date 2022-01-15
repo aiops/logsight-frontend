@@ -8,7 +8,7 @@ import * as moment from "moment";
 })
 export class GroupedVerticalBarChart2dComponent {
   @Input() data = [];
-  @Input() heatmapHeight = '200px'
+  @Input() heatmapHeight = '150px'
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = false;

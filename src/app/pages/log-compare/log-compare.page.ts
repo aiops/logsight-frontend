@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component, OnDestroy,
   OnInit, TemplateRef, ViewChild,
   ViewEncapsulation
@@ -26,14 +27,18 @@ import {VariableAnalysisHit} from "../../@core/common/variable-analysis-hit";
 import {VariableAnalysisTemplate} from "../../@core/components/app/variable-analysis-template";
 import {round} from "@popperjs/core/lib/utils/math";
 import {PredefinedTime} from "../../@core/common/predefined-time";
-
+import {VerificationData} from "../../@core/common/verification-data";
+import * as $ from 'jquery';
+import 'jquery-sparkline'
 @Component({
   selector: 'log-compare',
   styleUrls: ['./log-compare.page.scss', '../../../../node_modules/nvd3/build/nv.d3.min.css'],
   templateUrl: './log-compare.page.html',
   encapsulation: ViewEncapsulation.None
+
 })
-export class LogComparePage {
+
+export class LogComparePage{
 
   options = options.timelineChart()
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
@@ -46,6 +51,8 @@ export class LogComparePage {
   matchPercentage = 0.0
   logBarFirst = []
   logBarSecond = []
+  barData = []
+  barData$: Observable<any>;
   heatmapData = []
   isSpinning = false
   heatmapData$: Observable<any>;
@@ -59,7 +66,7 @@ export class LogComparePage {
   compareTagId: string;
   heatmapHeightList = [];
   unique = [];
-  startDateTime = 'now-720m';
+  startDateTime = 'now-525600m';
   endDateTime = 'now'
   heatmapHeight = '200px';
   horizontalHeight = '300px';
@@ -69,9 +76,30 @@ export class LogComparePage {
   barDataSecond = []
   newTemplatesBarData = []
   horizontalData = []
+  tableData = []
   horizontalData$: Observable<any>;
   newTemplatesBarData$: Observable<any>;
-  tableData = []
+  tableDataUnified : VerificationData = {
+  "risk": "0",
+  "total_n_log_messages": "0",
+  "count_baseline": "0",
+  "candidate_perc": "0",
+  "added_states": "0",
+  "added_states_info": "0",
+  "added_states_fault": "0",
+  "deleted_states": "0",
+  "deleted_states_info": "0",
+  "deleted_states_fault": "0",
+  "recurring_states": "0",
+  "recurring_states_info": "0",
+  "recurring_states_fault": "0",
+  "frequency_change_threshold": "0",
+  "frequency_change": "0",
+  "frequency_change_info": "0",
+  "frequency_change_fault": "0",
+  "cols": [],
+  "rows": []}
+
   predefinedTimes: PredefinedTime[] = [];
   countAnomalies = []
   newTemplates = []
@@ -96,7 +124,7 @@ export class LogComparePage {
     );
 
     this.barDataFirst$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, "", "")),
+      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, "", "", "")),
       share(),
       takeUntil(this.stopPolling)
     );
@@ -122,6 +150,7 @@ export class LogComparePage {
 
 
   ngOnInit(): void {
+    $('.sasho').css('background-color', 'red')
     this.loadPredefinedTimes();
     this.heatmapData$.subscribe(data => {
       for (let i = 0; i < data.data.length; i++) {
@@ -153,7 +182,6 @@ export class LogComparePage {
     })
 
     this.barDataFirst$.subscribe(data => {
-
       if (data.length > 0){
       let firstDay = moment.utc(data[0].name, 'DD-MM-YYYY HH:mm')
       let lastDay = moment.utc(data[data.length-1].name, 'DD-MM-YYYY HH:mm')
@@ -252,6 +280,7 @@ export class LogComparePage {
       switchMap(user => this.integrationService.loadApplications(user.key))
     ).subscribe(resp => {
       this.applications = resp;
+      console.log("APPS:", this.applications)
       if (this.applications.length > 0) {
         this.applicationId = this.applications[0].id;
         this.applicationSelected(this.applicationId);
@@ -282,6 +311,23 @@ export class LogComparePage {
     return this.logCompareService.loadHeatmapData(startTime, endTime, applicationId, baselineTagId, compareTagId)
   }
 
+  loadBarDataUnified(startTime: string, endTime: string, applicationId: number) {
+    this.logCompareService.loadBarData(startTime, endTime, applicationId).subscribe(data => {
+      if (data){
+      for (let i = 0; i < data.length; i++) {
+        var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
+        console.log("sample", data[i])
+        data[i].name = local.toString()
+      }
+      this.barData = data;
+      // console.log("DATA", data)
+    } }, error => {
+      console.log(error)
+    })
+  }
+
   loadBarData(startDateTime, endDateTime, applicationId, baselineTagId, compareTagId, newTemplates) {
     return this.logCompareService.getCognitiveBarData(applicationId, startDateTime, endDateTime, baselineTagId, compareTagId, newTemplates);
   }
@@ -290,14 +336,29 @@ export class LogComparePage {
     return this.logCompareService.loadCompareTemplatesHorizontalBar(applicationId, startDateTime, endDateTime, baselineTagId, compareTagId)
   }
 
+
+
   computeLogCompare(){
     this.isSpinning = true
-    if (this.applicationId && this.compareTagId && this.baselineTagId && this.compareTagId!=this.baselineTagId){
-      this.logCompareService.computeLogCompare(this.applicationId, this.baselineTagId, this.compareTagId).subscribe(resp => {
+    this.logCompareService.computeLogCompare(this.applicationId, this.baselineTagId, this.compareTagId).subscribe(resp => {
+        this.tableDataUnified = resp
+      this.isSpinning = false
+
+      setTimeout(_ => {
+        $('.inlinesparkline').sparkline('html', {width: '60'});
+        $('.barsparkline').sparkline('html', {type: 'bar'});
+        $('.dualsparkline').sparkline('html', {type: 'bar', barColor: 'blue', tagValuesAttribute: 'barvalues', width: '60px', barWidth: "7" });
+        $('.dualsparkline').sparkline('html', {type: 'line', lineColor: 'red', fillColor: false, tagValuesAttribute: 'linevalues', width: '60px', composite: true,});}, 50); //hack to start first refresh
+
       })
-    }else {
-      this.notificationService.bare("Make sure that the baseline and compare versions are different!")
-    }
+    this.loadBarDataUnified(this.startDateTime, this.endDateTime, this.applicationId)
+    // if (this.applicationId && this.compareTagId && this.baselineTagId && this.compareTagId!=this.baselineTagId){
+    //   this.logCompareService.computeLogCompare(this.applicationId, this.baselineTagId, this.compareTagId).subscribe(resp => {
+    //     console.log(resp)
+    //   })
+    // }else {
+    //   this.notificationService.bare("Make sure that the baseline and compare versions are different!")
+    // }
   }
 
   logCountBar(tag){
@@ -381,6 +442,8 @@ export class LogComparePage {
     this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId)
     this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, this.baselineTagId, this.compareTagId, "new_templates")
     this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId, "", this.compareTagId, "")
+    this.loadBarDataUnified(this.startDateTime, this.endDateTime, this.applicationId)
+
     this.reload$.next()
     // this.router.navigate([],
     //   { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })

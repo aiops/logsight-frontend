@@ -350,7 +350,7 @@ export class LogComparePage{
       this.isSpinning = false
 
       setTimeout(_ => {
-        $('.inlinesparkline').sparkline('html', {width: '60'});
+        $('.inlinesparkline').sparkline('html', {width: '6vh'});
         $('.barsparkline').sparkline('html', {type: 'bar'});
         $('.dualsparkline').sparkline('html', {type: 'bar', barColor: 'blue', tagValuesAttribute: 'barvalues', width: '60px', barWidth: "7" });
         $('.dualsparkline').sparkline('html', {type: 'line', lineColor: 'red', fillColor: false, tagValuesAttribute: 'linevalues', width: '60px', composite: true,});}, 50); //hack to start first refresh

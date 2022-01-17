@@ -40,17 +40,13 @@ ng-scrollbar {
 .semantics {
     text-align: center;
     font-family: "DecimaMonoPro", monospace;
-    font-size: 13px;
 }
 
 th, td {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 1.5vh;
 }
 
-th {
-  overflow-x: hidden;
-}
 
 .scrollable {
   max-height: 400px;
@@ -113,7 +109,6 @@ table {
 }
 
 .level {
-    font-size: 13px;
     text-align: left;
     font-family: "DecimaMonoPro", monospace;
     text-transform: uppercase;

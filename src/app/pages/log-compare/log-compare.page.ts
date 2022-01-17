@@ -63,7 +63,7 @@ export class LogComparePage{
     domain: ['#8bb4ff']
   };
 
-  selectedRadioOption: number = 15
+  selectedRadioOption: number = 525600
 
   compareTagId: string;
   heatmapHeightList = [];

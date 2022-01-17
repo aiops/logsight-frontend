@@ -54,34 +54,48 @@
               <div class="card-body">
                 <div class="card-text">
                   <div class="row pl-4">
-                    <nb-select (selectedChange)="applicationSelected($event)" [(selected)]="this.applicationId"
+                    <div class="col-4 text-left my-auto">
+                      Select application:
+                    </div>
+                    <div class="col-8">
+                    <nb-select (selectedChange)="applicationSelected($event)" fullWidth [(selected)]="this.applicationId"
                      class="period-select"
                      placeholder="Select application">
                         <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.id">
                           {{ app.name }}
                         </nb-option>
                     </nb-select>
+                      </div>
                   </div>
                   <div class="row pt-2 pl-4">
-          <nb-select style="margin-right: 10px" (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
+                    <div class="col-4  my-auto">Select baseline:</div>
+                    <div class="col-8">
+          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
                      class="period-select"
                      placeholder="Baseline">
             <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
               {{ tag }}
             </nb-option>
           </nb-select>
+                      </div>
                     </div>
                   <div class="row pt-2 pl-4">
-          <nb-select (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
+                    <div class="col-4  my-auto">Select candidate:</div>
+                    <div class="col-8">
+          <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
                      class="period-select"
                      placeholder="Candidate">
             <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
               {{ tag }}
             </nb-option>
           </nb-select>
-
-            <button (click)="computeLogCompare()" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" size="small" style="text-transform: none; margin-left: 10px">Get Results
-            </button>
+                      </div>
+</div>
+                  <div class="row pt-2">
+                    <div class="col-4"></div>
+      <div class="col-8">
+            <button (click)="computeLogCompare()" fullWidth [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" size="small" style="text-transform: none; margin-left: 10px">Get Results
+            </button></div>
 </div>
                   <div class="row pt-2 pl-4">
                         <div class="badge badge-pill badge-primary mb-1" style="height: 18px; margin-right: 10px">Branch: production</div>
@@ -91,17 +105,17 @@
 
                   <div class="row pt-2 pl-4">
 
-                    <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
+                    <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
                         <nb-radio value=10>10m</nb-radio>
                     </nb-radio-group>
-                     <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
+                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
                         <nb-radio value=15>15m</nb-radio>
                     </nb-radio-group>
-                     <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
+                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
                         <nb-radio value=30>30m</nb-radio>
                     </nb-radio-group>
                     <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
-                        <nb-radio value=525960>All data</nb-radio>
+                        <nb-radio value=525960 checked>All data</nb-radio>
                     </nb-radio-group>
 
                  </div>

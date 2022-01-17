@@ -72,7 +72,7 @@
           </nb-select>
                     </div>
                   <div class="row pt-2 pl-4">
-          <nb-select (selectedChange)="compareTagSelecCompareted($event)" [(selected)]="this.compareTagId"
+          <nb-select (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
                      class="period-select"
                      placeholder="Candidate">
             <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">

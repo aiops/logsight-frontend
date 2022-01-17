@@ -15,7 +15,7 @@ export class LogCompareService {
     return this.apiService.get(`/api/log_compare/load_versions?${applicationParam}`);
   }
 
-  computeLogCompare(applicationId: number, baselineTagId: string, compareTagId: string, selectedRadioOption: string){
+  computeLogCompare(applicationId: number, baselineTagId: string, compareTagId: string, selectedRadioOption: number){
     let applicationParam = '';
     if (applicationId) {
       applicationParam = `&applicationId=${applicationId}`

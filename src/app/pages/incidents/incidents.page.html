@@ -91,7 +91,7 @@
                   <app-ad-banner [row]="row"></app-ad-banner>
                 </td>
                 <td>
-                  <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [noBarWhenZero]="true"
+                  <ngx-charts-bar-horizontal  [showDataLabel]="true" [noBarWhenZero]="true"
                                              [yAxis]="false" [roundEdges]="false" [view]="[180,80]"
                                              [results]="[{'name':'Current', 'value':row.rate_now}, {'name':'Previous', 'value':row.smr}]"></ngx-charts-bar-horizontal>
                 </td>
@@ -158,7 +158,7 @@
                   <app-ad-banner [row]="row"></app-ad-banner>
                 </td>
                 <td>
-                  <ngx-charts-bar-horizontal style="fill: white" [showDataLabel]="true" [noBarWhenZero]="true"
+                  <ngx-charts-bar-horizontal [showDataLabel]="true" [noBarWhenZero]="true"
                                              [yAxis]="false" [roundEdges]="false" [view]="[150,80]"
                                              [results]="[{'name':'Current', 'value':row.rate_now}, {'name':'Previous', 'value':row.smr}]"></ngx-charts-bar-horizontal>
                 </td>

@@ -19,6 +19,7 @@
       <div class="row user_guidance">
 
         <div class="col-sm" align="center">
+          <nb-card style="padding:30px">
           <div class="form-group">
             <input nbInput size="giant" shape="round" fullWidth status="basic" type="file" id="file"
                          (change)="uploadFiles($event.target.files)">
@@ -31,6 +32,7 @@
 
           <div *ngIf="isSpinning" class="spinner-border text-primary" style="position: relative" role="status">
           </div>
+            </nb-card>
         </div>
 
         <!--          <div class="row user_guidance">-->

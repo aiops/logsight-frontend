@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
             }
   ngOnInit() {
-    this.themeService.changeTheme("dark")
+    this.themeService.changeTheme("default")
     this.curSec = 0;
     this.authService.getLoggedUser().subscribe(user => {
       this.key = user.key

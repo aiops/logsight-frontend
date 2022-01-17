@@ -63,7 +63,7 @@ export class LogComparePage{
     domain: ['#8bb4ff']
   };
 
-  selectedRadioOption = '15m'
+  selectedRadioOption: number = 15
 
   compareTagId: string;
   heatmapHeightList = [];
@@ -341,7 +341,6 @@ export class LogComparePage{
 
     radioChange(event){
       this.selectedRadioOption = event
-      console.log(this.selectedRadioOption)
     }
 
   computeLogCompare(){

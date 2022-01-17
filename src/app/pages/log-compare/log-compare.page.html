@@ -55,7 +55,7 @@
                 <div class="card-text">
                   <div class="row pl-4">
                     <div class="col-4 text-left my-auto">
-                      Select application:
+                      Application
                     </div>
                     <div class="col-8">
                     <nb-select (selectedChange)="applicationSelected($event)" fullWidth [(selected)]="this.applicationId"
@@ -68,7 +68,7 @@
                       </div>
                   </div>
                   <div class="row pt-2 pl-4">
-                    <div class="col-4  my-auto">Select baseline:</div>
+                    <div class="col-4  my-auto">Baseline</div>
                     <div class="col-8">
           <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
                      class="period-select"
@@ -80,7 +80,7 @@
                       </div>
                     </div>
                   <div class="row pt-2 pl-4">
-                    <div class="col-4  my-auto">Select candidate:</div>
+                    <div class="col-4  my-auto">Candidate</div>
                     <div class="col-8">
           <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
                      class="period-select"

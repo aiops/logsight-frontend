@@ -3,7 +3,7 @@
 <a class="navbar-brand title" href="#"><img alt="logo" src="assets/img/logol.png" height="60" /></a>
 </div>
 </div>
-<div *ngIf="!formSubmitted" style="color: #013b54; font-size: 18px; font-weight: 600;">Sign up and test for free</div>
+<div *ngIf="!formSubmitted" style="color: #013b54; font-size: 18px; font-weight: 600;">Sign up</div>
 <br>
 
 <!--<div class="col text-center align-items-center">-->
@@ -55,7 +55,7 @@
           <br>
           <div *ngIf="isSpinning" class="spinner-border text-primary" style="left: 50%; position: relative" role="status">
           </div>
-          <input *ngIf="!isSpinning" [disabled]="!form.valid" style="text-transform: none; background-color: #4154f1; width: 100%; height: 3.5rem" class="btn btn-primary mb-0"
+          <input *ngIf="!isSpinning" [disabled]="!form.valid" style="text-transform: none; background-color: #4154f1; width: 100%; height: 3.5rem" class="btn btn-secondary mb-0"
                                                   type="submit"
                  value="Sign up">
 

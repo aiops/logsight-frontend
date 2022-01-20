@@ -114,6 +114,16 @@ table {
     text-transform: uppercase;
 }
 
+.coverage {
+    font-size: 13px;
+    text-align: right;
+    vertical-align: middle;
+    width: 90px;
+    text-transform: uppercase;
+    padding-left: 5px;
+    box-sizing: content-box;
+}
+
 .coverage_signal {
     height: 18px;
     margin: 0;
@@ -127,6 +137,11 @@ table {
     padding: 0;
     display: inline-block;
     box-sizing: content-box;
+}
+
+.change {
+    font-size: 13px;
+    text-transform: uppercase;
 }
 
 

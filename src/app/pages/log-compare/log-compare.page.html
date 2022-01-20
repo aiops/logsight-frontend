@@ -39,25 +39,12 @@
               <h5 class="card-header">Service description</h5>
                   <div class="card-body">
                     <div class="card-text" style="margin-block-end: 5px;">
-                        This is a service description pulled form your software versioning system. For example, Github, Gitlab, etc.
-                        <a href="https://github.com/apache/hadoop">(more)</a>
-                        <div class="badge badge-pill badge-primary mb-1" style="height: 18px">Repo: Github</div>
-                    </div>
-                 </div>
-               </div>
-            </nb-card>
-      </div>
 
-      <div class="col-4 col-md-4 col-lg-4 mb-4 mb-lg-0">
-          <nb-card>
-              <h5 class="card-header">Releases</h5>
-              <div class="card-body">
-                <div class="card-text">
-                  <div class="row pl-4">
-                    <div class="col-4 text-left my-auto">
-                      Application
+                                        <div class="row">
+                    <div class="col-2 text-left my-auto">
+                      Choose application
                     </div>
-                    <div class="col-8">
+                    <div class="col-2">
                     <nb-select (selectedChange)="applicationSelected($event)" fullWidth [(selected)]="this.applicationId"
                      class="period-select"
                      placeholder="Select application">
@@ -67,8 +54,34 @@
                     </nb-select>
                       </div>
                   </div>
+                      <div class="row pt-4">
+                        <div class="col">
+                        <b style="font-weight: 600">Description: </b>This is a service description pulled form your software versioning system. For example, Github, Gitlab, etc.
+                        <a href="https://github.com/apache/hadoop">(more)</a>
+                        <div class="badge badge-pill badge-primary mb-1" style="height: 18px">Repo: Github</div>
+                          </div>
+                    </div>
+
+                      <div class="row pt-4 justify-content-center">
+
+                         <button (click)="computeLogCompare()" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" size="giant" style="padding-left: 10%; padding-right: 10%; text-transform: none; margin-left: 10px">Verify
+                        </button>
+
+                      </div>
+                      </div>
+                 </div>
+               </div>
+            </nb-card>
+      </div>
+
+      <div class="col-4 col-md-4 col-lg-4 mb-4 mb-lg-0">
+          <nb-card style="padding-bottom: 25px">
+              <h5 class="card-header">Choose releases</h5>
+              <div class="card-body">
+                <div class="card-text">
+
                   <div class="row pt-2 pl-4">
-                    <div class="col-4  my-auto">Baseline</div>
+                    <div class="col-4  my-auto">Baseline (B)</div>
                     <div class="col-8">
           <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
                      class="period-select"
@@ -80,7 +93,7 @@
                       </div>
                     </div>
                   <div class="row pt-2 pl-4">
-                    <div class="col-4  my-auto">Candidate</div>
+                    <div class="col-4  my-auto">Candidate (C)</div>
                     <div class="col-8">
           <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
                      class="period-select"
@@ -93,15 +106,12 @@
 </div>
                   <div class="row pt-2">
                     <div class="col-4"></div>
-      <div class="col-8">
-            <button (click)="computeLogCompare()" fullWidth [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" size="small" style="text-transform: none; margin-left: 10px">Get Results
-            </button></div>
 </div>
-                  <div class="row pt-2 pl-4">
-                        <div class="badge badge-pill badge-primary mb-1" style="height: 18px; margin-right: 10px">Branch: production</div>
-                        <div class="badge badge-pill badge-secondary mb-1" style="height: 18px; margin-right: 10px">Branch: develop</div>
-                        <div class="badge badge-pill badge-warning mb-1" style="height: 18px">Infrastructure: pre-production</div>
-                  </div>
+<!--                  <div class="row pt-2 pl-4">-->
+<!--                        <div class="badge badge-pill badge-primary mb-1" style="height: 18px; margin-right: 10px">Branch: production</div>-->
+<!--                        <div class="badge badge-pill badge-secondary mb-1" style="height: 18px; margin-right: 10px">Branch: develop</div>-->
+<!--                        <div class="badge badge-pill badge-warning mb-1" style="height: 18px">Infrastructure: pre-production</div>-->
+<!--                  </div>-->
 
                   <div class="row pt-2 pl-4">
 
@@ -132,11 +142,11 @@
 		<nb-card>
 			<div class="card-content">
 				<div class="card-body">
-					<div class="media d-flex">
-						<div class="align-self-center"> <i class="icon-energy font-large-2 float-left"></i>
+					<div class="media d-flex" >
+						<div class="align-self-center" style="color: {{this.tableDataUnified.risk_color}}"> <i class="icon-energy font-large-2 float-left"></i>
 						</div>
 						<div class="media-body text-right">
-							<h3 class=""> {{this.tableDataUnified.risk}} % </h3>
+							<h3 style="color: {{this.tableDataUnified.risk_color}}"> {{this.tableDataUnified.risk}} % </h3>
 							<span>Deployment failure risk</span>
 						</div>
 					</div>
@@ -149,10 +159,10 @@
 			<div class="card-content">
 				<div class="card-body">
 					<div class="media d-flex">
-						<div class="align-self-center"> <i class="icon-notebook success font-large-2 float-left"></i>
+						<div class="align-self-center"> <i class="icon-notebook text-success font-large-2 float-left"></i>
 						</div>
 						<div class="media-body text-right">
-							<h3 class="success"> {{this.tableDataUnified.total_n_log_messages}} </h3>
+							<h3 class="text-success"> {{this.tableDataUnified.total_n_log_messages}} </h3>
 							<span>Total log messages</span>
 						</div>
 					</div>
@@ -166,10 +176,10 @@
 				<div class="card-body">
 					<div class="media d-flex">
 						<div class="media-body text-left">
-							<h3 class="primary"> {{this.tableDataUnified.count_baseline}} </h3>
+							<h3 class="text-primary"> {{this.tableDataUnified.count_baseline}} </h3>
 							<span>Baseline</span>
 						</div>
-						<div class="align-self-center"> <i class="icon-screen-desktop primary font-large-2 float-right"></i>
+						<div class="align-self-center"> <i class="icon-screen-desktop text-primary font-large-2 float-right"></i>
 						</div>
 					</div>
 				</div>
@@ -212,9 +222,11 @@
         </div></div></div>
 <div class="row">
   <div class="col">
-<grouped-vertical-bar-chart-2d  [data]="barData"></grouped-vertical-bar-chart-2d>
+<grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
     </div>
 </div> </nb-card>
+
+
 
 
 
@@ -327,8 +339,8 @@
                   <p class="sub-heading">Added states</p>
                 </div>
                 <span class="inc-dec-percentage">
-                  <small>Report </small><small class="success"> {{ this.tableDataUnified.added_states_info }}% </small>&nbsp;
-                  <small>Fault </small><small class="danger"> {{ this.tableDataUnified.added_states_fault }}% </small>
+                  <small>Report</small><small class="text-success"> {{ this.tableDataUnified.added_states_info }}% </small>&nbsp;
+                  <small>Fault</small><small class="text-danger"> {{ this.tableDataUnified.added_states_fault }}% </small>
                 </span>
               </div>
             </div>
@@ -342,8 +354,8 @@
                   <p class="sub-heading">Deleted states</p>
                 </div>
                 <span class="inc-dec-percentage">
-                  <small>Report </small><small class="success"> {{ this.tableDataUnified.deleted_states_info }}% </small>&nbsp;
-                  <small>Fault </small><small class="danger"> {{ this.tableDataUnified.deleted_states_fault }}% </small>
+                  <small>Report </small><small class="text-success"> {{ this.tableDataUnified.deleted_states_info }}% </small>&nbsp;
+                  <small>Fault </small><small class="text-danger"> {{ this.tableDataUnified.deleted_states_fault }}% </small>
                 </span>
               </div>
             </div>
@@ -357,8 +369,8 @@
                   <p class="sub-heading">Recurring states</p>
                 </div>
                 <span class="inc-dec-percentage">
-                  <small>Report </small><small class="success"> {{ this.tableDataUnified.recurring_states_info }}% </small>&nbsp;
-                  <small>Fault </small><small class="danger"> {{ this.tableDataUnified.recurring_states_fault }}% </small>
+                  <small>Report </small><small class="text-success"> {{ this.tableDataUnified.recurring_states_info }}% </small>&nbsp;
+                  <small>Fault </small><small class="text-danger"> {{ this.tableDataUnified.recurring_states_fault }}% </small>
                 </span>
               </div>
             </div>
@@ -372,11 +384,11 @@
                   <p class="sub-heading">Frequency change</p>
                 </div>
                 <span class="inc-dec-percentage">
-                  <small>Report </small>&nbsp;<small class="success"><i class="fa fa-long-arrow-down"></i> {{ this.tableDataUnified.frequency_change_info }}% </small>&nbsp;
-                  <small class="success"><i class="fa fa-long-arrow-up"></i> {{ this.tableDataUnified.frequency_change_info }}% </small>
+                  <small>Report </small>&nbsp;<small class="text-success"><i class="fa fa-long-arrow-alt-down"></i> {{ this.tableDataUnified.frequency_change_info }}% </small>&nbsp;
+                  <small class="text-success"><i class="fa fa-long-arrow-alt-up"></i> {{ this.tableDataUnified.frequency_change_info }}% </small>
                   <br>
-                  <small>Fault </small><small class="danger"><i class="fa fa-long-arrow-down"></i> {{ this.tableDataUnified.frequency_change_fault }}% </small>&nbsp;
-                  <small class="danger"><i class="fa fa-long-arrow-up"></i> {{ this.tableDataUnified.frequency_change_fault }}% </small>
+                  <small>Fault </small><small class="text-danger"><i class="fa fa-long-arrow-alt-down"></i> {{ this.tableDataUnified.frequency_change_fault }}% </small>&nbsp;
+                  <small class="text-danger"><i class="fa fa-long-arrow-alt-up"></i> {{ this.tableDataUnified.frequency_change_fault }}% </small>
 
                 </span>
               </div>
@@ -397,17 +409,17 @@
               <div class="card-body">
 
       <div>
-      <table>
+      <table style=" word-wrap: anywhere">
         <thead>
           <tr>
             <th style="width: 3%">{{this.tableDataUnified.cols[0]}}</th>
             <th style="width: 6%">{{this.tableDataUnified.cols[1]}}</th>
-            <th style="width: 6%">{{this.tableDataUnified.cols[2]}}</th>
-            <th style="width: 6%">{{this.tableDataUnified.cols[3]}}</th>
-            <th style="width: 51%; overflow: hidden;">{{this.tableDataUnified.cols[4]}}</th>
+            <th style="width: 5%">{{this.tableDataUnified.cols[2]}}</th>
+            <th style="width: 5%">{{this.tableDataUnified.cols[3]}}</th>
+            <th style="width: 48%; overflow: hidden; word-wrap: anywhere">{{this.tableDataUnified.cols[4]}}</th>
             <th style="width: 4%">{{this.tableDataUnified.cols[5]}}</th>
-            <th style="width: 4%">{{this.tableDataUnified.cols[6]}}</th>
-            <th style="width: 5%">{{this.tableDataUnified.cols[7]}}</th>
+            <th style="width: 5%" class="text-center">{{this.tableDataUnified.cols[6]}}</th>
+            <th style="width: 9%" class="text-center">{{this.tableDataUnified.cols[7]}}</th>
             <th style="width: 5%">{{this.tableDataUnified.cols[8]}}</th>
             <th style="width: 5%">{{this.tableDataUnified.cols[9]}}</th>
             <th style="width: 5%">{{this.tableDataUnified.cols[10]}}</th>
@@ -450,35 +462,49 @@
 <!--                {% endif %}-->
             </td>
 
-            <td >
-              <div>
-                    {{row.count_base}}<span style="color: #999"></span>
+            <td>
+              <div class="row">
+                <div class="col text-right">
+                    B
+                  </div>
+                <div class="col text-center">
+                <span style="color: #999">{{row.count_base}}</span>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col text-right">
+                  C
+                </div>
+                <div class="col text-center">
+                  <span style="color: #999">{{row.count_cand}}</span>
+                </div>
               </div>
             </td>
 
-            <td class="change" style="color: {{row.change_color}}">
+            <td class="text-center" style="color: #999;">
 <!--                {% if row.change_perc >= 0 %}+{% endif %}{{ (row.change_perc * 100)|round|int }}%-->
-              <span style="color: #999;">({{row.change_count}})</span>
+                  {{row.change_perc*100 | ngxRound}}%
+                  ({{row.change_count}})
             </td>
 
-            <td>
+            <td >
 <!--              <div class="coverage_signal">-->
-<!--                <div class="coverage_bar" style="height:  4px; background: {% if row.coverage >  0 %}gray{% else %}lightgray{% endif %}"></div>-->
-<!--                <div class="coverage_bar" style="height:  8px; background: {% if row.coverage > 20 %}gray{% else %}lightgray{% endif %}"></div>-->
-<!--                <div class="coverage_bar" style="height: 12px; background: {% if row.coverage > 40 %}gray{% else %}lightgray{% endif %}"></div>-->
-<!--                <div class="coverage_bar" style="height: 16px; background: {% if row.coverage > 60 %}gray{% else %}lightgray{% endif %}"></div>-->
-<!--                <div class="coverage_bar" style="height: 20px; background: {% if row.coverage > 80 %}gray{% else %}lightgray{% endif %}"></div>-->
+<!--                <div class="coverage_bar" style="height:  4px; background: gray"></div>-->
+<!--                <div class="coverage_bar" style="height:  100px; background: grey"></div>-->
+<!--&lt;!&ndash;                <div class="coverage_bar" style="height: 12px; background: {% if row.coverage > 40 %}gray{% else %}lightgray{% endif %}"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="coverage_bar" style="height: 16px; background: {% if row.coverage > 60 %}gray{% else %}lightgray{% endif %}"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="coverage_bar" style="height: 20px; background: {% if row.coverage > 80 %}gray{% else %}lightgray{% endif %}"></div>&ndash;&gt;-->
 <!--              </div>-->
-               <span class="inlinesparkline">{{row.trend_baseline}}</span>
+              <span class="inlinesparkline">{{row.trend_baseline}}</span>
               <span class="inlinesparkline">{{row.trend_candidate}}</span>
             </td>
 
-            <td class="level">
+            <td class="level" style="color: {{row.semantic_color[1]}}">
               <div >{{row.level}}</div>
             </td>
 
             <td class="semantics"
-                style="color: {{row.semantic_color}}">{{row.semantics}}
+                style="color: {{row.semantic_color[0]}}">{{row.semantics}}
             </td>
           </tr>
         </tbody>

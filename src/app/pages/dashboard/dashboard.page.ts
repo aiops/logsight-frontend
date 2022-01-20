@@ -55,6 +55,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   unique = [];
   colorPieData = {}
   user: any;
+  clientTimezoneOffset = new Date().getTimezoneOffset()/60;//offset in hours
   reload$: Subject<boolean> = new Subject();
   @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
@@ -106,6 +107,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.clientTimezoneOffset)
     setTimeout(_ => this.reload$.next(), 5000); //hack to start first refresh
     setTimeout(_ => this.cancelGlobalSpinner(), 20000)
     this.authService.getLoggedUser().pipe(
@@ -142,7 +144,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
       if (this.unique.length > 0) {
         if (50 * (this.unique.length + 1) < 350) {
-          this.heatmapHeight = (70 * (this.unique.length + 1)).toString() + 'px'
+          this.heatmapHeight = (50 * (this.unique.length + 1)).toString() + 'px'
         } else {
           this.heatmapHeight = '350px'
         }

@@ -2,21 +2,24 @@
 <div id="nb-global-spinner" class="spinner">
     <div class="blob blob-0"></div>
   <div class="blob blob-1"></div>
-  </div>
+</div>
 
-<div class="row" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
+<div class="row" style="padding-left: 5%;padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
+  <div *ngIf="endDateTime == 'now'" class="col-sm my-auto"><nb-icon icon="clock-outline"></nb-icon> <b>{{startDateTime.split('-')[1]}} ago </b></div>
+  <div *ngIf="endDateTime != 'now'" class="col-sm my-auto"><nb-icon icon="clock-outline"></nb-icon> <b>{{startDateTime.concat('Z')|date:'yyyy-MM-dd HH:mm:ss'}} to {{endDateTime.concat('Z')|date:'yyyy-MM-dd HH:mm:ss'}}</b></div>
+  <div class="col-sm text-right"></div>
   <predefined-times [predefinedTimes]="predefinedTimes" (deletePredefinedTime)="onDeletePredefinedTime($event)"
                     (selectPredefinedTime)="onSelectPredefinedTime($event)">
 
   </predefined-times>
   <button title="Select date range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
           (click)="openPopover()"
-          nbPopoverTrigger="noop" size="small" shape="round"><i class="fa fa-calendar"></i></button>
+          nbPopoverTrigger="noop" style="background-color: #dadada;" size="small" shape="round"><i class="fa fa-calendar"></i></button>
 </div>
 <hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #bebebe">
 
-<div class="row" style="padding-left: 5%;padding-right: 5%; overflow-y:auto">
-<div class="col" tourAnchor="anchorSystemOverview" >
+<div class="row" style="padding-left: 5%;padding-right: 5%;">
+<div class="col-6" tourAnchor="anchorSystemOverview" >
   <h6 style="font-weight: 600">Application overview
     <nb-icon icon="info-outline"
              nbTooltip="Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!"
@@ -42,7 +45,7 @@
 </div>
 
 
-<div class="col-5">
+<div class="col-6">
     <div class="row">
   <div class="col" tourAnchor="anchorLogLevels">
     <h6 style="font-weight: 600">Log levels
@@ -58,7 +61,7 @@
   <div class="col" tourAnchor="anchorCognitiveAnomalies">
     <h6 style="font-weight: 600">Threats
       <nb-icon icon="info-outline"
-               nbTooltip="Cognitive anomalies are identified log messages that have negative semantic meaning in software systems. The AI system in the background distinguishes normal and anomaly log messages based on a model that is trained on millions of log messages."
+               nbTooltip="Threats are identified log messages that have negative semantic meaning in software systems. The AI system in the background distinguishes normal and anomaly log messages based on a model that is trained on millions of log messages."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
     </h6>
     <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>

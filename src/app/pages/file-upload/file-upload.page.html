@@ -18,20 +18,21 @@
 
       <div class="row user_guidance">
 
-        <div class="col-sm" align="center">
+        <div class="col-sm align-items-center" align="center">
           <nb-card style="padding:30px">
           <div class="form-group">
             <input nbInput size="giant" shape="round" fullWidth status="basic" type="file" id="file"
                          (change)="uploadFiles($event.target.files)">
           </div>
           <div *ngIf="!isSpinning">
-          <button  nbButton size="large" style="text-transform: none" status="basic" shape="round" type="button"
+          <button  nbButton size="giant" style="text-transform: none" status="basic" shape="round" type="button"
                   (click)="requestUpload()">Upload logs
           </button>
             </div>
-
+          <div class="row justify-content-center">
           <div *ngIf="isSpinning" class="spinner-border text-primary" style="position: relative" role="status">
           </div>
+            </div>
             </nb-card>
         </div>
 

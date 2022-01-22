@@ -83,6 +83,7 @@ export class LogComparePage{
   newTemplatesBarData$: Observable<any>;
   tableDataUnified : VerificationData = {
   "risk": "0",
+  "risk_color": "red",
   "total_n_log_messages": "0",
   "count_baseline": "0",
   "candidate_perc": "0",
@@ -281,12 +282,24 @@ export class LogComparePage{
     this.authService.getLoggedUser().pipe(
       switchMap(user => this.integrationService.loadApplications(user.key))
     ).subscribe(resp => {
-      this.applications = resp;
-      this.filterApplicationsWithVersions()
-      if (this.applications.length > 0) {
-        this.applicationId = this.applications[0].id;
-        this.applicationSelected(this.applicationId);
-      }
+      let preloadedApp = this.applications[0];
+      this.applications = []
+
+      // this.loadApplicationVersions(this.applications[0].id)
+      for (let i=0; i < resp.length; i++){
+        this.logCompareService.loadApplicationVersions(resp[i].id).subscribe(versions => {
+        if (versions.length > 0){
+          this.applications.push(resp[i])
+          preloadedApp = resp[i]
+          this.applicationId = preloadedApp.id;
+          this.applicationSelected(this.applicationId);
+          this.loadApplicationVersions(this.applicationId)
+        }
+        // this.notificationService.success("Versions loaded")
+      }, error => {
+        this.notificationService.error("Bad request, contact support!")
+      })
+    }
     })
     this.messagingService.getVariableAnalysisTemplate()
       .pipe(takeUntil(this.destroy$), map(it => it['item']))
@@ -465,7 +478,6 @@ export class LogComparePage{
     // this.loadApplicationVersions(this.applications[0].id)
     for (let i=0; i < this.applications.length; i++){
       let tags = this.loadApplicationVersions(this.applications[i].id)
-      console.log("T:", tags)
     }
 
   }
@@ -553,13 +565,13 @@ export class LogComparePage{
   private loadApplicationVersions(applicationId: number) {
     let tags = []
     this.logCompareService.loadApplicationVersions(applicationId).subscribe(resp => {
-      this.tags = resp
-      tags = resp
-      // this.notificationService.success("Versions loaded")
-    }, error => {
-      this.notificationService.error("Bad request, contact support!")
-    })
-    return tags
+        this.tags = resp
+        this.baselineTagId = resp[resp.length-1]
+        this.compareTagId = resp[resp.length-2]
+      },
+      error => {
+        this.notificationService.error("Bad request, contact support!")
+      })
   }
 
   private getTimeDiff() {

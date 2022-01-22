@@ -1,5 +1,6 @@
 export interface VerificationData {
   risk: any,
+  risk_color: any,
   total_n_log_messages: any,
   count_baseline: any,
   candidate_perc: any,

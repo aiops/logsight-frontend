@@ -83,7 +83,7 @@
                   <div class="row pt-2 pl-4">
                     <div class="col-4  my-auto">Baseline (B)</div>
                     <div class="col-8">
-          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
+          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.tags[this.tags.length-1]"
                      class="period-select"
                      placeholder="Baseline">
             <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
@@ -95,7 +95,7 @@
                   <div class="row pt-2 pl-4">
                     <div class="col-4  my-auto">Candidate (C)</div>
                     <div class="col-8">
-          <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
+          <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.tags[this.tags.length-2]"
                      class="period-select"
                      placeholder="Candidate">
             <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">

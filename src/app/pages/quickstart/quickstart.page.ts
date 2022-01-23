@@ -60,6 +60,10 @@ export class QuickstartPage implements OnInit {
     this.router.navigate(['pages','sample-data'])
   }
 
+  redirectToElasticsearch(){
+    this.router.navigate(['pages','elasticsearch-data'])
+  }
+
 
 
 

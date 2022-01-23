@@ -43,6 +43,11 @@ const routes: Routes = [{
         .then(m => m.SampleDataModule),
     },
     {
+      path: 'elasticsearch-data',
+      loadChildren: () => import('./elasticsearch-data/elasticsearch-data.module')
+        .then(m => m.ElasticsearchDataModule),
+    },
+    {
       path: 'variable-analysis',
       loadChildren: () => import('./variable-analysis/variable-analysis.module')
         .then(m => m.VariableAnalysisModule),

@@ -16,7 +16,7 @@
         <div class="vertical-center">
         <i class="fas fa-file-import fa-6x"></i> </div>
         <div class="vertical-center2">
-        <button shape="round"  style="text-transform: none" nbButton size="giant">Upload log file</button></div>
+        <button shape="round"  style="text-transform: none" nbButton size="giant">Upload file</button></div>
     </nb-card-body>
   </nb-card>
 </div>
@@ -27,7 +27,18 @@
         <div class="vertical-center">
         <i class="fas fa-copy fa-6x"></i> </div>
         <div class="vertical-center2">
-        <button nbButton shape="round" style="text-transform: none"  size="giant">Use sample data</button></div>
+        <button nbButton shape="round" style="text-transform: none"  size="giant">Sample data</button></div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+      <div class="col">
+  <nb-card size="small" (click)="redirectToElasticsearch()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center">
+        <img src="../../../assets/icons/logo-elastic-vertical-dark-ink.svg" height="100"> </div>
+        <div class="vertical-center2">
+        <button nbButton shape="round" style="text-transform: none"  size="giant">Elasticsearch</button></div>
     </nb-card-body>
   </nb-card>
 </div>

@@ -33,6 +33,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/sample-data',
   },
   {
+    title: 'Elasticsearch data',
+    icon: 'link-outline',
+    link: '/pages/elasticsearch-data',
+  },
+  {
     title: 'Kibana',
     icon: 'link-outline',
     link: '/pages/kibana',

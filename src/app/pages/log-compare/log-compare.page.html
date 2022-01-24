@@ -83,7 +83,7 @@
                   <div class="row pt-2 pl-4">
                     <div class="col-4  my-auto">Baseline (B)</div>
                     <div class="col-8">
-          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.tags[this.tags.length-1]"
+          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
                      class="period-select"
                      placeholder="Baseline">
             <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
@@ -95,7 +95,7 @@
                   <div class="row pt-2 pl-4">
                     <div class="col-4  my-auto">Candidate (C)</div>
                     <div class="col-8">
-          <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.tags[this.tags.length-2]"
+          <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
                      class="period-select"
                      placeholder="Candidate">
             <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
@@ -409,16 +409,16 @@
               <div class="card-body">
 
       <div>
-      <table style=" word-wrap: anywhere">
-        <thead>
-          <tr>
+      <table style=" word-wrap: anywhere" class="table-hover">
+        <thead >
+          <tr style="padding-bottom: 20px">
             <th style="width: 3%">{{this.tableDataUnified.cols[0]}}</th>
             <th style="width: 6%">{{this.tableDataUnified.cols[1]}}</th>
             <th style="width: 5%">{{this.tableDataUnified.cols[2]}}</th>
             <th style="width: 5%">{{this.tableDataUnified.cols[3]}}</th>
-            <th style="width: 48%; overflow: hidden; word-wrap: anywhere">{{this.tableDataUnified.cols[4]}}</th>
+            <th style="width: 43%; overflow: hidden; word-wrap: anywhere">{{this.tableDataUnified.cols[4]}}</th>
             <th style="width: 4%">{{this.tableDataUnified.cols[5]}}</th>
-            <th style="width: 5%" class="text-center">{{this.tableDataUnified.cols[6]}}</th>
+            <th style="width: 10%" class="text-center">{{this.tableDataUnified.cols[6]}}</th>
             <th style="width: 9%" class="text-center">{{this.tableDataUnified.cols[7]}}</th>
             <th style="width: 5%">{{this.tableDataUnified.cols[8]}}</th>
             <th style="width: 5%">{{this.tableDataUnified.cols[9]}}</th>
@@ -470,6 +470,9 @@
                 <div class="col text-center">
                 <span style="color: #999">{{row.count_base}}</span>
                   </div>
+                <div class="col text-left">
+                  <span class="inlinesparkline">{{row.trend_baseline}}</span>
+                </div>
               </div>
               <div class="row">
                 <div class="col text-right">
@@ -477,6 +480,9 @@
                 </div>
                 <div class="col text-center">
                   <span style="color: #999">{{row.count_cand}}</span>
+                </div>
+                <div class="col text-left">
+                  <span class="inlinesparkline">{{row.trend_candidate}}</span>
                 </div>
               </div>
             </td>
@@ -495,8 +501,8 @@
 <!--&lt;!&ndash;                <div class="coverage_bar" style="height: 16px; background: {% if row.coverage > 60 %}gray{% else %}lightgray{% endif %}"></div>&ndash;&gt;-->
 <!--&lt;!&ndash;                <div class="coverage_bar" style="height: 20px; background: {% if row.coverage > 80 %}gray{% else %}lightgray{% endif %}"></div>&ndash;&gt;-->
 <!--              </div>-->
-              <span class="inlinesparkline">{{row.trend_baseline}}</span>
-              <span class="inlinesparkline">{{row.trend_candidate}}</span>
+
+              {{row.coverage}}%
             </td>
 
             <td class="level" style="color: {{row.semantic_color[1]}}">

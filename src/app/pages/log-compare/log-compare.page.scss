@@ -42,11 +42,16 @@ ng-scrollbar {
     font-family: "DecimaMonoPro", monospace;
 }
 
-th, td {
+th {
   font-weight: 600;
   font-size: 1.5vh;
 }
 
+
+td {
+  font-weight: 500;
+  font-size: 1.5vh;
+}
 
 .scrollable {
   max-height: 400px;

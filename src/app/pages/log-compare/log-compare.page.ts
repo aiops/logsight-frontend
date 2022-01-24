@@ -284,8 +284,6 @@ export class LogComparePage{
     ).subscribe(resp => {
       let preloadedApp = this.applications[0];
       this.applications = []
-
-      // this.loadApplicationVersions(this.applications[0].id)
       for (let i=0; i < resp.length; i++){
         this.logCompareService.loadApplicationVersions(resp[i].id).subscribe(versions => {
         if (versions.length > 0){
@@ -362,7 +360,7 @@ export class LogComparePage{
       this.isSpinning = false
 
       setTimeout(_ => {
-        $('.inlinesparkline').sparkline('html', {width: '6vh'});
+        $('.inlinesparkline').sparkline('html', {width: '6vh', height: '1.8vh'});
         $('.barsparkline').sparkline('html', {type: 'bar'});
         $('.dualsparkline').sparkline('html', {type: 'bar', barColor: 'blue', tagValuesAttribute: 'barvalues', width: '60px', barWidth: "7" });
         $('.dualsparkline').sparkline('html', {type: 'line', lineColor: 'red', fillColor: false, tagValuesAttribute: 'linevalues', width: '60px', composite: true,});}, 50); //hack to start first refresh
@@ -565,9 +563,19 @@ export class LogComparePage{
   private loadApplicationVersions(applicationId: number) {
     let tags = []
     this.logCompareService.loadApplicationVersions(applicationId).subscribe(resp => {
+      this.tags = resp
+      for(let i=0; i< this.tags.length; i++){
+        this.tags[i] = this.tags[i].slice(this.tags[i].length - 8,this.tags[i].length)
+      }
         this.tags = resp
-        this.baselineTagId = resp[resp.length-1]
-        this.compareTagId = resp[resp.length-2]
+        if (resp.length > 1){
+          this.baselineTagId = resp[resp.length-1]
+          this.compareTagId = resp[resp.length-2]
+        }else {
+          this.baselineTagId = resp[resp.length-1]
+          this.compareTagId = resp[resp.length-1]
+        }
+        console.log(this.baselineTagId, this.compareTagId)
       },
       error => {
         this.notificationService.error("Bad request, contact support!")

@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
           // '{"key":"'+ user.key + '"}').subscribe(async data => {
           //   })
           }else{
-            redirectUrl = "/pages/dashboard"
+            redirectUrl = "/pages/send-logs"
           }
         // this.delay(3000, redirectUrl)
           this.router.navigate([redirectUrl]).then(() => {

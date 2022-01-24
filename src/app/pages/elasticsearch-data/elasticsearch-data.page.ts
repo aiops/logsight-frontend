@@ -28,6 +28,7 @@ export class ElasticsearchDataPage implements OnInit {
   applications: Application[] = [];
   logFileTypes: LogFileType[] = [];
   applicationName: String;
+  isElasticConnection = true;
   public show: boolean = false;
   public uploadFile: boolean = true;
   public showHideAppBtn: any = 'Show';
@@ -36,6 +37,7 @@ export class ElasticsearchDataPage implements OnInit {
   public loadDemoAppBtn: any = 'Load sample';
   public uploadBtn: any = 'Upload log file';
   public restBtn: any = 'REST API';
+
   progressValue: number;
   curSec: number;
 
@@ -171,12 +173,22 @@ export class ElasticsearchDataPage implements OnInit {
   }
 
 
+  checkElasticsearchConnection(){
+    this.http.post(`/api/logs/test_elasticsearch`, this.formElasticsearch.value)
+      .subscribe(resp => {
+        this.isElasticConnection = true
+        this.notificationService.success("Success", resp)
+      }, error => {
+        this.notificationService.error("Error", error)
+      });
+  }
+
+
   requestElasticsearchData(){
-    console.log(this.formElasticsearch.value)
     this.http.post(`/api/logs/load_elasticsearch`, this.formElasticsearch.value)
       .subscribe(resp => {
         this.notificationService.success("Successfully connected to elasticsearch. Ingesting logs...")
-        // this.router.navigate(['/pages', 'dashboard'])
+        this.router.navigate(['/pages', 'log-compare'])
       }, error => {
         this.notificationService.error("Error, please check your elasticsearch URL and Index and try again.")
       });

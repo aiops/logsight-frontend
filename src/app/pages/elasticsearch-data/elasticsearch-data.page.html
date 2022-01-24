@@ -37,9 +37,20 @@
              Elasticsearch password <input fullWidth nbInput class="mr-2" type="password" formControlName="elasticsearchPassword" id="elasticsearchPassword"
                          placeholder="Elasticsearch auth password" [required]="true"
                          >
-             <button  class="mt-2" nbButton (click)="requestElasticsearchData()" size="giant" style="text-transform: none" status="basic" shape="round" type="button" [disabled]="!formElasticsearch.valid"
+
+             <div class="row justify-content-center">
+             <button  class="mt-2" nbButton (click)="checkElasticsearchConnection()" size="giant" style="text-transform: none" status="basic" shape="round" type="button" [disabled]="!formElasticsearch.valid"
+             >Test connection
+          </button>
+               </div>
+
+             <div *ngIf="isElasticConnection" class="mt-2">Elasticsearch host and index exist and the connection can be setup successfully.</div>
+
+             <div class="row justify-content-center">
+             <button *ngIf="isElasticConnection" class="mt-2" nbButton (click)="requestElasticsearchData()" size="giant" style="text-transform: none" status="basic" shape="round" type="button" [disabled]="!formElasticsearch.valid"
              >Setup connection
           </button>
+               </div>
             </form>
             </div>
           <div *ngIf="isSpinning" class="spinner-border text-primary" style="position: relative" role="status">

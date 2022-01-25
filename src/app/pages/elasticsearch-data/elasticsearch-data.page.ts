@@ -28,7 +28,7 @@ export class ElasticsearchDataPage implements OnInit {
   applications: Application[] = [];
   logFileTypes: LogFileType[] = [];
   applicationName: String;
-  isElasticConnection = true;
+  isElasticConnection = false;
   public show: boolean = false;
   public uploadFile: boolean = true;
   public showHideAppBtn: any = 'Show';
@@ -177,9 +177,9 @@ export class ElasticsearchDataPage implements OnInit {
     this.http.post(`/api/logs/test_elasticsearch`, this.formElasticsearch.value)
       .subscribe(resp => {
         this.isElasticConnection = true
-        this.notificationService.success("Success", resp)
+        this.notificationService.success("Success", resp['detail'])
       }, error => {
-        this.notificationService.error("Error", error)
+        this.notificationService.error("Error", error['detail'])
       });
   }
 

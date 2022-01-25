@@ -282,22 +282,22 @@ export class LogComparePage{
     this.authService.getLoggedUser().pipe(
       switchMap(user => this.integrationService.loadApplications(user.key))
     ).subscribe(resp => {
+      this.applications = resp
       let preloadedApp = this.applications[0];
-      this.applications = []
+      // this.applications = []
       for (let i=0; i < resp.length; i++){
         this.logCompareService.loadApplicationVersions(resp[i].id).subscribe(versions => {
         if (versions.length > 0){
-          this.applications.push(resp[i])
+          // this.applications.push(resp[i])
           preloadedApp = resp[i]
           this.applicationId = preloadedApp.id;
-          this.applicationSelected(this.applicationId);
-          this.loadApplicationVersions(this.applicationId)
         }
         // this.notificationService.success("Versions loaded")
       }, error => {
         this.notificationService.error("Bad request, contact support!")
       })
     }
+      setTimeout(_ => {this.applicationSelected(this.applicationId);}, 50);
     })
     this.messagingService.getVariableAnalysisTemplate()
       .pipe(takeUntil(this.destroy$), map(it => it['item']))
@@ -561,21 +561,19 @@ export class LogComparePage{
 
 
   private loadApplicationVersions(applicationId: number) {
-    let tags = []
+
     this.logCompareService.loadApplicationVersions(applicationId).subscribe(resp => {
       this.tags = resp
       for(let i=0; i< this.tags.length; i++){
-        this.tags[i] = this.tags[i].slice(this.tags[i].length - 8,this.tags[i].length)
+        this.tags[i] = this.tags[i].slice(this.tags[i].length - 8,this.tags[i].length) + "_" + this.tags[i]
       }
-        this.tags = resp
         if (resp.length > 1){
-          this.baselineTagId = resp[resp.length-1]
-          this.compareTagId = resp[resp.length-2]
+          this.baselineTagId = this.tags[0].split('_')[1]
+          this.compareTagId = this.tags[1].split('_')[1]
         }else {
-          this.baselineTagId = resp[resp.length-1]
-          this.compareTagId = resp[resp.length-1]
+          this.baselineTagId = this.tags[0].split('_')[1]
+          this.compareTagId = this.tags[0].split('_')[1]
         }
-        console.log(this.baselineTagId, this.compareTagId)
       },
       error => {
         this.notificationService.error("Bad request, contact support!")

@@ -86,8 +86,8 @@
           <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
                      class="period-select"
                      placeholder="Baseline">
-            <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
-              {{ tag }}
+            <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag.split('_')[1]">
+              {{ tag.split("_")[0] }}
             </nb-option>
           </nb-select>
                       </div>
@@ -98,8 +98,8 @@
           <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
                      class="period-select"
                      placeholder="Candidate">
-            <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
-              {{ tag }}
+            <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag.split('_')[1]">
+              {{ tag.split("_")[0] }}
             </nb-option>
           </nb-select>
                       </div>

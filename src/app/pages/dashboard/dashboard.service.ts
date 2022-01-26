@@ -2,19 +2,17 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../../@core/service/api.service';
 import { Observable } from 'rxjs/Observable';
 import { PredefinedTime } from '../../@core/common/predefined-time';
+import {ChartConfig} from "../../@core/common/chart-config";
+import {ChartRequest} from "../../@core/common/chart-request";
 
 @Injectable()
 export class DashboardService {
   constructor(private apiService: ApiService) {
   }
 
-  loadHeatmapData(startTime: string, endTime: string, applicationId: number | null) {
-    let applicationParam = '';
-    if (applicationId) {
-      applicationParam = `&applicationId=${applicationId}`
-    }
-    return this.apiService.get(
-      `/api/charts/system_overview_heatmap?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
+  loadHeatmapData(chartRequest: ChartRequest) {
+    return this.apiService.post(
+      `/api/v1/charts/heatmap`, chartRequest);
   }
 
   loadBarData(startTime: string, endTime: string, applicationId: number) {

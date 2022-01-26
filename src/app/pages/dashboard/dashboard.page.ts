@@ -20,6 +20,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {element} from "protractor";
 import {dataService} from "../charts-wrapper-module/pie-chart/data.service";
 import {query} from "@angular/animations";
+import {ChartRequest} from "../../@core/common/chart-request";
+import {ChartConfig} from "../../@core/common/chart-config";
+import {DataSourceConfig} from "../../@core/common/data-source-config";
 //import {dataService} from "../charts-wrapper-module/pie-chart/data.service";
 
 @Component({
@@ -121,6 +124,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       this.user = user
     })
     this.heatmapData$.subscribe(data => {
+      data = data.data
       if (data && data.data.length > 0){
         const el = document.getElementById('nb-global-spinner');
         if (el) {
@@ -308,7 +312,13 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   loadHeatmapData(startTime: string, endTime: string, applicationId: number) {
-    return this.dashboardService.loadHeatmapData(startTime, endTime, applicationId)
+    let type = 'heatmap'
+    let library = 'ngx'
+    let feature = 'system_overview'
+    let dbType = 'elasticsearch'
+    let index = 'bf2sop0vdr7ntnbxtpuyfen3s3g_hdfs_node_log_ad'
+    let chartRequest = new ChartRequest(new ChartConfig(type, library, startTime, endTime, feature), new DataSourceConfig(dbType, index), 5)
+    return this.dashboardService.loadHeatmapData(chartRequest)
   }
 
   loadBarData(startTime: string, endTime: string, applicationId: number) {

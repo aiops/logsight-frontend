@@ -14,34 +14,27 @@ export class LoginService {
   }
 
   register(registerForm: UserRegisterForm): any {
-    return this.apiService.post('/api/auth/register', registerForm);
+    return this.apiService.post('/api/v1/user/register', registerForm);
   }
 
   login(loginForm: UserLoginForm): any {
-    return this.apiService.post('/api/auth/login', loginForm);
+    return this.apiService.post('/api/v1/user/login', loginForm);
   }
 
   changePassword(changePasswordForm: ChangePasswordForm): any {
-    return this.apiService.post('/api/auth/change_password', changePasswordForm);
+    return this.apiService.post('/api/v1/user/change_password', changePasswordForm);
   }
 
   resetPassword(email: string): any {
-    return this.apiService.post('/api/auth/reset_password', {"email": email});
+    return this.apiService.post('/api/v1/user/reset_password', {"email": email});
   }
 
-  loginId(loginForm: UserLoginFormId): any {
-    return this.apiService.post('/api/auth/login_id', loginForm);
-  }
-
-  requestLoginLink(email: string): any {
-    return this.apiService.post('/api/auth/login/login-link', email);
-  }
 
   activate(activateForm: UserActivateForm ): any {
-    return this.apiService.post('/api/auth/activate', activateForm)
+    return this.apiService.post('/api/v1/user/activate', activateForm)
   }
 
   getUser(): Observable<LogsightUser> {
-    return this.apiService.get(`/api/users`);
+    return this.apiService.get(`/api/v1/user`);
   }
 }

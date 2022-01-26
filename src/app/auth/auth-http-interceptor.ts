@@ -9,6 +9,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs-compat/add/observable/fromPromise';
 import { of, throwError } from 'rxjs';
+import {User} from "../@core/common/auth/user";
 
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
@@ -32,7 +33,11 @@ export class AuthHttpInterceptor implements HttpInterceptor {
   handleResponse(resp: HttpEvent<any>) {
     if (resp instanceof HttpResponse) {
       if (resp?.body?.token) {
+        let user: User
+        user = resp.body.user
+
         localStorage['token'] = resp.body.token
+        localStorage['user'] = user
       }
     }
   }

@@ -22,6 +22,7 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import { SortDirective } from '../@core/directives/sort-directive';
 import { CreatePredefinedTimeModal } from '../@core/components/create-predefined-time-modal/create-predefined-time-modal.component';
 import { PredefinedTimesComponent } from '../@core/components/predefined-times/predefined-times.component';
+import {DashboardService} from "./dashboard/dashboard.service";
 
 @NgModule({
   imports: [
@@ -61,7 +62,7 @@ import { PredefinedTimesComponent } from '../@core/components/predefined-times/p
     SortDirective,
     PredefinedTimesComponent
   ],
-  providers: [IntegrationService, VariableAnalysisService, MessagingService, NbDialogService]
+  providers: [IntegrationService, VariableAnalysisService, MessagingService, NbDialogService, DashboardService]
 })
 export class PagesModule {
 }

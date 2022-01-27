@@ -20,7 +20,7 @@ export class ElasticCustomDatepickerComponent {
     relativeDateTime: string = 'now-720m';
     relativeTimeChecked = true;
     absoluteTimeChecked = false;
-
+    @Input() elastic = false;
     @Output() search: EventEmitter<any> = new EventEmitter<any>();
     @Output() savePredefinedTime: EventEmitter<PredefinedTime> = new EventEmitter<PredefinedTime>();
 

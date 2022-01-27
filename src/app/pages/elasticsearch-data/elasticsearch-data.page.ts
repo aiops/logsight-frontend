@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../auth/authentication.service';
 import {NotificationsService} from 'angular2-notifications';
@@ -9,8 +9,12 @@ import {loadStripe} from '@stripe/stripe-js/pure';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {LogFileType} from "../../@core/common/log-file-type";
-import {interval} from "rxjs";
+import {interval, Observable, Subject, Subscription} from "rxjs";
 import {TourService} from "ngx-ui-tour-md-menu";
+import {PredefinedTime} from "../../@core/common/predefined-time";
+import {TopKIncident} from "../../@core/common/top-k-Incident";
+import {NbPopoverDirective} from "@nebular/theme";
+import {DashboardService} from "../dashboard/dashboard.service";
 
 @Component({
   selector: 'elasticsearch-data',
@@ -38,6 +42,40 @@ export class ElasticsearchDataPage implements OnInit {
   public uploadBtn: any = 'Upload log file';
   public restBtn: any = 'REST API';
 
+
+  // sss
+
+  selectedTime = "";
+  colorSubscription: Subscription;
+  pieChartData = [];
+  stackedChartData = [];
+  barDatabarData = [];
+  barData = []
+  topKIncidents: TopKIncident[] = [];
+  private stopPolling = new Subject();
+  openDatePicker = false;
+  startDateTime = 'now-720m';
+  endDateTime = 'now'
+  heatmapHeight = '200px';
+  numberOfIncidents = 5;
+  heatmapHeightList = [];
+  unique = [];
+  colorPieData = {}
+  user: any;
+  clientTimezoneOffset = new Date().getTimezoneOffset()/60;//offset in hours
+  reload$: Subject<boolean> = new Subject();
+  @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+  private destroy$: Subject<void> = new Subject<void>();
+  predefinedTimes: PredefinedTime[] = [];
+
+  // sss
+
+
+
+
+
+
   progressValue: number;
   curSec: number;
 
@@ -48,6 +86,9 @@ export class ElasticsearchDataPage implements OnInit {
       elasticsearchUrl: new FormControl(''),
       elasticsearchIndex: new FormControl(''),
       elasticsearchPeriod: new FormControl('', Validators.min(1)),
+      elasticsearchTimestamp: new FormControl(''),
+      elasticsearchStartTime: new FormControl(''),
+      elasticsearchEndTime: new FormControl(''),
       elasticsearchUser: new FormControl(''),
       elasticsearchPassword: new FormControl('')
   });
@@ -63,7 +104,7 @@ export class ElasticsearchDataPage implements OnInit {
   code_rest = ''
   code_upload = ''
 
-  constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
+  constructor(private integrationService: IntegrationService, private authService: AuthenticationService, private dashboardService: DashboardService,
               private notificationService: NotificationsService, private http: HttpClient, private router: Router, private tourService: TourService) {
   }
 
@@ -174,6 +215,9 @@ export class ElasticsearchDataPage implements OnInit {
 
 
   checkElasticsearchConnection(){
+    this.formElasticsearch.get('elasticsearchStartTime').setValue(this.startDateTime)
+    this.formElasticsearch.get('elasticsearchEndTime').setValue(this.endDateTime)
+    console.log(this.formElasticsearch.value)
     this.http.post(`/api/logs/test_elasticsearch`, this.formElasticsearch.value)
       .subscribe(resp => {
         this.isElasticConnection = true
@@ -183,8 +227,9 @@ export class ElasticsearchDataPage implements OnInit {
       });
   }
 
-
   requestElasticsearchData(){
+    this.formElasticsearch.get('elasticsearchStartTime').setValue(this.startDateTime)
+    this.formElasticsearch.get('elasticsearchEndTime').setValue(this.endDateTime)
     this.http.post(`/api/logs/load_elasticsearch`, this.formElasticsearch.value)
       .subscribe(resp => {
         this.notificationService.success("Successfully connected to elasticsearch. Ingesting logs...")
@@ -193,6 +238,42 @@ export class ElasticsearchDataPage implements OnInit {
         this.notificationService.error("Error, please check your elasticsearch URL and Index and try again.")
       });
   }
+
+   onSavePredefinedTime(predefinedTime: PredefinedTime) {
+    this.dashboardService.createTimeRange(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+  }
+ loadPredefinedTimes() {
+    this.dashboardService.getAllTimeRanges().subscribe(resp => this.predefinedTimes = resp)
+  }
+
+
+  onDateTimeSearch(event) {
+    localStorage.setItem('selectedTime', JSON.stringify(event));
+    this.popover.hide();
+    this.openDatePicker = false;
+    let dateTimeType = 'absolute';
+    if (event.relativeTimeChecked) {
+      this.startDateTime = event.relativeDateTime
+      this.endDateTime = 'now'
+      dateTimeType = 'relative';
+    } else if (event.absoluteTimeChecked) {
+      this.startDateTime = event.absoluteDateTime.startDateTime
+      this.endDateTime = event.absoluteDateTime.endDateTime
+    }
+    localStorage.setItem("selectedTime", JSON.stringify({ startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType }))
+    this.router.navigate([],
+      { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
+    this.reload$.next();
+  }
+
+  openPopover() {
+    this.popover.show();
+    this.openDatePicker = !this.openDatePicker
+    if (!this.openDatePicker) {
+      this.popover.hide();
+    }
+  }
+
 
 
   onLoadDemoApplications() {

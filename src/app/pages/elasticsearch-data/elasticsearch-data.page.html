@@ -34,9 +34,14 @@
              Time filter field name <input fullWidth nbInput class="mr-2" type="text" formControlName="elasticsearchTimestamp" id="elasticsearchTimestamp"
                          placeholder="e.g., @timestamp, es_time, etc." [required]="true"
                          >
-               Choose time period<button title="Select date range" fullWidth [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
+               <button class="mt-2" title="Select date range" fullWidth [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
           (click)="openPopover()"
-          nbPopoverTrigger="noop" style="background-color: #dadada;text-transform: none" shape="round">Click to select time interval</button>
+          nbPopoverTrigger="noop" style="background-color: #dadada;text-transform: none" shape="round">Choose time to import historic data</button>
+             <div class="pt-1 row">
+             <div *ngIf="endDateTime == 'now'" class="col-sm my-auto"><nb-icon icon="clock-outline"></nb-icon> <b> from {{startDateTime.split('-')[1]}} ago until now </b></div>
+  <div *ngIf="endDateTime != 'now'" class="col-sm-3 my-auto text-right"><nb-icon icon="clock-outline"></nb-icon></div>
+               <div *ngIf="endDateTime != 'now'" class="col-sm-9 text-left"> <b> from {{startDateTime|date:'yyyy-MM-dd HH:mm:ss'}}  <br> until {{endDateTime|date:'yyyy-MM-dd HH:mm:ss'}}</b></div>
+  </div>
              <div class="pt-2"></div>
              Elasticsearch user <input fullWidth nbInput class="mr-2" type="text" formControlName="elasticsearchUser" id="elasticsearchUser"
                          placeholder="Elasticsearch auth user" [required]="true"

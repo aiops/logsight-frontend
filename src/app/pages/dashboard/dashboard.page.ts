@@ -47,7 +47,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   stackedAreaChartData$: Observable<any>;
   topKIncidents$: Observable<any>;
   barData$: Observable<any>;
-  startDateTime = 'now-720m';
+  startDateTime = 'now-525600m';
   endDateTime = 'now'
   heatmapHeight = '200px';
   numberOfIncidents = 5;
@@ -283,7 +283,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         }
         this.reload$.next()
       } else {
-        this.startDateTime = 'now-720m'
+        this.startDateTime = 'now-525600m'
         this.endDateTime = 'now'
         this.reload$.next()
       }

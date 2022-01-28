@@ -5,8 +5,8 @@
 </div>
 
 <div class="row" style="padding-left: 5%;padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
-  <div *ngIf="endDateTime == 'now'" class="col-sm my-auto"><nb-icon icon="clock-outline"></nb-icon> <b>{{startDateTime.split('-')[1]}} ago </b></div>
-  <div *ngIf="endDateTime != 'now'" class="col-sm my-auto"><nb-icon icon="clock-outline"></nb-icon> <b>{{startDateTime.concat('Z')|date:'yyyy-MM-dd HH:mm:ss'}} to {{endDateTime.concat('Z')|date:'yyyy-MM-dd HH:mm:ss'}}</b></div>
+  <div *ngIf="endDateTime == 'now'" class="col-sm my-auto"><nb-icon icon="clock-outline"></nb-icon> <b>From {{startDateTime.split('-')[1]}} ago until now</b></div>
+  <div *ngIf="endDateTime != 'now'" class="col-sm my-auto"><nb-icon icon="clock-outline"></nb-icon> <b>From {{startDateTime.concat('Z')|date:'yyyy-MM-dd HH:mm:ss'}} until {{endDateTime.concat('Z')|date:'yyyy-MM-dd HH:mm:ss'}}</b></div>
   <div class="col-sm text-right"></div>
   <predefined-times [predefinedTimes]="predefinedTimes" (deletePredefinedTime)="onDeletePredefinedTime($event)"
                     (selectPredefinedTime)="onSelectPredefinedTime($event)">

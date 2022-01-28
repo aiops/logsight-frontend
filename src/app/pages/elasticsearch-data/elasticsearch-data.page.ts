@@ -248,7 +248,7 @@ export class ElasticsearchDataPage implements OnInit {
 
 
   onDateTimeSearch(event) {
-    localStorage.setItem('selectedTime', JSON.stringify(event));
+    // localStorage.setItem('selectedTime', JSON.stringify(event));
     this.popover.hide();
     this.openDatePicker = false;
     let dateTimeType = 'absolute';
@@ -260,7 +260,7 @@ export class ElasticsearchDataPage implements OnInit {
       this.startDateTime = event.absoluteDateTime.startDateTime
       this.endDateTime = event.absoluteDateTime.endDateTime
     }
-    localStorage.setItem("selectedTime", JSON.stringify({ startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType }))
+    // localStorage.setItem("selectedTime", JSON.stringify({ startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType }))
     this.router.navigate([],
       { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
     this.reload$.next();

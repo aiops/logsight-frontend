@@ -45,7 +45,7 @@
                       Choose application
                     </div>
                     <div class="col-2">
-                    <nb-select (selectedChange)="applicationSelected($event)" fullWidth [(selected)]="this.applicationId"
+                    <nb-select (click)="loadapplications()" (selectedChange)="applicationSelected($event)" fullWidth [(selected)]="this.applicationId"
                      class="period-select"
                      placeholder="Select application">
                         <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.id">
@@ -57,14 +57,14 @@
                       <div class="row pt-4">
                         <div class="col">
                         <b style="font-weight: 600">Description: </b>This is a service description pulled form your software versioning system. For example, Github, Gitlab, etc.
-                        <a href="https://github.com/apache/hadoop">(more)</a>
+                        <a href="https://logsight.ai">(more)</a>
                         <div class="badge badge-pill badge-primary mb-1" style="height: 18px">Repo: Github</div>
                           </div>
                     </div>
 
                       <div class="row pt-4 justify-content-center">
 
-                         <button (click)="computeLogCompare()" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" size="giant" style="padding-left: 10%; padding-right: 10%; text-transform: none; margin-left: 10px">Verify
+                         <button (click)="computeLogCompare()" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" size="large" style="padding-left: 10%; padding-right: 10%; text-transform: none; margin-left: 10px">Verify
                         </button>
 
                       </div>
@@ -114,19 +114,20 @@
 <!--                  </div>-->
 
                   <div class="row pt-2 pl-4">
-
-                    <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
-                        <nb-radio value=10>10m</nb-radio>
-                    </nb-radio-group>
-                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
-                        <nb-radio value=15>15m</nb-radio>
-                    </nb-radio-group>
-                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
-                        <nb-radio value=30>30m</nb-radio>
-                    </nb-radio-group>
-                    <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
-                        <nb-radio value=525960 checked>All data</nb-radio>
-                    </nb-radio-group>
+<div class="row pt-4"></div>
+                    <div class="row pt-2"></div>
+<!--                    <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
+<!--                        <nb-radio value=10>10m</nb-radio>-->
+<!--                    </nb-radio-group>-->
+<!--                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
+<!--                        <nb-radio value=15>15m</nb-radio>-->
+<!--                    </nb-radio-group>-->
+<!--                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
+<!--                        <nb-radio value=30>30m</nb-radio>-->
+<!--                    </nb-radio-group>-->
+<!--                    <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
+<!--                        <nb-radio value=525960 checked>All data</nb-radio>-->
+<!--                    </nb-radio-group>-->
 
                  </div>
                 </div>
@@ -452,7 +453,7 @@
 
             <td >
 <!--                {% if row.template_code %}-->
-                 <a href="{{ row.template_code }}">
+                 <a href="https://logsight.ai">
                      <i class="fa fa-link secondary font-medium-1"></i>
                  </a>
 <!--                {% else %}-->

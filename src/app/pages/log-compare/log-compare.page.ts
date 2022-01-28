@@ -283,20 +283,20 @@ export class LogComparePage{
       switchMap(user => this.integrationService.loadApplications(user.key))
     ).subscribe(resp => {
       this.applications = resp
-      let preloadedApp = this.applications[0];
-      // this.applications = []
-      for (let i=0; i < resp.length; i++){
-        this.logCompareService.loadApplicationVersions(resp[i].id).subscribe(versions => {
-        if (versions.length > 0){
-          // this.applications.push(resp[i])
-          preloadedApp = resp[i]
-          this.applicationId = preloadedApp.id;
-        }
-        // this.notificationService.success("Versions loaded")
-      }, error => {
-        this.notificationService.error("Bad request, contact support!")
-      })
-    }
+    //   let preloadedApp = this.applications[0];
+    //   // this.applications = []
+    //   for (let i=0; i < resp.length; i++){
+    //     this.logCompareService.loadApplicationVersions(resp[i].id).subscribe(versions => {
+    //     if (versions.length > 0){
+    //       // this.applications.push(resp[i])
+    //       preloadedApp = resp[i]
+    //       this.applicationId = preloadedApp.id;
+    //     }
+    //     // this.notificationService.success("Versions loaded")
+    //   }, error => {
+    //     this.notificationService.error("Bad request, contact support!")
+    //   })
+    // }
       setTimeout(_ => {this.applicationSelected(this.applicationId);}, 50);
     })
     this.messagingService.getVariableAnalysisTemplate()
@@ -339,6 +339,16 @@ export class LogComparePage{
     })
   }
 
+
+  loadapplications(){
+    this.authService.getLoggedUser().pipe(
+      switchMap(user => this.integrationService.loadApplications(user.key))
+    ).subscribe(resp => {
+      this.applications = resp
+      console.log(this.applications)
+      // setTimeout(_ => {this.applicationSelected(this.applicationId);}, 50);
+    })
+  }
   loadBarData(startDateTime, endDateTime, applicationId, baselineTagId, compareTagId, newTemplates) {
     return this.logCompareService.getCognitiveBarData(applicationId, startDateTime, endDateTime, baselineTagId, compareTagId, newTemplates);
   }

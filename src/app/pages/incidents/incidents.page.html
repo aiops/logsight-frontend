@@ -45,7 +45,7 @@
   <div *ngIf="tableData  && tableData.semanticCountAds.length > 0" tourAnchor="anchorCriticalAnomalies">
     <h6 style="font-weight: 600">Critical anomalies
       <nb-icon icon="info-outline"
-               nbTooltip="Critical anomalies are most severe. It means that they are deviating from the normal service execution flow (or are new log messages) and in the same time are recognized as cognitive anomalies by our deep network."
+               nbTooltip="Critical anomalies are most severe. It means that they are deviating from the normal service execution flow (or are new log messages) and in the same time are recognized as anomalies by our deep network."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
     </h6>
     <nb-card >
@@ -172,9 +172,9 @@
     </nb-card>
   </div>
   <div *ngIf="tableData  && tableData.semanticAd.length > 0" tourAnchor="anchorCogAnomalies">
-    <h6 style="font-weight: 600">Cognitive anomalies
+    <h6 style="font-weight: 600">Faults
       <nb-icon icon="info-outline"
-               nbTooltip="Cognitive anomalies are log messages that have negative semantic meaning in software systems. The AI system in the background knows how to distinguish normal and anomaly log messages based on learning from millions log messages."
+               nbTooltip="Faults are log messages that have negative semantic meaning in software systems. The AI system in the background knows how to distinguish normal and anomaly log messages based on learning from millions log messages."
                nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
     </h6>
     <nb-card>
@@ -184,7 +184,7 @@
           <div class="scrollable">
               <ng-scrollbar>
                               <table *ngIf="tableData.semanticAd.length == 0" style="text-align: center; justify-content: center; align-items: center; margin-top:50px">
-                <p>No cognitive anomalies found.</p>
+                <p>No faults found.</p>
                 <i class="fas fa-check-circle fa-10x"></i>
               </table>
 
@@ -238,7 +238,7 @@
           <div class="scrollable">
               <ng-scrollbar>
                               <table *ngIf="tableData.logData.length == 0" style="text-align: center; justify-content: center; align-items: center; margin-top:50px">
-                <p>No cognitive anomalies found.</p>
+                <p>No faults found.</p>
                 <i class="fas fa-check-circle fa-10x"></i>
               </table>
 
@@ -296,7 +296,7 @@
           <div class="scrollable">
               <ng-scrollbar>
                               <table *ngIf="tableData.logData.length == 0" style="text-align: center; justify-content: center; align-items: center; margin-top:50px">
-                <p>No cognitive anomalies found.</p>
+                <p>No faults found.</p>
                 <i class="fas fa-check-circle fa-10x"></i>
               </table>
 

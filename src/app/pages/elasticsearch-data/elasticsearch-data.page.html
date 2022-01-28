@@ -31,6 +31,11 @@
              Polling period <input fullWidth nbInput class="mr-2" type="text" formControlName="elasticsearchPeriod" id="elasticsearchPeriod"
                          placeholder="e.g., 30 (in seconds)" [required]="true"
                          >
+             <ng-container *ngIf="formElasticsearch.controls['elasticsearchPeriod'].invalid && formElasticsearch.touched">
+                    <p class="error-message"  *ngIf="formElasticsearch.controls['elasticsearchPeriod'].errors?.min">
+                      Polling period must be greater than or equal to 1
+                    </p>
+                  </ng-container>
              Time filter field name <input fullWidth nbInput class="mr-2" type="text" formControlName="elasticsearchTimestamp" id="elasticsearchTimestamp"
                          placeholder="e.g., @timestamp, es_time, etc." [required]="true"
                          >

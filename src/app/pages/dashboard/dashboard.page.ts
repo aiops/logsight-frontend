@@ -1,29 +1,25 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NbDialogService, NbPopoverDirective, NbThemeService } from '@nebular/theme';
-import { DashboardService } from './dashboard.service';
-import { TopKIncident } from '../../@core/common/top-k-Incident';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SpecificTemplateModalComponent } from '../../@core/components/specific-template-modal/specific-template-modal.component';
-import { VariableAnalysisService } from '../../@core/service/variable-analysis.service';
-import { MessagingService } from '../../@core/service/messaging.service';
-import { NotificationsService } from 'angular2-notifications';
-import { AuthenticationService } from '../../auth/authentication.service';
-import { debounceTime, map, retry, share, skip, switchMap, takeUntil, timeout } from 'rxjs/operators';
-import { Application } from '../../@core/common/application';
-import { IntegrationService } from '../../@core/service/integration.service';
-import {Observable, Subject, timer, combineLatest, Subscription} from 'rxjs';
-import { Moment } from 'moment';
-import * as moment from 'moment'
-import { TourService } from 'ngx-ui-tour-md-menu';
-import { PredefinedTime } from '../../@core/common/predefined-time';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {element} from "protractor";
-import {dataService} from "../charts-wrapper-module/pie-chart/data.service";
-import {query} from "@angular/animations";
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {NbDialogService, NbPopoverDirective} from '@nebular/theme';
+import {DashboardService} from './dashboard.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {VariableAnalysisService} from '../../@core/service/variable-analysis.service';
+import {MessagingService} from '../../@core/service/messaging.service';
+import {NotificationsService} from 'angular2-notifications';
+import {AuthenticationService} from '../../auth/authentication.service';
+import {share, switchMap, takeUntil} from 'rxjs/operators';
+import {Application} from '../../@core/common/application';
+import {IntegrationService} from '../../@core/service/integration.service';
+import {combineLatest, Observable, Subject, timer} from 'rxjs';
+import * as moment from 'moment';
+import {Moment} from 'moment';
+import {TourService} from 'ngx-ui-tour-md-menu';
+import {PredefinedTime} from '../../@core/common/predefined-time';
+import {FormControl, FormGroup} from '@angular/forms';
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ChartConfig} from "../../@core/common/chart-config";
-import {DataSourceConfig} from "../../@core/common/data-source-config";
-//import {dataService} from "../charts-wrapper-module/pie-chart/data.service";
+import {IncidentTableData} from "../../@core/common/incident-table-data";
+import {LogsightUser} from "../../@core/common/logsight-user";
+import {ApiService} from "../../@core/service/api.service";
 
 @Component({
   selector: 'dashboard',
@@ -32,38 +28,37 @@ import {DataSourceConfig} from "../../@core/common/data-source-config";
 })
 export class DashboardPage implements OnInit, OnDestroy {
   heatmapData = [];
-  pieData = [] ;
+  pieData = [];
   element_name = "";
   selectedTime = "";
-  colorSubscription: Subscription;
   pieChartData = [];
-  stackedChartData = [];
-  barDatabarData = [];
   applicationId = null;
   barData = []
-  topKIncidents: TopKIncident[] = [];
-  applications: Application[] = [];
-  private stopPolling = new Subject();
-  openDatePicker = false;
-  heatmapData$: Observable<any>;
-  pieChartData$: Observable<any>;
-  stackedAreaChartData$: Observable<any>;
-  topKIncidents$: Observable<any>;
-  barData$: Observable<any>;
   startDateTime = 'now-720m';
   endDateTime = 'now'
   heatmapHeight = '200px';
   numberOfIncidents = 5;
   heatmapHeightList = [];
+  predefinedTimes: PredefinedTime[] = [];
   unique = [];
   colorPieData = {}
-  user: any;
-  clientTimezoneOffset = new Date().getTimezoneOffset()/60;//offset in hours
+  user: LogsightUser;
+  topKIncidents: IncidentTableData[] = [];
+  applications: Application[] = [];
+  openDatePicker = false;
+  private stopPolling = new Subject();
+  heatmapData$: Observable<any>;
+  pieChartData$: Observable<any>;
+  topKIncidents$: Observable<any>;
+  barData$: Observable<any>;
+  clientTimezoneOffset = Intl.DateTimeFormat().resolvedOptions().timeZone
   reload$: Subject<boolean> = new Subject();
-  @ViewChild('dateTimePicker', { read: TemplateRef }) dateTimePicker: TemplateRef<any>;
+
+  @ViewChild('dateTimePicker', {read: TemplateRef}) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   private destroy$: Subject<void> = new Subject<void>();
-  predefinedTimes: PredefinedTime[] = [];
+
+
   numberOfIncidentsFormGroup = new FormGroup({
     numberOfIncidents: new FormControl(5),
   });
@@ -76,7 +71,7 @@ export class DashboardPage implements OnInit, OnDestroy {
               private authService: AuthenticationService,
               private integrationService: IntegrationService,
               private tourService: TourService,
-              private colorService: dataService) {
+              private apiService: ApiService) {
 
     this.heatmapData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
       switchMap(() => this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)),
@@ -90,8 +85,8 @@ export class DashboardPage implements OnInit, OnDestroy {
       takeUntil(this.stopPolling),
     );
 
-    this.stackedAreaChartData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadStackedAreaChartData(this.startDateTime, this.endDateTime)),
+    this.barData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
+      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId)),
       share(),
       takeUntil(this.stopPolling)
     );
@@ -101,164 +96,139 @@ export class DashboardPage implements OnInit, OnDestroy {
       share(),
       takeUntil(this.stopPolling)
     );
-
-    this.barData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId)),
-      share(),
-      takeUntil(this.stopPolling)
-    );
   }
 
   ngOnInit(): void {
-    console.log(this.clientTimezoneOffset)
     setTimeout(_ => this.reload$.next(), 5000); //hack to start first refresh
-    setTimeout(_ => this.cancelGlobalSpinner(), 20000)
-    this.authService.getLoggedUser().pipe(
-      switchMap(user => this.integrationService.loadApplications(user.key))
-    ).subscribe(resp => this.applications = resp)
-    // if (this.applications.length == 0){
-    //   this.router.navigate(['/pages','ingest_logs'])
-    // }
-
-   this.authService.getLoggedUser().subscribe(user => {
+    setTimeout(_ => this.cancelGlobalSpinner(), 15000)
+    this.integrationService.loadApplications().subscribe(resp => {
+      this.applications = resp.applications
+    })
+    this.authService.getLoggedUser().subscribe(user => {
       this.user = user
     })
+    this.loadPredefinedTimes()
+
     this.heatmapData$.subscribe(data => {
       data = data.data
-      if (data && data.data.length > 0){
+      if (data && data.data.length > 0) {
         const el = document.getElementById('nb-global-spinner');
         if (el) {
           el.style['display'] = 'none';
         }
-      for (let i = 0; i < data.data.length; i++) {
-        for (let j = 0; j < data.data[i].series.length; j++) {
-          data.data[i].series[j].extra = data.data[i].name
+        for (let i = 0; i < data.data.length; i++) {
+          for (let j = 0; j < data.data[i].series.length; j++) {
+            data.data[i].series[j].extra = data.data[i].name
+          }
+          var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
+          data.data[i].name = local.toString()
         }
-        var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
-        data.data[i].name = local.toString()
-      }
 
-      for (let i = 0; i < data.data.length; i++) {
-        for (let j = 0; j < data.data[i].series.length; j++) {
-          this.heatmapHeightList.push(data.data[i].series[j].name)
+        for (let i = 0; i < data.data.length; i++) {
+          for (let j = 0; j < data.data[i].series.length; j++) {
+            this.heatmapHeightList.push(data.data[i].series[j].name)
+          }
         }
-      }
-      this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
-      if (this.unique.length > 0) {
-        if (50 * (this.unique.length + 1) < 350) {
-          this.heatmapHeight = (50 * (this.unique.length + 1)).toString() + 'px'
+        this.unique = Array.from(new Set(this.heatmapHeightList.map(team => team)));
+        if (this.unique.length > 0) {
+          if (50 * (this.unique.length + 1) < 350) {
+            this.heatmapHeight = (50 * (this.unique.length + 1)).toString() + 'px'
+          } else {
+            this.heatmapHeight = '350px'
+          }
         } else {
-          this.heatmapHeight = '350px'
+          this.heatmapHeight = '150px'
         }
-      } else {
-        this.heatmapHeight = '150px'
+        this.heatmapData = data.data;
       }
-      this.heatmapData = data.data;
-    } }, error => {
+    }, error => {
       console.log(error)
     })
 
     this.pieChartData$.subscribe(data => {
-      if (data){
-      this.pieData = []
-      this.pieChartData = data.data;
-      this.pieChartData.forEach(element => {
-        this.element_name = element.name.toLowerCase()
-        if(this.element_name=="info" || this.element_name=="fine") {
-          this.pieData.push('#00ff00')
-        } else if(this.element_name=="warn" || this.element_name=="warning") {
-          this.pieData.push('#d9bc00')
-        } else if(this.element_name=="err" || this.element_name=="error" || this.element_name=="critical"){
-          this.pieData.push('#ff0000')
-        } else {
-          this.pieData.push('#8338ec')
-        }
-      })
-      this.colorPieData = {domain:this.pieData}
-    }
-      }, error => {
-      console.log(error)
-    })
-
-
-    this.stackedAreaChartData$.subscribe(data => {
-      if (data){
-
-      for (let i = 0; i < data.data.length; i++) {
-        for (let j = 0; j < data.data[i].series.length; j++) {
-          var date = moment.utc(data.data[i].series[j].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
-          data.data[i].series[j].name = local.toString()
-        }
+      data = data.data
+      if (data) {
+        this.pieData = []
+        this.pieChartData = data.data;
+        this.pieChartData.forEach(element => {
+          this.element_name = element.name.toLowerCase()
+          if (this.element_name == "info" || this.element_name == "fine") {
+            this.pieData.push('#00ff00')
+          } else if (this.element_name == "warn" || this.element_name == "warning") {
+            this.pieData.push('#d9bc00')
+          } else if (this.element_name == "err" || this.element_name == "error" || this.element_name == "critical") {
+            this.pieData.push('#ff0000')
+          } else {
+            this.pieData.push('#8338ec')
+          }
+        })
+        this.colorPieData = {domain: this.pieData}
       }
-      this.stackedChartData = data.data;
-    }      }, error => {
+    }, error => {
       console.log(error)
     })
 
     this.topKIncidents$.subscribe(data => {
-      if(data){
-
-
-      this.topKIncidents = data.map(it => {
-        const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
-        const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
-        const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
-        const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
-        return {
-          applicationId: it.applicationId,
-          appName: it.indexName,
-          timestamp: it.timestamp,
-          startTimestamp: it.startTimestamp,
-          stopTimestamp: it.stopTimestamp,
-          scAnomalies,
-          newTemplates,
-          semanticAD,
-          countAD
-        }
-      });
-    } }, error => {
+      data = data.data.data
+      if (data) {
+        this.topKIncidents = data.map(it => {
+          const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
+          const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
+          const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
+          const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
+          return {
+            applicationId: it.applicationId,
+            appName: it.indexName,
+            timestamp: it.timestamp,
+            startTimestamp: it.startTimestamp,
+            stopTimestamp: it.stopTimestamp,
+            scAnomalies,
+            newTemplates,
+            semanticAD,
+            countAD
+          }
+        });
+      }
+    }, error => {
       console.log(error)
     })
 
     this.barData$.subscribe(data => {
-      if (data){
+      data = data.data.data
+      if (data) {
+        for (let i = 0; i < data.length; i++) {
+          var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
+          data[i].name = local.toString()
+        }
 
-
-      for (let i = 0; i < data.length; i++) {
-        var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
-        var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-        var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
-        data[i].name = local.toString()
+        this.barData = data;
       }
-
-      this.barData = data;
-    } }, error => {
+    }, error => {
       console.log(error)
     })
 
 
-
-    this.messagingService.getVariableAnalysisTemplate()
-      .pipe(takeUntil(this.destroy$), map(it => it['item']))
-      .subscribe(selected => {
-        this.variableAnalysisService.loadSpecificTemplate(selected.applicationId, this.startDateTime,
-          this.endDateTime, selected)
-          .subscribe(
-            resp => {
-              this.dialogService.open(SpecificTemplateModalComponent, {
-                context: {
-                  data: resp.second,
-                  type: resp.first
-                }, dialogClass: 'model-full'
-              });
-            }, err => {
-              this.notificationService.error('Error', 'Error fetching data')
-            })
-      })
+    // this.messagingService.getVariableAnalysisTemplate()
+    //   .pipe(takeUntil(this.destroy$), map(it => it['item']))
+    //   .subscribe(selected => {
+    //     this.variableAnalysisService.loadSpecificTemplate(selected.applicationId, this.startDateTime,
+    //       this.endDateTime, selected)
+    //       .subscribe(
+    //         resp => {
+    //           this.dialogService.open(SpecificTemplateModalComponent, {
+    //             context: {
+    //               data: resp.second,
+    //               type: resp.first
+    //             }, dialogClass: 'model-full'
+    //           });
+    //         }, err => {
+    //           this.notificationService.error('Error', 'Error fetching data')
+    //         })
+    //   })
 
 
     this.route.queryParamMap.subscribe(queryParams => {
@@ -266,12 +236,12 @@ export class DashboardPage implements OnInit, OnDestroy {
       var startTime = ''
       var endTime = ''
       var dateTimeType = ''
-      if (this.selectedTime){
+      if (this.selectedTime) {
         queryParams = JSON.parse(this.selectedTime)
         startTime = queryParams['startTime'];
         endTime = queryParams['endTime'];
         dateTimeType = queryParams['dateTimeType'];
-      }else {
+      } else {
         startTime = queryParams.get('startTime');
         endTime = queryParams.get('endTime');
         dateTimeType = queryParams.get('dateTimeType');
@@ -293,57 +263,75 @@ export class DashboardPage implements OnInit, OnDestroy {
       }
     })
     this.reload$.next()
-    this.loadPredefinedTimes();
+
+  }
+
+  ngOnDestroy() {
+    this.stopPolling.next();
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   loadPredefinedTimes() {
-    this.dashboardService.getAllTimeRanges().subscribe(resp => this.predefinedTimes = resp)
+    this.dashboardService.getAllTimeRanges().subscribe(resp => {
+      this.predefinedTimes = resp.timeSelectionList
+    })
   }
 
-  cancelGlobalSpinner(){
+  cancelGlobalSpinner() {
     const el = document.getElementById('nb-global-spinner');
-        if (el) {
-          el.style['display'] = 'none';
-        }
+    if (el) {
+      el.style['display'] = 'none';
+    }
   }
 
   startTour() {
     this.tourService.start()
   }
 
-  loadHeatmapData(startTime: string, endTime: string, applicationId: number) {
+  loadHeatmapData(startTime: string, endTime: string, applicationId: string) {
     let type = 'heatmap'
-    let library = 'ngx'
     let feature = 'system_overview'
-    let dbType = 'elasticsearch'
-    let index = 'bf2sop0vdr7ntnbxtpuyfen3s3g_hdfs_node_log_ad'
-    let chartRequest = new ChartRequest(new ChartConfig(type, library, startTime, endTime, feature), new DataSourceConfig(dbType, index), 5)
+    let indexType = 'log_agg'
+    let timeZone = this.clientTimezoneOffset
+    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
     return this.dashboardService.loadHeatmapData(chartRequest)
   }
 
-  loadBarData(startTime: string, endTime: string, applicationId: number) {
-    return this.dashboardService.loadBarData(startTime, endTime, applicationId);
+  loadBarData(startTime: string, endTime: string, applicationId: string) {
+    let type = 'barchart'
+    let feature = 'system_overview'
+    let indexType = 'log_agg'
+    let timeZone = this.clientTimezoneOffset
+    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+    return this.dashboardService.loadBarData(chartRequest);
   }
 
-  loadPieChartData(startTime: string, endTime: string, applicationId: number) {
-    return this.dashboardService.loadPieChartData(startTime, endTime, applicationId);
+  loadPieChartData(startTime: string, endTime: string, applicationId: string) {
+    let type = 'piechart'
+    let feature = 'system_overview'
+    let indexType = 'log_agg'
+    let timeZone = this.clientTimezoneOffset
+    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+    return this.dashboardService.loadPieChartData(chartRequest);
   }
 
-  loadStackedAreaChartData(startTime: string, endTime: string) {
-    return this.dashboardService.loadStackedChartData(startTime, endTime);
-  }
-
-  loadTopKIncidents(startTime: string, endTime: string, numberOfIncidents: number, applicationId: number) {
-    return this.dashboardService.loadTopKIncidentsData(startTime, endTime, numberOfIncidents, applicationId);
+  loadTopKIncidents(startTime: string, endTime: string, numberOfIncidents: number, applicationId: string) {
+    let type = 'tablechart'
+    let feature = 'system_overview'
+    let indexType = 'incidents'
+    let timeZone = this.clientTimezoneOffset
+    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+    return this.dashboardService.loadTopKIncidentsData(chartRequest);
   }
 
   onHeatMapSelect(data: any) {
     try {
       var timeDiff = this.getTimeDiff()
-    }catch (e) {
+    } catch (e) {
     }
 
-    if (!timeDiff){
+    if (!timeDiff) {
       timeDiff = 1
     }
     const dateTime = data.extra
@@ -364,7 +352,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       let params = [];
       Object.keys(it2[0]).forEach(key => {
         if (key.startsWith('param_')) {
-          params.push({ key, value: it2[0][key] })
+          params.push({key, value: it2[0][key]})
         }
       });
       return {
@@ -378,19 +366,18 @@ export class DashboardPage implements OnInit, OnDestroy {
     });
   }
 
-  viewDetails(startTime: string, endTime: string, applicationId: number) {
-
+  viewDetails(startTime: string, endTime: string, applicationId: string) {
     this.navigateToIncidentsPage(startTime, endTime, applicationId)
   }
 
-  ngOnDestroy() {
-    this.stopPolling.next();
-    this.destroy$.next()
-    this.destroy$.complete()
-  }
-
-  private navigateToIncidentsPage(startTime: string, endTime: String, applicationId: number) {
-    this.router.navigate(['/pages', 'incidents'], { queryParams: { startTimeSpecific: startTime, endTimeSpecific: endTime, applicationId } })
+  navigateToIncidentsPage(startTime: string, endTime: String, applicationId: string) {
+    this.router.navigate(['/pages', 'incidents'], {
+      queryParams: {
+        startTimeSpecific: startTime,
+        endTimeSpecific: endTime,
+        applicationId
+      }
+    })
   }
 
   onDateTimeSearch(event) {
@@ -406,9 +393,13 @@ export class DashboardPage implements OnInit, OnDestroy {
       this.startDateTime = event.absoluteDateTime.startDateTime
       this.endDateTime = event.absoluteDateTime.endDateTime
     }
-    localStorage.setItem("selectedTime", JSON.stringify({ startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType }))
+    localStorage.setItem("selectedTime", JSON.stringify({
+      startTime: this.startDateTime,
+      endTime: this.endDateTime,
+      dateTimeType
+    }))
     this.router.navigate([],
-      { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
+      {queryParams: {startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType}})
     this.reload$.next();
   }
 
@@ -437,7 +428,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   onSelectPredefinedTime(pt: PredefinedTime) {
     if (pt.dateTimeType == 'RELATIVE') {
-      this.onDateTimeSearch({ relativeTimeChecked: true, relativeDateTime: pt.startTime })
+      this.onDateTimeSearch({relativeTimeChecked: true, relativeDateTime: pt.startTime})
     } else {
       this.onDateTimeSearch({
         absoluteTimeChecked: true, absoluteDateTime: {
@@ -453,11 +444,11 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.reload$.next()
   }
 
-  private getTimeDiff() {
+  getTimeDiff() {
     let timeList = []
     let indx = []
-    for(let i = 0; i < this.heatmapData.length; i++){
-      if (this.heatmapData[i].series.length){
+    for (let i = 0; i < this.heatmapData.length; i++) {
+      if (this.heatmapData[i].series.length) {
         indx.push(i)
         timeList.push(this.heatmapData[i].series[0].extra)
       }
@@ -474,24 +465,24 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   }
 
-  applicationSelected(appId: number) {
-    appId === 0 ? this.applicationId = null : this.applicationId = appId;
+  applicationSelected(appId: string) {
+    appId === null ? this.applicationId = null : this.applicationId = appId;
     this.reload$.next()
   }
 
-    removeApplication(id: number) {
+  removeApplication(id: string) {
     this.integrationService.deleteApplication(id).subscribe(
       resp => {
         this.notificationService.success('Success', 'Application successfully deleted')
         this.loadApplications()
         window.location.reload();
-      }, err => {
-        this.notificationService.error('Error', 'Application not deleted');
+      }, error => {
+        this.apiService.handleErrors(error)
       })
   }
 
   loadApplications() {
-    this.integrationService.loadApplications(this.user.key).subscribe(resp => this.applications = resp)
+    this.integrationService.loadApplications().subscribe(resp => this.applications = resp.applications)
   }
 
 }

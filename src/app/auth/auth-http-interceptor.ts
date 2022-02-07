@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
-  HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
   HttpResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs-compat/add/observable/fromPromise';
-import { of, throwError } from 'rxjs';
+import {of, throwError} from 'rxjs';
 import {User} from "../@core/common/auth/user";
 
 @Injectable()
@@ -24,7 +28,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
       return next.handle(req).do(this.handleResponse).catch(this.handleError);
     }
 
-    const update = { headers: req.headers.set('Authorization', 'Bearer ' + token) };
+    const update = {headers: req.headers.set('Authorization', 'Bearer ' + token)};
     req = req.clone(update);
     return next.handle(req).do(this.handleResponse).catch(this.handleError);
 

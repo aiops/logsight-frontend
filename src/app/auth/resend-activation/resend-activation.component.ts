@@ -6,20 +6,19 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from "../../@core/service/api.service";
 import {NbThemeService} from "@nebular/theme";
 
-
 @Component({
-  selector: 'login',
-  styleUrls: ['./login.component.scss'],
-  templateUrl: './login.component.html',
+  selector: 'resend-activation',
+  styleUrls: ['./resend-activation.component.scss'],
+  templateUrl: './resend-activation.component.html',
 })
-export class LoginComponent implements OnInit {
+export class ResendActivationComponent implements OnInit {
 
   form = new FormGroup({
     email: new FormControl('', Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')),
-    password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)]))
   });
-
-  notificationServiceTimeOut = 6000
+  isEmailSent: boolean = false;
+  emailNotFound: boolean = false;
+  isSpinning: boolean = false;
 
   constructor(
     private authService: LoginService,
@@ -32,6 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //hack code to stop spinner
     this.themeService.changeTheme("default");
     const el = document.getElementById('nb-global-spinner');
     if (el) {
@@ -39,24 +39,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
-  onLogin() {
-    localStorage.removeItem('token')
-    this.authService.login(this.form.value).subscribe(resp => {
-        this.route.queryParamMap.subscribe(
-          queryParams => {
-            let redirectUrl = "/pages/send-logs"
-            this.router.navigate([redirectUrl]).then(() => {
-            });
-          }
-        )
+  onResendActivation() {
+    this.isSpinning = true
+    this.authService.resendActivation(this.form.value).subscribe(resp => {
+        this.isEmailSent = true;
+        this.isSpinning = false;
+        this.notificationService.success('Success', 'New activation email was sent.')
       }, error => {
-        if (error.status == 409) {
-          this.apiService.handleErrors(error)
-          this.router.navigate(['auth', 'resend-activation'])
-        } else {
-          this.apiService.handleErrors(error)
-        }
+        this.emailNotFound = true;
+        this.isSpinning = false;
+        this.apiService.handleErrors(error)
       }
     )
   }

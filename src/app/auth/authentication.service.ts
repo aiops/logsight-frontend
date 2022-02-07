@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from '../@core/service/api.service';
-import { Observable, of, throwError } from 'rxjs';
-import { LogsightUser } from '../@core/common/logsight-user';
-import { catchError, map, share } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {ApiService} from '../@core/service/api.service';
+import {Observable, of, throwError} from 'rxjs';
+import {LogsightUser} from '../@core/common/logsight-user';
+import {catchError, map, share} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class AuthenticationService {
     const token = localStorage.getItem('token');
     if (token) {
       if (!this.userChecked) {
-        return this.apiService.get(`/api/v1/user`).pipe(
+        return this.apiService.get(`/api/v1/users/user`).pipe(
           map(user => {
             this.userChecked = true;
             this.loggedUser = user

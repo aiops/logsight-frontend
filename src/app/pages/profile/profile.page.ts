@@ -8,10 +8,8 @@ import {NotificationsService} from "angular2-notifications";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {environment} from "../../../environments/environment";
 import {Browser} from "leaflet";
-import win = Browser.win;
 import {LoginService} from "../../auth/login.service";
-import {ChangePasswordForm} from "../../@core/common/auth/changePasswordForm";
-import {error} from "protractor";
+import {ApiService} from "../../@core/service/api.service";
 
 @Component({
   selector: 'profile',
@@ -29,10 +27,9 @@ export class ProfilePage implements OnInit {
   paymentSuccessful: string = 'default'
   isMatching = true;
   formPassword = new FormGroup({
-      key: new FormControl(''),
       oldPassword: new FormControl('', Validators.minLength(8)),
-      password: new FormControl('', Validators.minLength(8)),
-      passwordRetry: new FormControl('', Validators.minLength(8))
+      newPassword: new FormControl('', Validators.minLength(8)),
+      repeatNewPassword: new FormControl('', Validators.minLength(8))
   });
 
   form = new FormGroup({
@@ -53,7 +50,7 @@ export class ProfilePage implements OnInit {
   stripePromise;
 
   constructor(private router: Router, private integrationService: IntegrationService, private authService: AuthenticationService,
-              private notificationService: NotificationsService, private route: ActivatedRoute, private loginService: LoginService) {
+              private notificationService: NotificationsService, private route: ActivatedRoute, private loginService: LoginService, private apiService: ApiService) {
 
   }
 
@@ -76,16 +73,16 @@ export class ProfilePage implements OnInit {
     this.stripePromise = loadStripe(
     this.pKey);
 
-    this.route.queryParams
-      .subscribe(params => {
-        if (params["payment"]=='successful'.concat(this.key)){
-          this.paymentSuccessful = 'true'
-          this.getUserData()
-        }else if (params["payment"]=='failed'.concat(this.key)){
-          this.paymentSuccessful = 'false'
-        }
-        }
-      );
+    // this.route.queryParams
+    //   .subscribe(params => {
+    //     if (params["payment"]=='successful'.concat(this.key)){
+    //       this.paymentSuccessful = 'true'
+    //       // this.getUserData()
+    //     }else if (params["payment"]=='failed'.concat(this.key)){
+    //       this.paymentSuccessful = 'false'
+    //     }
+    //     }
+    //   );
 
 
   }
@@ -97,11 +94,10 @@ export class ProfilePage implements OnInit {
         };
 
       this.authService.getLoggedUser().subscribe(user => {
-      this.key = user.key
       this.email = user.email
-      this.hasPaid = user.hasPaid
-      this.availableData = roundTo((user.availableData / 1000000), 1)
-      this.usedData = roundTo((user.usedData / 1000000), 1)
+      // this.hasPaid = user.hasPaid
+      // this.availableData = roundTo((user.availableData / 1000000), 1)
+      // this.usedData = roundTo((user.usedData / 1000000), 1)
     })
   }
 
@@ -120,9 +116,8 @@ export class ProfilePage implements OnInit {
   }
 
   changePassword(){
-    let newPassword = this.formPassword.value.password
-    let newPasswordRetry = this.formPassword.value.passwordRetry
-    this.formPassword.get("key").setValue(this.key)
+    let newPassword = this.formPassword.value.newPassword
+    let newPasswordRetry = this.formPassword.value.repeatNewPassword
     if (newPassword != newPasswordRetry){
       this.isMatching = false
     }else{
@@ -130,7 +125,7 @@ export class ProfilePage implements OnInit {
       this.loginService.changePassword(this.formPassword.value).subscribe(resp => {
         this.notificationService.success("Success", "The password was successfully updated.")
       }, error =>{
-        this.notificationService.error("Error", "Incorrect old password.")
+        this.apiService.handleErrors(error)
       })
     }
   }

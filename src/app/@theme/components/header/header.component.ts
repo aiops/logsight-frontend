@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly: boolean = false;
   menu = MENU_ITEMS;
   user: any;
-  key: string;
+  id: string;
   email: string;
   progressValue: number;
   curSec: number;
@@ -98,13 +98,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.themeService.changeTheme("default")
     this.curSec = 0;
     this.authService.getLoggedUser().subscribe(user => {
-      this.key = user.key
+      this.id = user.id
       this.email = user.email
     })
 
-
-    this.apiService.post("/api/auth/kibana/login",
-      '{"key":"'+ this.key + '"}').subscribe(data =>{
+    this.apiService.post("/api/v1/external/kibana/login", {}).subscribe(data =>{
     })
 
     this.currentTheme = this.themeService.currentTheme;

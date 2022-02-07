@@ -34,8 +34,10 @@ import { MatCardModule } from '@angular/material/card';
 import { TooltipModule } from '@swimlane/ngx-charts';
 import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
 import $ from 'jquery'
+import {ResendActivationComponent} from "./auth/resend-activation/resend-activation.component";
+import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, ActivateComponent, ForgotPasswordComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, ActivateComponent, ForgotPasswordComponent, ResendActivationComponent, ResetPasswordComponent],
   imports: [
     BrowserModule,
     FormsModule,

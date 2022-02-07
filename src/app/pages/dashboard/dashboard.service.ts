@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from '../../@core/service/api.service';
-import { Observable } from 'rxjs/Observable';
-import { PredefinedTime } from '../../@core/common/predefined-time';
-import {ChartConfig} from "../../@core/common/chart-config";
+import {Injectable} from '@angular/core';
+import {ApiService} from '../../@core/service/api.service';
+import {Observable} from 'rxjs/Observable';
+import {PredefinedTime} from '../../@core/common/predefined-time';
 import {ChartRequest} from "../../@core/common/chart-request";
+import {PredefinedTimeList} from "../../@core/common/predefined-time-list";
 
 @Injectable()
 export class DashboardService {
@@ -15,49 +15,27 @@ export class DashboardService {
       `/api/v1/charts/heatmap`, chartRequest);
   }
 
-  loadBarData(startTime: string, endTime: string, applicationId: number) {
-    let applicationParam = '';
-    if (applicationId) {
-      applicationParam = `&applicationId=${applicationId}`
-    }
-    return this.apiService.get(`/api/charts/dashboard_bar_anomalies?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
+  loadBarData(chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/charts/barchart`, chartRequest);
   }
 
-  loadPieChartData(startTime: string, endTime: string, applicationId: number) {
-    let applicationParam = '';
-    if (applicationId) {
-      applicationParam = `&applicationId=${applicationId}`
-    }
-
-    return this.apiService.get(`/api/charts/log_level_advanced_pie_chart?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
+  loadPieChartData(chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/charts/piechart`, chartRequest);
   }
 
-  loadStackedChartData(startTime: string, endTime: string) {
-    return this.apiService.get(`/api/charts/log_level_stacked_line_chart?startTime=${startTime}&endTime=${endTime}`);
+  loadTopKIncidentsData(chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/charts/tablechart`, chartRequest);
   }
 
-  loadTopKIncidentsData(startTime: string, endTime: string, numberOfIncidents: number, applicationId: number) {
-    let applicationParam = '';
-    if (applicationId) {
-      applicationParam = `&applicationId=${applicationId}`
-    }
-
-    return this.apiService.get(`/api/incidents/top_k_incidents?startTime=${startTime}&endTime=${endTime}&numberOfIncidents=${numberOfIncidents}${applicationParam}`);
-  }
-
-  getAllTimeRanges(): Observable<PredefinedTime[]> {
-    return this.apiService.get(`/api/user/time_ranges`);
+  getAllTimeRanges(): Observable<PredefinedTimeList> {
+    return this.apiService.get(`/api/v1/time_ranges`);
   }
 
   deleteTimeRange(predefinedTime: PredefinedTime) {
-    return this.apiService.post(`/api/user/time_ranges/range/delete`, predefinedTime);
+    return this.apiService.delete(`/api/v1/time_ranges/${predefinedTime.id}`);
   }
 
   createTimeRange(predefinedTime: PredefinedTime) {
-    return this.apiService.post(`/api/user/time_ranges/range`, predefinedTime);
-  }
-
-  createPredefinedTimeRange() {
-    return this.apiService.post(`/api/user/time_ranges/predefined`, null);
+    return this.apiService.post(`/api/v1/time_ranges`, predefinedTime);
   }
 }

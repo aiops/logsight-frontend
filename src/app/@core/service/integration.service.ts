@@ -3,26 +3,27 @@ import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Application } from '../common/application';
 import {LogFileType} from "../common/log-file-type";
+import {ApplicationList} from "../common/applicationList";
 
 @Injectable()
 export class IntegrationService {
   constructor(private apiService: ApiService) {
   }
 
-  createApplication(app: { name: string; key: string }): Observable<Application> {
-    return this.apiService.post('/api/applications/create', app)
+  createApplication(app: { name: string }): Observable<Application> {
+    return this.apiService.post('/api/v1/applications', app)
   }
 
   createDemoApplications(): Observable<String> {
     return this.apiService.post('/api/applications/create/demo_apps', null)
   }
 
-  loadApplications(key: string): Observable<Application[]> {
-    return this.apiService.get(`/api/applications/user/${key}`)
+  loadApplications(): Observable<ApplicationList> {
+    return this.apiService.get(`/api/v1/applications`)
   }
 
-  deleteApplication(id: number) {
-    return this.apiService.post(`/api/applications/${id}`, null)
+  deleteApplication(id: string) {
+    return this.apiService.delete(`/api/v1/applications/${id}`)
   }
 
   subscription(payment: any) {

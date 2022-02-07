@@ -1,14 +1,11 @@
-import {DataSourceConfig} from "./data-source-config";
 import {ChartConfig} from "./chart-config";
 
 export class ChartRequest {
   chartConfig: ChartConfig;
-  dataSource: DataSourceConfig;
-  applicationId: number;
+  applicationId: string;
 
-  constructor(chartConfig: ChartConfig, dataSource: DataSourceConfig, applicationId: number) {
+  constructor(chartConfig: ChartConfig, applicationId: string) {
     this.chartConfig = chartConfig;
-    this.dataSource = dataSource;
     this.applicationId = applicationId;
   }
 

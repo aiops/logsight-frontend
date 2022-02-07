@@ -3,10 +3,7 @@
     <div class="row gutters-sm">
       <div class="col-sm-4 text-left">
         <h6>User info</h6>
-        <p>Username:</p>
-        <p><b>{{email}}</b></p>
-        <p>Private key:</p>
-        <p><b>{{key}}</b></p>
+        <p>Username: <b>{{email}}</b></p>
         <br>
 
         <nb-accordion style="margin-right: 30%">
@@ -29,21 +26,21 @@
                   <br>
                   <br>
 
-                  <input nbInput class="mr-2" type="password" formControlName="password" id="formPassword"
+                  <input nbInput class="mr-2" type="password" formControlName="newPassword" id="formPassword"
                          placeholder="Enter the new password" [required]="true"
                          [attr.aria-invalid]="formPassword.invalid && formPassword.touched ? true : null">
-                  <ng-container *ngIf="formPassword.controls['password'].invalid && formPassword.touched">
-                    <p class="error-message"  *ngIf="formPassword.controls['password'].errors?.minlength">
+                  <ng-container *ngIf="formPassword.controls['newPassword'].invalid && formPassword.touched">
+                    <p class="error-message"  *ngIf="formPassword.controls['newPassword'].errors?.minlength">
                       Password length should be minimum of 8 characters.
                     </p>
                   </ng-container>
                   <br>
                   <br>
-                  <input nbInput class="mr-2" type="password" formControlName="passwordRetry" id="formRetryPassword"
+                  <input nbInput class="mr-2" type="password" formControlName="repeatNewPassword" id="formRepeatPassword"
                          placeholder="Repeat the new password" [required]="true"
                          [attr.aria-invalid]="formPassword.invalid && formPassword.touched ? true : null">
                   <ng-container *ngIf="formPassword.touched">
-                    <p class="error-message"  *ngIf="formPassword.controls['passwordRetry'].errors?.minlength">
+                    <p class="error-message"  *ngIf="formPassword.controls['repeatNewPassword'].errors?.minlength">
                       Password length should be minimum of 8 characters.
                     </p>
                     <p class="error-message"  *ngIf="!isMatching">

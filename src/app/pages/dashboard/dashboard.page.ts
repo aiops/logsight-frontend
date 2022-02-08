@@ -41,7 +41,9 @@ export class DashboardPage implements OnInit, OnDestroy {
   heatmapHeightList = [];
   predefinedTimes: PredefinedTime[] = [];
   unique = [];
-  colorPieData = {}
+  colorPieData = {
+    domain: ['#00ff00', '#ff0000', '#d9bc00', '#8338ec']
+  };
   user: LogsightUser;
   topKIncidents: IncidentTableData[] = [];
   applications: Application[] = [];
@@ -178,6 +180,7 @@ export class DashboardPage implements OnInit, OnDestroy {
           const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
           const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
           const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
+          const logs = this.parseTemplates(it, 'logs').sort((a, b) => b.timeStamp - a.timeStamp)
           return {
             applicationId: it.applicationId,
             appName: it.indexName,
@@ -187,12 +190,14 @@ export class DashboardPage implements OnInit, OnDestroy {
             scAnomalies,
             newTemplates,
             semanticAD,
-            countAD
+            countAD,
+            logs
           }
         });
       }
     }, error => {
-      console.log(error)
+      // console.log(error)
+      this.apiService.handleErrors(error)
     })
 
     this.barData$.subscribe(data => {
@@ -292,7 +297,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   loadHeatmapData(startTime: string, endTime: string, applicationId: string) {
     let type = 'heatmap'
     let feature = 'system_overview'
-    let indexType = 'log_agg'
+    let indexType = 'incidents'
     let timeZone = this.clientTimezoneOffset
     let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
     return this.dashboardService.loadHeatmapData(chartRequest)
@@ -335,9 +340,9 @@ export class DashboardPage implements OnInit, OnDestroy {
       timeDiff = 1
     }
     const dateTime = data.extra
-    const date = dateTime.split(' ')[0].split('-');
-    const time = dateTime.split(' ')[1].split(':');
-    const startDateTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+    const date = dateTime.split('T')[0].split('-');
+    const time = dateTime.split('T')[1].split(':');
+    const startDateTime: Moment = moment().year(+date[0]).month(+date[1] - 1).date(+date[2]).hour(+time[0]).minute(
       +time[1]);
 
     this.startDateTime = startDateTime.format('YYYY-MM-DDTHH:mm') + ":00"
@@ -372,10 +377,11 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   navigateToIncidentsPage(startTime: string, endTime: String, applicationId: string) {
     this.router.navigate(['/pages', 'incidents'], {
-      queryParams: {
+          queryParams: {
         startTimeSpecific: startTime,
         endTimeSpecific: endTime,
-        applicationId
+        applicationId: applicationId,
+        viewDetails: "true"
       }
     })
   }

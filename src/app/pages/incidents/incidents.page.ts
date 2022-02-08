@@ -3,7 +3,7 @@ import {
   OnInit, TemplateRef, ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {IncidentsService} from './incidents.service';
 import {options} from './chart-options';
 import {IncidentTableData} from '../../@core/common/incident-table-data';
@@ -26,6 +26,7 @@ import {IntegrationService} from '../../@core/service/integration.service';
 import {PredefinedTime} from '../../@core/common/predefined-time';
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ChartConfig} from "../../@core/common/chart-config";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'incidents',
@@ -35,7 +36,6 @@ import {ChartConfig} from "../../@core/common/chart-config";
 })
 export class IncidentsPage implements OnInit, OnDestroy {
   heatmapData = [];
-  tableData: IncidentTableData;
   hasError = false;
   barData = [];
   options = options.timelineChart()
@@ -49,7 +49,18 @@ export class IncidentsPage implements OnInit, OnDestroy {
   startDateTime = 'now-720m';
   endDateTime = 'now'
   heatmapHeight = '200px';
+  isViewDetails = "false";
+  numberOfIncidents = 10;
+
   predefinedTimes: PredefinedTime[] = [];
+  topKIncidents: IncidentTableData[] = [];
+  detailedIncident: IncidentTableData;
+
+
+   numberOfIncidentsFormGroup = new FormGroup({
+    numberOfIncidents: new FormControl(this.numberOfIncidents),
+  });
+
   private destroy$: Subject<void> = new Subject<void>();
   clientTimezoneOffset = Intl.DateTimeFormat().resolvedOptions().timeZone
   constructor(private route: ActivatedRoute,
@@ -60,7 +71,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
               private dialogService: NbDialogService,
               private dashboardService: DashboardService,
               private authService: AuthenticationService,
-              private integrationService: IntegrationService) {
+              private integrationService: IntegrationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -69,7 +81,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
       let selectedTime = JSON.parse(localStorage.getItem("selectedTime"))
       let startTime = queryParams.get('startTimeSpecific') ?? selectedTime['startTime'] ?? queryParams.get('startTime')
       let endTime = queryParams.get('endTimeSpecific') ?? selectedTime['endTime'] ?? queryParams.get('endTime')
-
+      this.isViewDetails = queryParams.get('viewDetails')
       if (startTime.toString().includes(":")) {
         startTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
         endTime = moment(endTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
@@ -150,17 +162,77 @@ export class IncidentsPage implements OnInit, OnDestroy {
     let indexType = 'incidents'
     let timeZone = this.clientTimezoneOffset
     let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
-    this.incidentsService.loadIncidentsTableData(chartRequest).subscribe(resp => {
-      resp = resp.data.data
-
-      resp['countAds'] = this.toLocalTime(resp['countAds'])
-      resp['newTemplates'] = this.toLocalTime(resp['newTemplates'])
-      resp['semanticCountAds'] = this.toLocalTime(resp['semanticCountAds'])
-      resp['semanticAd'] = this.toLocalTime(resp['semanticAd'])
-      resp['logData'] = this.toLocalTime(resp['logData'])
-      this.tableData = resp
+    this.incidentsService.loadIncidentsTableData(chartRequest).subscribe(data => {
+      data = data.data.data
+      if (data) {
+        this.topKIncidents = data.map(it => {
+          const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
+          const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
+          const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
+          const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
+          const logs = this.parseTemplates(it, 'logs').sort((a, b) => b.timeStamp - a.timeStamp)
+          return {
+            applicationId: it.applicationId,
+            appName: it.indexName,
+            timestamp: it.timestamp,
+            startTimestamp: it.startTimestamp,
+            stopTimestamp: it.stopTimestamp,
+            scAnomalies,
+            newTemplates,
+            semanticAD,
+            countAD,
+            logs
+          }
+        })
+        if (this.isViewDetails == "true"){
+          this.detailedIncident = this.topKIncidents[0]
+        }
+        ;
+      }
     })
   }
+
+  moment(startTimestamp: string | undefined) {
+    var date = moment.utc(startTimestamp, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD-MM-YYYY HH:mm');
+    var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+    var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
+    return local.toString()
+  }
+
+  viewDetails(startTime: string, endTime: string, applicationId: string) {
+    this.navigateToIncidentsPage(startTime, endTime, applicationId, "true")
+  }
+
+  navigateToIncidentsPage(startTime: string, endTime: String, applicationId: string, viewDetails:string = "false") {
+    this.router.navigate(['/pages', 'incidents'], {
+      queryParams: {
+        startTimeSpecific: startTime,
+        endTimeSpecific: endTime,
+        applicationId: applicationId,
+        viewDetails: viewDetails
+      }
+    })
+  }
+
+  parseTemplates(data, incident) {
+    return JSON.parse(data[incident]).map(it2 => {
+      let params = [];
+      Object.keys(it2[0]).forEach(key => {
+        if (key.startsWith('param_')) {
+          params.push({key, value: it2[0][key]})
+        }
+      });
+      return {
+        message: it2[0].message,
+        template: it2[0].template,
+        params: params,
+        actualLevel: it2[0].actual_level,
+        timeStamp: new Date(it2[0]['@timestamp']),
+        applicationId: data.applicationId //this should be checked
+      }
+    });
+  }
+
 
   onDateTimeSearch(event) {
     this.popover.hide();
@@ -186,6 +258,12 @@ export class IncidentsPage implements OnInit, OnDestroy {
     // this.router.navigate([],
     //   { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
   }
+
+  changeTopKIncidents() {
+    this.numberOfIncidents = this.numberOfIncidentsFormGroup.controls['numberOfIncidents'].value;
+    this.loadIncidentsTableData(this.startDateTime, this.endDateTime, this.applicationId)
+  }
+
 
   openPopover() {
     this.popover.show();

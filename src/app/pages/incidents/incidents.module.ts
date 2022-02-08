@@ -14,7 +14,7 @@ import {IncidentsService} from './incidents.service';
 import {NvD3Module} from 'ng2-nvd3';
 import {IncidentsPage} from './incidents.page';
 import {PagesModule} from '../pages.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChartsWrapperModule} from '../charts-wrapper-module/charts-wrapper.module';
 import {DashboardService} from "../dashboard/dashboard.service";
 import {BarChartModule} from "@swimlane/ngx-charts";
@@ -40,12 +40,13 @@ import {NgScrollbarModule} from "ngx-scrollbar";
     NbSelectModule,
     BarChartModule,
     TourMatMenuModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    ReactiveFormsModule
   ],
   declarations: [
     IncidentsPage,
   ],
-  providers: [IncidentsService, DashboardService]
+  providers: [IncidentsService, DashboardService, ReactiveFormsModule]
 })
 export class IncidentsModule {
 }

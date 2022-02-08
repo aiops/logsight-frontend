@@ -3,12 +3,12 @@ import {ThemeModule} from '../../@theme/theme.module';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {ChartModule} from 'angular2-chartjs';
 import {
-  NbButtonModule,
-  NbCardModule,
-  NbIconModule,
-  NbInputModule,
-  NbPopoverModule, NbSelectModule,
-  NbTooltipModule
+    NbButtonModule,
+    NbCardModule,
+    NbIconModule,
+    NbInputModule,
+    NbPopoverModule, NbSelectModule,
+    NbTooltipModule, NbTreeGridModule
 } from '@nebular/theme';
 import {DashboardPage} from './dashboard.page';
 import {DashboardRoutingModule} from './dashboard-routing.module';
@@ -21,26 +21,27 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {NgScrollbarModule} from "ngx-scrollbar";
 
 @NgModule({
-  imports: [
-    DashboardRoutingModule,
-    ThemeModule,
-    NgxChartsModule,
-    ChartModule,
-    NbCardModule,
-    Ng2SmartTableModule,
-    NgxDatatableModule,
-    ChartsWrapperModule,
-    PagesModule,
-    NbButtonModule,
-    NbIconModule,
-    NbPopoverModule,
-    TourMatMenuModule,
-    NbTooltipModule,
-    ReactiveFormsModule,
-    NbInputModule,
-    NgScrollbarModule,
-    NbSelectModule
-  ],
+    imports: [
+        DashboardRoutingModule,
+        ThemeModule,
+        NgxChartsModule,
+        ChartModule,
+        NbCardModule,
+        Ng2SmartTableModule,
+        NgxDatatableModule,
+        ChartsWrapperModule,
+        PagesModule,
+        NbButtonModule,
+        NbIconModule,
+        NbPopoverModule,
+        TourMatMenuModule,
+        NbTooltipModule,
+        ReactiveFormsModule,
+        NbInputModule,
+        NgScrollbarModule,
+        NbSelectModule,
+        NbTreeGridModule
+    ],
   declarations: [
     DashboardPage,
   ],

@@ -54,6 +54,7 @@ export class ActivateComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params.uuid && params.token) {
         const activateForm = {"id": params.uuid, "activationToken": params.token}
+        console.log(activateForm)
         this.authService.activate(activateForm).subscribe(user => {
           this.user = user
           this.activationSuccess = true;

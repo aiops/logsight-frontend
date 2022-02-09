@@ -1,5 +1,5 @@
 
 export interface Application {
-  id: string
+  applicationId: string
   name: string
 }

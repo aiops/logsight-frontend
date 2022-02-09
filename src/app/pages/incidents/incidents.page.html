@@ -4,7 +4,7 @@
                class="period-select col-md-2 pl-3"
                placeholder="Select application">
       <nb-option [value]="0">All</nb-option>
-      <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.id">
+      <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.applicationId">
         {{ app.name }}
       </nb-option>
     </nb-select>

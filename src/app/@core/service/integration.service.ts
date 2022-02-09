@@ -10,13 +10,13 @@ export class IntegrationService {
   constructor(private apiService: ApiService) {
   }
 
-  createApplication(app: { name: string }): Observable<Application> {
+  createApplication(app: { applicationName: string }): Observable<Application> {
     return this.apiService.post('/api/v1/applications', app)
   }
 
-  createDemoApplications(): Observable<String> {
-    return this.apiService.post('/api/applications/create/demo_apps', null)
-  }
+  // createDemoApplications(): Observable<String> {
+  //   return this.apiService.post('/api/v1/applications/', null)
+  // }
 
   loadApplications(): Observable<ApplicationList> {
     return this.apiService.get(`/api/v1/applications`)

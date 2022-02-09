@@ -37,9 +37,9 @@
         <nb-option [value]="null">
           <div class="col-9">All applications</div>
         </nb-option>
-        <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.id">
+        <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.applicationId">
           <div class="col-9">{{ app.name }}</div>
-          <div class="col-auto"><i (click)="removeApplication(app.id)" [title]='"Delete application"'
+          <div class="col-auto"><i (click)="removeApplication(app.applicationId)" [title]='"Delete application"'
                                    class="ml-3 fas  fa-trash pointer"></i></div>
         </nb-option>
 

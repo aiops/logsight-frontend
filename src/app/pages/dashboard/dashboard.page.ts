@@ -349,7 +349,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.endDateTime = startDateTime.add(timeDiff, 'minutes').format('YYYY-MM-DDTHH:mm') + ":00"
 
     this.navigateToIncidentsPage(this.startDateTime,
-      this.endDateTime, data.id)
+      this.endDateTime, data.applicationId)
   }
 
   parseTemplates(data, incident) {

@@ -77,14 +77,14 @@ export class ApiService {
     handleErrors(error: any){
       if(error.errors != null){
           this.notificationsService.error(error.error, error.errors[0].defaultMessage, {
-      timeOut: 10000,
+      timeOut: 15000,
       showProgressBar: true,
       pauseOnHover: true,
       clickToClose: true
     })
         }else{
           this.notificationsService.error(error.error, error.message, {
-      timeOut: 10000,
+      timeOut: 15000,
       showProgressBar: true,
       pauseOnHover: true,
       clickToClose: true

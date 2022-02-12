@@ -15,7 +15,7 @@ export class LoginService {
   }
 
   register(registerForm: UserRegisterForm): any {
-    return this.apiService.post('/api/v1/users/register', registerForm);
+    return this.apiService.post('/api/v1/users', registerForm);
   }
 
   login(loginForm: UserLoginForm): any {

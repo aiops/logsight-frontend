@@ -54,7 +54,7 @@ export class ElasticsearchDataPage implements OnInit {
   topKIncidents: TopKIncident[] = [];
   private stopPolling = new Subject();
   openDatePicker = false;
-  startDateTime = 'now-720m';
+  startDateTime = 'now-5m';
   endDateTime = 'now'
   heatmapHeight = '200px';
   numberOfIncidents = 5;

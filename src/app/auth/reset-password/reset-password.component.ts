@@ -51,7 +51,7 @@ export class ResetPasswordComponent implements OnInit {
         this.id = params.uuid
       }
     }, error => {
-      this.notificationService.error(error.error, error.message)
+      this.apiService.handleErrors(error)
     })
 
   }
@@ -66,7 +66,7 @@ export class ResetPasswordComponent implements OnInit {
     } else {
       this.isMatching = true
       this.loginService.resetPassword(this.formPassword.value).subscribe(resp => {
-        this.notificationService.success("Success", "The password was successfully updated.")
+        this.notificationService.success("Success", "The password was successfully updated.", this.apiService.getNotificationOpetions())
         this.router.navigate([''])
       }, error => {
         this.apiService.handleErrors(error)

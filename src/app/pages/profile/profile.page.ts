@@ -10,6 +10,8 @@ import {environment} from "../../../environments/environment";
 import {Browser} from "leaflet";
 import {LoginService} from "../../auth/login.service";
 import {ApiService} from "../../@core/service/api.service";
+import {Application} from "../../@core/common/application";
+import {LogsightUser} from "../../@core/common/logsight-user";
 
 @Component({
   selector: 'profile',
@@ -27,10 +29,12 @@ export class ProfilePage implements OnInit {
   paymentSuccessful: string = 'default'
   isMatching = true;
   formPassword = new FormGroup({
+      id: new FormControl(''),
       oldPassword: new FormControl('', Validators.minLength(8)),
       newPassword: new FormControl('', Validators.minLength(8)),
       repeatNewPassword: new FormControl('', Validators.minLength(8))
   });
+  id: string;
 
   form = new FormGroup({
   name: new FormControl('', Validators.required),
@@ -43,11 +47,20 @@ export class ProfilePage implements OnInit {
   cardColor: string = '#ffffff';
   units: string = 'GBs';
 
+  userId: string;
+
   pKey: string = "";
   cancelUrl: string = "";
   successUrl: string = "";
   priceId: string = "";
   stripePromise;
+
+  user: LogsightUser | null
+  applicationId: string;
+  isSpinning = false;
+  applications: Application[] = [];
+  applicationName: string;
+
 
   constructor(private router: Router, private integrationService: IntegrationService, private authService: AuthenticationService,
               private notificationService: NotificationsService, private route: ActivatedRoute, private loginService: LoginService, private apiService: ApiService) {
@@ -55,51 +68,39 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserData()
-    this.quantity = 1
-
-    if (window.location.href.toString().includes("demo")){
-      this.pKey = environment.stripePkeyDemo
-      this.cancelUrl = environment.stripeCancelUrlDemo
-      this.successUrl = environment.stripeSuccessUrlDemo
-      this.priceId = environment.stripePriceIdDemo
-    }else {
-      this.pKey = environment.stripePkey
-      this.cancelUrl = environment.stripeCancelUrl
-      this.successUrl = environment.stripeSuccessUrl
-      this.priceId = environment.stripePriceId
-    }
-
-    this.stripePromise = loadStripe(
-    this.pKey);
-
-    // this.route.queryParams
-    //   .subscribe(params => {
-    //     if (params["payment"]=='successful'.concat(this.key)){
-    //       this.paymentSuccessful = 'true'
-    //       // this.getUserData()
-    //     }else if (params["payment"]=='failed'.concat(this.key)){
-    //       this.paymentSuccessful = 'false'
-    //     }
-    //     }
-    //   );
-
-
+    this.userId = localStorage.getItem('userId')
+    this.authService.getLoggedUser(this.userId).subscribe(resp => {
+      this.email = resp.email
+      this.id = resp.id
+      this.user = resp
+      }
+    )
+    this.loadApplications(this.userId)
   }
 
-  getUserData(){
-    const roundTo = function(num: number, places: number) {
-      const factor = 10 ** places;
-      return Math.round(num * factor) / factor;
-        };
-
-      this.authService.getLoggedUser().subscribe(user => {
-      this.email = user.email
-      // this.hasPaid = user.hasPaid
-      // this.availableData = roundTo((user.availableData / 1000000), 1)
-      // this.usedData = roundTo((user.usedData / 1000000), 1)
+  applicationSelected(appId: string) {
+    this.applications.forEach(it => {
+      if (appId == it.applicationId) {
+        this.applicationName = it.name
+      }
     })
+    appId === null ? this.applicationId = null : this.applicationId = appId;
   }
+
+  // getUserData(){
+  //   const roundTo = function(num: number, places: number) {
+  //     const factor = 10 ** places;
+  //     return Math.round(num * factor) / factor;
+  //       };
+  //
+  //     this.authService.getLoggedUser().subscribe(user => {
+  //     this.email = user.email
+  //       this.id = user.id
+  //     // this.hasPaid = user.hasPaid
+  //     // this.availableData = roundTo((user.availableData / 1000000), 1)
+  //     // this.usedData = roundTo((user.usedData / 1000000), 1)
+  //   })
+  // }
 
   plus() {
     this.quantity++;
@@ -116,6 +117,7 @@ export class ProfilePage implements OnInit {
   }
 
   changePassword(){
+    this.formPassword.get("id").setValue(this.id)
     let newPassword = this.formPassword.value.newPassword
     let newPasswordRetry = this.formPassword.value.repeatNewPassword
     if (newPassword != newPasswordRetry){
@@ -123,7 +125,7 @@ export class ProfilePage implements OnInit {
     }else{
       this.isMatching = true
       this.loginService.changePassword(this.formPassword.value).subscribe(resp => {
-        this.notificationService.success("Success", "The password was successfully updated.")
+        this.notificationService.success("Success", "The password was successfully updated.", this.apiService.getNotificationOpetions())
       }, error =>{
         this.apiService.handleErrors(error)
       })
@@ -157,6 +159,42 @@ export class ProfilePage implements OnInit {
       })
     });
   }
+
+
+    createApplication() {
+    this.isSpinning = true
+    if (this.form) {
+      this.integrationService.createApplication(this.userId, {applicationName: this.form.get("name").value}).subscribe(
+        resp => {
+          setTimeout(_ => {this.applicationSelected(resp.applicationId);}, 50);
+          this.loadApplications(this.userId);
+          this.form.reset()
+          this.isSpinning = false
+          this.notificationService.success("Application created", "Application successfully created.", this.apiService.getNotificationOpetions())
+        }, error => {
+          this.apiService.handleErrors(error)
+          this.isSpinning = false
+        })
+    }
+  }
+
+  removeApplication(id: string) {
+    console.log(id)
+    this.integrationService.deleteApplication(this.user.id, id).subscribe(
+      resp => {
+        this.notificationService.success('Success', 'Application successfully deleted', this.apiService.getNotificationOpetions())
+        this.loadApplications(this.user.id)
+      }, error => {
+        this.apiService.handleErrors(error)
+      })
+  }
+
+  loadApplications(userId: string) {
+    this.integrationService.loadApplications(userId).subscribe(resp => {
+      this.applications = resp.applications
+    })
+  }
+
 
   // async stripeCLickCheckout() {
   //   const payment = {

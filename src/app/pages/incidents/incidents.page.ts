@@ -27,6 +27,8 @@ import {PredefinedTime} from '../../@core/common/predefined-time';
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ChartConfig} from "../../@core/common/chart-config";
 import {FormControl, FormGroup} from "@angular/forms";
+import {LogsightUser} from "../../@core/common/logsight-user";
+import {ApiService} from "../../@core/service/api.service";
 
 @Component({
   selector: 'incidents',
@@ -56,7 +58,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
   topKIncidents: IncidentTableData[] = [];
   detailedIncident: IncidentTableData;
 
-
+  user: LogsightUser;
+  userId: string;
    numberOfIncidentsFormGroup = new FormGroup({
     numberOfIncidents: new FormControl(this.numberOfIncidents),
   });
@@ -72,11 +75,16 @@ export class IncidentsPage implements OnInit, OnDestroy {
               private dashboardService: DashboardService,
               private authService: AuthenticationService,
               private integrationService: IntegrationService,
+              private apiService: ApiService,
               private router: Router) {
   }
 
   ngOnInit(): void {
-    this.loadPredefinedTimes();
+    this.userId = localStorage.getItem('userId')
+    this.authService.getLoggedUser(this.userId).subscribe(user => {
+      this.user = user
+    })
+    this.loadPredefinedTimes(this.user.id);
     this.route.queryParamMap.subscribe(queryParams => {
       let selectedTime = JSON.parse(localStorage.getItem("selectedTime"))
       let startTime = queryParams.get('startTimeSpecific') ?? selectedTime['startTime'] ?? queryParams.get('startTime')
@@ -90,6 +98,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
       const applicationParam = queryParams.get('applicationId')
       const dateTimeType = queryParams.get('dateTimeType');
       this.applicationId = applicationParam ? applicationParam : null
+      console.log("APPID:", this.applicationId)
       if (startTime && endTime) {
         if (dateTimeType == 'absolute') {
           this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
@@ -117,13 +126,13 @@ export class IncidentsPage implements OnInit, OnDestroy {
                 }, dialogClass: 'model-full'
               });
             }, error => {
-              this.notificationService.error('Error', error)
+              this.apiService.handleErrors(error)
             })
         }
       })
 
-    this.authService.getLoggedUser().pipe(
-      switchMap(user => this.integrationService.loadApplications())
+    this.authService.getLoggedUser(this.userId).pipe(
+      switchMap(user => this.integrationService.loadApplications(user.id))
     ).subscribe(resp => {
       this.applications = resp.applications;
       if (this.applications.length > 0) {
@@ -138,8 +147,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
   }
 
 
-  loadPredefinedTimes() {
-    this.dashboardService.getAllTimeRanges().subscribe(resp => this.predefinedTimes = resp.timeSelectionList)
+  loadPredefinedTimes(userId: string) {
+    this.dashboardService.getAllTimeRanges(userId).subscribe(resp => this.predefinedTimes = resp.timeSelectionList)
   }
 
   toLocalTime(data) {
@@ -280,11 +289,11 @@ export class IncidentsPage implements OnInit, OnDestroy {
   }
 
   onDeletePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.deleteTimeRange(predefinedTime).subscribe(() => this.loadPredefinedTimes())
+    this.dashboardService.deleteTimeRange(this.user.id, predefinedTime).subscribe(() => this.loadPredefinedTimes(this.user.id))
   }
 
   onSavePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.createTimeRange(predefinedTime).subscribe(_ => this.loadPredefinedTimes())
+    this.dashboardService.createTimeRange(this.user.id, predefinedTime).subscribe(_ => this.loadPredefinedTimes(this.user.id))
   }
 
   onSelectPredefinedTime(pt: PredefinedTime) {

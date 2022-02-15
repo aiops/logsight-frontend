@@ -44,7 +44,7 @@ export class ResendActivationComponent implements OnInit {
     this.authService.resendActivation(this.form.value).subscribe(resp => {
         this.isEmailSent = true;
         this.isSpinning = false;
-        this.notificationService.success('Success', 'New activation email was sent.')
+        this.notificationService.success('Success', 'New activation email was sent.', this.apiService.getNotificationOpetions())
       }, error => {
         this.emailNotFound = true;
         this.isSpinning = false;

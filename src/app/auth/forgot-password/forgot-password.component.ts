@@ -44,12 +44,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.authService.onForgotPassword(this.form.value.email).subscribe(resp => {
         this.isEmailSent = true;
         this.isSpinning = false;
-        this.notificationService.success('Success', 'New password was sent to your email.', {
-          timeOut: 10000,
-          showProgressBar: true,
-          pauseOnHover: true,
-          clickToClose: true
-        })
+        this.notificationService.success('Success', 'New password was sent to your email.', this.apiService.getNotificationOpetions())
       }, error => {
         this.emailNotFound = true;
         this.isSpinning = false;

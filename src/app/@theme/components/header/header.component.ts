@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user: any;
   id: string;
   email: string;
+  userId: string;
   progressValue: number;
   curSec: number;
   horizontal: boolean = true;
@@ -97,13 +98,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.themeService.changeTheme("default")
     this.curSec = 0;
-    this.authService.getLoggedUser().subscribe(user => {
+    this.userId = localStorage.getItem('userId')
+    this.authService.getLoggedUser(this.userId).subscribe(user => {
+      console.log(user)
       this.id = user.id
       this.email = user.email
     })
 
-    this.apiService.post("/api/v1/external/kibana/login", {}).subscribe(data =>{
-    })
+    // this.apiService.post("/api/v1/external/kibana/login", {}).subscribe(data =>{
+    // })
 
     this.currentTheme = this.themeService.currentTheme;
     this.sidebarService.collapse('menu-sidebar')

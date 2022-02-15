@@ -45,7 +45,7 @@ export class QuickstartPage implements OnInit {
     this.progressValue = 0
     this.curSec = 0
     this.next = 0
-    this.authService.getLoggedUser().subscribe(user => {
+    this.authService.getLoggedUser(localStorage.getItem('userId')).subscribe(user => {
       this.user = user
     });
   }

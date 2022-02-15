@@ -65,6 +65,75 @@
 
         </div>
 
+      <div class="col-sm-2"></div>
+
+            <div class="col-sm-6 justify-content-center">
+    <div class="row">
+            <div class="row ml-2">
+        <h6>Applications</h6>
+        </div>
+      <nb-card style="width: 100%">
+      <div class="row  pl-5 pr-5 pt-5 pb-5 justify-content-center">
+            <form class="col-12 justify-content-center" [formGroup]="form" (submit)="createApplication()"
+                  aria-labelledby="title">
+              <div class="form-control-group">
+                <div class="col-12 justify-content-center">
+                <input nbInput
+                       type="text"
+                       fullWidth
+                       formControlName="name"
+                       id="name"
+                       placeholder="Enter application name"
+                       [required]="true"
+                       [attr.aria-invalid]="form.invalid && form.touched ? true : null">
+                <ng-container *ngIf="form.controls['name'].invalid && form.touched">
+                  <p class="error-message" *ngIf="form.controls['name'].errors?.required">
+                    Application name is required!
+                  </p>
+                </ng-container>
+              </div>
+                <div *ngIf="!isSpinning" class="col-12 justify-content-center">
+                <button nbButton
+                        fullWidth
+                        class="mt-2"
+                        status="success"
+                        shape="round"
+                        [disabled]="!form.valid">
+                  Create
+                </button>
+                  </div>
+              </div>
+            </form>
+                                          <div class="row justify-content-center mt-2">
+          <div *ngIf="isSpinning" class="spinner-border text-primary" style="position: relative" role="status">
+          </div>
+            </div>
+</div>
+      <div class="row pl-5 pr-5">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Terminate</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of applications">
+            <td>{{row.applicationId}}</td>
+            <td>{{row.name}}</td>
+            <td><div class="col-auto"><i (click)="removeApplication(row.applicationId)" [title]='"Delete application"'
+                                   class="ml-3 fas  fa-trash pointer"></i></div></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+  </nb-card>
+      </div>
+            </div>
+
+
+
 <!--      <div class="col-sm-4 text-center">-->
 <!--        <nb-alert *ngIf="paymentSuccessful=='true'" status="success">The payment was successful!</nb-alert>-->
 <!--        <nb-alert *ngIf="paymentSuccessful=='false'" status="danger">The payment was not successful, try again!</nb-alert>-->

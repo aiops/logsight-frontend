@@ -7,6 +7,7 @@ import {IntegrationService} from '../../@core/service/integration.service';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {TourService} from "ngx-ui-tour-md-menu";
+import {ApiService} from "../../@core/service/api.service";
 
 @Component({
   selector: 'elasticsearch-data',
@@ -30,7 +31,7 @@ export class ElasticsearchDataPage implements OnInit {
     elasticsearchPassword: new FormControl('')
   });
 
-  constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
+  constructor(private integrationService: IntegrationService, private authService: AuthenticationService, private apiService: ApiService,
               private notificationService: NotificationsService, private http: HttpClient, private router: Router, private tourService: TourService) {
   }
 
@@ -52,9 +53,9 @@ export class ElasticsearchDataPage implements OnInit {
     this.http.post(`/api/logs/test_elasticsearch`, this.formElasticsearch.value)
       .subscribe(resp => {
         this.isElasticConnection = true
-        this.notificationService.success("Success", resp['detail'])
+        this.notificationService.success("Success", resp['detail'], this.apiService.getNotificationOpetions())
       }, error => {
-        this.notificationService.error("Error", error['detail'])
+        this.apiService.handleErrors(error)
       });
   }
 
@@ -62,16 +63,16 @@ export class ElasticsearchDataPage implements OnInit {
   requestElasticsearchData() {
     this.http.post(`/api/logs/load_elasticsearch`, this.formElasticsearch.value)
       .subscribe(resp => {
-        this.notificationService.success("Successfully connected to elasticsearch. Ingesting logs...")
+        this.notificationService.success("Connected", "Successfully connected to elasticsearch. Ingesting logs...", this.apiService.getNotificationOpetions())
         this.router.navigate(['/pages', 'log-compare'])
       }, error => {
-        this.notificationService.error("Error, please check your elasticsearch URL and Index and try again.")
+        this.apiService.handleErrors(error)
       });
   }
 
 
-  loadApplications() {
-    this.integrationService.loadApplications().subscribe(resp => this.applications = resp.applications)
+  loadApplications(userId: string) {
+    this.integrationService.loadApplications(userId).subscribe(resp => this.applications = resp.applications)
   }
 
 

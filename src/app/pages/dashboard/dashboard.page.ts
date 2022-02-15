@@ -56,6 +56,8 @@ export class DashboardPage implements OnInit, OnDestroy {
   clientTimezoneOffset = Intl.DateTimeFormat().resolvedOptions().timeZone
   reload$: Subject<boolean> = new Subject();
 
+  userId: string;
+
   @ViewChild('dateTimePicker', {read: TemplateRef}) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   private destroy$: Subject<void> = new Subject<void>();
@@ -101,19 +103,21 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.userId = localStorage.getItem('userId')
     setTimeout(_ => this.reload$.next(), 5000); //hack to start first refresh
     setTimeout(_ => this.cancelGlobalSpinner(), 15000)
-    this.integrationService.loadApplications().subscribe(resp => {
+    this.integrationService.loadApplications(this.userId).subscribe(resp => {
       this.applications = resp.applications
     })
-    this.authService.getLoggedUser().subscribe(user => {
+    this.authService.getLoggedUser(this.userId).subscribe(user => {
       this.user = user
     })
-    this.loadPredefinedTimes()
+    this.loadPredefinedTimes(this.user.id)
 
     this.heatmapData$.subscribe(data => {
       data = data.data
-      if (data && data.data.length > 0) {
+      console.log(data)
+      if (data) {
         const el = document.getElementById('nb-global-spinner');
         if (el) {
           el.style['display'] = 'none';
@@ -146,7 +150,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.heatmapData = data.data;
       }
     }, error => {
-      console.log(error)
     })
 
     this.pieChartData$.subscribe(data => {
@@ -169,7 +172,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.colorPieData = {domain: this.pieData}
       }
     }, error => {
-      console.log(error)
     })
 
     this.topKIncidents$.subscribe(data => {
@@ -196,7 +198,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         });
       }
     }, error => {
-      // console.log(error)
       this.apiService.handleErrors(error)
     })
 
@@ -213,7 +214,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.barData = data;
       }
     }, error => {
-      console.log(error)
     })
 
 
@@ -277,8 +277,8 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.destroy$.complete()
   }
 
-  loadPredefinedTimes() {
-    this.dashboardService.getAllTimeRanges().subscribe(resp => {
+  loadPredefinedTimes(userId: string) {
+    this.dashboardService.getAllTimeRanges(userId).subscribe(resp => {
       this.predefinedTimes = resp.timeSelectionList
     })
   }
@@ -335,9 +335,8 @@ export class DashboardPage implements OnInit, OnDestroy {
       var timeDiff = this.getTimeDiff()
     } catch (e) {
     }
-
     if (!timeDiff) {
-      timeDiff = 1
+      timeDiff = 2
     }
     const dateTime = data.extra
     const date = dateTime.split('T')[0].split('-');
@@ -347,7 +346,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
     this.startDateTime = startDateTime.format('YYYY-MM-DDTHH:mm') + ":00"
     this.endDateTime = startDateTime.add(timeDiff, 'minutes').format('YYYY-MM-DDTHH:mm') + ":00"
-
+    console.log(data)
     this.navigateToIncidentsPage(this.startDateTime,
       this.endDateTime, data.applicationId)
   }
@@ -425,11 +424,11 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onDeletePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.deleteTimeRange(predefinedTime).subscribe(() => this.loadPredefinedTimes())
+    this.dashboardService.deleteTimeRange(this.user.id, predefinedTime).subscribe(() => this.loadPredefinedTimes(this.user.id))
   }
 
   onSavePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.createTimeRange(predefinedTime).subscribe(resp => this.loadPredefinedTimes())
+    this.dashboardService.createTimeRange(this.user.id, predefinedTime).subscribe(resp => this.loadPredefinedTimes(this.user.id))
   }
 
   onSelectPredefinedTime(pt: PredefinedTime) {
@@ -459,13 +458,14 @@ export class DashboardPage implements OnInit, OnDestroy {
         timeList.push(this.heatmapData[i].series[0].extra)
       }
     }
-    let date = timeList[0].split(' ')[0].split('-');
-    let time = timeList[0].split(' ')[1].split(':');
-    const firstTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+
+    let date = timeList[0].split('T')[0].split('-');
+    let time = timeList[0].split('T')[1].split(':');
+    const firstTime: Moment = moment().year(+date[0]).month(+date[1] - 1).date(+date[2]).hour(+time[0]).minute(
       +time[1]);
-    date = timeList[1].split(' ')[0].split('-');
-    time = timeList[1].split(' ')[1].split(':');
-    const secondTime: Moment = moment().year(+date[2]).month(+date[1] - 1).date(+date[0]).hour(+time[0]).minute(
+    date = timeList[1].split('T')[0].split('-');
+    time = timeList[1].split('T')[1].split(':');
+    const secondTime: Moment = moment().year(+date[0]).month(+date[1] - 1).date(+date[2]).hour(+time[0]).minute(
       +time[1]);
     return (secondTime.diff(firstTime, "minutes") / indx[1] - indx[0])
 
@@ -477,18 +477,18 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   removeApplication(id: string) {
-    this.integrationService.deleteApplication(id).subscribe(
+    this.integrationService.deleteApplication(this.user.id, id).subscribe(
       resp => {
-        this.notificationService.success('Success', 'Application successfully deleted')
-        this.loadApplications()
+        this.notificationService.success('Success', 'Application successfully deleted', this.apiService.getNotificationOpetions())
+        this.loadApplications(this.user.id)
         window.location.reload();
       }, error => {
         this.apiService.handleErrors(error)
       })
   }
 
-  loadApplications() {
-    this.integrationService.loadApplications().subscribe(resp => this.applications = resp.applications)
+  loadApplications(userId: string) {
+    this.integrationService.loadApplications(userId).subscribe(resp => this.applications = resp.applications)
   }
 
 }

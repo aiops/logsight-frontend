@@ -5,6 +5,7 @@ import {IntegrationService} from '../../@core/service/integration.service';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {TourService} from "ngx-ui-tour-md-menu";
+import {ApiService} from "../../@core/service/api.service";
 
 @Component({
   selector: 'sample-data',
@@ -14,7 +15,7 @@ import {TourService} from "ngx-ui-tour-md-menu";
 export class SampleDataPage implements OnInit {
   isSpinning = false;
 
-  constructor(private integrationService: IntegrationService, private authService: AuthenticationService,
+  constructor(private integrationService: IntegrationService, private authService: AuthenticationService, private apiService: ApiService,
               private notificationService: NotificationsService, private http: HttpClient, private router: Router, private tourService: TourService) {
   }
 
@@ -29,7 +30,8 @@ export class SampleDataPage implements OnInit {
         this.router.navigate(['/pages', 'dashboard'])
         this.tourService.start()
       }, error => {
-        this.notificationService.error("Error: ", error)
+        this.isSpinning = false
+        this.apiService.handleErrors(error)
       });
   }
 }

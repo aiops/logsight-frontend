@@ -61,7 +61,7 @@ export class ActivateComponent implements OnInit {
           this.loading = false
           this.status = "activate"
           this.startTimer(5)
-          this.notificationService.success("Success", "User activated. Please login.")
+          this.notificationService.success("Success", "User activated. Please login.", this.apiService.getNotificationOpetions())
         }, error => {
           this.apiService.handleErrors(error)
         })

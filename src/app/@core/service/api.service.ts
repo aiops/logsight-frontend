@@ -92,6 +92,15 @@ export class ApiService {
         }
     }
 
+    getNotificationOpetions(){
+      return {
+      timeOut: 10000,
+      showProgressBar: true,
+      pauseOnHover: true,
+      clickToClose: true
+    }
+    }
+
     private handleError<T>(error: any) {
         return throwError(error.error);
     }

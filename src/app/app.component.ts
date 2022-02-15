@@ -35,6 +35,8 @@ export class AppComponent implements OnInit {
   onContextItemSelection(data) {
     if (data === 'log_out') {
       localStorage.removeItem('token')
+      localStorage.removeItem('userId')
+      localStorage.removeItem('user')
       location.reload()
     }
   }

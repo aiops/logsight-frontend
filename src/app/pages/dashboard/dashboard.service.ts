@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {PredefinedTime} from '../../@core/common/predefined-time';
 import {ChartRequest} from "../../@core/common/chart-request";
 import {PredefinedTimeList} from "../../@core/common/predefined-time-list";
+import {userInfo} from "os";
 
 @Injectable()
 export class DashboardService {
@@ -27,15 +28,15 @@ export class DashboardService {
     return this.apiService.post(`/api/v1/charts/tablechart`, chartRequest);
   }
 
-  getAllTimeRanges(): Observable<PredefinedTimeList> {
-    return this.apiService.get(`/api/v1/time_ranges`);
+  getAllTimeRanges(userId: string): Observable<PredefinedTimeList> {
+    return this.apiService.get(`/api/v1/users/${userId}/time_ranges`);
   }
 
-  deleteTimeRange(predefinedTime: PredefinedTime) {
-    return this.apiService.delete(`/api/v1/time_ranges/${predefinedTime.id}`);
+  deleteTimeRange(userId: string, predefinedTime: PredefinedTime) {
+    return this.apiService.delete(`/api/v1/users/${userId}/time_ranges/${predefinedTime.id}`);
   }
 
-  createTimeRange(predefinedTime: PredefinedTime) {
-    return this.apiService.post(`/api/v1/time_ranges`, predefinedTime);
+  createTimeRange(userId: string, predefinedTime: PredefinedTime) {
+    return this.apiService.post(`/api/v1/users/${userId}/time_ranges`, predefinedTime);
   }
 }

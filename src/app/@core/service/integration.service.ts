@@ -10,20 +10,20 @@ export class IntegrationService {
   constructor(private apiService: ApiService) {
   }
 
-  createApplication(app: { applicationName: string }): Observable<Application> {
-    return this.apiService.post('/api/v1/applications', app)
+  createApplication(userId: string, app: { applicationName: string }): Observable<Application> {
+    return this.apiService.post(`/api/v1/users/${userId}/applications`, app)
   }
 
   // createDemoApplications(): Observable<String> {
   //   return this.apiService.post('/api/v1/applications/', null)
   // }
 
-  loadApplications(): Observable<ApplicationList> {
-    return this.apiService.get(`/api/v1/applications`)
+  loadApplications(userId: string): Observable<ApplicationList> {
+    return this.apiService.get(`/api/v1/users/${userId}/applications`)
   }
 
-  deleteApplication(id: string) {
-    return this.apiService.delete(`/api/v1/applications/${id}`)
+  deleteApplication(userId: string, id: string) {
+    return this.apiService.delete(`/api/v1/users/${userId}/applications/${id}`)
   }
 
   subscription(payment: any) {

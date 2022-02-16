@@ -807,7 +807,8 @@
                 <tbody>
                 <tr *ngFor="let row of detailedIncident.semanticAD; let i = index">
                   <td>{{i + 1}}</td>
-                  <td>{{row.timestamp}}</td>
+                  <td>{{row.timeStamp + 'Z' | date:'yyyy-MM-dd HH:mm:ss.SSSS'}}</td>
+
                   <td>
                 <span [class.error]="row.actualLevel == 'ERROR'"
                       [class.info]="row.actualLevel == 'INFO'"
@@ -865,7 +866,7 @@
                   <td
                     *ngIf="row.actualLevel == 'ERROR' || row.actualLevel == 'CRITICAL'  || row.actualLevel == 'SEVERE'">{{i + 1}}</td>
                   <td
-                    *ngIf="row.actualLevel == 'ERROR' || row.actualLevel == 'CRITICAL'  || row.actualLevel == 'SEVERE'">{{row.timestamp}}</td>
+                    *ngIf="row.actualLevel == 'ERROR' || row.actualLevel == 'CRITICAL'  || row.actualLevel == 'SEVERE'">{{row.timeStamp + 'Z' | date:'yyyy-MM-dd HH:mm:ss.SSSS'}}</td>
                   <td
                     *ngIf="row.actualLevel == 'ERROR' || row.actualLevel == 'CRITICAL'  || row.actualLevel == 'SEVERE'">
                 <span [class.error]="row.actualLevel == 'ERROR'"

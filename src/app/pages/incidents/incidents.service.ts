@@ -8,7 +8,7 @@ export class IncidentsService {
   constructor(private apiService: ApiService) {
   }
 
-  loadIncidentsTableData(chartRequest: ChartRequest): Observable<any> {
-    return this.apiService.post(`/api/v1/charts/tablechart`, chartRequest);
+  loadIncidentsTableData(userId: string, chartRequest: ChartRequest): Observable<any> {
+    return this.apiService.post(`/api/v1/users/${userId}/charts/tablechart`, chartRequest);
   }
 }

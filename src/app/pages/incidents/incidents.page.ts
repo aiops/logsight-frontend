@@ -98,7 +98,6 @@ export class IncidentsPage implements OnInit, OnDestroy {
       const applicationParam = queryParams.get('applicationId')
       const dateTimeType = queryParams.get('dateTimeType');
       this.applicationId = applicationParam ? applicationParam : null
-      console.log("APPID:", this.applicationId)
       if (startTime && endTime) {
         if (dateTimeType == 'absolute') {
           this.startDateTime = moment(startTime, 'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
@@ -171,15 +170,15 @@ export class IncidentsPage implements OnInit, OnDestroy {
     let indexType = 'incidents'
     let timeZone = this.clientTimezoneOffset
     let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
-    this.incidentsService.loadIncidentsTableData(chartRequest).subscribe(data => {
+    this.incidentsService.loadIncidentsTableData(this.userId, chartRequest).subscribe(data => {
       data = data.data.data
       if (data) {
         this.topKIncidents = data.map(it => {
-          const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timeStamp - a.timeStamp)
-          const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timeStamp - a.timeStamp)
-          const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timeStamp - a.timeStamp)
-          const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timeStamp - a.timeStamp)
-          const logs = this.parseTemplates(it, 'logs').sort((a, b) => b.timeStamp - a.timeStamp)
+          const scAnomalies = this.parseTemplates(it, 'scAnomalies').sort((a, b) => b.timestamp - a.timestamp)
+          const newTemplates = this.parseTemplates(it, 'newTemplates').sort((a, b) => b.timestamp - a.timestamp)
+          const semanticAD = this.parseTemplates(it, 'semanticAD').sort((a, b) => b.timestamp - a.timestamp)
+          const countAD = this.parseTemplates(it, 'countAD').sort((a, b) => b.timestamp - a.timestamp)
+          const logs = this.parseTemplates(it, 'logs').sort((a, b) => b.timestamp - a.timestamp)
           return {
             applicationId: it.applicationId,
             appName: it.indexName,
@@ -236,7 +235,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
         template: it2[0].template,
         params: params,
         actualLevel: it2[0].actual_level,
-        timeStamp: new Date(it2[0]['@timestamp']),
+        timeStamp:  it2[0]['@timestamp'],
         applicationId: data.applicationId //this should be checked
       }
     });

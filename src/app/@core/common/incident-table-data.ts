@@ -6,9 +6,9 @@ export interface IncidentTableData {
   timestamp: string,
   startTimestamp: string,
   stopTimestamp: string,
-  countAD: VariableAnalysisHit[]
-  scAnomalies: VariableAnalysisHit[],
-  newTemplates: VariableAnalysisHit[]
-  semanticAD: VariableAnalysisHit[],
-  logs: VariableAnalysisHit[],
+  countAD: String[]
+  scAnomalies: String[],
+  newTemplates: String[]
+  semanticAD: String[],
+  logs: String[],
 }

@@ -116,7 +116,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
     this.heatmapData$.subscribe(data => {
       data = data.data
-      console.log(data)
+      console.log("D", data.data)
       if (data) {
         const el = document.getElementById('nb-global-spinner');
         if (el) {
@@ -126,7 +126,7 @@ export class DashboardPage implements OnInit, OnDestroy {
           for (let j = 0; j < data.data[i].series.length; j++) {
             data.data[i].series[j].extra = data.data[i].name
           }
-          var date = moment.utc(data.data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+          var date = moment.utc(data.data[i].name, 'YYYY-MM-DDTHH:mmZ[UTC]').format('YYYY-MM-DD HH:mm');
           var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
           var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
           data.data[i].name = local.toString()
@@ -300,7 +300,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     let indexType = 'incidents'
     let timeZone = this.clientTimezoneOffset
     let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
-    return this.dashboardService.loadHeatmapData(chartRequest)
+    return this.dashboardService.loadHeatmapData(this.userId, chartRequest)
   }
 
   loadBarData(startTime: string, endTime: string, applicationId: string) {
@@ -309,7 +309,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     let indexType = 'log_agg'
     let timeZone = this.clientTimezoneOffset
     let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
-    return this.dashboardService.loadBarData(chartRequest);
+    return this.dashboardService.loadBarData(this.userId, chartRequest);
   }
 
   loadPieChartData(startTime: string, endTime: string, applicationId: string) {
@@ -318,7 +318,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     let indexType = 'log_agg'
     let timeZone = this.clientTimezoneOffset
     let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
-    return this.dashboardService.loadPieChartData(chartRequest);
+    return this.dashboardService.loadPieChartData(this.userId, chartRequest);
   }
 
   loadTopKIncidents(startTime: string, endTime: string, numberOfIncidents: number, applicationId: string) {
@@ -327,7 +327,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     let indexType = 'incidents'
     let timeZone = this.clientTimezoneOffset
     let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
-    return this.dashboardService.loadTopKIncidentsData(chartRequest);
+    return this.dashboardService.loadTopKIncidentsData(this.userId, chartRequest);
   }
 
   onHeatMapSelect(data: any) {
@@ -342,11 +342,10 @@ export class DashboardPage implements OnInit, OnDestroy {
     const date = dateTime.split('T')[0].split('-');
     const time = dateTime.split('T')[1].split(':');
     const startDateTime: Moment = moment().year(+date[0]).month(+date[1] - 1).date(+date[2]).hour(+time[0]).minute(
-      +time[1]);
+      +time[1].split('Z')[0]);
 
     this.startDateTime = startDateTime.format('YYYY-MM-DDTHH:mm') + ":00"
     this.endDateTime = startDateTime.add(timeDiff, 'minutes').format('YYYY-MM-DDTHH:mm') + ":00"
-    console.log(data)
     this.navigateToIncidentsPage(this.startDateTime,
       this.endDateTime, data.applicationId)
   }
@@ -458,15 +457,14 @@ export class DashboardPage implements OnInit, OnDestroy {
         timeList.push(this.heatmapData[i].series[0].extra)
       }
     }
-
-    let date = timeList[0].split('T')[0].split('-');
-    let time = timeList[0].split('T')[1].split(':');
-    const firstTime: Moment = moment().year(+date[0]).month(+date[1] - 1).date(+date[2]).hour(+time[0]).minute(
-      +time[1]);
-    date = timeList[1].split('T')[0].split('-');
-    time = timeList[1].split('T')[1].split(':');
-    const secondTime: Moment = moment().year(+date[0]).month(+date[1] - 1).date(+date[2]).hour(+time[0]).minute(
-      +time[1]);
+    let date_f = timeList[0].split('T')[0].split('-');
+    let time_f = timeList[0].split('T')[1].split(':');
+    const firstTime: Moment = moment().year(+date_f[0]).month(+date_f[1] - 1).date(+date_f[2]).hour(+time_f[0]).minute(
+      +time_f[1].split('Z')[0]);
+    let date_s = timeList[1].split('T')[0].split('-');
+    let time_s = timeList[1].split('T')[1].split(':');
+    const secondTime: Moment = moment().year(+date_s[0]).month(+date_s[1] - 1).date(+date_s[2]).hour(+time_s[0]).minute(
+      +time_s[1].split('Z')[0]);
     return (secondTime.diff(firstTime, "minutes") / indx[1] - indx[0])
 
   }

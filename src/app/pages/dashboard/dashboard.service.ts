@@ -11,21 +11,21 @@ export class DashboardService {
   constructor(private apiService: ApiService) {
   }
 
-  loadHeatmapData(chartRequest: ChartRequest) {
+  loadHeatmapData(userId: string, chartRequest: ChartRequest) {
     return this.apiService.post(
-      `/api/v1/charts/heatmap`, chartRequest);
+      `/api/v1/users/${userId}/charts/heatmap`, chartRequest);
   }
 
-  loadBarData(chartRequest: ChartRequest) {
-    return this.apiService.post(`/api/v1/charts/barchart`, chartRequest);
+  loadBarData(userId: string, chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/users/${userId}/charts/barchart`, chartRequest);
   }
 
-  loadPieChartData(chartRequest: ChartRequest) {
-    return this.apiService.post(`/api/v1/charts/piechart`, chartRequest);
+  loadPieChartData(userId: string, chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/users/${userId}/charts/piechart`, chartRequest);
   }
 
-  loadTopKIncidentsData(chartRequest: ChartRequest) {
-    return this.apiService.post(`/api/v1/charts/tablechart`, chartRequest);
+  loadTopKIncidentsData(userId: string, chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/users/${userId}/charts/tablechart`, chartRequest);
   }
 
   getAllTimeRanges(userId: string): Observable<PredefinedTimeList> {

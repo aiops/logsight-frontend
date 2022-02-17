@@ -64,7 +64,7 @@ export class ElasticsearchDataPage implements OnInit {
     this.http.post(`/api/logs/load_elasticsearch`, this.formElasticsearch.value)
       .subscribe(resp => {
         this.notificationService.success("Connected", "Successfully connected to elasticsearch. Ingesting logs...", this.apiService.getNotificationOpetions())
-        this.router.navigate(['/pages', 'log-compare'])
+        this.router.navigate(['/pages', 'compare'])
       }, error => {
         this.apiService.handleErrors(error)
       });

@@ -3,6 +3,7 @@ export interface VerificationData {
   risk_color: any,
   total_n_log_messages: any,
   count_baseline: any,
+  count_candidate: any,
   candidate_perc: any,
   added_states: any,
   added_states_info: any,

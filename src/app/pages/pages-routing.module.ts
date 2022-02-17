@@ -18,11 +18,11 @@ const routes: Routes = [{
       loadChildren: () => import('./quality/quality.module')
         .then(m => m.QualityModule),
     },
-    // {
-    //   path: 'log-compare',
-    //   loadChildren: () => import('./log-compare/log-compare.module')
-    //     .then(m => m.LogCompareModule),
-    // },
+    {
+      path: 'compare',
+      loadChildren: () => import('./log-compare/log-compare.module')
+        .then(m => m.LogCompareModule),
+    },
     {
       path: 'dashboard',
       loadChildren: () => import('./dashboard/dashboard.module')

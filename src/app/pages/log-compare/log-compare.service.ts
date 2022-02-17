@@ -1,73 +1,33 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../@core/service/api.service';
 import {Observable} from "rxjs";
+import {ChartRequest} from "../../@core/common/chart-request";
+import {VerificationRequest} from "../../@core/common/verification-request";
 
 @Injectable()
 export class LogCompareService {
   constructor(private apiService: ApiService) {
   }
 
-    loadApplicationVersions(applicationId: number): Observable<any> {
+  loadApplicationVersions(userId: string, applicationId: string): Observable<any> {
     let applicationParam = '';
+    let userParam = '';
     if (applicationId) {
-      applicationParam = `&applicationId=${applicationId}`
+      applicationParam = `applicationId=${applicationId}`
+      userParam = `&userId=${userId}`
     }
-    return this.apiService.get(`/api/log_compare/load_versions?${applicationParam}`);
+    return this.apiService.get(`/api/v1/compare/versions?${applicationParam}${userParam}`);
   }
 
-  computeLogCompare(applicationId: number, baselineTagId: string, compareTagId: string, selectedRadioOption: number){
-    let applicationParam = '';
-    if (applicationId) {
-      applicationParam = `&applicationId=${applicationId}`
-    }
-
-    return this.apiService.get(`/api/log_compare/compute_log_compare?${applicationParam}
-    &baselineTag=${baselineTagId}&compareTag=${compareTagId}&selectedTime=${selectedRadioOption}`);
-  }
-
-  getLogCountBar(applicationId: number, startTime: string, endTime: string, tag: string): Observable<any> {
-    return this.apiService.get(
-      `/api/log_compare/bar_plot_count?startTime=${startTime}&endTime=${endTime}&applicationId=${applicationId}&tag=${tag}`)
-  }
-
-  loadBarData(startTime: string, endTime: string, applicationId: number) {
-    let applicationParam = '';
-    if (applicationId) {
-      applicationParam = `&applicationId=${applicationId}`
-    }
-    return this.apiService.get(`/api/charts/dashboard_bar_anomalies?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
-  }
-
-  getCognitiveBarData(applicationId: number, startTime: string, endTime: string, baselineTagId: string, compareTagId: string, newTemplates: string) {
-    if (newTemplates == "new_templates" && baselineTagId && compareTagId){
-      return this.apiService.get(`/api/charts/log_comp_new_templates_bar?startTime=${startTime}&endTime=${endTime}&applicationId=${applicationId}&baselineTagId=${baselineTagId}&compareTagId=${compareTagId}`);
-    }else{
-      var tag = ""
-      if (baselineTagId){
-        tag = baselineTagId
-      }else{
-        tag = compareTagId
-      }
-      return this.apiService.get(`/api/log_compare/cognitive_bar_plot?startTime=${startTime}&endTime=${endTime}&applicationId=${applicationId}&tag=${tag}`);
-    }
-  }
-
-  loadCompareTemplatesHorizontalBar(applicationId: number, startTime: string, endTime: string, baselineTagId: string, compareTagId: string) {
-    return this.apiService.get(`/api/log_compare/compare_templates_horizontal_bar?startTime=${startTime}&endTime=${endTime}&baselineTagId=${baselineTagId}&compareTagId=${compareTagId}&applicationId=${applicationId}`);
+  computeLogCompare(verificationRequest: VerificationRequest){
+    return this.apiService.post(`/api/v1/compare/view`, verificationRequest);
   }
 
 
- loadLogCompareData(startTime: string, endTime: string, applicationId: number, baselineTagId: string, compareTagId: string): Observable<any> {
-    let applicationParam = `&applicationId=${applicationId}`
-    return this.apiService.get(`/api/log_compare/data?startTime=${startTime}&endTime=${endTime}${applicationParam}&baselineTagId=${baselineTagId}&compareTagId=${compareTagId}`);
+  loadBarData(userId: string, chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/users/${userId}/charts/barchart`, chartRequest);
   }
 
-  loadHeatmapData(startTime: string, endTime: string, applicationId: number, baselineTagId: string, compareTagId: string) {
 
-    let applicationParam = `&applicationId=${applicationId}`
-
-    return this.apiService.get(
-      `/api/charts/log_compare_heatmap?startTime=${startTime}&endTime=${endTime}&compareTagId=${compareTagId}&baselineTagId=${baselineTagId}${applicationParam}`);
-  }
 
 }

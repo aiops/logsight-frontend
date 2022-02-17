@@ -104,10 +104,10 @@ export class FileUploadPage implements OnInit {
   }
 
   removeApplication(id: string) {
-    this.integrationService.deleteApplication(this.user.id, id).subscribe(
+    this.integrationService.deleteApplication(this.userId, id).subscribe(
       resp => {
         this.notificationService.success('Success', 'Application successfully deleted', this.apiService.getNotificationOpetions())
-        this.loadApplications(this.user.id)
+        this.loadApplications(this.userId)
         window.location.reload();
       }, error => {
         this.apiService.handleErrors(error)

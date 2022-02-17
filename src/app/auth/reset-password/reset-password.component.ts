@@ -14,7 +14,7 @@ import {NbThemeService} from "@nebular/theme";
 export class ResetPasswordComponent implements OnInit {
 
   formPassword = new FormGroup({
-    id: new FormControl(''),
+    userId: new FormControl(''),
     passwordResetToken: new FormControl(''),
     password: new FormControl('', Validators.minLength(8)),
     repeatPassword: new FormControl('', Validators.minLength(8))
@@ -60,7 +60,7 @@ export class ResetPasswordComponent implements OnInit {
     let newPassword = this.formPassword.value.password
     let repeatNewPassword = this.formPassword.value.repeatPassword
     this.formPassword.get("passwordResetToken").setValue(this.token)
-    this.formPassword.get("id").setValue(this.id)
+    this.formPassword.get("userId").setValue(this.id)
     if (newPassword != repeatNewPassword) {
       this.isMatching = false
     } else {

@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     localStorage.removeItem('token')
     localStorage.removeItem('userId')
     this.authService.login(this.form.value).subscribe(resp => {
-      localStorage.setItem("userId", resp.user.id)
+      localStorage.setItem("userId", resp.user.userId)
         this.route.queryParamMap.subscribe(
           queryParams => {
             let redirectUrl = "/pages/send-logs"

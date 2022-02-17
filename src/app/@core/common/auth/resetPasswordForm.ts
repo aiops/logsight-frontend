@@ -1,5 +1,5 @@
 export class ResetPasswordForm {
-  id: string;
+  userId: string;
   token: string;
   password: string;
   passwordRetry: string;

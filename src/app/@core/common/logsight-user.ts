@@ -1,4 +1,4 @@
 export interface LogsightUser {
-  id: string,
+  userId: string,
   email: string
 }

@@ -16,11 +16,11 @@ export class LogCompareService {
       applicationParam = `applicationId=${applicationId}`
       userParam = `&userId=${userId}`
     }
-    return this.apiService.get(`/api/v1/compare/versions?${applicationParam}${userParam}`);
+    return this.apiService.get(`/api/v1/logs/compare/tags?${applicationParam}${userParam}`);
   }
 
   computeLogCompare(verificationRequest: VerificationRequest){
-    return this.apiService.post(`/api/v1/compare/view`, verificationRequest);
+    return this.apiService.post(`/api/v1/logs/compare/view`, verificationRequest);
   }
 
 

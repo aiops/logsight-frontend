@@ -53,15 +53,14 @@
                         </nb-option>
                     </nb-select>
                       </div>
-                  </div>
-                      <div class="row pt-4">
+
+                      <div class="col">
                         <div class="col">
                         <b style="font-weight: 600">Description: </b>This is a service description pulled form your software versioning system. For example, Github, Gitlab, etc.
                         <a href="https://github.com/apache/hadoop">(more)</a>
-                        <div class="badge badge-pill badge-primary mb-1" style="height: 18px">Repo: Github</div>
                           </div>
-                    </div>
-
+                      </div>
+</div>
                       <div class="row pt-4 justify-content-center">
 
                          <button (click)="computeLogCompare()" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" size="giant" style="padding-left: 10%; padding-right: 10%; text-transform: none; margin-left: 10px">Verify
@@ -86,8 +85,8 @@
           <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
                      class="period-select"
                      placeholder="Baseline">
-            <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
-              {{ tag}}
+            <nb-option *ngFor="let tag of tags" [nbSort]="tag.tagView" [value]="tag.tag">
+              {{ tag.tagView}}
             </nb-option>
           </nb-select>
                       </div>
@@ -98,8 +97,8 @@
           <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
                      class="period-select"
                      placeholder="Candidate">
-            <nb-option *ngFor="let tag of tags" [nbSort]="tag" [value]="tag">
-              {{ tag }}
+            <nb-option *ngFor="let tag of tags" [nbSort]="tag.tagView" [value]="tag.tag">
+              {{ tag.tagView}}
             </nb-option>
           </nb-select>
                       </div>
@@ -113,22 +112,22 @@
 <!--                        <div class="badge badge-pill badge-warning mb-1" style="height: 18px">Infrastructure: pre-production</div>-->
 <!--                  </div>-->
 
-                  <div class="row pt-2 pl-4">
+<!--                  <div class="row pt-2 pl-4">-->
 
-                    <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
-                        <nb-radio value=10>10m</nb-radio>
-                    </nb-radio-group>
-                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
-                        <nb-radio value=15>15m</nb-radio>
-                    </nb-radio-group>
-                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
-                        <nb-radio value=30>30m</nb-radio>
-                    </nb-radio-group>
-                    <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">
-                        <nb-radio value=525960 checked>All data</nb-radio>
-                    </nb-radio-group>
+<!--                    <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
+<!--                        <nb-radio value=10>10m</nb-radio>-->
+<!--                    </nb-radio-group>-->
+<!--                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
+<!--                        <nb-radio value=15>15m</nb-radio>-->
+<!--                    </nb-radio-group>-->
+<!--                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
+<!--                        <nb-radio value=30>30m</nb-radio>-->
+<!--                    </nb-radio-group>-->
+<!--                    <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
+<!--                        <nb-radio value=525960 checked>All data</nb-radio>-->
+<!--                    </nb-radio-group>-->
 
-                 </div>
+<!--                 </div>-->
                 </div>
               </div>
             </nb-card>
@@ -339,8 +338,8 @@
                   <p class="sub-heading">Added states</p>
                 </div>
                 <span class="inc-dec-percentage">
-                  <small>Report</small><small class="text-success"> {{ this.tableDataUnified.added_states_info }}% </small>&nbsp;
-                  <small>Fault</small><small class="text-danger"> {{ this.tableDataUnified.added_states_fault }}% </small>
+                  Report<p style="display:inline" class="text-success"> {{ this.tableDataUnified.added_states_info }}% </p>&nbsp;
+                  Fault<p style="display:inline" class="text-danger"> {{ this.tableDataUnified.added_states_fault }}% </p>
                 </span>
               </div>
             </div>
@@ -354,8 +353,8 @@
                   <p class="sub-heading">Deleted states</p>
                 </div>
                 <span class="inc-dec-percentage">
-                  <small>Report </small><small class="text-success"> {{ this.tableDataUnified.deleted_states_info }}% </small>&nbsp;
-                  <small>Fault </small><small class="text-danger"> {{ this.tableDataUnified.deleted_states_fault }}% </small>
+                  Report <p style="display:inline" class="text-success"> {{ this.tableDataUnified.deleted_states_info }}% </p>&nbsp;
+                  Fault <p style="display:inline" class="text-danger"> {{ this.tableDataUnified.deleted_states_fault }}% </p>
                 </span>
               </div>
             </div>
@@ -369,8 +368,8 @@
                   <p class="sub-heading">Recurring states</p>
                 </div>
                 <span class="inc-dec-percentage">
-                  <small>Report </small><small class="text-success"> {{ this.tableDataUnified.recurring_states_info }}% </small>&nbsp;
-                  <small>Fault </small><small class="text-danger"> {{ this.tableDataUnified.recurring_states_fault }}% </small>
+                  Report <p style="display:inline" class="text-success"> {{ this.tableDataUnified.recurring_states_info }}% </p>&nbsp;
+                  Fault <p style="display:inline" class="text-danger"> {{ this.tableDataUnified.recurring_states_fault }}% </p>
                 </span>
               </div>
             </div>
@@ -384,11 +383,11 @@
                   <p class="sub-heading">Frequency change</p>
                 </div>
                 <span class="inc-dec-percentage">
-                  <small>Report </small>&nbsp;<small class="text-success"><i class="fa fa-long-arrow-alt-down"></i> {{ this.tableDataUnified.frequency_change_info[0] }}% </small>&nbsp;
-                  <small class="text-success"><i class="fa fa-long-arrow-alt-up"></i> {{ this.tableDataUnified.frequency_change_info[1] }}% </small>
+                 Report &nbsp;<p style="display:inline" class="text-success"><i class="fa fa-long-arrow-alt-down"></i> {{ this.tableDataUnified.frequency_change_info[0] }}% </p>&nbsp;
+                  <p style="display:inline" class="text-success"><i class="fa fa-long-arrow-alt-up"></i> {{ this.tableDataUnified.frequency_change_info[1] }}% </p>
                   <br>
-                  <small>Fault </small><small class="text-danger"><i class="fa fa-long-arrow-alt-down"></i> {{ this.tableDataUnified.frequency_change_fault[0] }}% </small>&nbsp;
-                  <small class="text-danger"><i class="fa fa-long-arrow-alt-up"></i> {{ this.tableDataUnified.frequency_change_fault[1] }}% </small>
+                  Fault <p style="display:inline" class="text-danger"><i class="fa fa-long-arrow-alt-down"></i> {{ this.tableDataUnified.frequency_change_fault[0] }}% </p>&nbsp;
+                  <p style="display:inline" class="text-danger"><i class="fa fa-long-arrow-alt-up"></i> {{ this.tableDataUnified.frequency_change_fault[1] }}% </p>
 
                 </span>
               </div>

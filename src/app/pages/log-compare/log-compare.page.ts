@@ -25,6 +25,7 @@ import {ApiService} from "../../@core/service/api.service";
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ChartConfig} from "../../@core/common/chart-config";
 import {VerificationRequest} from "../../@core/common/verification-request";
+import {Tags} from "../../@core/common/tags";
 
 @Component({
   selector: 'compare',
@@ -40,13 +41,13 @@ export class LogComparePage {
   @ViewChild('dateTimePicker', {read: TemplateRef}) dateTimePicker: TemplateRef<any>;
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
   openDatePicker = false;
-  applicationId: string;
+  applicationId: string = null;
   applications: Application[] = [];
 
   userId: string;
   user: LogsightUser | null;
 
-  tags: string[] = [];
+  tags: Tags[] = [];
   baselineTagId: string;
   matchPercentage = 0.0
   logBarFirst = []
@@ -130,12 +131,26 @@ export class LogComparePage {
   ngOnInit(): void {
     this.userId = localStorage.getItem("userId")
     this.loadPredefinedTimes();
-    this.authService.getLoggedUser(this.userId).pipe(
+    this.route.queryParamMap.subscribe(queryParams => {
+      let applicationId = queryParams.get('applicationId')
+      let baselineTag = queryParams.get('baselineTag')
+      let compareTag = queryParams.get('baselineTag')
+      if(applicationId&&baselineTag&&compareTag){
+        this.baselineTagId = baselineTag
+        this.compareTagId = compareTag
+        this.applicationId = applicationId
+        this.applicationSelected(this.applicationId)
+        this.computeLogCompare()
+      }
+    });
+      this.authService.getLoggedUser(this.userId).pipe(
       switchMap(user => this.integrationService.loadApplications(user.id))
     ).subscribe(resp => {
       this.applications = resp.applications
       setTimeout(_ => {
-        this.applicationSelected(this.applications[0].applicationId);
+        if(this.applicationId==null){
+          this.applicationSelected(this.applications[0].applicationId);
+        }
       }, 50);
     })
   }
@@ -250,10 +265,9 @@ export class LogComparePage {
 
   applicationSelected(appId: string) {
     this.applicationId = appId;
-    setTimeout(_ => {
-      this.loadApplicationVersions(this.userId, this.applicationId);
-    }, 50);
-
+          setTimeout(_ => {
+          this.loadApplicationVersions(this.userId, this.applicationId);
+      }, 1);
   }
 
   baselineTagSelected(tagId: string) {
@@ -319,16 +333,16 @@ export class LogComparePage {
     this.logCompareService.loadApplicationVersions(userId, applicationId).subscribe(resp => {
         this.tags = resp
         for (let i = 0; i < this.tags.length; i++) {
-          if (this.tags[i].length > 7) {
-            this.tags[i] = this.tags[i].slice(this.tags[i].length - 8, this.tags[i].length) + "_" + this.tags[i]
+          if (this.tags[i].tagView.length > 7) {
+            this.tags[i].tagView = this.tags[i].tagView.slice(this.tags[i].tagView.length - 8, this.tags[i].tagView.length)
           }
         }
         if (resp.length > 1) {
-          this.baselineTagId = this.tags[0].split('_')[1]
-          this.compareTagId = this.tags[1].split('_')[1]
+          this.baselineTagId = this.tags[0].tag
+          this.compareTagId = this.tags[1].tag
         } else {
-          this.baselineTagId = this.tags[0].split('_')[1]
-          this.compareTagId = this.tags[0].split('_')[1]
+          this.baselineTagId = this.tags[0].tag
+          this.compareTagId = this.tags[0].tag
         }
       },
       error => {

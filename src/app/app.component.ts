@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
       localStorage.removeItem('user')
-      location.reload()
+      setTimeout(_ => location.reload(), 300)
     }
   }
 }

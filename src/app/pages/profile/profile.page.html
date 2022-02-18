@@ -3,10 +3,16 @@
     <div class="row gutters-sm">
       <div class="col-sm-4 text-left">
         <h6>User info</h6>
-        <p>Username: <b>{{email}}</b></p>
+        <div class="row">
+        <div class="col-4"><p>Username: </div>
+          <div class="col-8"><b>{{email}}</b></div>
+        </div>
+        <div class="row text-left">
+        <div class="col-4"><p>User ID: </div>
+          <div class="col-8"><b>{{userId}}</b></div>
+        </div>
         <br>
-
-        <nb-accordion style="margin-right: 30%">
+        <nb-accordion >
   <nb-accordion-item>
     <nb-accordion-item-header>
       Change password
@@ -109,13 +115,13 @@
           </div>
             </div>
 </div>
-      <div class="row pl-5 pr-5">
+      <div *ngIf="this.applications.length>0" class="row pl-5 pr-5">
         <table class="table table-striped">
           <thead>
           <tr>
             <th scope="col">Id</th>
             <th scope="col">Name</th>
-            <th scope="col">Terminate</th>
+            <th scope="col">Operation</th>
           </tr>
           </thead>
           <tbody>
@@ -127,6 +133,10 @@
           </tr>
           </tbody>
         </table>
+      </div>
+
+         <div *ngIf="this.applications.length==0" class="row pl-5 pr-5 pb-5 justify-content-center">
+        No applications running at the moment.
       </div>
   </nb-card>
       </div>

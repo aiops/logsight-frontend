@@ -50,6 +50,7 @@ export class RegisterComponent implements OnInit {
 
   onSignUp() {
     this.isSpinning = true;
+    localStorage.removeItem("token")
     this.authService.register(this.form.value).subscribe(resp => {
         this.isSpinning = false;
         this.formSubmitted = true;

@@ -84,7 +84,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
     this.authService.getLoggedUser(this.userId).subscribe(user => {
       this.user = user
     })
-    this.loadPredefinedTimes(this.user.id);
+    this.loadPredefinedTimes(this.userId);
     this.route.queryParamMap.subscribe(queryParams => {
       let selectedTime = JSON.parse(localStorage.getItem("selectedTime"))
       let startTime = queryParams.get('startTimeSpecific') ?? selectedTime['startTime'] ?? queryParams.get('startTime')
@@ -131,7 +131,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
       })
 
     this.authService.getLoggedUser(this.userId).pipe(
-      switchMap(user => this.integrationService.loadApplications(user.id))
+      switchMap(user => this.integrationService.loadApplications(this.userId))
     ).subscribe(resp => {
       this.applications = resp.applications;
       if (this.applications.length > 0) {
@@ -288,11 +288,11 @@ export class IncidentsPage implements OnInit, OnDestroy {
   }
 
   onDeletePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.deleteTimeRange(this.user.id, predefinedTime).subscribe(() => this.loadPredefinedTimes(this.user.id))
+    this.dashboardService.deleteTimeRange(this.userId, predefinedTime).subscribe(() => this.loadPredefinedTimes(this.userId))
   }
 
   onSavePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.createTimeRange(this.user.id, predefinedTime).subscribe(_ => this.loadPredefinedTimes(this.user.id))
+    this.dashboardService.createTimeRange(this.userId, predefinedTime).subscribe(_ => this.loadPredefinedTimes(this.userId))
   }
 
   onSelectPredefinedTime(pt: PredefinedTime) {

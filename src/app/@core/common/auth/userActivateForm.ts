@@ -1,4 +1,4 @@
 export class UserActivateForm {
-  id: string;
+  userId: string;
   activationToken: string;
 }

@@ -1,5 +1,5 @@
 export class ChangePasswordForm {
-  id: string;
+  userId: string;
   oldPassword: string;
   newPassword: string;
   repeatNewPassword: string;

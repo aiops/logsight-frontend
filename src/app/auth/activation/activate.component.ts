@@ -53,8 +53,7 @@ export class ActivateComponent implements OnInit {
     this.themeService.changeTheme("default")
     this.route.queryParams.subscribe(params => {
       if (params.uuid && params.token) {
-        const activateForm = {"id": params.uuid, "activationToken": params.token}
-        console.log(activateForm)
+        const activateForm = {"userId": params.uuid, "activationToken": params.token}
         this.authService.activate(activateForm).subscribe(user => {
           this.user = user
           this.activationSuccess = true;

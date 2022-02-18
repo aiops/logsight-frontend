@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from "../../auth/authentication.service";
 import {HighlightResult} from "ngx-highlightjs";
-import {loadStripe} from "@stripe/stripe-js/pure";
 import {IntegrationService} from "../../@core/service/integration.service";
 import {NotificationsService} from "angular2-notifications";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {environment} from "../../../environments/environment";
-import {Browser} from "leaflet";
 import {LoginService} from "../../auth/login.service";
 import {ApiService} from "../../@core/service/api.service";
 import {Application} from "../../@core/common/application";
@@ -29,15 +26,15 @@ export class ProfilePage implements OnInit {
   paymentSuccessful: string = 'default'
   isMatching = true;
   formPassword = new FormGroup({
-      id: new FormControl(''),
-      oldPassword: new FormControl('', Validators.minLength(8)),
-      newPassword: new FormControl('', Validators.minLength(8)),
-      repeatNewPassword: new FormControl('', Validators.minLength(8))
+    id: new FormControl(''),
+    oldPassword: new FormControl('', Validators.minLength(8)),
+    newPassword: new FormControl('', Validators.minLength(8)),
+    repeatNewPassword: new FormControl('', Validators.minLength(8))
   });
   id: string;
 
   form = new FormGroup({
-  name: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
   });
   customerId = ''
   view: any[] = [400, 200];
@@ -70,9 +67,9 @@ export class ProfilePage implements OnInit {
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId')
     this.authService.getLoggedUser(this.userId).subscribe(resp => {
-      this.email = resp.email
-      this.id = resp.id
-      this.user = resp
+        this.email = resp.email
+        this.id = resp.userId
+        this.user = resp
       }
     )
     this.loadApplications(this.userId)
@@ -106,27 +103,27 @@ export class ProfilePage implements OnInit {
     this.quantity++;
   }
 
-  changeQuantity(){
+  changeQuantity() {
     var quantity = this.form.controls['name'].value
-    if (quantity >= 1){
+    if (quantity >= 1) {
       this.quantity = quantity
-    }else{
+    } else {
       this.notificationService.error("The entry is not a valid number!")
     }
 
   }
 
-  changePassword(){
+  changePassword() {
     this.formPassword.get("id").setValue(this.id)
     let newPassword = this.formPassword.value.newPassword
     let newPasswordRetry = this.formPassword.value.repeatNewPassword
-    if (newPassword != newPasswordRetry){
+    if (newPassword != newPasswordRetry) {
       this.isMatching = false
-    }else{
+    } else {
       this.isMatching = true
       this.loginService.changePassword(this.formPassword.value).subscribe(resp => {
         this.notificationService.success("Success", "The password was successfully updated.", this.apiService.getNotificationOpetions())
-      }, error =>{
+      }, error => {
         this.apiService.handleErrors(error)
       })
     }
@@ -161,12 +158,14 @@ export class ProfilePage implements OnInit {
   }
 
 
-    createApplication() {
+  createApplication() {
     this.isSpinning = true
     if (this.form) {
       this.integrationService.createApplication(this.userId, {applicationName: this.form.get("name").value}).subscribe(
         resp => {
-          setTimeout(_ => {this.applicationSelected(resp.applicationId);}, 50);
+          setTimeout(_ => {
+            this.applicationSelected(resp.applicationId);
+          }, 50);
           this.loadApplications(this.userId);
           this.form.reset()
           this.isSpinning = false
@@ -179,11 +178,10 @@ export class ProfilePage implements OnInit {
   }
 
   removeApplication(id: string) {
-    console.log(id)
-    this.integrationService.deleteApplication(this.user.id, id).subscribe(
+    this.integrationService.deleteApplication(this.userId, id).subscribe(
       resp => {
         this.notificationService.success('Success', 'Application successfully deleted', this.apiService.getNotificationOpetions())
-        this.loadApplications(this.user.id)
+        this.loadApplications(this.userId)
       }, error => {
         this.apiService.handleErrors(error)
       })
@@ -217,7 +215,6 @@ export class ProfilePage implements OnInit {
   // }
 
 
-
   async stripeCustomerPortal() {
     const stripe = await this.stripePromise;
     this.integrationService.checkCustomerPortal().subscribe(data => {
@@ -225,10 +222,9 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  valueFormatter(val){
+  valueFormatter(val) {
     return val.value
   }
-
 
 
 }

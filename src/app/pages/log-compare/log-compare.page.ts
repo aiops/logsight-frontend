@@ -144,7 +144,7 @@ export class LogComparePage {
       }
     });
       this.authService.getLoggedUser(this.userId).pipe(
-      switchMap(user => this.integrationService.loadApplications(user.id))
+      switchMap(user => this.integrationService.loadApplications(this.userId))
     ).subscribe(resp => {
       this.applications = resp.applications
       setTimeout(_ => {

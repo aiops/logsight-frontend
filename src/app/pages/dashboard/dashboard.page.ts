@@ -112,7 +112,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.authService.getLoggedUser(this.userId).subscribe(user => {
       this.user = user
     })
-    this.loadPredefinedTimes(this.user.id)
+    this.loadPredefinedTimes(this.user.userId)
 
     this.heatmapData$.subscribe(data => {
       data = data.data
@@ -423,11 +423,11 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onDeletePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.deleteTimeRange(this.user.id, predefinedTime).subscribe(() => this.loadPredefinedTimes(this.user.id))
+    this.dashboardService.deleteTimeRange(this.userId, predefinedTime).subscribe(() => this.loadPredefinedTimes(this.userId))
   }
 
   onSavePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.createTimeRange(this.user.id, predefinedTime).subscribe(resp => this.loadPredefinedTimes(this.user.id))
+    this.dashboardService.createTimeRange(this.userId, predefinedTime).subscribe(resp => this.loadPredefinedTimes(this.userId))
   }
 
   onSelectPredefinedTime(pt: PredefinedTime) {
@@ -475,10 +475,10 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   removeApplication(id: string) {
-    this.integrationService.deleteApplication(this.user.id, id).subscribe(
+    this.integrationService.deleteApplication(this.userId, id).subscribe(
       resp => {
         this.notificationService.success('Success', 'Application successfully deleted', this.apiService.getNotificationOpetions())
-        this.loadApplications(this.user.id)
+        this.loadApplications(this.userId)
         window.location.reload();
       }, error => {
         this.apiService.handleErrors(error)

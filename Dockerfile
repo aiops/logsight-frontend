@@ -1,3 +1,5 @@
+# docker build -t logsight/logsight-frontend .
+
 ### STAGE 1: Build ###
 
 # We label our stage as ‘builder’

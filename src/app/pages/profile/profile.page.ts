@@ -26,7 +26,7 @@ export class ProfilePage implements OnInit {
   paymentSuccessful: string = 'default'
   isMatching = true;
   formPassword = new FormGroup({
-    id: new FormControl(''),
+    userId: new FormControl(''),
     oldPassword: new FormControl('', Validators.minLength(8)),
     newPassword: new FormControl('', Validators.minLength(8)),
     repeatNewPassword: new FormControl('', Validators.minLength(8))
@@ -114,7 +114,7 @@ export class ProfilePage implements OnInit {
   }
 
   changePassword() {
-    this.formPassword.get("id").setValue(this.id)
+    this.formPassword.get("userId").setValue(this.id)
     let newPassword = this.formPassword.value.newPassword
     let newPasswordRetry = this.formPassword.value.repeatNewPassword
     if (newPassword != newPasswordRetry) {

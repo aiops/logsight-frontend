@@ -24,7 +24,7 @@ export class SampleDataPage implements OnInit {
 
   requestSampleData() {
     this.isSpinning = true
-    this.http.post(`/api/v1/logs/sample`, {})
+    this.http.post(`/api/v1/demo/hadoop`, {})
       .subscribe(resp => {
         this.isSpinning = false
         this.router.navigate(['/pages', 'dashboard'])

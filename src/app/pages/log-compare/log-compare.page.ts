@@ -210,6 +210,9 @@ export class LogComparePage {
         });
       }, 50); //hack to start first refresh
 
+    }, error => {
+      this.apiService.handleErrors(error)
+      this.isSpinning = false
     })
     this.loadBarDataUnified()
   }

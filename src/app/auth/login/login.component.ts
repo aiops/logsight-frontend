@@ -42,8 +42,9 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
-      this.router.navigate(['/pages/send-logs'])
-      // setTimeout(_ => this.router.navigate(['/pages/send-logs']), 300)
+      localStorage.setItem("userId", resp.user.userId)
+      // this.router.navigate(['/pages/send-logs'])
+      setTimeout(_ => this.router.navigate(['/pages/send-logs']), 300)
       }, error => {
         if (error.status == 409) {
           this.apiService.handleErrors(error)

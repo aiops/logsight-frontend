@@ -41,23 +41,17 @@ export class LoginComponent implements OnInit {
 
 
   onLogin() {
-    localStorage.removeItem('token')
     this.authService.login(this.form.value).subscribe(resp => {
-      localStorage.setItem("userId", resp.user.userId)
-
-      setTimeout(_ => this.route.queryParamMap.subscribe(
-          queryParams => {
-            let redirectUrl = "/pages/send-logs"
-            this.router.navigate([redirectUrl]).then(() => {
-            });
-          }
-        ), 200)
-
+      this.router.navigate(['/pages/send-logs'])
+      // setTimeout(_ => this.router.navigate(['/pages/send-logs']), 300)
       }, error => {
         if (error.status == 409) {
           this.apiService.handleErrors(error)
           this.router.navigate(['auth', 'resend-activation'])
         } else {
+          let redirectUrl = "/pages/send-logs"
+            this.router.navigate([redirectUrl]).then(() => {
+            });
           this.apiService.handleErrors(error)
         }
       }

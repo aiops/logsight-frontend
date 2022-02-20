@@ -46,9 +46,9 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     this.route.queryParams.subscribe(params => {
-      if (params.uuid && params.token) {
-        this.token = params.token
-        this.id = params.uuid
+      if (params.userId && params.passwordResetToken) {
+        this.token = params.passwordResetToken
+        this.id = params.userId
       }
     }, error => {
       this.apiService.handleErrors(error)

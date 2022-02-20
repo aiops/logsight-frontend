@@ -9,7 +9,13 @@ th {
 table td ,table th{
     border: 1px solid #222b45 !important;
 }
-
+.file-upload{
+  height: 100px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
 nb-list-item {
   font-weight: 550;
   font-size: 14px;
@@ -44,7 +50,6 @@ html, body {
 
 .dscr {
   font-weight: 500;
-  color: #ffffff;
 }
 // Columns and rows
 

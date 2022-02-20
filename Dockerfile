@@ -1,3 +1,5 @@
+# docker build -t logsight/logsight-frontend .
+
 ### STAGE 1: Build ###
 
 # We label our stage as ‘builder’
@@ -20,7 +22,7 @@ RUN $(npm bin)/ng build --prod --output-path=dist
 
 ### STAGE 2: Setup ###
 
-FROM nginx:1.14.1-alpine
+FROM nginx:1.21.6-alpine
 
 ## Copy our default nginx config
 COPY nginx/default.conf /etc/nginx/conf.d/

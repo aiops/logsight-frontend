@@ -1,15 +1,15 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { IntegrationPage } from './integration.page';
+import { ElasticsearchDataPage } from './elasticsearch-data.page';
 
 const routes: Routes = [{
   path: '',
-  component: IntegrationPage,
+  component: ElasticsearchDataPage,
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class IntegrationRoutingModule {
+export class ElasticsearchDataRoutingModule {
 }

@@ -9,6 +9,7 @@ import {interval} from "rxjs";
 import {TourService} from "ngx-ui-tour-md-menu";
 import {FileUploadValidators} from "@iplab/ngx-file-upload";
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {LogsightUser} from "../../@core/common/logsight-user";
 
 @Component({
   selector: 'send-logs',
@@ -19,8 +20,7 @@ export class QuickstartPage implements OnInit {
   firstForm: FormGroup;
   secondForm: FormGroup;
   thirdForm: FormGroup;
-  key: string;
-  email: string;
+  user: LogsightUser
   progressValue: number;
   curSec: number;
   progressIsHidden: boolean;
@@ -29,7 +29,6 @@ export class QuickstartPage implements OnInit {
 
 
   public formData = new FormData();
-  ReqJson: any = {};
 
   constructor(private fb: FormBuilder,
               private integrationService: IntegrationService,
@@ -46,9 +45,8 @@ export class QuickstartPage implements OnInit {
     this.progressValue = 0
     this.curSec = 0
     this.next = 0
-    this.authService.getLoggedUser().subscribe(user => {
-      this.key = user.key
-      this.email = user.email
+    this.authService.getLoggedUser(localStorage.getItem('userId')).subscribe(user => {
+      this.user = user
     });
   }
 
@@ -58,6 +56,10 @@ export class QuickstartPage implements OnInit {
 
   redirectToSampleData(){
     this.router.navigate(['pages','sample-data'])
+  }
+
+  redirectToElasticsearch(){
+    this.router.navigate(['pages','elasticsearch-data'])
   }
 
 

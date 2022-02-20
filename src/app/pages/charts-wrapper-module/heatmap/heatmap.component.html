@@ -11,7 +11,7 @@
     [yAxisLabel]="yAxisLabel"
     [results]="data"
     (select)="select.emit($event)"
-    [ngStyle]="{'fill':'white'}">
+    >
     <ng-template #tooltipTemplate let-model="model">
       <div style="text-align: left;">
         <div *ngFor="let d of data; let i = index">
@@ -23,7 +23,7 @@
 <!--              <p *ngIf="model .value == 0"> Number of incidents:-->
 <!--              {{0}}-->
 <!--              </p>-->
-              <p>
+              <p style="color: white">
               Severity score:
               {{model .value}}
                </p>

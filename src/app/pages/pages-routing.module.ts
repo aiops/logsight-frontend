@@ -19,7 +19,7 @@ const routes: Routes = [{
         .then(m => m.QualityModule),
     },
     {
-      path: 'log-compare',
+      path: 'compare',
       loadChildren: () => import('./log-compare/log-compare.module')
         .then(m => m.LogCompareModule),
     },
@@ -41,6 +41,11 @@ const routes: Routes = [{
       path: 'sample-data',
       loadChildren: () => import('./sample-data/sample-data.module')
         .then(m => m.SampleDataModule),
+    },
+    {
+      path: 'elasticsearch-data',
+      loadChildren: () => import('./elasticsearch-data/elasticsearch-data.module')
+        .then(m => m.ElasticsearchDataModule),
     },
     {
       path: 'variable-analysis',

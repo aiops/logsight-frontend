@@ -2,9 +2,8 @@
 
   <div class="col" >
 
-    <ng-container *ngIf="uploadFile">
+    <ng-container>
       <div class="row user_guidance">
-        <!--      <nb-card class="p-2 rows" style="width: 100%">-->
         <div class="col-sm">
           <div class="row">
             <h4>Use sample data</h4>
@@ -16,7 +15,7 @@
       </div>
       <br>
       <br>
-
+      <nb-card style="padding: 30px">
       <div class="row user_guidance">
 
         <div class="col-sm" align="center">
@@ -26,23 +25,13 @@
           </button>
             </div>
 
+          <div *ngIf="isSpinning">Loading sample data... After redirect, it may take up to a minute for the data to load.</div>
           <div *ngIf="isSpinning" class="spinner-border text-primary" style="position: relative" role="status">
           </div>
         </div>
 
-        <!--          <div class="row user_guidance">-->
-        <!--            <div class="col">-->
-        <!--              <div class="row">-->
-        <!--                <h6>Integration help?</h6>-->
-        <!--              </div>-->
-        <!--              <div class="row">-->
-        <!--                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--          </div>-->
-
       </div>
-
+</nb-card>
 
           <div class="row user_guidance pt-5">
         <div class="col">

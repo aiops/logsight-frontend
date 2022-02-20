@@ -6,31 +6,42 @@
 <!--</div>-->
 <br>
 <div class="row justify-content-md-center" style="max-width: 100%; padding-bottom: 75px">
-  <h4 style="color: #ffffff">Select data source</h4>
+  <h4>Select data source</h4>
   <br>
 </div>
 <div class="row justify-content-md-center" style="padding-left: 20%; padding-right: 20%">
 <div class="col">
-  <nb-card size="tiny" (click)="redirectToUploadLogFile()" style="cursor: pointer">
+  <nb-card size="small" (click)="redirectToUploadLogFile()" style="cursor: pointer">
     <nb-card-body>
         <div class="vertical-center">
         <i class="fas fa-file-import fa-6x"></i> </div>
         <div class="vertical-center2">
-        <button nbButton size="giant">Upload log file</button></div>
+        <button shape="round"  style="text-transform: none" nbButton size="giant">Upload file</button></div>
     </nb-card-body>
   </nb-card>
 </div>
 
     <div class="col">
-  <nb-card size="tiny" (click)="redirectToSampleData()" style="cursor: pointer">
+  <nb-card size="small" (click)="redirectToSampleData()" style="cursor: pointer">
     <nb-card-body>
         <div class="vertical-center">
         <i class="fas fa-copy fa-6x"></i> </div>
         <div class="vertical-center2">
-        <button nbButton size="giant">Use sample data</button></div>
+        <button nbButton shape="round" style="text-transform: none"  size="giant">Sample data</button></div>
     </nb-card-body>
   </nb-card>
 </div>
+
+<!--      <div class="col">-->
+<!--  <nb-card size="small" (click)="redirectToElasticsearch()" style="cursor: pointer">-->
+<!--    <nb-card-body>-->
+<!--        <div class="vertical-center">-->
+<!--        <img src="../../../assets/icons/logo-elastic-vertical-dark-ink.svg" height="100"> </div>-->
+<!--        <div class="vertical-center2">-->
+<!--        <button nbButton shape="round" style="text-transform: none"  size="giant">Elasticsearch</button></div>-->
+<!--    </nb-card-body>-->
+<!--  </nb-card>-->
+<!--</div>-->
 
 
 </div>

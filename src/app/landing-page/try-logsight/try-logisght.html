@@ -1,0 +1,205 @@
+<main id="main" xmlns="http://www.w3.org/1999/html">
+  <section class="about" id="about">
+
+    <div class="container">
+      <div class="row">
+        <div class="col" style="margin-top: 5rem;">
+          <h2>Upload Log Files & Get Fast Insights</h2>
+          <p>Free up to 1MB, no credit card required.</p>
+          <table class="text-center align-items-center" style="width: 100%">
+            <tr class="row">
+              <div class="col-sm text-left mb-3">
+<!--            <nb-select class="period-select" [(selected)]="this.logFileType"-->
+<!--                       (selectedChange)="logFileTypeSelected($event)"-->
+<!--                       placeholder="Select log file type">-->
+<!--              <nb-option *ngFor="let fileType of logFileTypes" [value]="fileType.type">-->
+<!--                {{ fileType.renderType }}-->
+<!--              </nb-option>-->
+<!--            </nb-select>-->
+<!--                <div *ngFor="let fileType of logFileTypes">-->
+<!--                  {{fileType.renderType}}-->
+<!--                </div>-->
+              <form [formGroup]="formLogFileType">
+                <select formControlName="logTypeControl" class="form-select" aria-label="Default select example" [value]="logFileType">
+                <option selected disabled [value]="'Choose'">Choose log file type</option>
+                <option *ngFor="let fileType of logFileTypes" [value]="fileType.type">{{fileType.renderType}}</option>
+                  </select>
+                </form>
+          </div>
+
+            </tr>
+            <tr class="row">
+              <div class="col-sm uploader">
+                <div class="box">
+                  <label>
+                    <div style="right: 50%;
+                              bottom: 50%;
+                              transform: translate(50%,50%);
+                              position: absolute;">
+                    <img alt="Preview" id="file-image"
+                         src="../../../assets/img/try_logsight/log-file-format-svgrepo-com.svg">
+                    <img alt="Preview"  id="file-image-logstash"
+                         src="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt8b679e63f2b49b27/5d082d93877575d0584761c0/logo-logstash-32-color.svg">
+
+                    <div *ngIf="fileList.length == 0"> <p style="color: #454cad; margin: 0px; padding: 0px; font-weight: 500; font-size: 18px">Click anywhere to select your log file for upload.</p></div>
+                      <div *ngIf="fileList.length == 0"> <p style="color: #8d8fa6; margin: 0px; padding: 0px; font-weight: 500; font-size: 14px">Select <b style="font-size: 14px">Syslog</b> file type and upload<br> <code style="font-size: 14px">/var/log/syslog</code> in Linux distributions<br> <code style="font-size: 14px">/private/var/log/system.log</code> in MacOS</p></div>
+                      <div *ngIf="fileList.length == 0"> <p style="color: #8d8fa6; margin: 0px; padding: 0px; font-weight: 500; font-size: 14px">Select <b style="font-size: 14px">Logstash</b> file type and upload<br> <i style="font-size: 14px">any logstash formated log file</i></p></div>
+
+                      <input nbInput size="giant" style="text-align: left" fullWidth status="basic" type="file" id="file"
+                           (change)="uploadFiles($event.target.files)">
+                    <div>
+                    <nb-icon *ngIf="fileList.length > 0" style="width: 1rem" icon="file-text-outline"
+                             nbButton status="basic"></nb-icon> {{fileList[fileList.length-1]}}
+                    </div>
+                      </div>
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm uploader">
+                <div class="box">
+                  <label>
+                    <div *ngIf="isSpinning == false && emailCheck == false" style="right: 60%;
+                              bottom: 50%;
+                              transform: translate(50%,50%);
+                              position: absolute;">
+                      <form (submit)="onGetInsights()" [formGroup]="form" accept-charset="UTF-8" autocomplete="off"
+                            class="subscribe-form uploader wow zoomIn"
+                            enctype="application/x-www-form-urlencoded" id="chimp-form" novalidate>
+                        <input autocomplete="off" class="form-control" formControlName="email" id="chimp-email"
+                               name="email"
+                               placeholder="Enter your email"
+                               style="width: 170%; height: 3.5rem" type="email">
+
+                        <input class="btn btn-primary mt-1"
+                               style="font-weight: 700; width: 170%; height: 3.5rem; background-color: #4154f1"
+                               type="submit"
+                               value="Get Insights">
+                      </form>
+                    </div>
+
+                    <div *ngIf="isSpinning == true" style="right: 50%;
+                              bottom: 60%;
+                              transform: translate(50%,50%);
+                              position: absolute;">
+                      <div class="loader"></div>
+                    </div>
+                    <div  *ngIf="isSpinning == true" style="right: 50%;
+                              bottom: 40%;
+                              transform: translate(50%,50%);
+                              position: absolute;">
+<!--                      <div style="color: #012970; font-weight: 600">The AI systems are processing your logs! It may take up to a minute ...</div>-->
+                    </div>
+
+                    <div  *ngIf="isSpinning == false && emailCheck == true" style="right: 50%;
+                              bottom: 50%;
+                              transform: translate(50%,50%);
+                              position: absolute;">
+                      <div style="color: #012970; font-weight: 600; font-size: 20px">The AI systems are processing your logs! <br> It may take up to two minutes. <br> You will receive an email when the result is ready. </div>
+                    </div>
+
+                  </label>
+                </div>
+              </div>
+            </tr>
+            <div class="row mt-4">
+            <div class="col">
+            <p>Need help? <a href="https://docs.logsight.ai">Read the docs</a> or <a href="mailto:info@logsight.ai">Contact us.</a></p>
+            <h1>You are using the free version of logsight.ai. </h1>
+            <div style="color: #012970; font-weight: 600">Unlock the full potential of logsight.ai – Try logsight.ai Premium features.</div>
+            <div style="color: #012970; font-weight: 600">Contact us for enterprise solutions.</div>
+
+
+            </div>
+          </div>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+
+  </section><!-- End About Section -->
+
+
+<section id="pricing" class="pricing pt-0">
+
+    <div class="container">
+      <div class="row gy-2" >
+
+        <div class="col-lg-4 col-md-4">
+          <div class="box">
+            <h3 style="color: #07d5c0;">Free Plan</h3>
+            <div class="price"><sup>$</sup>0</div>
+<!--            <img src="assets/img/pricing-free.png" class="img-fluid" alt="">-->
+            <ul>
+              <li>Up to 1 GB</li>
+              <li>Cognitive & Flow Anomalies</li>
+              <li>Quality Analysis (up to 5 operations)</li>
+              <li>Variable Analysis</li>
+              <li>Continuous Verification (up to 5 operations)</li>
+              <li class="na">Customized AI Models</li>
+              <li class="na">On-Premise Deployment</li>
+            </ul>
+<!--            <a href="#" class="btn-buy">Buy Now</a>-->
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4" >
+          <div class="box">
+            <span class="featured">Featured</span>
+            <h3 style="color: #65c600;">Starter Plan</h3>
+            <div class="price"><sup>$</sup>2<span> / GB</span></div>
+<!--            <img src="assets/img/pricing-starter.png" class="img-fluid" alt="">-->
+            <ul>
+              <li>Pay per GB</li>
+              <li>Cognitive & Flow Anomalies</li>
+              <li>Quality Analysis</li>
+              <li>Variable Analysis</li>
+              <li>Continuous Verification</li>
+              <li class="na">Customized AI Models</li>
+              <li class="na">On-Premise Deployment</li>
+            </ul>
+<!--            <a href="#" class="btn-buy">Buy Now</a>-->
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4" >
+          <div class="box">
+            <h3 style="color: #ff901c;">Enterprise Plan</h3>
+            <div class="price"><a href="mailto:info@logsight.ai" style="color: black">Contact us</a></div>
+<!--            <img src="assets/img/pricing-business.png" class="img-fluid" alt="">-->
+                <ul>
+              <li>Custom Price</li>
+              <li>Cognitive & Flow Anomalies</li>
+              <li>Quality Analysis</li>
+              <li>Variable Analysis</li>
+              <li>Continuous Verification</li>
+              <li>Customized AI Models</li>
+              <li>On-Premise Deployment</li>
+            </ul>
+<!--            <a href="#" class="btn-buy">Buy Now</a>-->
+          </div>
+        </div>
+
+<!--        <div class="col-lg-3 col-md-6" >-->
+<!--          <div class="box">-->
+<!--            <h3 style="color: #ff0071;">Ultimate Plan</h3>-->
+<!--            <div class="price"><sup>$</sup>49<span> / mo</span></div>-->
+<!--            <img src="assets/img/pricing-ultimate.png" class="img-fluid" alt="">-->
+<!--            <ul>-->
+<!--              <li>Aida dere</li>-->
+<!--              <li>Nec feugiat nisl</li>-->
+<!--              <li>Nulla at volutpat dola</li>-->
+<!--              <li>Pharetra massa</li>-->
+<!--              <li>Massa ultricies mi</li>-->
+<!--            </ul>-->
+<!--            <a href="#" class="btn-buy">Buy Now</a>-->
+<!--          </div>-->
+<!--        </div>-->
+
+      </div>
+
+    </div>
+
+  </section><!-- End Pricing Section -->
+</main>

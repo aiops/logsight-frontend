@@ -20,7 +20,7 @@ const routes: Routes = [{
       component: ImpressumComponent
     },
     {
-      path: 'quickstart',
+      path: 'get-started',
       component: TryLogsightComponent
     },
     {

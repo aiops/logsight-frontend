@@ -68,7 +68,7 @@ export class TryLogsightComponent implements OnInit {
       // if (error.status)
       localStorage.removeItem("token")
       this.loadFileTypes()
-      location.reload()
+      // location.reload()
       }
     )
   }

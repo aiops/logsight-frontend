@@ -961,11 +961,17 @@ section {
 }
 
 .pricing .price {
-  font-size: 36px;
+  font-size: 24px;
   color: #444444;
   font-weight: 600;
-  font-family: "Poppins", sans-serif;
 }
+
+.pricing .price a {
+  font-size: 24px;
+  color: #444444;
+  font-weight: 600;
+}
+
 
 .pricing .price sup {
   font-size: 20px;

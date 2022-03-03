@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit, HostListener, AfterViewInit } from '@angular/core';
+import {Component, OnDestroy, OnInit, HostListener, AfterViewInit, Renderer2, Inject} from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { Router } from '@angular/router';
 import { LoginService } from '../auth/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as AOS from 'aos';
+import {DOCUMENT} from "@angular/common";
 @Component({
   selector: 'landing-page',
   styleUrls: ['./assets/css/style.css', './assets/vendor/bootstrap-icons/bootstrap-icons.css',
@@ -21,7 +22,9 @@ export class LandingPage implements OnInit, AfterViewInit {
 
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
-              private router: Router) {
+              private router: Router,
+              private _renderer: Renderer2,
+              @Inject(DOCUMENT) private _document,) {
   }
 
   ngOnInit(): void {
@@ -31,6 +34,17 @@ export class LandingPage implements OnInit, AfterViewInit {
       el.style['display'] = 'none';
     }
     AOS.init();
+
+    const s2 = this._renderer.createElement('script');
+    s2.text = `(function () {
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://w.appzi.io/w.js?token=nM3C4';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+    })();`
+    this._renderer.appendChild(this._document.body, s2);
   }
 
   @HostListener('window:scroll', ['$event'])

@@ -36,8 +36,9 @@ import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.co
 import $ from 'jquery'
 import {ResendActivationComponent} from "./auth/resend-activation/resend-activation.component";
 import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
+import {LandingPage} from "./landing-page/landing.page";
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, ActivateComponent, ForgotPasswordComponent, ResendActivationComponent, ResetPasswordComponent],
+  declarations: [LandingPage, AppComponent, LoginComponent, RegisterComponent, ActivateComponent, ForgotPasswordComponent, ResendActivationComponent, ResetPasswordComponent],
   imports: [
     BrowserModule,
     FormsModule,

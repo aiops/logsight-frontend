@@ -12,6 +12,7 @@
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
+    "prestart": "envsubst < src/environments/environment.template.ts > src/environments/environment.ts",
     "start": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --port 4200",
     "build": "ng build",
     "build:prod": "npm run build -- --prod --aot",

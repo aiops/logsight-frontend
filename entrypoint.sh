@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Copyright 2021-2022 logsight.ai
 
 set -e
@@ -14,4 +14,5 @@ check_license() {
 }
 
 check_license
-nginx -g daemon off;
+envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js 
+exec nginx -g 'daemon off;'

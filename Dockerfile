@@ -40,4 +40,4 @@ COPY entrypoint.sh /sbin
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT [ "/sbin/entrypoint.sh" ]

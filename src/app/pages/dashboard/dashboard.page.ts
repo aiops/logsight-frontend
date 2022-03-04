@@ -116,7 +116,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
     this.heatmapData$.subscribe(data => {
       data = data.data
-      console.log("D", data.data)
+      // console.log("D", data.data)
       if (data) {
         const el = document.getElementById('nb-global-spinner');
         if (el) {

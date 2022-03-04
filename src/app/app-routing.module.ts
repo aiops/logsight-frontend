@@ -16,7 +16,7 @@ import {ResetPasswordComponent} from "./auth/reset-password/reset-password.compo
 import {environment} from "../environments/environment";
 
 export var routes: Routes
-console.log("PRODUCTION:", environment.production)
+// console.log("PRODUCTION:", environment.production)
 if (environment.production){
   routes =  [
   {

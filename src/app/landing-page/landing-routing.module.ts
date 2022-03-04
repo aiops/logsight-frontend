@@ -20,10 +20,6 @@ const routes: Routes = [{
       component: ImpressumComponent
     },
     {
-      path: 'get-started',
-      component: TryLogsightComponent
-    },
-    {
       path: 'privacy-policy',
       component: PrivacyPolicyComponent,
     },

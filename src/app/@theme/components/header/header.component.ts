@@ -100,7 +100,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.curSec = 0;
     this.userId = localStorage.getItem('userId')
     this.authService.getLoggedUser(this.userId).subscribe(user => {
-      console.log(user)
+      // console.log(user)
       this.id = user.userId
       this.email = user.email
     })

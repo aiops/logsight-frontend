@@ -188,7 +188,7 @@ export class LogComparePage {
     let verificationRequest = new VerificationRequest(this.applicationId, this.userId, this.baselineTagId, this.compareTagId)
     this.logCompareService.computeLogCompare(verificationRequest).subscribe(resp => {
       this.tableDataUnified = resp
-      console.log("data:", this.tableDataUnified)
+      // console.log("data:", this.tableDataUnified)
       this.isSpinning = false
       setTimeout(_ => {
         $('.inlinesparkline').sparkline('html', {width: '6vh', height: '1.8vh'});

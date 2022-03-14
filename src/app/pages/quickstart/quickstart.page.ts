@@ -62,6 +62,12 @@ export class QuickstartPage implements OnInit {
     this.router.navigate(['pages','elasticsearch-data'])
   }
 
+  redirectToSwagger(){
+    window.open(
+  'https://docs.logsight.ai/#/detect_incidents/using_the_rest_api?id=send-logs',
+  '_blank' // <- This is what makes it open in a new window.
+    );
+  }
 
 
 

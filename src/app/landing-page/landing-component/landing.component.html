@@ -1,40 +1,44 @@
-<section id="hero" class="hero d-flex align-items-center">
-  <div style="max-width: 80%" class="container">
+<section class="hero d-flex align-items-center" id="hero">
+  <div class="container" style="max-width: 80%">
     <div class="row">
       <div class="col-lg-5 d-flex flex-column justify-content-center">
         <h1 data-aos="fade-up">Your Ally for Intelligent DevOps Pipelines</h1>
-        <h2 data-aos="fade-up">logsight.ai infuses deep learning and AI-powered analytics to enable continuous software delivery and proactive troubleshooting</h2>
+        <h2 data-aos="fade-up">logsight.ai infuses deep learning and AI-powered analytics to enable continuous software
+          delivery and proactive troubleshooting</h2>
         <div data-aos="fade-up">
           <div class="text-center text-lg-start" style="margin-top: 2rem">
-              <form id="chimp-form" [formGroup]="form" (submit)="onSignUp()" class="subscribe-form wow zoomIn"
-            accept-charset="UTF-8"
-            enctype="application/x-www-form-urlencoded" autocomplete="off" novalidate>
-        <table>
-          <tr style="width: 100%">
-            <td style="width: 80%"><input formControlName="email" class="form-control" id="chimp-email" type="email" name="email"
-                       placeholder="Enter your email"
-                       autocomplete="off" style="width: 100%; height: 3.5rem"></td>
-            <td style="padding-left: 1em; width: 30%"><input style="text-transform: none; background-color: #4154f1; width: 100%; height: 3.5rem" class="btn btn-primary mb-0"
-                                                  type="submit"
-                                                  value="Sign up"></td>
-          </tr>
-<!--          <tr>-->
-<!--            <td style="padding-top: 10px">-->
-<!--              <div class="form-note">-->
-<!--                <p>Free up to 1 GB of log data, no credit card required</p>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--          </tr>-->
-        </table>
-      </form>
+            <form (submit)="onSignUp()" [formGroup]="form" accept-charset="UTF-8" autocomplete="off"
+                  class="subscribe-form wow zoomIn"
+                  enctype="application/x-www-form-urlencoded" id="chimp-form" novalidate>
+              <table>
+                <tr style="width: 100%">
+                  <td style="width: 80%"><input autocomplete="off" class="form-control" formControlName="email"
+                                                id="chimp-email" name="email"
+                                                placeholder="Enter your email"
+                                                style="width: 100%; height: 3.5rem" type="email"></td>
+                  <td style="padding-left: 1em; width: 30%"><input
+                    class="btn btn-primary mb-0"
+                    style="text-transform: none; background-color: #4154f1; width: 100%; height: 3.5rem"
+                    type="submit"
+                    value="Sign up"></td>
+                </tr>
+                <!--          <tr>-->
+                <!--            <td style="padding-top: 10px">-->
+                <!--              <div class="form-note">-->
+                <!--                <p>Free up to 1 GB of log data, no credit card required</p>-->
+                <!--              </div>-->
+                <!--            </td>-->
+                <!--          </tr>-->
+              </table>
+            </form>
           </div>
         </div>
       </div>
 
-      <div class="col-lg-1 hero-img" style="image-rendering: crisp-edges" data-aos="zoom-out">
+      <div class="col-lg-1 hero-img" data-aos="zoom-out" style="image-rendering: crisp-edges">
       </div>
-      <div class="col-lg-6 hero-img" style="image-rendering: crisp-edges" data-aos="zoom-out">
-        <img src="assets/img/hero.png" class="img-fluid" alt="">
+      <div class="col-lg-6 hero-img" data-aos="zoom-out" style="image-rendering: crisp-edges">
+        <img alt="" class="img-fluid" src="assets/img/hero.svg">
       </div>
     </div>
   </div>
@@ -44,40 +48,54 @@
 <main id="main">
 
   <!-- ======= Values Section ======= -->
-  <section id="values" class="values" data-aos="fade-up">
+  <section class="values" data-aos="fade-up" id="values">
 
     <div class="container">
       <header class="section-header">
-        <h2>Spotlight</h2>
-        <p>Your AI Partner for Reliable DevOps Pipelines</p>
+<!--        <h2>Spotlight</h2>-->
+        <p>AI Partner for Reliable DevOps Pipelines</p>
       </header>
 
       <div class="row">
 
-                <div class="col-lg-4 mt-4 mt-lg-0">
-          <div class="box" >
-            <img src="assets/img/stage_verifier.png" class="img-fluid" alt="">
+        <div class="col-3">
+<!--          <div class="box">-->
+<!--            <img alt="" class="img-fluid" src="assets/img/code_inspector.png">-->
+<!--            <h3>Code Inspector</h3>-->
+<!--            <p>AI-powered code reviewer trained to find logging statements with a low quality. Once statements are-->
+<!--              located, Code Inspector provides intelligent recommendations on how to improve log quality.</p>-->
+<!--          </div>-->
+        </div>
+
+
+        <div class="col-3">
+          <div class="box">
+            <img alt="" class="img-fluid" src="assets/img/stage_verifier.svg">
             <h3>Stage Verifier</h3>
-            <p>AI-powered continuous verification system that verifies software releases across deployment stages (e.g., testing, staging and production) ensuring their reliability.</p>
+            <p>AI-powered system that verifies software releases across deployment stages such as testing, staging, and production, ensuring their reliability.</p>
+            <a href="https://docs.logsight.ai/#/monitor_deployments/stage_verifier" target="_blank">Read more</a>
           </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-3">
           <div class="box">
-            <img style="width: 50%" src="assets/img/incident_detector.png" class="img-fluid" alt="">
+            <img alt="" class="img-fluid" src="assets/img/incident_detector.svg">
             <h3>Incident Detector</h3>
-            <p>Proactively identifies incidents in production and in real-time. It uses semantic technologies and AI to infer the meaning and risk of log records.</p>
+            <p>Proactively identifies incidents in production and in real-time. It uses semantic technologies and AI to
+              infer the meaning and risk of log records.</p>
+            <a href="https://docs.logsight.ai/#/detect_incidents/incident_detector" target="_blank">Read more</a>
+
           </div>
         </div>
 
 
-
-        <div class="col-lg-4 mt-4 mt-lg-0">
-          <div class="box">
-            <img  style="width: 40%" src="assets/img/code_inspector.png" class="img-fluid" alt="">
-            <h3>Code Inspector</h3>
-            <p>AI-powered code reviewer trained to find logging statements with a low quality. Once statements are located, Code Inspector provides intelligent recommendations on how to improve log quality.</p>
-          </div>
+        <div class="col-3">
+<!--          <div class="box">-->
+<!--            <img alt="" class="img-fluid" src="assets/img/code_inspector.png">-->
+<!--            <h3>Code Inspector</h3>-->
+<!--            <p>AI-powered code reviewer trained to find logging statements with a low quality. Once statements are-->
+<!--              located, Code Inspector provides intelligent recommendations on how to improve log quality.</p>-->
+<!--          </div>-->
         </div>
 
       </div>
@@ -87,115 +105,115 @@
   </section><!-- End Values Section -->
 
   <!-- ======= Counts Section ======= -->
-<!--  <section id="counts" class="counts">-->
-<!--    <div class="container" data-aos="fade-up">-->
+  <!--  <section id="counts" class="counts">-->
+  <!--    <div class="container" data-aos="fade-up">-->
 
-<!--      <div class="row gy-4">-->
+  <!--      <div class="row gy-4">-->
 
-<!--        <div class="col-lg-3 col-md-6">-->
-<!--          <div class="count-box">-->
-<!--            <i class="bi bi-emoji-smile"></i>-->
-<!--            <div>-->
-<!--              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"-->
-<!--                    class="purecounter"></span>-->
-<!--              <p>Happy Clients</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-3 col-md-6">-->
+  <!--          <div class="count-box">-->
+  <!--            <i class="bi bi-emoji-smile"></i>-->
+  <!--            <div>-->
+  <!--              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"-->
+  <!--                    class="purecounter"></span>-->
+  <!--              <p>Happy Clients</p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-3 col-md-6">-->
-<!--          <div class="count-box">-->
-<!--            <i class="bi bi-journal-richtext" style="color: #ee6c20;"></i>-->
-<!--            <div>-->
-<!--              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"-->
-<!--                    class="purecounter"></span>-->
-<!--              <p>Projects</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-3 col-md-6">-->
+  <!--          <div class="count-box">-->
+  <!--            <i class="bi bi-journal-richtext" style="color: #ee6c20;"></i>-->
+  <!--            <div>-->
+  <!--              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"-->
+  <!--                    class="purecounter"></span>-->
+  <!--              <p>Projects</p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-3 col-md-6">-->
-<!--          <div class="count-box">-->
-<!--            <i class="bi bi-headset" style="color: #15be56;"></i>-->
-<!--            <div>-->
-<!--              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1"-->
-<!--                    class="purecounter"></span>-->
-<!--              <p>Hours Of Support</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-3 col-md-6">-->
+  <!--          <div class="count-box">-->
+  <!--            <i class="bi bi-headset" style="color: #15be56;"></i>-->
+  <!--            <div>-->
+  <!--              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1"-->
+  <!--                    class="purecounter"></span>-->
+  <!--              <p>Hours Of Support</p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-3 col-md-6">-->
-<!--          <div class="count-box">-->
-<!--            <i class="bi bi-people" style="color: #bb0852;"></i>-->
-<!--            <div>-->
-<!--              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"-->
-<!--                    class="purecounter"></span>-->
-<!--              <p>Hard Workers</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-3 col-md-6">-->
+  <!--          <div class="count-box">-->
+  <!--            <i class="bi bi-people" style="color: #bb0852;"></i>-->
+  <!--            <div>-->
+  <!--              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"-->
+  <!--                    class="purecounter"></span>-->
+  <!--              <p>Hard Workers</p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--      </div>-->
+  <!--      </div>-->
 
-<!--    </div>-->
-<!--  </section>&lt;!&ndash; End Counts Section &ndash;&gt;-->
+  <!--    </div>-->
+  <!--  </section>&lt;!&ndash; End Counts Section &ndash;&gt;-->
 
   <!-- ======= Features Section ======= -->
-  <section id="features" class="features" data-aos="fade-up">
+  <section class="features" data-aos="fade-up" id="features">
 
     <div class="container">
 
       <header class="section-header">
-        <h2>Features</h2>
+<!--        <h2>Features</h2>-->
         <p>AI-powered Log Analytics with Scalable Performance</p>
       </header>
 
       <div class="row">
 
-        <div class="col-lg-6">
-          <img src="assets/img/features.png" class="img-fluid" alt="">
+        <div class="col-lg-3">
+          <img alt="" class="img-fluid" src="assets/img/imgfeatures.svg">
         </div>
 
-        <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
+        <div class="col-lg-9 mt-5 mt-lg-0 d-flex">
           <div class="row align-self-center gy-4">
 
-            <div class="col-md-6" >
+            <div class="col-md-6">
               <div class="feature-box d-flex align-items-center">
                 <i class="bi bi-check"></i>
                 <h3>Proactive Troubleshooting</h3>
               </div>
             </div>
 
-            <div class="col-md-6" >
+            <div class="col-md-6">
               <div class="feature-box d-flex align-items-center">
                 <i class="bi bi-check"></i>
                 <h3>Cognitive & Flow Anomalies</h3>
               </div>
             </div>
 
-            <div class="col-md-6" >
+            <div class="col-md-6">
               <div class="feature-box d-flex align-items-center">
                 <i class="bi bi-check"></i>
                 <h3>Quality Analysis</h3>
               </div>
             </div>
 
-            <div class="col-md-6"  >
+            <div class="col-md-6">
               <div class="feature-box d-flex align-items-center">
                 <i class="bi bi-check"></i>
                 <h3>Variable Analysis</h3>
               </div>
             </div>
 
-            <div class="col-md-6"  >
+            <div class="col-md-6">
               <div class="feature-box d-flex align-items-center">
                 <i class="bi bi-check"></i>
                 <h3>Continuous Verification</h3>
               </div>
             </div>
 
-            <div class="col-md-6" >
+            <div class="col-md-6">
               <div class="feature-box d-flex align-items-center">
                 <i class="bi bi-check"></i>
                 <h3>Customizable Models</h3>
@@ -208,378 +226,386 @@
       </div> <!-- / row -->
 
       <!-- Feature Tabs -->
-<!--      <div class="row feture-tabs">-->
-<!--        <div class="col-lg-6">-->
-<!--          <h3>Neque officiis dolore maiores et exercitationem quae est seda lidera pat claero</h3>-->
+      <!--      <div class="row feture-tabs">-->
+      <!--        <div class="col-lg-6">-->
+      <!--          <h3>Neque officiis dolore maiores et exercitationem quae est seda lidera pat claero</h3>-->
 
-<!--          &lt;!&ndash; Tabs &ndash;&gt;-->
-<!--          <ul class="nav nav-pills mb-3">-->
-<!--            <li>-->
-<!--              <a class="nav-link active" data-bs-toggle="pill" href="#tab1">Saepe fuga</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a class="nav-link" data-bs-toggle="pill" href="#tab2">Voluptates</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a class="nav-link" data-bs-toggle="pill" href="#tab3">Corrupti</a>-->
-<!--            </li>-->
-<!--          </ul>&lt;!&ndash; End Tabs &ndash;&gt;-->
+      <!--          &lt;!&ndash; Tabs &ndash;&gt;-->
+      <!--          <ul class="nav nav-pills mb-3">-->
+      <!--            <li>-->
+      <!--              <a class="nav-link active" data-bs-toggle="pill" href="#tab1">Saepe fuga</a>-->
+      <!--            </li>-->
+      <!--            <li>-->
+      <!--              <a class="nav-link" data-bs-toggle="pill" href="#tab2">Voluptates</a>-->
+      <!--            </li>-->
+      <!--            <li>-->
+      <!--              <a class="nav-link" data-bs-toggle="pill" href="#tab3">Corrupti</a>-->
+      <!--            </li>-->
+      <!--          </ul>&lt;!&ndash; End Tabs &ndash;&gt;-->
 
-<!--          &lt;!&ndash; Tab Content &ndash;&gt;-->
-<!--          <div class="tab-content">-->
+      <!--          &lt;!&ndash; Tab Content &ndash;&gt;-->
+      <!--          <div class="tab-content">-->
 
-<!--            <div class="tab-pane fade show active" id="tab1">-->
-<!--              <p>Consequuntur inventore voluptates consequatur aut vel et. Eos doloribus expedita. Sapiente atque-->
-<!--                consequatur minima nihil quae aspernatur quo suscipit voluptatem.</p>-->
-<!--              <div class="d-flex align-items-center mb-2">-->
-<!--                <i class="bi bi-check2"></i>-->
-<!--                <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>-->
-<!--              </div>-->
-<!--              <p>Laborum omnis voluptates voluptas qui sit aliquam blanditiis. Sapiente minima commodi dolorum non-->
-<!--                eveniet magni quaerat nemo et.</p>-->
-<!--              <div class="d-flex align-items-center mb-2">-->
-<!--                <i class="bi bi-check2"></i>-->
-<!--                <h4>Incidunt non veritatis illum ea ut nisi</h4>-->
-<!--              </div>-->
-<!--              <p>Non quod totam minus repellendus autem sint velit. Rerum debitis facere soluta tenetur. Iure molestiae-->
-<!--                assumenda sunt qui inventore eligendi voluptates nisi at. Dolorem quo tempora. Quia et perferendis.</p>-->
-<!--            </div>&lt;!&ndash; End Tab 1 Content &ndash;&gt;-->
+      <!--            <div class="tab-pane fade show active" id="tab1">-->
+      <!--              <p>Consequuntur inventore voluptates consequatur aut vel et. Eos doloribus expedita. Sapiente atque-->
+      <!--                consequatur minima nihil quae aspernatur quo suscipit voluptatem.</p>-->
+      <!--              <div class="d-flex align-items-center mb-2">-->
+      <!--                <i class="bi bi-check2"></i>-->
+      <!--                <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>-->
+      <!--              </div>-->
+      <!--              <p>Laborum omnis voluptates voluptas qui sit aliquam blanditiis. Sapiente minima commodi dolorum non-->
+      <!--                eveniet magni quaerat nemo et.</p>-->
+      <!--              <div class="d-flex align-items-center mb-2">-->
+      <!--                <i class="bi bi-check2"></i>-->
+      <!--                <h4>Incidunt non veritatis illum ea ut nisi</h4>-->
+      <!--              </div>-->
+      <!--              <p>Non quod totam minus repellendus autem sint velit. Rerum debitis facere soluta tenetur. Iure molestiae-->
+      <!--                assumenda sunt qui inventore eligendi voluptates nisi at. Dolorem quo tempora. Quia et perferendis.</p>-->
+      <!--            </div>&lt;!&ndash; End Tab 1 Content &ndash;&gt;-->
 
-<!--            <div class="tab-pane fade show" id="tab2">-->
-<!--              <p>Consequuntur inventore voluptates consequatur aut vel et. Eos doloribus expedita. Sapiente atque-->
-<!--                consequatur minima nihil quae aspernatur quo suscipit voluptatem.</p>-->
-<!--              <div class="d-flex align-items-center mb-2">-->
-<!--                <i class="bi bi-check2"></i>-->
-<!--                <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>-->
-<!--              </div>-->
-<!--              <p>Laborum omnis voluptates voluptas qui sit aliquam blanditiis. Sapiente minima commodi dolorum non-->
-<!--                eveniet magni quaerat nemo et.</p>-->
-<!--              <div class="d-flex align-items-center mb-2">-->
-<!--                <i class="bi bi-check2"></i>-->
-<!--                <h4>Incidunt non veritatis illum ea ut nisi</h4>-->
-<!--              </div>-->
-<!--              <p>Non quod totam minus repellendus autem sint velit. Rerum debitis facere soluta tenetur. Iure molestiae-->
-<!--                assumenda sunt qui inventore eligendi voluptates nisi at. Dolorem quo tempora. Quia et perferendis.</p>-->
-<!--            </div>&lt;!&ndash; End Tab 2 Content &ndash;&gt;-->
+      <!--            <div class="tab-pane fade show" id="tab2">-->
+      <!--              <p>Consequuntur inventore voluptates consequatur aut vel et. Eos doloribus expedita. Sapiente atque-->
+      <!--                consequatur minima nihil quae aspernatur quo suscipit voluptatem.</p>-->
+      <!--              <div class="d-flex align-items-center mb-2">-->
+      <!--                <i class="bi bi-check2"></i>-->
+      <!--                <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>-->
+      <!--              </div>-->
+      <!--              <p>Laborum omnis voluptates voluptas qui sit aliquam blanditiis. Sapiente minima commodi dolorum non-->
+      <!--                eveniet magni quaerat nemo et.</p>-->
+      <!--              <div class="d-flex align-items-center mb-2">-->
+      <!--                <i class="bi bi-check2"></i>-->
+      <!--                <h4>Incidunt non veritatis illum ea ut nisi</h4>-->
+      <!--              </div>-->
+      <!--              <p>Non quod totam minus repellendus autem sint velit. Rerum debitis facere soluta tenetur. Iure molestiae-->
+      <!--                assumenda sunt qui inventore eligendi voluptates nisi at. Dolorem quo tempora. Quia et perferendis.</p>-->
+      <!--            </div>&lt;!&ndash; End Tab 2 Content &ndash;&gt;-->
 
-<!--            <div class="tab-pane fade show" id="tab3">-->
-<!--              <p>Consequuntur inventore voluptates consequatur aut vel et. Eos doloribus expedita. Sapiente atque-->
-<!--                consequatur minima nihil quae aspernatur quo suscipit voluptatem.</p>-->
-<!--              <div class="d-flex align-items-center mb-2">-->
-<!--                <i class="bi bi-check2"></i>-->
-<!--                <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>-->
+      <!--            <div class="tab-pane fade show" id="tab3">-->
+      <!--              <p>Consequuntur inventore voluptates consequatur aut vel et. Eos doloribus expedita. Sapiente atque-->
+      <!--                consequatur minima nihil quae aspernatur quo suscipit voluptatem.</p>-->
+      <!--              <div class="d-flex align-items-center mb-2">-->
+      <!--                <i class="bi bi-check2"></i>-->
+      <!--                <h4>Repudiandae rerum velit modi et officia quasi facilis</h4>-->
+      <!--              </div>-->
+      <!--              <p>Laborum omnis voluptates voluptas qui sit aliquam blanditiis. Sapiente minima commodi dolorum non-->
+      <!--                eveniet magni quaerat nemo et.</p>-->
+      <!--              <div class="d-flex align-items-center mb-2">-->
+      <!--                <i class="bi bi-check2"></i>-->
+      <!--                <h4>Incidunt non veritatis illum ea ut nisi</h4>-->
+      <!--              </div>-->
+      <!--              <p>Non quod totam minus repellendus autem sint velit. Rerum debitis facere soluta tenetur. Iure molestiae-->
+      <!--                assumenda sunt qui inventore eligendi voluptates nisi at. Dolorem quo tempora. Quia et perferendis.</p>-->
+      <!--            </div>&lt;!&ndash; End Tab 3 Content &ndash;&gt;-->
+
+      <!--          </div>-->
+
+      <!--        </div>-->
+
+      <!--        <div class="col-lg-6">-->
+      <!--          <img src="assets/img/features-2.png" class="img-fluid" alt="">-->
+      <!--        </div>-->
+
+      <!--      </div>&lt;!&ndash; End Feature Tabs &ndash;&gt;-->
+
+      <!-- Feature Icons -->
+<!--      <div class="row feature-icons">-->
+<!--        <div class="container">-->
+<!--          <header class="section-header">-->
+<!--            &lt;!&ndash;        <h2></h2>&ndash;&gt;-->
+<!--            <p>Benefits</p>-->
+<!--          </header>-->
+<!--          <div class="row">-->
+<!--            <div class="col-xl-4 text-center">-->
+
+<!--              <img alt="" class="img-fluid p-4" src="assets/img/features-2.png">-->
+<!--            </div>-->
+
+<!--            <div class="col-xl-8 d-flex content">-->
+<!--              <div class="row align-self-center gy-4">-->
+
+<!--                <div class="col-md-6 icon-box">-->
+<!--                  <i class="ri-line-chart-line"></i>-->
+<!--                  <div>-->
+<!--                    <h4>Time & Cost Savings</h4>-->
+<!--                    <p>Automated log analytics enables lower troubleshooting costs by up to 60x</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-6 icon-box">-->
+<!--                  <i class="ri-scan-line"></i>-->
+<!--                  <div>-->
+<!--                    <h4>Real-Time Incident Detection</h4>-->
+<!--                    <p>Pre-trained deep learning detection models identify incidents in real-time</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+
+<!--                <div class="col-md-6 icon-box">-->
+<!--                  <i class="ri-focus-3-line"></i>-->
+<!--                  <div>-->
+<!--                    <h4>High Accuracy</h4>-->
+<!--                    <p>Extracts key signals out of noisy data to generate alerts and dramatically reduces the number of-->
+<!--                      false positives</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="col-md-6 icon-box">-->
+<!--                  <i class="ri-brush-4-line"></i>-->
+<!--                  <div>-->
+<!--                    <h4>Customizable Models</h4>-->
+<!--                    <p>Specialized models to understand your critical systems</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+
+<!--                <div class="col-md-6 icon-box">-->
+<!--                  <i class="ri-server-line"></i>-->
+<!--                  <div>-->
+<!--                    <h4>Application Domains</h4>-->
+<!--                    <p>IT troubleshooting, proactive incident detection, high velocity CI/CD pipelines, compliance, and-->
+<!--                      security</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+
+<!--                <div class="col-md-6 icon-box">-->
+<!--                  <i class="ri-link"></i>-->
+<!--                  <div>-->
+<!--                    <h4>Lightweight Integration</h4>-->
+<!--                    <p>Integrates seamlessly on top of existing monitoring platforms</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+
 <!--              </div>-->
-<!--              <p>Laborum omnis voluptates voluptas qui sit aliquam blanditiis. Sapiente minima commodi dolorum non-->
-<!--                eveniet magni quaerat nemo et.</p>-->
-<!--              <div class="d-flex align-items-center mb-2">-->
-<!--                <i class="bi bi-check2"></i>-->
-<!--                <h4>Incidunt non veritatis illum ea ut nisi</h4>-->
-<!--              </div>-->
-<!--              <p>Non quod totam minus repellendus autem sint velit. Rerum debitis facere soluta tenetur. Iure molestiae-->
-<!--                assumenda sunt qui inventore eligendi voluptates nisi at. Dolorem quo tempora. Quia et perferendis.</p>-->
-<!--            </div>&lt;!&ndash; End Tab 3 Content &ndash;&gt;-->
+<!--            </div>-->
 
 <!--          </div>-->
 
-<!--        </div>-->
-
-<!--        <div class="col-lg-6">-->
-<!--          <img src="assets/img/features-2.png" class="img-fluid" alt="">-->
-<!--        </div>-->
-
-<!--      </div>&lt;!&ndash; End Feature Tabs &ndash;&gt;-->
-
-      <!-- Feature Icons -->
-      <div class="row feature-icons">
-        <div class="container">
-      <header class="section-header">
-<!--        <h2></h2>-->
-        <p>Benefits</p>
-      </header>
-        <div class="row">
-          <div class="col-xl-4 text-center" >
-
-            <img src="assets/img/features-2.png" class="img-fluid p-4" alt="">
-          </div>
-
-          <div class="col-xl-8 d-flex content">
-            <div class="row align-self-center gy-4">
-
-              <div class="col-md-6 icon-box" >
-                <i class="ri-line-chart-line"></i>
-                <div>
-                  <h4>Time & Cost Savings</h4>
-                  <p>Automated log analytics enables lower troubleshooting costs by up to 60x</p>
-                </div>
-              </div>
-
-              <div class="col-md-6 icon-box" >
-                <i class="ri-scan-line"></i>
-                <div>
-                  <h4>Real-Time Incident Detection</h4>
-                  <p>Pre-trained deep learning detection models identify incidents in real-time</p>
-                </div>
-              </div>
-
-
-               <div class="col-md-6 icon-box">
-                <i class="ri-focus-3-line"></i>
-                <div>
-                  <h4>High Accuracy</h4>
-                  <p>Extracts key signals out of noisy data to generate alerts and dramatically reduces the number of false positives</p>
-                </div>
-              </div>
-
-              <div class="col-md-6 icon-box" >
-                <i class="ri-brush-4-line"></i>
-                <div>
-                  <h4>Customizable Models</h4>
-                  <p>Specialized models to understand your critical systems</p>
-                </div>
-              </div>
-
-
-              <div class="col-md-6 icon-box">
-                <i class="ri-server-line"></i>
-                <div>
-                  <h4>Application Domains</h4>
-                  <p>IT troubleshooting, proactive incident detection, high velocity CI/CD pipelines, compliance, and security</p>
-                </div>
-              </div>
-
-
-                <div class="col-md-6 icon-box" >
-                <i class="ri-link"></i>
-                <div>
-                  <h4>Lightweight Integration</h4>
-                  <p>Integrates seamlessly on top of existing monitoring platforms</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
-      </div><!-- End Feature Icons -->
-      </div>
+<!--        </div>&lt;!&ndash; End Feature Icons &ndash;&gt;-->
+<!--      </div>-->
     </div>
 
   </section><!-- End Features Section -->
 
-<!--   ======= Services Section =======-->
-<!--  <section id="services" class="services">-->
+  <!--   ======= Services Section =======-->
+    <section id="services" class="services">
 
-<!--    <div class="container">-->
+      <div class="container">
 
-<!--      <header class="section-header">-->
-<!--        <h2>Services</h2>-->
-<!--        <p>Veritatis et dolores facere numquam et praesentium</p>-->
-<!--      </header>-->
+        <header class="section-header">
+<!--          <h2>Recommended reading</h2>-->
+          <p>Recommended materials</p>
+        </header>
 
-<!--      <div class="row gy-4">-->
+        <div class="row gy-4">
 
-<!--        <div class="col-lg-4 col-md-6" >-->
-<!--          <div class="service-box blue">-->
-<!--            <i class="ri-discuss-line icon"></i>-->
-<!--            <h3>Nesciunt Mete</h3>-->
-<!--            <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure perferendis-->
-<!--              tempore et consequatur.</p>-->
-<!--            <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-lg-4 col-md-6">-->
-<!--          <div class="service-box orange">-->
-<!--            <i class="ri-discuss-line icon"></i>-->
-<!--            <h3>Eosle Commodi</h3>-->
-<!--            <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non ut-->
-<!--              nesciunt dolorem.</p>-->
-<!--            <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-lg-4 col-md-6" >-->
-<!--          <div class="service-box green">-->
-<!--            <i class="ri-discuss-line icon"></i>-->
-<!--            <h3>Ledo Markt</h3>-->
-<!--            <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id voluptas adipisci eos-->
-<!--              earum corrupti.</p>-->
-<!--            <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-lg-4 col-md-6">-->
-<!--          <div class="service-box red">-->
-<!--            <i class="ri-discuss-line icon"></i>-->
-<!--            <h3>Asperiores Commodi</h3>-->
-<!--            <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident-->
-<!--              adipisci neque.</p>-->
-<!--            <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-lg-4 col-md-6">-->
-<!--          <div class="service-box purple">-->
-<!--            <i class="ri-discuss-line icon"></i>-->
-<!--            <h3>Velit Doloremque.</h3>-->
-<!--            <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem-->
-<!--              alias eius labore.</p>-->
-<!--            <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-lg-4 col-md-6">-->
-<!--          <div class="service-box pink">-->
-<!--            <i class="ri-discuss-line icon"></i>-->
-<!--            <h3>Dolori Architecto</h3>-->
-<!--            <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti recusandae-->
-<!--              ducimus enim.</p>-->
-<!--            <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--      </div>-->
-
-<!--    </div>-->
-
-<!--  </section>&lt;!&ndash; End Services Section &ndash;&gt;-->
-
-
-
-   <!-- ======= About Section ======= -->
-  <section id="about" class="about">
-
-    <div class="container">
-      <div class="row gx-0">
-
-        <div class="col-lg-6 d-flex flex-column justify-content-center">
-          <div class="content">
-            <h3>R & D</h3>
-            <h2>Science behind logsight.ai</h2>
-            <p>Deep learning is the heart of intelligent log analytics.
-            Five minute introduction to logsight.ai
-            </p>
-            <div class="row">
-              <div class="col-sm p-2" style="width: 100%">
-              <a href="https://arxiv.org/pdf/2008.09340.pdf"
-                 class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center" >
-                <span class="p-2">Cogn. Anomalies</span>
-<!--                <i class="bi bi-arrow-right"></i>-->
-              </a>
-              </div>
-              <div class="col-sm p-2"  style="width: 100%">
-              <a href="https://arxiv.org/abs/2003.07905"
-                 class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
-                <span class="p-2">Variable Analysis</span>
-<!--                <i class="bi bi-arrow-right"></i>-->
-              </a>
-                </div>
+          <div class="col-lg-4 col-md-6" >
+            <div class="service-box blue">
+              <i class="ri-file-2-line icon"></i>
+              <h3>Semantic log analysis</h3>
+              <p>Existing solutions to detect incidents typically let users set a static alerts and thresholds for an application
+                in a certain timeframe. Logsight Incident Detection takes a different approach.</p>
+                              <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"
+                   href="https://arxiv.org/pdf/2008.09340.pdf" target="_blank">
+                  <span class="p-2">Read more</span>
+                  <!--                <i class="bi bi-arrow-right"></i>-->
+                </a>
             </div>
-
-
           </div>
-        </div>
 
-        <div class="col-lg-6 d-flex align-items-center">
-          <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;">
-            <iframe width="100%" height="350" src="https://www.youtube.com/embed/z1Gg_y_6-C0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="service-box orange">
+              <i class="ri-file-list-2-line icon"></i>
+              <h3>Automated log parsing</h3>
+              <p>Parsing semi-structured log records with free-form text log messages into structured templates is the first and crucial step that enables further advanced analysis and obtain insights.</p>
+              <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"
+                   href="https://arxiv.org/abs/2003.07905" target="_blank">
+                  <span class="p-2">Read more</span>
+                  <!--                <i class="bi bi-arrow-right"></i>-->
+                </a>
+            </div>
+          </div>
 
-<!--        <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out">-->
-<!--          <img src="assets/img/about.jpg" class="img-fluid" alt="">-->
-<!--        </div>-->
+          <div class="col-lg-4 col-md-6" >
+            <div class="service-box green">
+<!--              <i class="ri-discuss-line icon"></i>-->
+<!--              <h3>Ledo Markt</h3>-->
+              <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"
+                    height="350" src="https://www.youtube.com/embed/z1Gg_y_6-C0"
+                    title="YouTube video player"
+                    width="100%"></iframe>
+            </div>
+          </div>
+
+<!--          <div class="col-lg-4 col-md-6">-->
+<!--            <div class="service-box red">-->
+<!--              <i class="ri-discuss-line icon"></i>-->
+<!--              <h3>Asperiores Commodi</h3>-->
+<!--              <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident-->
+<!--                adipisci neque.</p>-->
+<!--              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="col-lg-4 col-md-6">-->
+<!--            <div class="service-box purple">-->
+<!--              <i class="ri-discuss-line icon"></i>-->
+<!--              <h3>Velit Doloremque.</h3>-->
+<!--              <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem-->
+<!--                alias eius labore.</p>-->
+<!--              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="col-lg-4 col-md-6">-->
+<!--            <div class="service-box pink">-->
+<!--              <i class="ri-discuss-line icon"></i>-->
+<!--              <h3>Dolori Architecto</h3>-->
+<!--              <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti recusandae-->
+<!--                ducimus enim.</p>-->
+<!--              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
+<!--            </div>-->
+<!--          </div>-->
+
+        </div>
 
       </div>
-    </div>
 
-  </section><!-- End About Section -->
+    </section><!-- End Services Section -->
 
 
+  <!-- ======= About Section ======= -->
+<!--  <section class="about" id="about">-->
+
+<!--    <div class="container">-->
+<!--      <div class="row gx-0">-->
+
+<!--        <div class="col-lg-6 d-flex flex-column justify-content-center">-->
+<!--          <div class="content">-->
+<!--            <h3>R & D</h3>-->
+<!--            <h2>Science behind logsight.ai</h2>-->
+<!--            <p>Deep learning is the heart of intelligent log analytics.-->
+<!--              Five minute introduction to logsight.ai-->
+<!--            </p>-->
+<!--            <div class="row">-->
+<!--              <div class="col-sm p-2" style="width: 100%">-->
+<!--                <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"-->
+<!--                   href="https://arxiv.org/pdf/2008.09340.pdf">-->
+<!--                  <span class="p-2">Cogn. Anomalies</span>-->
+<!--                  &lt;!&ndash;                <i class="bi bi-arrow-right"></i>&ndash;&gt;-->
+<!--                </a>-->
+<!--              </div>-->
+<!--              <div class="col-sm p-2" style="width: 100%">-->
+<!--                <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"-->
+<!--                   href="https://arxiv.org/abs/2003.07905">-->
+<!--                  <span class="p-2">Variable Analysis</span>-->
+<!--                  &lt;!&ndash;                <i class="bi bi-arrow-right"></i>&ndash;&gt;-->
+<!--                </a>-->
+<!--              </div>-->
+<!--            </div>-->
+
+
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="col-lg-6 d-flex align-items-center">-->
+<!--          <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;">-->
+<!--            <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"-->
+<!--                    height="350" src="https://www.youtube.com/embed/z1Gg_y_6-C0"-->
+<!--                    title="YouTube video player"-->
+<!--                    width="100%"></iframe>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash;        <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out">&ndash;&gt;-->
+<!--        &lt;!&ndash;          <img src="assets/img/about.jpg" class="img-fluid" alt="">&ndash;&gt;-->
+<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </section>&lt;!&ndash; End About Section &ndash;&gt;-->
 
 
   <!-- ======= Pricing Section ======= -->
-  <section id="pricing" class="pricing">
+  <section class="pricing" id="pricing">
 
     <div class="container">
 
       <header class="section-header">
-        <h2>Pricing</h2>
-        <p>Matching Prices to Your Needs</p>
+<!--        <h2>Pricing</h2>-->
+        <p>Pricing</p>
       </header>
 
-      <div class="row gy-2" >
+      <div class="row gy-2">
 
-        <div class="col-sm">
+
+        <div class="col-3" >
+        </div>
+
+        <div class="col-3">
           <div class="box">
-            <h3 style="color: #07d5c0;">Free Plan</h3>
+            <h2>Community edition</h2>
+            <h3>Loved by individual developers</h3>
             <div class="price"><sup>€</sup>0</div>
-            <img src="assets/img/pricing-free.png" class="img-fluid" alt="">
+            <!--            <img src="assets/img/pricing-free.png" class="img-fluid" alt="">-->
+            <p><b>All of the following features:</b></p>
             <ul>
-              <li>Up to 1 GB</li>
-              <li>Cognitive & Flow Anomalies</li>
-              <li>Quality Analysis (up to 5 operations)</li>
-              <li>Variable Analysis</li>
-              <li>Continuous Verification (up to 5 operations)</li>
-              <li class="na">Customized AI Models</li>
-              <li class="na">On-Premise Deployment</li>
+              <li>Up to 5 applications</li>
+              <li>Semantic Anomalies</li>
+              <li>Incident detection</li>
+              <li>Stage Verifier (up to 10k logs)</li>
+              <li class="na">Flow Anomalies</li>
+              <li class="na">Log Quality Analysis</li>
+              <li class="na">Variable Analysis</li>
+              <li class="na">Customized AI DevOps Pipelines</li>
+              <li class="na">Support</li>
             </ul>
-<!--            <a href="#" class="btn-buy">Buy Now</a>-->
+                        <a href="#" class="btn-buy">Sign up</a>
           </div>
         </div>
 
-<!--        <div class="col-lg-4 col-md-4" >-->
-<!--          <div class="box">-->
-<!--            <span class="featured">Featured</span>-->
-<!--            <h3 style="color: #65c600;">Starter Plan</h3>-->
-<!--            <div class="price"><sup>€</sup>2<span> / GB</span></div>-->
-<!--            <img src="assets/img/pricing-starter.png" class="img-fluid" alt="">-->
-<!--            <ul>-->
-<!--              <li>Pay per GB</li>-->
-<!--              <li>Cognitive & Flow Anomalies</li>-->
-<!--              <li>Quality Analysis</li>-->
-<!--              <li>Variable Analysis</li>-->
-<!--              <li>Continuous Verification</li>-->
-<!--              <li class="na">Customized AI Models</li>-->
-<!--              <li class="na">On-Premise Deployment</li>-->
-<!--            </ul>-->
-<!--&lt;!&ndash;            <a href="#" class="btn-buy">Buy Now</a>&ndash;&gt;-->
-<!--          </div>-->
-<!--        </div>-->
-
-        <div class="col-sm" >
+        <div class="col-3">
           <div class="box">
-            <h3 style="color: #ff901c;">Enterprise Plan</h3>
-            <div class="price"><a href="mailto:info@logsight.ai" style="color: black">Contact us</a></div>
-            <img src="assets/img/pricing-business.png" class="img-fluid" alt="">
-                <ul>
-              <li>Custom Price</li>
-              <li>Cognitive & Flow Anomalies</li>
-              <li>Quality Analysis</li>
+            <h2>Enterprise Edition</h2>
+            <h3>Built for enterprise requirements</h3>
+            <div class="price"><a href="mailto:support@logsight.ai">Custom price</a></div>
+            <!--            <img src="assets/img/pricing-business.png" class="img-fluid" alt="">-->
+            <p><b>All of the following features:</b></p>
+            <ul>
+              <li>Unlimited applications</li>
+              <li>Semantic Anomalies</li>
+              <li>Incident detection</li>
+              <li>Stage Verifier (up to 10k logs)</li>
+              <li>Flow Anomalies</li>
+              <li>Log Quality Analysis</li>
               <li>Variable Analysis</li>
-              <li>Continuous Verification</li>
-              <li>Customized AI Models</li>
-              <li>On-Premise Deployment</li>
+              <li>Customized AI DevOps Pipelines</li>
+              <li>Support</li>
             </ul>
-<!--            <a href="#" class="btn-buy">Buy Now</a>-->
+                        <a href="mailto:support@logsight.ai" class="btn-buy">Contact us</a>
           </div>
         </div>
 
-<!--        <div class="col-lg-3 col-md-6" >-->
-<!--          <div class="box">-->
-<!--            <h3 style="color: #ff0071;">Ultimate Plan</h3>-->
-<!--            <div class="price"><sup>$</sup>49<span> / mo</span></div>-->
-<!--            <img src="assets/img/pricing-ultimate.png" class="img-fluid" alt="">-->
-<!--            <ul>-->
-<!--              <li>Aida dere</li>-->
-<!--              <li>Nec feugiat nisl</li>-->
-<!--              <li>Nulla at volutpat dola</li>-->
-<!--              <li>Pharetra massa</li>-->
-<!--              <li>Massa ultricies mi</li>-->
-<!--            </ul>-->
-<!--            <a href="#" class="btn-buy">Buy Now</a>-->
-<!--          </div>-->
-<!--        </div>-->
+                <div class="col-3" >
+        </div>
+
+
+        <!--        <div class="col-lg-3 col-md-6" >-->
+        <!--          <div class="box">-->
+        <!--            <h3 style="color: #ff0071;">Ultimate Plan</h3>-->
+        <!--            <div class="price"><sup>$</sup>49<span> / mo</span></div>-->
+        <!--            <img src="assets/img/pricing-ultimate.png" class="img-fluid" alt="">-->
+        <!--            <ul>-->
+        <!--              <li>Aida dere</li>-->
+        <!--              <li>Nec feugiat nisl</li>-->
+        <!--              <li>Nulla at volutpat dola</li>-->
+        <!--              <li>Pharetra massa</li>-->
+        <!--              <li>Massa ultricies mi</li>-->
+        <!--            </ul>-->
+        <!--            <a href="#" class="btn-buy">Buy Now</a>-->
+        <!--          </div>-->
+        <!--        </div>-->
 
       </div>
 
@@ -588,632 +614,628 @@
   </section><!-- End Pricing Section -->
 
   <!-- ======= F.A.Q Section ======= -->
-<!--  <section id="faq" class="faq">-->
+  <!--  <section id="faq" class="faq">-->
 
-<!--    <div class="container" data-aos="fade-up">-->
+  <!--    <div class="container" data-aos="fade-up">-->
 
-<!--      <header class="section-header">-->
-<!--        <h2>F.A.Q</h2>-->
-<!--        <p>Frequently Asked Questions</p>-->
-<!--      </header>-->
+  <!--      <header class="section-header">-->
+  <!--        <h2>F.A.Q</h2>-->
+  <!--        <p>Frequently Asked Questions</p>-->
+  <!--      </header>-->
 
-<!--      <div class="row">-->
-<!--        <div class="col-lg-6">-->
-<!--          &lt;!&ndash; F.A.Q List 1&ndash;&gt;-->
-<!--          <div class="accordion accordion-flush" id="faqlist1">-->
-<!--            <div class="accordion-item">-->
-<!--              <h2 class="accordion-header">-->
-<!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
-<!--                        data-bs-target="#faq-content-1">-->
-<!--                  Non consectetur a erat nam at lectus urna duis?-->
-<!--                </button>-->
-<!--              </h2>-->
-<!--              <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist1">-->
-<!--                <div class="accordion-body">-->
-<!--                  Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur-->
-<!--                  gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+  <!--      <div class="row">-->
+  <!--        <div class="col-lg-6">-->
+  <!--          &lt;!&ndash; F.A.Q List 1&ndash;&gt;-->
+  <!--          <div class="accordion accordion-flush" id="faqlist1">-->
+  <!--            <div class="accordion-item">-->
+  <!--              <h2 class="accordion-header">-->
+  <!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
+  <!--                        data-bs-target="#faq-content-1">-->
+  <!--                  Non consectetur a erat nam at lectus urna duis?-->
+  <!--                </button>-->
+  <!--              </h2>-->
+  <!--              <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist1">-->
+  <!--                <div class="accordion-body">-->
+  <!--                  Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur-->
+  <!--                  gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
 
-<!--            <div class="accordion-item">-->
-<!--              <h2 class="accordion-header">-->
-<!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
-<!--                        data-bs-target="#faq-content-2">-->
-<!--                  Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?-->
-<!--                </button>-->
-<!--              </h2>-->
-<!--              <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist1">-->
-<!--                <div class="accordion-body">-->
-<!--                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id-->
-<!--                  donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit-->
-<!--                  ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+  <!--            <div class="accordion-item">-->
+  <!--              <h2 class="accordion-header">-->
+  <!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
+  <!--                        data-bs-target="#faq-content-2">-->
+  <!--                  Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?-->
+  <!--                </button>-->
+  <!--              </h2>-->
+  <!--              <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist1">-->
+  <!--                <div class="accordion-body">-->
+  <!--                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id-->
+  <!--                  donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit-->
+  <!--                  ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
 
-<!--            <div class="accordion-item">-->
-<!--              <h2 class="accordion-header">-->
-<!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
-<!--                        data-bs-target="#faq-content-3">-->
-<!--                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?-->
-<!--                </button>-->
-<!--              </h2>-->
-<!--              <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist1">-->
-<!--                <div class="accordion-body">-->
-<!--                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum-->
-<!--                  integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt.-->
-<!--                  Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi-->
-<!--                  quis-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+  <!--            <div class="accordion-item">-->
+  <!--              <h2 class="accordion-header">-->
+  <!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
+  <!--                        data-bs-target="#faq-content-3">-->
+  <!--                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?-->
+  <!--                </button>-->
+  <!--              </h2>-->
+  <!--              <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist1">-->
+  <!--                <div class="accordion-body">-->
+  <!--                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum-->
+  <!--                  integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt.-->
+  <!--                  Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi-->
+  <!--                  quis-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
 
-<!--          </div>-->
-<!--        </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-6">-->
+  <!--        <div class="col-lg-6">-->
 
-<!--          &lt;!&ndash; F.A.Q List 2&ndash;&gt;-->
-<!--          <div class="accordion accordion-flush" id="faqlist2">-->
+  <!--          &lt;!&ndash; F.A.Q List 2&ndash;&gt;-->
+  <!--          <div class="accordion accordion-flush" id="faqlist2">-->
 
-<!--            <div class="accordion-item">-->
-<!--              <h2 class="accordion-header">-->
-<!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
-<!--                        data-bs-target="#faq2-content-1">-->
-<!--                  Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?-->
-<!--                </button>-->
-<!--              </h2>-->
-<!--              <div id="faq2-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist2">-->
-<!--                <div class="accordion-body">-->
-<!--                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id-->
-<!--                  donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit-->
-<!--                  ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+  <!--            <div class="accordion-item">-->
+  <!--              <h2 class="accordion-header">-->
+  <!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
+  <!--                        data-bs-target="#faq2-content-1">-->
+  <!--                  Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?-->
+  <!--                </button>-->
+  <!--              </h2>-->
+  <!--              <div id="faq2-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist2">-->
+  <!--                <div class="accordion-body">-->
+  <!--                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id-->
+  <!--                  donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit-->
+  <!--                  ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
 
-<!--            <div class="accordion-item">-->
-<!--              <h2 class="accordion-header">-->
-<!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
-<!--                        data-bs-target="#faq2-content-2">-->
-<!--                  Tempus quam pellentesque nec nam aliquam sem et tortor consequat?-->
-<!--                </button>-->
-<!--              </h2>-->
-<!--              <div id="faq2-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist2">-->
-<!--                <div class="accordion-body">-->
-<!--                  Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc-->
-<!--                  vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus-->
-<!--                  gravida quis blandit turpis cursus in-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+  <!--            <div class="accordion-item">-->
+  <!--              <h2 class="accordion-header">-->
+  <!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
+  <!--                        data-bs-target="#faq2-content-2">-->
+  <!--                  Tempus quam pellentesque nec nam aliquam sem et tortor consequat?-->
+  <!--                </button>-->
+  <!--              </h2>-->
+  <!--              <div id="faq2-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist2">-->
+  <!--                <div class="accordion-body">-->
+  <!--                  Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc-->
+  <!--                  vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus-->
+  <!--                  gravida quis blandit turpis cursus in-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
 
-<!--            <div class="accordion-item">-->
-<!--              <h2 class="accordion-header">-->
-<!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
-<!--                        data-bs-target="#faq2-content-3">-->
-<!--                  Varius vel pharetra vel turpis nunc eget lorem dolor?-->
-<!--                </button>-->
-<!--              </h2>-->
-<!--              <div id="faq2-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist2">-->
-<!--                <div class="accordion-body">-->
-<!--                  Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada-->
-<!--                  nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis-->
-<!--                  tellus in metus vulputate eu scelerisque. Pellentesque diam volutpat commodo sed egestas egestas-->
-<!--                  fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+  <!--            <div class="accordion-item">-->
+  <!--              <h2 class="accordion-header">-->
+  <!--                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
+  <!--                        data-bs-target="#faq2-content-3">-->
+  <!--                  Varius vel pharetra vel turpis nunc eget lorem dolor?-->
+  <!--                </button>-->
+  <!--              </h2>-->
+  <!--              <div id="faq2-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist2">-->
+  <!--                <div class="accordion-body">-->
+  <!--                  Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada-->
+  <!--                  nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis-->
+  <!--                  tellus in metus vulputate eu scelerisque. Pellentesque diam volutpat commodo sed egestas egestas-->
+  <!--                  fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
 
-<!--          </div>-->
-<!--        </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--      </div>-->
+  <!--      </div>-->
 
-<!--    </div>-->
+  <!--    </div>-->
 
-<!--  </section>&lt;!&ndash; End F.A.Q Section &ndash;&gt;-->
+  <!--  </section>&lt;!&ndash; End F.A.Q Section &ndash;&gt;-->
 
   <!-- ======= Portfolio Section ======= -->
-<!--  <section id="portfolio" class="portfolio">-->
+  <!--  <section id="portfolio" class="portfolio">-->
 
-<!--    <div class="container" data-aos="fade-up">-->
+  <!--    <div class="container" data-aos="fade-up">-->
 
-<!--      <header class="section-header">-->
-<!--        <h2>Portfolio</h2>-->
-<!--        <p>Check our latest work</p>-->
-<!--      </header>-->
+  <!--      <header class="section-header">-->
+  <!--        <h2>Portfolio</h2>-->
+  <!--        <p>Check our latest work</p>-->
+  <!--      </header>-->
 
-<!--      <div class="row" data-aos="fade-up">-->
-<!--        <div class="col-lg-12 d-flex justify-content-center">-->
-<!--          <ul id="portfolio-flters">-->
-<!--            <li data-filter="*" class="filter-active">All</li>-->
-<!--            <li data-filter=".filter-app">App</li>-->
-<!--            <li data-filter=".filter-card">Card</li>-->
-<!--            <li data-filter=".filter-web">Web</li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--      </div>-->
+  <!--      <div class="row" data-aos="fade-up">-->
+  <!--        <div class="col-lg-12 d-flex justify-content-center">-->
+  <!--          <ul id="portfolio-flters">-->
+  <!--            <li data-filter="*" class="filter-active">All</li>-->
+  <!--            <li data-filter=".filter-app">App</li>-->
+  <!--            <li data-filter=".filter-card">Card</li>-->
+  <!--            <li data-filter=".filter-web">Web</li>-->
+  <!--          </ul>-->
+  <!--        </div>-->
+  <!--      </div>-->
 
-<!--      <div class="row gy-4 portfolio-container" data-aos="fade-up">-->
+  <!--      <div class="row gy-4 portfolio-container" data-aos="fade-up">-->
 
-<!--        <div class="col-lg-4 col-md-6 portfolio-item filter-app">-->
-<!--          <div class="portfolio-wrap">-->
-<!--            <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">-->
-<!--            <div class="portfolio-info">-->
-<!--              <h4>App 1</h4>-->
-<!--              <p>App</p>-->
-<!--              <div class="portfolio-links">-->
-<!--                <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery"-->
-<!--                   class="portfokio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>-->
-<!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4 col-md-6 portfolio-item filter-app">-->
+  <!--          <div class="portfolio-wrap">-->
+  <!--            <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">-->
+  <!--            <div class="portfolio-info">-->
+  <!--              <h4>App 1</h4>-->
+  <!--              <p>App</p>-->
+  <!--              <div class="portfolio-links">-->
+  <!--                <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery"-->
+  <!--                   class="portfokio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>-->
+  <!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4 col-md-6 portfolio-item filter-web">-->
-<!--          <div class="portfolio-wrap">-->
-<!--            <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">-->
-<!--            <div class="portfolio-info">-->
-<!--              <h4>Web 3</h4>-->
-<!--              <p>Web</p>-->
-<!--              <div class="portfolio-links">-->
-<!--                <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"-->
-<!--                   class="portfokio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>-->
-<!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4 col-md-6 portfolio-item filter-web">-->
+  <!--          <div class="portfolio-wrap">-->
+  <!--            <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">-->
+  <!--            <div class="portfolio-info">-->
+  <!--              <h4>Web 3</h4>-->
+  <!--              <p>Web</p>-->
+  <!--              <div class="portfolio-links">-->
+  <!--                <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"-->
+  <!--                   class="portfokio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>-->
+  <!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4 col-md-6 portfolio-item filter-app">-->
-<!--          <div class="portfolio-wrap">-->
-<!--            <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">-->
-<!--            <div class="portfolio-info">-->
-<!--              <h4>App 2</h4>-->
-<!--              <p>App</p>-->
-<!--              <div class="portfolio-links">-->
-<!--                <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery"-->
-<!--                   class="portfokio-lightbox" title="App 2"><i class="bi bi-plus"></i></a>-->
-<!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4 col-md-6 portfolio-item filter-app">-->
+  <!--          <div class="portfolio-wrap">-->
+  <!--            <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">-->
+  <!--            <div class="portfolio-info">-->
+  <!--              <h4>App 2</h4>-->
+  <!--              <p>App</p>-->
+  <!--              <div class="portfolio-links">-->
+  <!--                <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery"-->
+  <!--                   class="portfokio-lightbox" title="App 2"><i class="bi bi-plus"></i></a>-->
+  <!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4 col-md-6 portfolio-item filter-card">-->
-<!--          <div class="portfolio-wrap">-->
-<!--            <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">-->
-<!--            <div class="portfolio-info">-->
-<!--              <h4>Card 2</h4>-->
-<!--              <p>Card</p>-->
-<!--              <div class="portfolio-links">-->
-<!--                <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery"-->
-<!--                   class="portfokio-lightbox" title="Card 2"><i class="bi bi-plus"></i></a>-->
-<!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4 col-md-6 portfolio-item filter-card">-->
+  <!--          <div class="portfolio-wrap">-->
+  <!--            <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">-->
+  <!--            <div class="portfolio-info">-->
+  <!--              <h4>Card 2</h4>-->
+  <!--              <p>Card</p>-->
+  <!--              <div class="portfolio-links">-->
+  <!--                <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery"-->
+  <!--                   class="portfokio-lightbox" title="Card 2"><i class="bi bi-plus"></i></a>-->
+  <!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4 col-md-6 portfolio-item filter-web">-->
-<!--          <div class="portfolio-wrap">-->
-<!--            <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">-->
-<!--            <div class="portfolio-info">-->
-<!--              <h4>Web 2</h4>-->
-<!--              <p>Web</p>-->
-<!--              <div class="portfolio-links">-->
-<!--                <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery"-->
-<!--                   class="portfokio-lightbox" title="Web 2"><i class="bi bi-plus"></i></a>-->
-<!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4 col-md-6 portfolio-item filter-web">-->
+  <!--          <div class="portfolio-wrap">-->
+  <!--            <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">-->
+  <!--            <div class="portfolio-info">-->
+  <!--              <h4>Web 2</h4>-->
+  <!--              <p>Web</p>-->
+  <!--              <div class="portfolio-links">-->
+  <!--                <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery"-->
+  <!--                   class="portfokio-lightbox" title="Web 2"><i class="bi bi-plus"></i></a>-->
+  <!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4 col-md-6 portfolio-item filter-app">-->
-<!--          <div class="portfolio-wrap">-->
-<!--            <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">-->
-<!--            <div class="portfolio-info">-->
-<!--              <h4>App 3</h4>-->
-<!--              <p>App</p>-->
-<!--              <div class="portfolio-links">-->
-<!--                <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery"-->
-<!--                   class="portfokio-lightbox" title="App 3"><i class="bi bi-plus"></i></a>-->
-<!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4 col-md-6 portfolio-item filter-app">-->
+  <!--          <div class="portfolio-wrap">-->
+  <!--            <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">-->
+  <!--            <div class="portfolio-info">-->
+  <!--              <h4>App 3</h4>-->
+  <!--              <p>App</p>-->
+  <!--              <div class="portfolio-links">-->
+  <!--                <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery"-->
+  <!--                   class="portfokio-lightbox" title="App 3"><i class="bi bi-plus"></i></a>-->
+  <!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4 col-md-6 portfolio-item filter-card">-->
-<!--          <div class="portfolio-wrap">-->
-<!--            <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">-->
-<!--            <div class="portfolio-info">-->
-<!--              <h4>Card 1</h4>-->
-<!--              <p>Card</p>-->
-<!--              <div class="portfolio-links">-->
-<!--                <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery"-->
-<!--                   class="portfokio-lightbox" title="Card 1"><i class="bi bi-plus"></i></a>-->
-<!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4 col-md-6 portfolio-item filter-card">-->
+  <!--          <div class="portfolio-wrap">-->
+  <!--            <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">-->
+  <!--            <div class="portfolio-info">-->
+  <!--              <h4>Card 1</h4>-->
+  <!--              <p>Card</p>-->
+  <!--              <div class="portfolio-links">-->
+  <!--                <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery"-->
+  <!--                   class="portfokio-lightbox" title="Card 1"><i class="bi bi-plus"></i></a>-->
+  <!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4 col-md-6 portfolio-item filter-card">-->
-<!--          <div class="portfolio-wrap">-->
-<!--            <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">-->
-<!--            <div class="portfolio-info">-->
-<!--              <h4>Card 3</h4>-->
-<!--              <p>Card</p>-->
-<!--              <div class="portfolio-links">-->
-<!--                <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery"-->
-<!--                   class="portfokio-lightbox" title="Card 3"><i class="bi bi-plus"></i></a>-->
-<!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4 col-md-6 portfolio-item filter-card">-->
+  <!--          <div class="portfolio-wrap">-->
+  <!--            <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">-->
+  <!--            <div class="portfolio-info">-->
+  <!--              <h4>Card 3</h4>-->
+  <!--              <p>Card</p>-->
+  <!--              <div class="portfolio-links">-->
+  <!--                <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery"-->
+  <!--                   class="portfokio-lightbox" title="Card 3"><i class="bi bi-plus"></i></a>-->
+  <!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4 col-md-6 portfolio-item filter-web">-->
-<!--          <div class="portfolio-wrap">-->
-<!--            <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">-->
-<!--            <div class="portfolio-info">-->
-<!--              <h4>Web 3</h4>-->
-<!--              <p>Web</p>-->
-<!--              <div class="portfolio-links">-->
-<!--                <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery"-->
-<!--                   class="portfokio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>-->
-<!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4 col-md-6 portfolio-item filter-web">-->
+  <!--          <div class="portfolio-wrap">-->
+  <!--            <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">-->
+  <!--            <div class="portfolio-info">-->
+  <!--              <h4>Web 3</h4>-->
+  <!--              <p>Web</p>-->
+  <!--              <div class="portfolio-links">-->
+  <!--                <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery"-->
+  <!--                   class="portfokio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>-->
+  <!--                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--      </div>-->
+  <!--      </div>-->
 
-<!--    </div>-->
+  <!--    </div>-->
 
-<!--  </section>&lt;!&ndash; End Portfolio Section &ndash;&gt;-->
+  <!--  </section>&lt;!&ndash; End Portfolio Section &ndash;&gt;-->
 
-<!--   ======= Testimonials Section =======-->
-<!--  <section id="testimonials" class="testimonials">-->
-<!--    <div class="container">-->
+  <!--   ======= Testimonials Section =======-->
+  <!--  <section id="testimonials" class="testimonials">-->
+  <!--    <div class="container">-->
 
-<!--      <header class="section-header">-->
-<!--        <h2>Testimonials</h2>-->
-<!--        <p>Our Endorsements</p>-->
-<!--      </header>-->
-<!--           <swiper class="row" direction="horizontal" [slidesPerView]="'auto'" [spaceBetween]="50" [pagination]="{'clickable':true}" [autoplay]= "true">-->
-<!--          <ng-template swiperSlide >-->
-<!--            <div class="testimonial-item">-->
-<!--              <p>-->
-<!--                Unlike other systems which identify isolated anomalies, logsight.ai aggregates and correlates all log records  which together form an incident. <br> This dramatically reduces the volume of false alarms triggered.-->
-<!--              </p>-->
-<!--              <div class="profile mt-auto">-->
-<!--&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;-->
-<!--                <h5>Gjorgji Madjarov</h5>-->
-<!--                <h5>Ceo &amp; Founder of Elevate Global</h5>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;-->
+  <!--      <header class="section-header">-->
+  <!--        <h2>Testimonials</h2>-->
+  <!--        <p>Our Endorsements</p>-->
+  <!--      </header>-->
+  <!--           <swiper class="row" direction="horizontal" [slidesPerView]="'auto'" [spaceBetween]="50" [pagination]="{'clickable':true}" [autoplay]= "true">-->
+  <!--          <ng-template swiperSlide >-->
+  <!--            <div class="testimonial-item">-->
+  <!--              <p>-->
+  <!--                Unlike other systems which identify isolated anomalies, logsight.ai aggregates and correlates all log records  which together form an incident. <br> This dramatically reduces the volume of false alarms triggered.-->
+  <!--              </p>-->
+  <!--              <div class="profile mt-auto">-->
+  <!--&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;-->
+  <!--                <h5>Gjorgji Madjarov</h5>-->
+  <!--                <h5>Ceo &amp; Founder of Elevate Global</h5>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;-->
 
-<!--                      <ng-template swiperSlide>-->
-<!--            <div class="testimonial-item">-->
-<!--              <p>-->
-<!--              With logsight.ai, our mean time to detection went from hours to a few minutes. <br> The prioritization and classification of incidents using AI enables  a near real-time feedback loop.-->
-<!--              </p>-->
-<!--              <div class="profile mt-auto">-->
-<!--&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;-->
-<!--                <h5>Anton Gulenko</h5>-->
-<!--                <h5>Freelancer</h5>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;-->
+  <!--                      <ng-template swiperSlide>-->
+  <!--            <div class="testimonial-item">-->
+  <!--              <p>-->
+  <!--              With logsight.ai, our mean time to detection went from hours to a few minutes. <br> The prioritization and classification of incidents using AI enables  a near real-time feedback loop.-->
+  <!--              </p>-->
+  <!--              <div class="profile mt-auto">-->
+  <!--&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;-->
+  <!--                <h5>Anton Gulenko</h5>-->
+  <!--                <h5>Freelancer</h5>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;-->
 
-<!--            <ng-template swiperSlide>-->
-<!--            <div class="testimonial-item">-->
-<!--              <p>-->
-<!--            logsight.ai was the missing link to fully automate our CI/CD pipeline. <br> Logs from service upgrades are automatically compared to detect latent failures. <br> In the last 2 months we avoided 3 events of type P2 in production.</p>-->
-<!--              <div class="profile mt-auto">-->
-<!--&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;-->
-<!--                <h5>Jasmin Bogatinovski</h5>-->
-<!--                <h5>AIOPS Researcher</h5>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;-->
-<!--&lt;!&ndash;             <ng-template swiperSlide>&ndash;&gt;-->
-<!--&lt;!&ndash;            <div class="testimonial-item">&ndash;&gt;-->
-<!--&lt;!&ndash;              <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                Unlike other systems which identify isolated anomalies, logsight.ai aggregates and correlates all log records  which together form an incident. This dramatically reduces the volume of false alarms triggered.&ndash;&gt;-->
-<!--&lt;!&ndash;              </p>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="profile mt-auto">&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <h5>Jasmin Bogatinovski</h5>&ndash;&gt;-->
-<!--&lt;!&ndash;                <h5>Ceo &amp; Founder</h5>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;&ndash;&gt;-->
+  <!--            <ng-template swiperSlide>-->
+  <!--            <div class="testimonial-item">-->
+  <!--              <p>-->
+  <!--            logsight.ai was the missing link to fully automate our CI/CD pipeline. <br> Logs from service upgrades are automatically compared to detect latent failures. <br> In the last 2 months we avoided 3 events of type P2 in production.</p>-->
+  <!--              <div class="profile mt-auto">-->
+  <!--&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;-->
+  <!--                <h5>Jasmin Bogatinovski</h5>-->
+  <!--                <h5>AIOPS Researcher</h5>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;-->
+  <!--&lt;!&ndash;             <ng-template swiperSlide>&ndash;&gt;-->
+  <!--&lt;!&ndash;            <div class="testimonial-item">&ndash;&gt;-->
+  <!--&lt;!&ndash;              <p>&ndash;&gt;-->
+  <!--&lt;!&ndash;                Unlike other systems which identify isolated anomalies, logsight.ai aggregates and correlates all log records  which together form an incident. This dramatically reduces the volume of false alarms triggered.&ndash;&gt;-->
+  <!--&lt;!&ndash;              </p>&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="profile mt-auto">&ndash;&gt;-->
+  <!--&lt;!&ndash;&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                <h5>Jasmin Bogatinovski</h5>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <h5>Ceo &amp; Founder</h5>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;&ndash;&gt;-->
 
-<!--&lt;!&ndash;             <ng-template swiperSlide>&ndash;&gt;-->
-<!--&lt;!&ndash;            <div class="testimonial-item">&ndash;&gt;-->
-<!--&lt;!&ndash;              <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                Unlike other systems which identify isolated anomalies, logsight.ai aggregates and correlates all log records  which together form an incident. This dramatically reduces the volume of false alarms triggered.&ndash;&gt;-->
-<!--&lt;!&ndash;              </p>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="profile mt-auto">&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <h5>Jasmin Bogatinovski</h5>&ndash;&gt;-->
-<!--&lt;!&ndash;                <h5>Ceo &amp; Founder</h5>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;&ndash;&gt;-->
-<!--          </swiper>-->
-<!--        </div>-->
+  <!--&lt;!&ndash;             <ng-template swiperSlide>&ndash;&gt;-->
+  <!--&lt;!&ndash;            <div class="testimonial-item">&ndash;&gt;-->
+  <!--&lt;!&ndash;              <p>&ndash;&gt;-->
+  <!--&lt;!&ndash;                Unlike other systems which identify isolated anomalies, logsight.ai aggregates and correlates all log records  which together form an incident. This dramatically reduces the volume of false alarms triggered.&ndash;&gt;-->
+  <!--&lt;!&ndash;              </p>&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="profile mt-auto">&ndash;&gt;-->
+  <!--&lt;!&ndash;&lt;!&ndash;                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;                <h5>Jasmin Bogatinovski</h5>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <h5>Ceo &amp; Founder</h5>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;          </ng-template>&lt;!&ndash; End testimonial item &ndash;&gt;&ndash;&gt;-->
+  <!--          </swiper>-->
+  <!--        </div>-->
 
-<!--  </section>&lt;!&ndash; End Testimonials Section &ndash;&gt;-->
+  <!--  </section>&lt;!&ndash; End Testimonials Section &ndash;&gt;-->
 
   <!-- ======= Team Section ======= -->
-<!--  <section id="team" class="team">-->
+  <!--  <section id="team" class="team">-->
 
-<!--    <div class="container">-->
+  <!--    <div class="container">-->
 
-<!--      <header class="section-header">-->
-<!--        <h2>Team</h2>-->
-<!--        <p>Our leadership</p>-->
-<!--      </header>-->
+  <!--      <header class="section-header">-->
+  <!--        <h2>Team</h2>-->
+  <!--        <p>Our leadership</p>-->
+  <!--      </header>-->
 
-<!--      <div class="row gy-4">-->
+  <!--      <div class="row gy-4">-->
 
-<!--        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >-->
-<!--          <div class="member">-->
-<!--            <div class="member-img">-->
-<!--              <img src="assets/img/team/alexander_acker.jpg" class="img-fluid" alt="">-->
-<!--              <div class="social">-->
-<!--                <a href=""><i class="bi bi-twitter"></i></a>-->
-<!--                <a href=""><i class="bi bi-facebook"></i></a>-->
-<!--                <a href=""><i class="bi bi-instagram"></i></a>-->
-<!--                <a href=""><i class="bi bi-linkedin"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="member-info">-->
-<!--              <h4>Alexander Acker</h4>-->
-<!--              <span>CEO & Co-founder</span>-->
-<!--              <p>Ph.D. in systems engineering with over 5 years of experience</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >-->
+  <!--          <div class="member">-->
+  <!--            <div class="member-img">-->
+  <!--              <img src="assets/img/team/alexander_acker.jpg" class="img-fluid" alt="">-->
+  <!--              <div class="social">-->
+  <!--                <a href=""><i class="bi bi-twitter"></i></a>-->
+  <!--                <a href=""><i class="bi bi-facebook"></i></a>-->
+  <!--                <a href=""><i class="bi bi-instagram"></i></a>-->
+  <!--                <a href=""><i class="bi bi-linkedin"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--            <div class="member-info">-->
+  <!--              <h4>Alexander Acker</h4>-->
+  <!--              <span>CEO & Co-founder</span>-->
+  <!--              <p>Ph.D. in systems engineering with over 5 years of experience</p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >-->
-<!--          <div class="member">-->
-<!--            <div class="member-img">-->
-<!--              <img src="assets/img/team/sasho.jfif" class="img-fluid" alt="">-->
-<!--              <div class="social">-->
-<!--                <a href=""><i class="bi bi-twitter"></i></a>-->
-<!--                <a href=""><i class="bi bi-facebook"></i></a>-->
-<!--                <a href=""><i class="bi bi-instagram"></i></a>-->
-<!--                <a href=""><i class="bi bi-linkedin"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="member-info">-->
-<!--              <h4>Sasho Nedelkoski</h4>-->
-<!--              <span>CEO & Co-founder</span>-->
-<!--              <p>Ph.D. in Machine Learning with over 5 years of experience</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >-->
+  <!--          <div class="member">-->
+  <!--            <div class="member-img">-->
+  <!--              <img src="assets/img/team/sasho.jfif" class="img-fluid" alt="">-->
+  <!--              <div class="social">-->
+  <!--                <a href=""><i class="bi bi-twitter"></i></a>-->
+  <!--                <a href=""><i class="bi bi-facebook"></i></a>-->
+  <!--                <a href=""><i class="bi bi-instagram"></i></a>-->
+  <!--                <a href=""><i class="bi bi-linkedin"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--            <div class="member-info">-->
+  <!--              <h4>Sasho Nedelkoski</h4>-->
+  <!--              <span>CEO & Co-founder</span>-->
+  <!--              <p>Ph.D. in Machine Learning with over 5 years of experience</p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >-->
-<!--          <div class="member">-->
-<!--            <div class="member-img">-->
-<!--              <img src="assets/img/team/odej.kao.jpg" class="img-fluid" alt="">-->
-<!--              <div class="social">-->
-<!--                <a href=""><i class="bi bi-twitter"></i></a>-->
-<!--                <a href=""><i class="bi bi-facebook"></i></a>-->
-<!--                <a href=""><i class="bi bi-instagram"></i></a>-->
-<!--                <a href=""><i class="bi bi-linkedin"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="member-info">-->
-<!--              <h4>Odej Kao</h4>-->
-<!--              <span>Advisor & Co-founder</span>-->
-<!--              <p>Vero omnis enim consequatur. Voluptas consectetur unde qui molestiae deserunt. Voluptates enim aut-->
-<!--                architecto porro aspernatur molestiae modi.</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >-->
+  <!--          <div class="member">-->
+  <!--            <div class="member-img">-->
+  <!--              <img src="assets/img/team/odej.kao.jpg" class="img-fluid" alt="">-->
+  <!--              <div class="social">-->
+  <!--                <a href=""><i class="bi bi-twitter"></i></a>-->
+  <!--                <a href=""><i class="bi bi-facebook"></i></a>-->
+  <!--                <a href=""><i class="bi bi-instagram"></i></a>-->
+  <!--                <a href=""><i class="bi bi-linkedin"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--            <div class="member-info">-->
+  <!--              <h4>Odej Kao</h4>-->
+  <!--              <span>Advisor & Co-founder</span>-->
+  <!--              <p>Vero omnis enim consequatur. Voluptas consectetur unde qui molestiae deserunt. Voluptates enim aut-->
+  <!--                architecto porro aspernatur molestiae modi.</p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >-->
-<!--          <div class="member">-->
-<!--            <div class="member-img">-->
-<!--              <img src="assets/img/team/jorge_cardoso.jpg" class="img-fluid" alt="">-->
-<!--              <div class="social">-->
-<!--                <a href=""><i class="bi bi-twitter"></i></a>-->
-<!--                <a href=""><i class="bi bi-facebook"></i></a>-->
-<!--                <a href=""><i class="bi bi-instagram"></i></a>-->
-<!--                <a href=""><i class="bi bi-linkedin"></i></a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="member-info">-->
-<!--              <h4>Jorge Cardoso</h4>-->
-<!--              <span>Advisor & Co-founder</span>-->
-<!--              <p>Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut-->
-<!--                possimus ipsum officia.</p>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" >-->
+  <!--          <div class="member">-->
+  <!--            <div class="member-img">-->
+  <!--              <img src="assets/img/team/jorge_cardoso.jpg" class="img-fluid" alt="">-->
+  <!--              <div class="social">-->
+  <!--                <a href=""><i class="bi bi-twitter"></i></a>-->
+  <!--                <a href=""><i class="bi bi-facebook"></i></a>-->
+  <!--                <a href=""><i class="bi bi-instagram"></i></a>-->
+  <!--                <a href=""><i class="bi bi-linkedin"></i></a>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--            <div class="member-info">-->
+  <!--              <h4>Jorge Cardoso</h4>-->
+  <!--              <span>Advisor & Co-founder</span>-->
+  <!--              <p>Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut-->
+  <!--                possimus ipsum officia.</p>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--      </div>-->
+  <!--      </div>-->
 
-<!--    </div>-->
+  <!--    </div>-->
 
-<!--  </section>&lt;!&ndash; End Team Section &ndash;&gt;-->
-
-
-
-
+  <!--  </section>&lt;!&ndash; End Team Section &ndash;&gt;-->
 
 
   <!-- ======= Clients Section ======= -->
-<!--  <section id="clients" class="clients">-->
+  <!--  <section id="clients" class="clients">-->
 
-<!--    <div class="container" >-->
+  <!--    <div class="container" >-->
 
-<!--      <header class="section-header">-->
-<!--        <h2>Our Clients</h2>-->
-<!--        <p>Temporibus omnis officia</p>-->
-<!--      </header>-->
+  <!--      <header class="section-header">-->
+  <!--        <h2>Our Clients</h2>-->
+  <!--        <p>Temporibus omnis officia</p>-->
+  <!--      </header>-->
 
-<!--      <div class="clients-slider swiper-container">-->
-<!--        <div class="swiper-wrapper align-items-center">-->
-<!--          <div class="swiper-slide"><img src="assets/img/clients/client-1.png" class="img-fluid" alt=""></div>-->
-<!--          <div class="swiper-slide"><img src="assets/img/clients/client-2.png" class="img-fluid" alt=""></div>-->
-<!--          <div class="swiper-slide"><img src="assets/img/clients/client-3.png" class="img-fluid" alt=""></div>-->
-<!--          <div class="swiper-slide"><img src="assets/img/clients/client-4.png" class="img-fluid" alt=""></div>-->
-<!--          <div class="swiper-slide"><img src="assets/img/clients/client-5.png" class="img-fluid" alt=""></div>-->
-<!--          <div class="swiper-slide"><img src="assets/img/clients/client-6.png" class="img-fluid" alt=""></div>-->
-<!--          <div class="swiper-slide"><img src="assets/img/clients/client-7.png" class="img-fluid" alt=""></div>-->
-<!--          <div class="swiper-slide"><img src="assets/img/clients/client-8.png" class="img-fluid" alt=""></div>-->
-<!--        </div>-->
-<!--        <div class="swiper-pagination"></div>-->
-<!--      </div>-->
-<!--    </div>-->
+  <!--      <div class="clients-slider swiper-container">-->
+  <!--        <div class="swiper-wrapper align-items-center">-->
+  <!--          <div class="swiper-slide"><img src="assets/img/clients/client-1.png" class="img-fluid" alt=""></div>-->
+  <!--          <div class="swiper-slide"><img src="assets/img/clients/client-2.png" class="img-fluid" alt=""></div>-->
+  <!--          <div class="swiper-slide"><img src="assets/img/clients/client-3.png" class="img-fluid" alt=""></div>-->
+  <!--          <div class="swiper-slide"><img src="assets/img/clients/client-4.png" class="img-fluid" alt=""></div>-->
+  <!--          <div class="swiper-slide"><img src="assets/img/clients/client-5.png" class="img-fluid" alt=""></div>-->
+  <!--          <div class="swiper-slide"><img src="assets/img/clients/client-6.png" class="img-fluid" alt=""></div>-->
+  <!--          <div class="swiper-slide"><img src="assets/img/clients/client-7.png" class="img-fluid" alt=""></div>-->
+  <!--          <div class="swiper-slide"><img src="assets/img/clients/client-8.png" class="img-fluid" alt=""></div>-->
+  <!--        </div>-->
+  <!--        <div class="swiper-pagination"></div>-->
+  <!--      </div>-->
+  <!--    </div>-->
 
-<!--  </section>&lt;!&ndash; End Clients Section &ndash;&gt;-->
+  <!--  </section>&lt;!&ndash; End Clients Section &ndash;&gt;-->
 
   <!-- ======= Recent Blog Posts Section ======= -->
-<!--  <section id="recent-blog-posts" class="recent-blog-posts">-->
+  <!--  <section id="recent-blog-posts" class="recent-blog-posts">-->
 
-<!--    <div class="container" data-aos="fade-up">-->
+  <!--    <div class="container" data-aos="fade-up">-->
 
-<!--      <header class="section-header">-->
-<!--        <h2>Blog</h2>-->
-<!--        <p>Recent posts form our Blog</p>-->
-<!--      </header>-->
+  <!--      <header class="section-header">-->
+  <!--        <h2>Blog</h2>-->
+  <!--        <p>Recent posts form our Blog</p>-->
+  <!--      </header>-->
 
-<!--      <div class="row">-->
+  <!--      <div class="row">-->
 
-<!--        <div class="col-lg-4">-->
-<!--          <div class="post-box">-->
-<!--            <div class="post-img"><img src="assets/img/blog/blog-1.jpg" class="img-fluid" alt=""></div>-->
-<!--            <span class="post-date">Tue, September 15</span>-->
-<!--            <h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit</h3>-->
-<!--            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i-->
-<!--              class="bi bi-arrow-right"></i></a>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4">-->
+  <!--          <div class="post-box">-->
+  <!--            <div class="post-img"><img src="assets/img/blog/blog-1.jpg" class="img-fluid" alt=""></div>-->
+  <!--            <span class="post-date">Tue, September 15</span>-->
+  <!--            <h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur sit</h3>-->
+  <!--            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i-->
+  <!--              class="bi bi-arrow-right"></i></a>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4">-->
-<!--          <div class="post-box">-->
-<!--            <div class="post-img"><img src="assets/img/blog/blog-2.jpg" class="img-fluid" alt=""></div>-->
-<!--            <span class="post-date">Fri, August 28</span>-->
-<!--            <h3 class="post-title">Et repellendus molestiae qui est sed omnis voluptates magnam</h3>-->
-<!--            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i-->
-<!--              class="bi bi-arrow-right"></i></a>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4">-->
+  <!--          <div class="post-box">-->
+  <!--            <div class="post-img"><img src="assets/img/blog/blog-2.jpg" class="img-fluid" alt=""></div>-->
+  <!--            <span class="post-date">Fri, August 28</span>-->
+  <!--            <h3 class="post-title">Et repellendus molestiae qui est sed omnis voluptates magnam</h3>-->
+  <!--            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i-->
+  <!--              class="bi bi-arrow-right"></i></a>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-4">-->
-<!--          <div class="post-box">-->
-<!--            <div class="post-img"><img src="assets/img/blog/blog-3.jpg" class="img-fluid" alt=""></div>-->
-<!--            <span class="post-date">Mon, July 11</span>-->
-<!--            <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>-->
-<!--            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i-->
-<!--              class="bi bi-arrow-right"></i></a>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-4">-->
+  <!--          <div class="post-box">-->
+  <!--            <div class="post-img"><img src="assets/img/blog/blog-3.jpg" class="img-fluid" alt=""></div>-->
+  <!--            <span class="post-date">Mon, July 11</span>-->
+  <!--            <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>-->
+  <!--            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i-->
+  <!--              class="bi bi-arrow-right"></i></a>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--      </div>-->
+  <!--      </div>-->
 
-<!--    </div>-->
+  <!--    </div>-->
 
-<!--  </section>&lt;!&ndash; End Recent Blog Posts Section &ndash;&gt;-->
+  <!--  </section>&lt;!&ndash; End Recent Blog Posts Section &ndash;&gt;-->
 
   <!-- ======= Contact Section ======= -->
-<!--  <section id="contact" class="contact">-->
+  <!--  <section id="contact" class="contact">-->
 
-<!--    <div class="container" >-->
+  <!--    <div class="container" >-->
 
-<!--      <header class="section-header">-->
-<!--        <h2>Contact</h2>-->
-<!--        <p>Contact Us</p>-->
-<!--      </header>-->
+  <!--      <header class="section-header">-->
+  <!--        <h2>Contact</h2>-->
+  <!--        <p>Contact Us</p>-->
+  <!--      </header>-->
 
-<!--      <div class="row gy-4">-->
+  <!--      <div class="row gy-4">-->
 
-<!--        <div class="col-lg-12">-->
+  <!--        <div class="col-lg-12">-->
 
-<!--          <div class="row gy-4">-->
-<!--&lt;!&ndash;            <div class="col-md-6">&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="info-box">&ndash;&gt;-->
-<!--&lt;!&ndash;                <i class="bi bi-geo-alt"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                <h3>Address</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>A108 Adam Street,<br>New York, NY 535022</p>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            <div class="col-md-6">&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="info-box">&ndash;&gt;-->
-<!--&lt;!&ndash;                <i class="bi bi-telephone"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                <h3>Call Us</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>+1 5589 55488 55<br>+1 6678 254445 41</p>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--            <div class="col-md-12 text-center">-->
-<!--              <div class="info-box">-->
-<!--                <i class="bi bi-envelope"></i>-->
-<!--                <h2>info@logsight.ai</h2>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--&lt;!&ndash;            <div class="col-md-6">&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="info-box">&ndash;&gt;-->
-<!--&lt;!&ndash;                <i class="bi bi-clock"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                <h3>Open Hours</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;                <p>Monday - Friday<br>9:00AM - 05:00PM</p>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--          </div>-->
+  <!--          <div class="row gy-4">-->
+  <!--&lt;!&ndash;            <div class="col-md-6">&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="info-box">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <i class="bi bi-geo-alt"></i>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <h3>Address</h3>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <p>A108 Adam Street,<br>New York, NY 535022</p>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;            <div class="col-md-6">&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="info-box">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <i class="bi bi-telephone"></i>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <h3>Call Us</h3>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <p>+1 5589 55488 55<br>+1 6678 254445 41</p>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--            <div class="col-md-12 text-center">-->
+  <!--              <div class="info-box">-->
+  <!--                <i class="bi bi-envelope"></i>-->
+  <!--                <h2>info@logsight.ai</h2>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--&lt;!&ndash;            <div class="col-md-6">&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="info-box">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <i class="bi bi-clock"></i>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <h3>Open Hours</h3>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <p>Monday - Friday<br>9:00AM - 05:00PM</p>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--          </div>-->
 
-<!--        </div>-->
+  <!--        </div>-->
 
-<!--&lt;!&ndash;        <div class="col-lg-6">&ndash;&gt;-->
-<!--&lt;!&ndash;          <form action="forms/contact.php" method="post" class="php-email-form">&ndash;&gt;-->
-<!--&lt;!&ndash;            <div class="row gy-4">&ndash;&gt;-->
+  <!--&lt;!&ndash;        <div class="col-lg-6">&ndash;&gt;-->
+  <!--&lt;!&ndash;          <form action="forms/contact.php" method="post" class="php-email-form">&ndash;&gt;-->
+  <!--&lt;!&ndash;            <div class="row gy-4">&ndash;&gt;-->
 
-<!--&lt;!&ndash;              <div class="col-md-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                <input type="text" name="name" class="form-control" placeholder="Your Name" required>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="col-md-6">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <input type="text" name="name" class="form-control" placeholder="Your Name" required>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
 
-<!--&lt;!&ndash;              <div class="col-md-6 ">&ndash;&gt;-->
-<!--&lt;!&ndash;                <input type="email" class="form-control" name="email" placeholder="Your Email" required>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="col-md-6 ">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <input type="email" class="form-control" name="email" placeholder="Your Email" required>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
 
-<!--&lt;!&ndash;              <div class="col-md-12">&ndash;&gt;-->
-<!--&lt;!&ndash;                <input type="text" class="form-control" name="subject" placeholder="Subject" required>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="col-md-12">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <input type="text" class="form-control" name="subject" placeholder="Subject" required>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
 
-<!--&lt;!&ndash;              <div class="col-md-12">&ndash;&gt;-->
-<!--&lt;!&ndash;                <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="col-md-12">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
 
-<!--&lt;!&ndash;              <div class="col-md-12 text-center">&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="loading">Loading</div>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="error-message"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="sent-message">Your message has been sent. Thank you!</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;              <div class="col-md-12 text-center">&ndash;&gt;-->
+  <!--&lt;!&ndash;                <div class="loading">Loading</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <div class="error-message"></div>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <div class="sent-message">Your message has been sent. Thank you!</div>&ndash;&gt;-->
 
-<!--&lt;!&ndash;                <button type="submit">Send Message</button>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;                <button type="submit">Send Message</button>&ndash;&gt;-->
+  <!--&lt;!&ndash;              </div>&ndash;&gt;-->
 
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;          </form>&ndash;&gt;-->
+  <!--&lt;!&ndash;            </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;          </form>&ndash;&gt;-->
 
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+  <!--&lt;!&ndash;        </div>&ndash;&gt;-->
 
-<!--      </div>-->
+  <!--      </div>-->
 
-<!--    </div>-->
+  <!--    </div>-->
 
-<!--  </section>&lt;!&ndash; End Contact Section &ndash;&gt;-->
+  <!--  </section>&lt;!&ndash; End Contact Section &ndash;&gt;-->
 
 </main><!-- End #main -->

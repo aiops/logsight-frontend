@@ -26,7 +26,7 @@ FROM nginx:1.21.6-alpine
 
 ## Copy our default nginx config
 COPY nginx/default.conf /etc/nginx/conf.d/
-
+COPY logsight-eula.txt /
 ## Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 

@@ -4,6 +4,7 @@ import {LoginService} from '../login.service';
 import {Router} from '@angular/router';
 import {NbThemeService} from "@nebular/theme";
 import {ApiService} from "../../@core/service/api.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'register',
@@ -53,6 +54,9 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.form.value).subscribe(resp => {
         this.isSpinning = false;
         this.formSubmitted = true;
+        if (!environment.production){
+          this.router.navigate(['/auth/login'])
+        }
       }, error => {
         this.isSpinning = false;
         this.apiService.handleErrors(error)

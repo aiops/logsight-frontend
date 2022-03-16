@@ -9,12 +9,13 @@
   <h4>Select data source</h4>
   <br>
 </div>
+
 <div class="row justify-content-md-center" style="padding-left: 20%; padding-right: 20%">
 <div class="col">
   <nb-card size="small" (click)="redirectToUploadLogFile()" style="cursor: pointer">
     <nb-card-body>
         <div class="vertical-center">
-        <i class="fas fa-file-import fa-6x"></i> </div>
+        <img src="../../../assets/img/upload-file.png" height="150"> </div>
         <div class="vertical-center2">
         <button shape="round"  style="text-transform: none" nbButton size="giant">Upload file</button></div>
     </nb-card-body>
@@ -25,7 +26,7 @@
   <nb-card size="small" (click)="redirectToSampleData()" style="cursor: pointer">
     <nb-card-body>
         <div class="vertical-center">
-        <i class="fas fa-copy fa-6x"></i> </div>
+        <img src="../../../assets/img/sample-data.png" height="150"> </div>
         <div class="vertical-center2">
         <button nbButton shape="round" style="text-transform: none"  size="giant">Sample data</button></div>
     </nb-card-body>
@@ -36,12 +37,48 @@
   <nb-card size="small" (click)="redirectToSwagger()" style="cursor: pointer">
     <nb-card-body>
         <div class="vertical-center">
-        <img src="../../../assets/icons/rest-api.png" height="100"> </div>
+        <img src="../../../assets/icons/swagger_logo.svg" height="100"> </div>
         <div class="vertical-center2">
         <button nbButton shape="round" style="text-transform: none"  size="giant">Open API</button></div>
     </nb-card-body>
   </nb-card>
 </div>
 
+
+
+</div>
+
+<div class="row justify-content-center" style="padding-left: 20%; padding-right: 20%">
+
+    <div class="col">
+
+</div>
+
+  <div class="col">
+  <nb-card size="small" (click)="redirectToLogstash()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center">
+        <img src="../../../assets/img/logstash.png" height="150"> </div>
+        <div class="vertical-center2">
+        <button shape="round"  style="text-transform: none" nbButton size="giant">Logstash</button></div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+
+      <div class="col">
+  <nb-card size="small" (click)="redirectToFluentbit()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center">
+        <img src="../../../assets/img/logo-fluentbit.png" height="150"> </div>
+        <div class="vertical-center2">
+        <button nbButton shape="round" style="text-transform: none"  size="giant">FluentBit</button></div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+      <div class="col">
+
+</div>
 
 </div>

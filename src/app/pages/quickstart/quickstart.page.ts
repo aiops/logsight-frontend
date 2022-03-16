@@ -69,6 +69,20 @@ export class QuickstartPage implements OnInit {
     );
   }
 
+  redirectToLogstash(){
+    window.open(
+  'https://docs.logsight.ai/#/./send_logs/logstash',
+  '_blank' // <- This is what makes it open in a new window.
+    );
+  }
+
+  redirectToFluentbit(){
+    window.open(
+  'https://docs.logsight.ai/#/./send_logs/fluentbit',
+  '_blank' // <- This is what makes it open in a new window.
+    );
+  }
+
 
 
   onFirstSubmit() {

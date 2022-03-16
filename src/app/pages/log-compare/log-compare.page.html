@@ -41,10 +41,10 @@
                     <div class="card-text" style="margin-block-end: 5px;">
 
                                         <div class="row">
-                    <div class="col-2 text-left my-auto">
+                    <div class="col text-right my-auto">
                       Choose application
                     </div>
-                    <div class="col-2">
+                    <div class="col">
                     <nb-select (selectedChange)="applicationSelected($event)" fullWidth [(selected)]="this.applicationId"
                      class="period-select"
                      placeholder="Select application">
@@ -54,11 +54,9 @@
                     </nb-select>
                       </div>
 
-                      <div class="col">
-                        <div class="col">
-                        <b style="font-weight: 600">Description: </b>This is a service description pulled form your software versioning system. For example, Github, Gitlab, etc.
-                        <a href="https://github.com/apache/hadoop">(more)</a>
-                          </div>
+                      <div class="col justify-content-center">
+<!--                        <button (click)="computeLogCompare()" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" style="padding-left: 10%; padding-right: 10%; text-transform: none; margin-left: 10px">Verify-->
+<!--                        </button>-->
                       </div>
 </div>
                       <div class="row pt-4 justify-content-center">
@@ -74,7 +72,7 @@
       </div>
 
       <div class="col-4 col-md-4 col-lg-4 mb-4 mb-lg-0">
-          <nb-card style="padding-bottom: 25px">
+          <nb-card style="padding-bottom: 20px">
               <h5 class="card-header">Choose releases</h5>
               <div class="card-body">
                 <div class="card-text">
@@ -416,7 +414,6 @@
             <th style="width: 5%">{{this.tableDataUnified.cols[2]}}</th>
             <th style="width: 5%">{{this.tableDataUnified.cols[3]}}</th>
             <th style="width: 43%; overflow: hidden; word-wrap: anywhere">{{this.tableDataUnified.cols[4]}}</th>
-            <th style="width: 4%">{{this.tableDataUnified.cols[5]}}</th>
             <th style="width: 10%" class="text-center">{{this.tableDataUnified.cols[6]}}</th>
             <th style="width: 9%" class="text-center">{{this.tableDataUnified.cols[7]}}</th>
             <th style="width: 5%">{{this.tableDataUnified.cols[8]}}</th>
@@ -449,17 +446,17 @@
 
             <td>{{row.template}}</td>
 
-            <td >
-<!--                {% if row.template_code %}-->
-                 <a href="{{ row.template_code }}">
-                     <i class="fa fa-link secondary font-medium-1"></i>
-                 </a>
-<!--                {% else %}-->
-<!--                 <a href="https://github.com/willyblackkeez" id="profile-link">-->
-<!--                     <i class="fa fa-external-link font-medium-1" style="color: rgba(0, 0, 0, 0.5)"></i>-->
+<!--            <td >-->
+<!--&lt;!&ndash;                {% if row.template_code %}&ndash;&gt;-->
+<!--                 <a href="{{ row.template_code }}">-->
+<!--                     <i class="fa fa-link secondary font-medium-1"></i>-->
 <!--                 </a>-->
-<!--                {% endif %}-->
-            </td>
+<!--&lt;!&ndash;                {% else %}&ndash;&gt;-->
+<!--&lt;!&ndash;                 <a href="https://github.com/willyblackkeez" id="profile-link">&ndash;&gt;-->
+<!--&lt;!&ndash;                     <i class="fa fa-external-link font-medium-1" style="color: rgba(0, 0, 0, 0.5)"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                 </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                {% endif %}&ndash;&gt;-->
+<!--            </td>-->
 
             <td>
               <div class="row">
@@ -508,7 +505,7 @@
               <div >{{row.level}}</div>
             </td>
 
-            <td class="semantics"
+            <td class="semantics text-left"
                 style="color: {{row.semantic_color[0]}}">{{row.semantics}}
             </td>
           </tr>

@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [{ title: 'Settings', data: 'profile' }, { title: 'Log out', data: 'log_out' }];
+  userMenu = [{ title: 'Profile', data: 'profile' }, { title: 'Log out', data: 'log_out' }];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               this.tourService.initialize([
                 {
                 anchorId: 'anchorDashboard',
-                content: 'The Dashboard shows an overview of your system. This includes overview of the observed services, the statistics of their log data, as well as top incidents within a period of time.',
+                content: 'Wait for the data to load.. It may take up to a minute. \n\n The Dashboard shows an overview of your system. This includes overview of the observed services, the statistics of their log data, as well as top incidents within a period of time.',
                 enableBackdrop: true,
                 route: '/pages/dashboard'
                 },
@@ -88,10 +88,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 },
                 {
                   anchorId: 'anchorIncidentsTab',
-                  content: 'In this view, the details of the selected incident are shown!',
+                  content: 'In this view, the details of the selected incident are shown! Clicking on View Details will show you the details of the incident!',
                   enableBackdrop: true,
                   route: '/pages/incidents'
+                },
+                {
+                  anchorId: 'compareExplanation',
+                  content: 'In this tab, you can compare logs and verify deployments.',
+                  enableBackdrop: true,
+                  route: '/pages/compare'
                 }
+                ,
+                {
+                  anchorId: 'compareVerify',
+                  content: 'Select your application, select the tags, and click on Verify to see the results!',
+                  enableBackdrop: true,
+                },
+                {
+                  anchorId: 'profile',
+                  content: 'In this tab, you can manage your user and applications.',
+                  enableBackdrop: true,
+                  route: '/pages/profile'
+                }
+
                 ]);
 
             }

@@ -28,7 +28,10 @@ export class SampleDataPage implements OnInit {
       .subscribe(resp => {
         this.isSpinning = false
         this.router.navigate(['/pages', 'dashboard'])
-        this.tourService.start()
+        if (!localStorage.getItem("loadTour")){
+          localStorage.setItem("loadTour", "true")
+          this.tourService.start()
+        }
       }, error => {
         this.isSpinning = false
         this.apiService.handleErrors(error)

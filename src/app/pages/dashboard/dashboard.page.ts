@@ -103,9 +103,15 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // cancel spinner on click
+    // the tour should show only once add coookie.
+    const el = document.getElementById('nb-global-spinner');
+    el.addEventListener('click', function(event) {
+      el.style['display'] = 'none';
+});
     this.userId = localStorage.getItem('userId')
     setTimeout(_ => this.reload$.next(), 5000); //hack to start first refresh
-    setTimeout(_ => this.cancelGlobalSpinner(), 15000)
+    setTimeout(_ => this.cancelGlobalSpinner(), 45000)
     this.integrationService.loadApplications(this.userId).subscribe(resp => {
       this.applications = resp.applications
     })
@@ -117,7 +123,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.heatmapData$.subscribe(data => {
       data = data.data
       // console.log("D", data.data)
-      if (data) {
+      if (data.data.length>0) {
         const el = document.getElementById('nb-global-spinner');
         if (el) {
           el.style['display'] = 'none';

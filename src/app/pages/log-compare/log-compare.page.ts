@@ -337,7 +337,7 @@ export class LogComparePage {
         this.tags = resp
         for (let i = 0; i < this.tags.length; i++) {
           if (this.tags[i].tagView.length > 7) {
-            this.tags[i].tagView = this.tags[i].tagView.slice(this.tags[i].tagView.length - 8, this.tags[i].tagView.length)
+            this.tags[i].tagView = this.tags[i].tagView.slice(0, 8)
           }
         }
         if (resp.length > 1) {

@@ -134,7 +134,7 @@ export class LogComparePage {
     this.route.queryParamMap.subscribe(queryParams => {
       let applicationId = queryParams.get('applicationId')
       let baselineTag = queryParams.get('baselineTag')
-      let compareTag = queryParams.get('baselineTag')
+      let compareTag = queryParams.get('compareTag')
       if(applicationId&&baselineTag&&compareTag){
         this.baselineTagId = baselineTag
         this.compareTagId = compareTag

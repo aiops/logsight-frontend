@@ -139,7 +139,6 @@ export class LogComparePage {
         this.baselineTagId = baselineTag
         this.compareTagId = compareTag
         this.applicationId = applicationId
-        this.applicationSelected(this.applicationId)
         this.computeLogCompare()
       }
     });

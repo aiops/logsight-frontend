@@ -139,17 +139,17 @@ export class LogComparePage {
         this.baselineTagId = baselineTag
         this.compareTagId = compareTag
         this.applicationId = applicationId
-        this.computeLogCompare()
+        setTimeout(_ => this.computeLogCompare(), 100);
       } else {
         this.authService.getLoggedUser(this.userId).pipe(
           switchMap(user => this.integrationService.loadApplications(this.userId))
         ).subscribe(resp => {
           this.applications = resp.applications
-          setTimeout(_ => {
-            if (this.applicationId == null) {
-              this.applicationSelected(this.applications[0].applicationId);
-            }
-          }, 50);
+          // setTimeout(_ => {
+          //   if (this.applicationId == null) {
+          //     this.applicationSelected(this.applications[0].applicationId);
+          //   }
+          // }, 50);
         })
       }
     });

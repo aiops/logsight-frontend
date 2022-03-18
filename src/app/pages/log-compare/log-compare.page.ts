@@ -136,11 +136,13 @@ export class LogComparePage {
       let baselineTag = queryParams.get('baselineTag')
       let compareTag = queryParams.get('compareTag')
       if (applicationId && baselineTag && compareTag) {
+        console.log(applicationId, baselineTag, compareTag)
         this.baselineTagId = baselineTag
         this.compareTagId = compareTag
         this.applicationId = applicationId
         setTimeout(_ => this.computeLogCompare(), 100);
       } else {
+        console.log("Here")
         this.authService.getLoggedUser(this.userId).pipe(
           switchMap(user => this.integrationService.loadApplications(this.userId))
         ).subscribe(resp => {
@@ -245,7 +247,7 @@ export class LogComparePage {
       // this.loadQualityOverview(this.startDateTime, this.endDateTime, this.applicationId)
     }
     this.loadBarDataUnified()
-    this.reload$.next()
+    // this.reload$.next()
     // this.router.navigate([],
     //   { queryParams: { startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType } })
   }

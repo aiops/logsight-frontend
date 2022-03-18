@@ -38,7 +38,7 @@ const routes: Routes = [{
       loadChildren: () => import('./file-upload/file-upload.module')
         .then(m => m.FileUploadModule),
     },{
-      path: 'sample-data',
+      path: 'demo-data',
       loadChildren: () => import('./sample-data/sample-data.module')
         .then(m => m.SampleDataModule),
     },

@@ -6,8 +6,8 @@
       <div class="row user_guidance">
         <div class="col-sm">
           <div class="row">
-            <h4>Use sample data</h4>
-          <p>The sample data contains logs from Apache™ Hadoop®. The logs in the sample data are snapshot of few of the system's services that had bugs in the past.</p>
+            <h4>Use demo data</h4>
+          <p>The demo data contains logs from Apache™ Hadoop®. The logs in the demo data are snapshot of few of the system's services that had bugs in the past.</p>
             <br>
             <p>Load the data and check how logsight is able to find the bugs and provide insights!</p>
             </div>
@@ -24,11 +24,11 @@
           </div>
           <div *ngIf="!isSpinning" style="width: 50%">
           <button  nbButton size="giant" style="text-transform: none" status="basic" shape="round" type="button"
-                  (click)="requestSampleData()">Load sample data
+                  (click)="requestSampleData()">Load demo data
           </button>
             </div>
 
-          <div *ngIf="isSpinning">Loading sample data... After redirect, it may take up to a minute for the data to load.</div>
+          <div *ngIf="isSpinning">Loading demo data... After redirect, it may take up to a minute for the data to load.</div>
           <div *ngIf="isSpinning" class="spinner-border text-primary" style="position: relative" role="status">
           </div>
         </div>

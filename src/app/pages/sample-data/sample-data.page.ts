@@ -8,7 +8,7 @@ import {TourService} from "ngx-ui-tour-md-menu";
 import {ApiService} from "../../@core/service/api.service";
 
 @Component({
-  selector: 'sample-data',
+  selector: 'demo-data',
   styleUrls: ['./sample-data.page.scss'],
   templateUrl: './sample-data.page.html',
 })

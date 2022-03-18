@@ -27,9 +27,10 @@
                   (click)="requestSampleData()">Load demo data
           </button>
             </div>
-
-          <div *ngIf="isSpinning">Loading demo data... After redirect, it may take up to a minute for the data to load.</div>
-          <div *ngIf="isSpinning" class="spinner-border text-primary" style="position: relative" role="status">
+          <div *ngIf="isSpinning" class="pt-1">Loading demo data...</div>
+          <div *ngIf="isSpinning" class="pt-1">It may take up to a minute for the data to load... You will be automatically redirected once is ready.</div>
+          <br>
+          <div *ngIf="isSpinning" class="spinner-border text-primary pt-3" style="position: relative" role="status">
           </div>
         </div>
 

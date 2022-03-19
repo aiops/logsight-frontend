@@ -133,25 +133,16 @@ export class LogComparePage {
     this.loadPredefinedTimes();
     this.route.queryParamMap.subscribe(queryParams => {
       let applicationId = queryParams.get('applicationId')
-      let baselineTag = queryParams.get('baselineTag')
-      let compareTag = queryParams.get('compareTag')
-      if (applicationId && baselineTag && compareTag) {
-        console.log(applicationId, baselineTag, compareTag)
-        this.baselineTagId = baselineTag
-        this.compareTagId = compareTag
+      this.baselineTagId = queryParams.get('baselineTag')
+      this.compareTagId = queryParams.get('compareTag')
+      if (applicationId && this.baselineTagId && this.compareTagId) {
         this.applicationId = applicationId
         setTimeout(_ => this.computeLogCompare(), 100);
       } else {
-        console.log("Here")
         this.authService.getLoggedUser(this.userId).pipe(
           switchMap(user => this.integrationService.loadApplications(this.userId))
         ).subscribe(resp => {
           this.applications = resp.applications
-          // setTimeout(_ => {
-          //   if (this.applicationId == null) {
-          //     this.applicationSelected(this.applications[0].applicationId);
-          //   }
-          // }, 50);
         })
       }
     });

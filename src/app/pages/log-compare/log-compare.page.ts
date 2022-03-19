@@ -136,8 +136,8 @@ export class LogComparePage {
       this.baselineTagId = queryParams.get('baselineTag')
       this.compareTagId = queryParams.get('compareTag')
       if (this.applicationId && this.baselineTagId && this.compareTagId) {
+        this.integrationService.loadApplications(this.userId)
         setTimeout(_ => this.computeLogCompare(), 100);
-        this.computeLogCompare()
       } else {
         this.authService.getLoggedUser(this.userId).pipe(
           switchMap(user => this.integrationService.loadApplications(this.userId))

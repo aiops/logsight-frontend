@@ -132,11 +132,10 @@ export class LogComparePage {
     this.userId = localStorage.getItem("userId")
     this.loadPredefinedTimes();
     this.route.queryParamMap.subscribe(queryParams => {
-      let applicationId = queryParams.get('applicationId')
+      this.applicationId = queryParams.get('applicationId')
       this.baselineTagId = queryParams.get('baselineTag')
       this.compareTagId = queryParams.get('compareTag')
-      if (applicationId && this.baselineTagId && this.compareTagId) {
-        this.applicationId = applicationId
+      if (this.applicationId && this.baselineTagId && this.compareTagId) {
         setTimeout(_ => this.computeLogCompare(), 100);
       } else {
         this.authService.getLoggedUser(this.userId).pipe(

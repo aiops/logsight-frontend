@@ -131,19 +131,15 @@ export class LogComparePage {
   ngOnInit(): void {
     this.userId = localStorage.getItem("userId")
     this.loadPredefinedTimes();
+    this.integrationService.loadApplications(this.userId).subscribe(resp => {
+      this.applications = resp.applications
+    })
     this.route.queryParamMap.subscribe(queryParams => {
       this.applicationId = queryParams.get('applicationId')
       this.baselineTagId = queryParams.get('baselineTag')
       this.compareTagId = queryParams.get('compareTag')
       if (this.applicationId && this.baselineTagId && this.compareTagId) {
-        this.integrationService.loadApplications(this.userId)
         setTimeout(_ => this.computeLogCompare(), 100);
-      } else {
-        this.authService.getLoggedUser(this.userId).pipe(
-          switchMap(user => this.integrationService.loadApplications(this.userId))
-        ).subscribe(resp => {
-          this.applications = resp.applications
-        })
       }
     });
 

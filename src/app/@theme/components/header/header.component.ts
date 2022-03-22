@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               this.tourService.initialize([
                 {
                 anchorId: 'anchorDashboard',
-                content: 'Wait for the data to load.. It may take up to a minute. \n\n The Dashboard shows an overview of your system. This includes overview of the observed services, the statistics of their log data, as well as top incidents within a period of time.',
+                content: 'The Dashboard shows an overview of your system. This includes overview of the observed services, the statistics of their log data, as well as top incidents within a period of time.',
                 enableBackdrop: true,
                 route: '/pages/dashboard'
                 },

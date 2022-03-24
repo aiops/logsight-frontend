@@ -54,9 +54,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.form.value).subscribe(resp => {
         this.isSpinning = false;
         this.formSubmitted = true;
-        if (!environment.production){
-          this.router.navigate(['/auth/login'])
-        }
+        this.router.navigate(['/auth/login'])
       }, error => {
         this.isSpinning = false;
         this.apiService.handleErrors(error)

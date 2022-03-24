@@ -69,6 +69,13 @@ export class QuickstartPage implements OnInit {
     );
   }
 
+  redirectToGithub(){
+     window.open(
+  'https://docs.logsight.ai/#/integration/github_action',
+  '_blank' // <- This is what makes it open in a new window.
+    );
+  }
+
   redirectToLogstash(){
     window.open(
   'https://docs.logsight.ai/#/./integration/logstash?id=logstash',

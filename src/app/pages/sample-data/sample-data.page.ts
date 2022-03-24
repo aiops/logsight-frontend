@@ -48,7 +48,7 @@ export class SampleDataPage implements OnInit {
         for (let i = 0; i < receipts.length; i++) {
           this.http.post<Flush>(`/api/v1/logs/flush`, {"receiptId": receipts[i].receiptId}).subscribe(flush => {
             this.http.get<Flush>(`/api/v1/logs/flush/${flush.flushId}`).pipe(
-              repeatWhen(obs => obs),
+              repeatWhen(obs => obs.pipe(delay(1000))),
               filter(data => data.status == "DONE"),
               take(1)
             ).subscribe(result => this.redirectToDashboard(result, receipts.length));

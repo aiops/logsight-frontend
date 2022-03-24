@@ -109,6 +109,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
                   content: 'In this tab, you can manage your user and applications.',
                   enableBackdrop: true,
                   route: '/pages/profile'
+                },
+                {
+                  anchorId: 'anchorDashboard',
+                  content: 'Start exploring on your own.',
+                  route: '/pages/dashboard'
                 }
 
                 ]);

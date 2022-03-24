@@ -50,8 +50,17 @@
 
 <div class="row justify-content-center" style="padding-left: 20%; padding-right: 20%">
 
-    <div class="col">
 
+    <div class="col">
+  <nb-card size="small" (click)="redirectToGithub()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center justify-content-center text-center">
+        <img src="../../../assets/img/github.png"  style="width: 70%; height: 70%"> </div>
+        <div class="vertical-center2">
+        <button shape="round"  style="text-transform: none" nbButton size="giant">GitHub</button>
+        </div>
+    </nb-card-body>
+  </nb-card>
 </div>
 
   <div class="col">
@@ -77,8 +86,5 @@
   </nb-card>
 </div>
 
-      <div class="col">
-
-</div>
 
 </div>

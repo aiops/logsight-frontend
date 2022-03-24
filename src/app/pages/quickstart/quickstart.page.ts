@@ -64,21 +64,21 @@ export class QuickstartPage implements OnInit {
 
   redirectToSwagger(){
     window.open(
-  'https://docs.logsight.ai/#/detect_incidents/using_the_rest_api?id=send-logs',
+  'https://docs.logsight.ai/#/incident_detection/using_the_rest_api?id=send-logs',
   '_blank' // <- This is what makes it open in a new window.
     );
   }
 
   redirectToLogstash(){
     window.open(
-  'https://docs.logsight.ai/#/./send_logs/logstash',
+  'https://docs.logsight.ai/#/./integration/logstash?id=logstash',
   '_blank' // <- This is what makes it open in a new window.
     );
   }
 
   redirectToFluentbit(){
     window.open(
-  'https://docs.logsight.ai/#/./send_logs/fluentbit',
+  'https://docs.logsight.ai/#/./integration/fluentbit?id=fluentbit',
   '_blank' // <- This is what makes it open in a new window.
     );
   }

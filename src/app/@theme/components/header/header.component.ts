@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 anchorId: 'anchorDashboard',
                 content: 'The Dashboard shows an overview of your system. This includes overview of the observed services, the statistics of their log data, as well as top incidents within a period of time.',
                 enableBackdrop: true,
-                route: '/pages/dashboard'
                 },
                 {
                   anchorId: 'anchorLogLevels',

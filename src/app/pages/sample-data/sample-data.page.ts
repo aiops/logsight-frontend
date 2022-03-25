@@ -42,11 +42,6 @@ export class SampleDataPage implements OnInit {
             sample: true
       }
     })
-      if (!localStorage.getItem("loadTour")) {
-        localStorage.setItem("loadTour", "true")
-        this.tourService.start()
-
-      }
     }
   }
 

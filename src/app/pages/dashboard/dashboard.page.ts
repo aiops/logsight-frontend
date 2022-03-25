@@ -274,6 +274,10 @@ export class DashboardPage implements OnInit, OnDestroy {
       }
     })
     this.reload$.next()
+      if (!localStorage.getItem("loadTour")) {
+        localStorage.setItem("loadTour", "true")
+        this.tourService.start()
+      }
 
   }
 

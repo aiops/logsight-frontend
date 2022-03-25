@@ -17,7 +17,7 @@ WORKDIR /ng-app
 COPY . .
 
 ## Build the angular app in production mode and store the artifacts in dist folder
-RUN $(npm bin)/ng build --output-path=dist
+RUN $(npm bin)/ng build --configuration --aot --vendor-chunk --build-optimizer --delete-output-path --common-chunk --output-path=dist
 
 
 ### STAGE 2: Setup ###

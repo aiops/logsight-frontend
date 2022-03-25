@@ -247,7 +247,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       var startTime = ''
       var endTime = ''
       var dateTimeType = ''
-      if (this.selectedTime) {
+      if (this.selectedTime && (queryParams.get('sample') != "true")) {
         queryParams = JSON.parse(this.selectedTime)
         startTime = queryParams['startTime'];
         endTime = queryParams['endTime'];

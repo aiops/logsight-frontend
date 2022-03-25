@@ -13,9 +13,7 @@ Swiper.use([Navigation, Pagination]);
 @Component({
   selector: 'landing',
   styleUrls: ['../assets/css/style.css',
-    '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css',
-    '../assets/vendor/bootstrap-icons/bootstrap-icons.css',
-    '../assets/vendor/swiper/swiper-bundle.min.css', '../assets/vendor/glightbox/css/glightbox.css'],
+    '../assets/vendor/bootstrap-icons/bootstrap-icons.css'],
   templateUrl: './landing.component.html',
 })
 export class LandingComponent implements OnInit, AfterViewInit {

@@ -14,9 +14,7 @@ import {Observable} from "rxjs";
   selector: 'try-logsight',
   templateUrl: './try-logisght.html',
   styleUrls: ['../assets/css/style.css', 'try-logsight.scss',
-    '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css',
-    '../assets/vendor/bootstrap-icons/bootstrap-icons.css',
-    '../assets/vendor/swiper/swiper-bundle.min.css', '../assets/vendor/glightbox/css/glightbox.css'],
+    '../assets/vendor/bootstrap-icons/bootstrap-icons.css'],
 })
 export class TryLogsightComponent implements OnInit {
 

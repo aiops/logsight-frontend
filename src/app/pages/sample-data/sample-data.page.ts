@@ -19,6 +19,8 @@ import {Flush} from "../../@core/common/flush";
 export class SampleDataPage implements OnInit {
   isSpinning = false;
   listResults = []
+  demoStartTime = "2021-12-01T10:17:43.000Z"
+  demoEndTime = "2021-12-31T09:17:43.000Z"
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService, private apiService: ApiService,
               private notificationService: NotificationsService, private http: HttpClient, private router: Router, private tourService: TourService) {
@@ -32,7 +34,14 @@ export class SampleDataPage implements OnInit {
     this.listResults.push(result)
     if (this.listResults.length == size) {
       this.isSpinning = false
-      this.router.navigate(['/pages', 'dashboard'])
+      this.router.navigate(['/pages', 'dashboard'],{
+          queryParams: {
+        startTime: this.demoStartTime,
+        endTime: this.demoEndTime,
+        dateTimeType: "absolute",
+            sample: true
+      }
+    })
       if (!localStorage.getItem("loadTour")) {
         localStorage.setItem("loadTour", "true")
         this.tourService.start()

@@ -14,7 +14,7 @@ import * as moment from 'moment';
 import {Moment} from 'moment';
 import {TourService} from 'ngx-ui-tour-md-menu';
 import {PredefinedTime} from '../../@core/common/predefined-time';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ChartConfig} from "../../@core/common/chart-config";
 import {IncidentTableData} from "../../@core/common/incident-table-data";
@@ -64,7 +64,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
 
   numberOfIncidentsFormGroup = new FormGroup({
-    numberOfIncidents: new FormControl(5),
+    numberOfIncidents: new FormControl(5, Validators.min(0)),
   });
 
   constructor(private dashboardService: DashboardService, private router: Router, private route: ActivatedRoute,
@@ -178,6 +178,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.colorPieData = {domain: this.pieData}
       }
     }, error => {
+      this.apiService.handleErrors(error)
     })
 
     this.topKIncidents$.subscribe(data => {
@@ -336,7 +337,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     let feature = 'system_overview'
     let indexType = 'incidents'
     let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone, numberOfIncidents), applicationId)
     return this.dashboardService.loadTopKIncidentsData(this.userId, chartRequest);
   }
 

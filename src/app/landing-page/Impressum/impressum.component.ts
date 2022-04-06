@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../../auth/login.service';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConnectionService } from './connectionService';
+import {ApiService} from "../../@core/service/api.service";
 
 @Component({
   selector: 'impressum',
@@ -27,6 +28,7 @@ export class ImpressumComponent implements OnInit {
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
               private router: Router,
+              private apiService: ApiService,
               fb: FormBuilder,
               private connectionService: ConnectionService) {
     this.contactForm = fb.group({
@@ -77,9 +79,8 @@ export class ImpressumComponent implements OnInit {
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/quickstart'])
-      }, err => {
-
-        this.notificationService.error('Error', 'Incorrect email or password')
+      }, error => {
+        this.apiService.handleErrors(error)
       }
     )
   }

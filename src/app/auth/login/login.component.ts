@@ -50,9 +50,6 @@ export class LoginComponent implements OnInit {
           this.apiService.handleErrors(error)
           this.router.navigate(['auth', 'resend-activation'])
         } else {
-          let redirectUrl = "/pages/send-logs"
-            this.router.navigate([redirectUrl]).then(() => {
-            });
           this.apiService.handleErrors(error)
         }
       }

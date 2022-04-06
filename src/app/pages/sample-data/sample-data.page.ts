@@ -58,11 +58,9 @@ export class SampleDataPage implements OnInit {
             ).subscribe(result => this.redirectToDashboard(result, receipts.length));
           })
         }
-
-
       }, error => {
         this.isSpinning = false
-        this.apiService.handleErrors(error)
+        this.apiService.handleErrors(error.error)
       });
   }
 }

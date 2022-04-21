@@ -325,11 +325,11 @@ export class LogComparePage {
   private loadApplicationVersions(userId: string, applicationId: string) {
     this.logCompareService.loadApplicationVersions(userId, applicationId).subscribe(resp => {
         this.tags = resp
-        for (let i = 0; i < this.tags.length; i++) {
-          if (this.tags[i].tagView.length > 7) {
-            this.tags[i].tagView = this.tags[i].tagView.slice(0, 8)
-          }
-        }
+        // for (let i = 0; i < this.tags.length; i++) {
+        //   if (this.tags[i].tagView.length > 7) {
+        //     this.tags[i].tagView = this.tags[i].tagView.slice(0, 8)
+        //   }
+        // }
         if (resp.length > 1) {
           this.baselineTagId = this.tags[0].tag
           this.compareTagId = this.tags[1].tag

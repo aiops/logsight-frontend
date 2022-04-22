@@ -93,8 +93,10 @@
                        [required]="true"
                        [attr.aria-invalid]="form.invalid && form.touched ? true : null">
                 <ng-container *ngIf="form.controls['name'].invalid && form.touched">
-                  <p class="error-message" *ngIf="form.controls['name'].errors?.required">
-                    Application name is required!
+                  <p class="error-message" *ngIf="form.controls['name'].errors">
+                    Application name must follow the following regex pattern ^[a-zA-Z0-9][ a-zA-Z0-9_.-]+$
+                    <br>
+                    Starts with alphanumeric and in the following can contain alphanumeric and ('-', '.', '_', 'SPACE')
                   </p>
                 </ng-container>
               </div>

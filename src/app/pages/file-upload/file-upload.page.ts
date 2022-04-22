@@ -27,7 +27,7 @@ export class FileUploadPage implements OnInit {
   userId: string;
 
   form = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.pattern(`^[a-zA-Z0-9][ a-zA-Z0-9_.-]+$`)),
   });
 
   constructor(private integrationService: IntegrationService, private authService: AuthenticationService,

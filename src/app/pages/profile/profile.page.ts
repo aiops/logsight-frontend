@@ -34,7 +34,7 @@ export class ProfilePage implements OnInit {
   id: string;
 
   form = new FormGroup({
-    name: new FormControl('', Validators.pattern(`^[a-zA-Z0-9][ a-zA-Z0-9_.-]+$`)),
+    name: new FormControl('', Validators.pattern(`^[a-z0-9_-]*$`)),
   });
   customerId = ''
   view: any[] = [400, 200];

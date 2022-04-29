@@ -122,7 +122,6 @@ export class DashboardPage implements OnInit, OnDestroy {
 
     this.heatmapData$.subscribe(data => {
       data = data.data
-      // console.log("D", data.data)
       if (data.data.length>0) {
         const el = document.getElementById('nb-global-spinner');
         if (el) {
@@ -178,7 +177,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         this.colorPieData = {domain: this.pieData}
       }
     }, error => {
-      this.apiService.handleErrors(error)
     })
 
     this.topKIncidents$.subscribe(data => {
@@ -205,7 +203,6 @@ export class DashboardPage implements OnInit, OnDestroy {
         });
       }
     }, error => {
-      this.apiService.handleErrors(error)
     })
 
     this.barData$.subscribe(data => {

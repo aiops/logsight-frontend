@@ -37,10 +37,19 @@ ng-scrollbar {
 }
 
 
-th, td {
-  color: white;
+.semantics {
+    text-align: center;
+}
+
+th {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1.3vh;
+}
+
+
+td {
+  font-weight: 500;
+  font-size: 1.3vh;
 }
 
 .scrollable {
@@ -65,11 +74,11 @@ table {
   table-layout: fixed;
   width: 100%;
 }
-
-.table-height {
-  max-height: 80vh;
-  overflow-y: auto
-}
+//
+//.table-height {
+//  max-height: 80vh;
+//  overflow-y: auto
+//}
 
 .error {
   color: red !important;
@@ -99,4 +108,56 @@ table {
   font-size: 30px !important;
 }
 
+.trend {
+    text-align: left;
+}
 
+.level {
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.coverage {
+    font-size: 13px;
+    text-align: right;
+    vertical-align: middle;
+    width: 90px;
+    text-transform: uppercase;
+    padding-left: 5px;
+    box-sizing: content-box;
+}
+
+.coverage_signal {
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    display: table;
+    float: left;
+    box-sizing: content-box;
+}
+
+.coverage_bar {
+    padding: 0;
+    display: inline-block;
+    box-sizing: content-box;
+}
+
+.change {
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+
+.card-description {
+  flex-direction: row;
+}
+.card-description img {
+  width: 20%;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: calc(0.25rem - 1px);
+}
+
+
+.font-large-2{
+  font-size: xxx-large;
+}

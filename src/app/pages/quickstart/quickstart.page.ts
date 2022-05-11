@@ -9,9 +9,10 @@ import {interval} from "rxjs";
 import {TourService} from "ngx-ui-tour-md-menu";
 import {FileUploadValidators} from "@iplab/ngx-file-upload";
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {LogsightUser} from "../../@core/common/logsight-user";
 
 @Component({
-  selector: 'quickstart',
+  selector: 'send-logs',
   styleUrls: ['./quickstart.page.scss'],
   templateUrl: './quickstart.page.html',
 })
@@ -19,8 +20,7 @@ export class QuickstartPage implements OnInit {
   firstForm: FormGroup;
   secondForm: FormGroup;
   thirdForm: FormGroup;
-  key: string;
-  email: string;
+  user: LogsightUser
   progressValue: number;
   curSec: number;
   progressIsHidden: boolean;
@@ -29,7 +29,6 @@ export class QuickstartPage implements OnInit {
 
 
   public formData = new FormData();
-  ReqJson: any = {};
 
   constructor(private fb: FormBuilder,
               private integrationService: IntegrationService,
@@ -46,13 +45,50 @@ export class QuickstartPage implements OnInit {
     this.progressValue = 0
     this.curSec = 0
     this.next = 0
-    this.authService.getLoggedUser().subscribe(user => {
-      this.key = user.key
-      this.email = user.email
+    this.authService.getLoggedUser(localStorage.getItem('userId')).subscribe(user => {
+      this.user = user
     });
   }
 
+  redirectToUploadLogFile(){
+    this.router.navigate(['pages','file-upload'])
+  }
 
+  redirectToSampleData(){
+    this.router.navigate(['pages','demo-data'])
+  }
+
+  redirectToElasticsearch(){
+    this.router.navigate(['pages','elasticsearch-data'])
+  }
+
+  redirectToSwagger(){
+    window.open(
+  'https://docs.logsight.ai/#/incident_detection/using_the_rest_api?id=send-logs',
+  '_blank' // <- This is what makes it open in a new window.
+    );
+  }
+
+  redirectToGithub(){
+     window.open(
+  'https://docs.logsight.ai/#/integration/github_action',
+  '_blank' // <- This is what makes it open in a new window.
+    );
+  }
+
+  redirectToLogstash(){
+    window.open(
+  'https://docs.logsight.ai/#/./integration/logstash?id=logstash',
+  '_blank' // <- This is what makes it open in a new window.
+    );
+  }
+
+  redirectToFluentbit(){
+    window.open(
+  'https://docs.logsight.ai/#/./integration/fluentbit?id=fluentbit',
+  '_blank' // <- This is what makes it open in a new window.
+    );
+  }
 
 
 
@@ -72,37 +108,6 @@ export class QuickstartPage implements OnInit {
     this.router.navigate(['/pages/integration'])
   }
 
-  startTimer(seconds: number) {
-    this.progressIsHidden = false
-    const time = seconds;
-    const timer$ = interval(1000);
 
-    const sub = timer$.subscribe((sec) => {
-      this.progressValue = Number((sec * 100 / seconds).toPrecision(1));
-      this.curSec = sec;
-      if (this.curSec === seconds) {
-        sub.unsubscribe();
-        this.next = this.next + 1;
-        // this.router.navigate(['/pages/dashboard'])
-      }
-    });
-  }
-
-  createApplication() {
-    if (this.key) {
-      // this.integrationService.createApplication({ name: "authN_sample_app", key: this.key }).subscribe(
-      //   resp => {
-      //     this.notificationService.success('Success', 'Please wait couple of minutes... sample data is streaming into logsight.ai.')
-      //   }, error => this.notificationService.error('Error', 'Sorry, a problem happened'))
-
-      this.startTimer(10)
-    } else {
-      this.notificationService.error('Error', 'Sorry, a problem happened')
-    }
-  }
-
-  startTutorial(){
-    this.tourService.start()
-  }
 
 }

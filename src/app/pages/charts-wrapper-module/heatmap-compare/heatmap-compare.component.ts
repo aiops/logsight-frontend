@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { multi } from './data';
 import * as moment from 'moment';
 import { Style } from '@angular/cli/lib/config/schema';
+import { data } from '../pie-chart/data';
 
 @Component({
   selector: 'chart-heatmap-compare',

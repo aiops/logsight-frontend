@@ -8,7 +8,7 @@ import * as moment from "moment";
 })
 export class GroupedVerticalBarChart2dComponent {
   @Input() data = [];
-  @Input() heatmapHeight = '200px'
+  @Input() heatmapHeight = '150px'
   showXAxis: boolean = true;
   showYAxis: boolean = true;
   gradient: boolean = false;
@@ -21,12 +21,8 @@ export class GroupedVerticalBarChart2dComponent {
 
 
   @Input() colorScheme = {
-    domain: ['#d94800', '#00ff00']
+    domain: ['#9f3000','#ff0000', '#d9bc00']
   };
-
-  // colorScheme = {
-  //   domain: ['#00ff00', '#d94800', '#ff006e', '#8338ec', '#3a86ff']
-  // };
 
   constructor() {
     this.data = data

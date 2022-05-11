@@ -77,7 +77,7 @@ export class KibanaPage implements OnInit {
     return new Promise( resolve => {
       setTimeout(()=>{
         if (window.location.href.toString().includes("demo")){
-      this.kibanaUrl = this.sanitizer.bypassSecurityTrustResourceUrl(environment.kibanaUrlDemo)
+      this.kibanaUrl = this.sanitizer.bypassSecurityTrustResourceUrl(environment.kibanaUrl)
     } else {
       this.kibanaUrl = this.sanitizer.bypassSecurityTrustResourceUrl(environment.kibanaUrl)
     }

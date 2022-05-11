@@ -1,51 +1,42 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from '../../@core/service/api.service';
-import { Observable } from 'rxjs/Observable';
-import { PredefinedTime } from '../../@core/common/predefined-time';
+import {Injectable} from '@angular/core';
+import {ApiService} from '../../@core/service/api.service';
+import {Observable} from 'rxjs/Observable';
+import {PredefinedTime} from '../../@core/common/predefined-time';
+import {ChartRequest} from "../../@core/common/chart-request";
+import {PredefinedTimeList} from "../../@core/common/predefined-time-list";
+import {userInfo} from "os";
 
 @Injectable()
 export class DashboardService {
   constructor(private apiService: ApiService) {
   }
 
-  loadHeatmapData(startTime: string, endTime: string, applicationId: number | null) {
-    let applicationParam = '';
-    if (applicationId) {
-      applicationParam = `&applicationId=${applicationId}`
-    }
-    return this.apiService.get(
-      `/api/charts/system_overview_heatmap?startTime=${startTime}&endTime=${endTime}${applicationParam}`);
+  loadHeatmapData(userId: string, chartRequest: ChartRequest) {
+    return this.apiService.post(
+      `/api/v1/users/${userId}/charts/heatmap`, chartRequest);
   }
 
-  loadBarData(startTime: string, endTime: string) {
-    return this.apiService.get(`/api/charts/dashboard_bar_anomalies?startTime=${startTime}&endTime=${endTime}`);
+  loadBarData(userId: string, chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/users/${userId}/charts/barchart`, chartRequest);
   }
 
-  loadPieChartData(startTime: string, endTime: string) {
-    return this.apiService.get(`/api/charts/log_level_advanced_pie_chart?startTime=${startTime}&endTime=${endTime}`);
+  loadPieChartData(userId: string, chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/users/${userId}/charts/piechart`, chartRequest);
   }
 
-  loadStackedChartData(startTime: string, endTime: string) {
-    return this.apiService.get(`/api/charts/log_level_stacked_line_chart?startTime=${startTime}&endTime=${endTime}`);
+  loadTopKIncidentsData(userId: string, chartRequest: ChartRequest) {
+    return this.apiService.post(`/api/v1/users/${userId}/charts/tablechart`, chartRequest);
   }
 
-  loadTopKIncidentsData(startTime: string, endTime: string, numberOfIncidents: number) {
-    return this.apiService.get(`/api/incidents/top_k_incidents?startTime=${startTime}&endTime=${endTime}&numberOfIncidents=${numberOfIncidents}`);
+  getAllTimeRanges(userId: string): Observable<PredefinedTimeList> {
+    return this.apiService.get(`/api/v1/users/${userId}/time_ranges`);
   }
 
-  getAllTimeRanges(): Observable<PredefinedTime[]> {
-    return this.apiService.get(`/api/user/time_ranges`);
+  deleteTimeRange(userId: string, predefinedTime: PredefinedTime) {
+    return this.apiService.delete(`/api/v1/users/${userId}/time_ranges/${predefinedTime.id}`);
   }
 
-  deleteTimeRange(predefinedTime: PredefinedTime) {
-    return this.apiService.post(`/api/user/time_ranges/range/delete`, predefinedTime);
-  }
-
-  createTimeRange(predefinedTime: PredefinedTime) {
-    return this.apiService.post(`/api/user/time_ranges/range`, predefinedTime);
-  }
-
-  createPredefinedTimeRange() {
-    return this.apiService.post(`/api/user/time_ranges/predefined`, null);
+  createTimeRange(userId: string, predefinedTime: PredefinedTime) {
+    return this.apiService.post(`/api/v1/users/${userId}/time_ranges`, predefinedTime);
   }
 }

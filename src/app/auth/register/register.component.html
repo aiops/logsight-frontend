@@ -1,71 +1,80 @@
 <div class="col text-center align-items-center">
-<div class="logo align-items-center" style="margin-right: 3%">
-<a class="navbar-brand title" href="#"><img alt="logo" src="assets/img/logol.png" height="60" /></a>
+  <div class="logo align-items-center" style="margin-right: 3%">
+    <a class="navbar-brand title" href="#"><img alt="logo" height="60" src="assets/img/logo-logsight.svg"/></a>
+  </div>
 </div>
-</div>
-<div *ngIf="!formSubmitted" style="color: #013b54; font-size: 18px; font-weight: 600;">Sign up and test for free</div>
+<div *ngIf="!formSubmitted" style="color: #013b54; font-size: 18px; font-weight: 600;">Sign up</div>
 <br>
 
 <!--<div class="col text-center align-items-center">-->
 <!--<div  class="text-center text-lg-start" style="margin-top: 2rem;">-->
-              <form *ngIf="!formSubmitted" id="chimp-form" [formGroup]="form" (submit)="onSignUp()" class="subscribe-form wow zoomIn"
-            accept-charset="UTF-8"
-            enctype="application/x-www-form-urlencoded" autocomplete="off" novalidate>
-        <div class="form-control-group">
-            <input fullWidth formControlName="email" class="form-control" id="chimp-email" type="email" name="email"
-                       placeholder="Enter your email"
-                       autocomplete="off" style="width: 100%; height: 3.5rem">
+<form (submit)="onSignUp()" *ngIf="!formSubmitted" [formGroup]="form" accept-charset="UTF-8" autocomplete="off"
+      class="subscribe-form wow zoomIn"
+      enctype="application/x-www-form-urlencoded" id="chimp-form" novalidate>
+  <div class="form-control-group">
+    <input autocomplete="off" class="form-control" formControlName="email" fullWidth id="chimp-email" name="email"
+           placeholder="Enter your email"
+           style="width: 100%; height: 3.5rem" type="email">
 
-            <ng-container *ngIf="form.controls['email'].invalid && form.touched">
-<!--                <p style="color: black" class="error-message" *ngIf="form.controls['email'].errors?.required">-->
-<!--                  Email is required!-->
-<!--                </p>-->
-                <p style="color: black" class="error-message" *ngIf="form.controls['email'].errors?.pattern">
-                  Email is invalid!
-                </p>
-            </ng-container>
-          <br>
+    <ng-container *ngIf="form.controls['email'].invalid && form.touched">
+      <!--                <p style="color: black" class="error-message" *ngIf="form.controls['email'].errors?.required">-->
+      <!--                  Email is required!-->
+      <!--                </p>-->
+      <p *ngIf="form.controls['email'].errors?.pattern" class="error-message" style="color: black">
+        Email is invalid!
+      </p>
+    </ng-container>
+    <br>
 
 
-          <input fullWidth formControlName="password" class="form-control" id="chimp-password" type="password" name="password"
-                       placeholder="Enter your password"
-                       autocomplete="off" style="width: 100%; height: 3.5rem">
-            <ng-container *ngIf="form.controls['password'].invalid && form.touched">
-<!--                <p style="color: black" class="error-message" *ngIf="form.controls['password'].errors?.required">-->
-<!--                  Password is required!-->
-<!--                </p>-->
-                <p style="color: black" class="error-message" *ngIf="form.controls['password'].errors?.minlength">
-                  The minimum size of the password is 8 characters!
-                </p>
-            </ng-container>
+    <input autocomplete="off" class="form-control" formControlName="password" fullWidth id="chimp-password"
+           name="password"
+           placeholder="Enter your password"
+           style="width: 100%; height: 3.5rem" type="password">
+    <ng-container *ngIf="form.controls['password'].invalid && form.touched">
+      <!--                <p style="color: black" class="error-message" *ngIf="form.controls['password'].errors?.required">-->
+      <!--                  Password is required!-->
+      <!--                </p>-->
+      <p *ngIf="form.controls['password'].errors?.minlength" class="error-message" style="color: black">
+        The minimum size of the password is 8 characters!
+      </p>
+    </ng-container>
 
-<br>
-         <input fullWidth formControlName="retryPassword" class="form-control" id="chimp-retrypassword" type="password" name="retryPassword"
-                       placeholder="Repeat password"
-                       autocomplete="off" style="width: 100%; height: 3.5rem">
-            <ng-container *ngIf="form.controls['password'].invalid && form.touched">
-<!--                <p style="color: black" class="error-message" *ngIf="form.controls['retryPassword'].errors?.required">-->
-<!--                  Password is required!-->
-<!--                </p>-->
-                <p style="color: black" class="error-message" *ngIf="form.controls['retryPassword'].errors?.minlength">
-                  The minimum size of the password is 8 characters! Make sure the passwords match!
-                </p>
-            </ng-container>
-<br>
-          <br>
-          <div *ngIf="isSpinning" class="spinner-border text-primary" style="left: 50%; position: relative" role="status">
-          </div>
-          <input *ngIf="!isSpinning" [disabled]="!form.valid" style="text-transform: none; background-color: #4154f1; width: 100%; height: 3.5rem" class="btn btn-primary mb-0"
-                                                  type="submit"
-                 value="Sign up">
+    <br>
+    <input autocomplete="off" class="form-control" formControlName="repeatPassword" fullWidth id="chimp-retrypassword"
+           name="repeatPassword"
+           placeholder="Repeat password"
+           style="width: 100%; height: 3.5rem" type="password">
+    <ng-container *ngIf="form.controls['password'].invalid && form.touched">
+      <!--                <p style="color: black" class="error-message" *ngIf="form.controls['retryPassword'].errors?.required">-->
+      <!--                  Password is required!-->
+      <!--                </p>-->
+      <p *ngIf="form.controls['repeatPassword'].errors?.minlength" class="error-message" style="color: black">
+        The minimum size of the password is 8 characters! Make sure the passwords match!
+      </p>
+    </ng-container>
+    <br>
+    <br>
+    <div *ngIf="isSpinning" class="spinner-border text-primary" role="status" style="left: 50%; position: relative">
+    </div>
+    <input *ngIf="!isSpinning" [disabled]="!form.valid"
+           class="btn btn-secondary mb-0"
+           style="text-transform: none; background-color: #4154f1; width: 100%; height: 3.5rem"
+           type="submit"
+           value="Sign up">
 
-        </div>
-      </form>
-  <section *ngIf="!formSubmitted" style="color: #013b54;" class="another-action" aria-label="Login">
+  </div>
+</form>
+<section *ngIf="!formSubmitted" aria-label="Login" class="another-action" style="color: #013b54;">
+ By creating a logsight.ai account, you’re agreeing to accept the  <a target="_blank" class="text-link" href="https://logsight.ai/terms-conditions">Terms and Service</a>
+</section>
+
+<section *ngIf="!formSubmitted" aria-label="Login" class="another-action" style="color: #013b54;">
   Already have an account? <a class="text-link" routerLink="/auth/login">Login</a>
 </section>
 <!--</div>-->
-<div *ngIf="formSubmitted" style="margin-top: 1rem" class="text-center">
-  <p style="color: #013b54; font-size: 18px; font-weight: 600">We have sent you an activation email. Please activate your account. Go to the <a class="text-link" routerLink="/">Landing</a> page.</p>
-</div>
+<!--<div *ngIf="formSubmitted" class="text-center" style="margin-top: 1rem">-->
+<!--  <p style="color: #013b54; font-size: 18px; font-weight: 600">Please activate-->
+<!--    your account on the link sent via email. If you are using logsight.ai, the user is already activated. Go to the <a class="text-link" routerLink="/"> Login</a> page.</p>-->
+<!--</div>-->
 <!--</div>-->

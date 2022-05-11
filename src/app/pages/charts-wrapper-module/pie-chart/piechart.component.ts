@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { data } from './data';
 import Any = jasmine.Any;
+import { dataService } from "./data.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'piechart',
@@ -9,18 +11,18 @@ import Any = jasmine.Any;
 })
 export class PiechartComponent {
   @Input() data = [];
-
   // options
   gradient: boolean = true;
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
+  colorSubscription: Subscription;
 
-  colorScheme = {
-    domain: ['#00ff00', '#d9bc00', '#ff0000', '#8338ec', '#3a86ff']
+  @Input() colorScheme = {
+    domain: ['#00ff00', '#ff0000', '#d9bc00', '#8338ec']
   };
 
-  constructor() {
+  constructor(private colorService: dataService) {
     this.data = data
   }
 
@@ -35,5 +37,8 @@ export class PiechartComponent {
 
   tooltipFormatter(val: Any){
     return val
+  }
+  ngOnInit(){
+    this.colorScheme = this.colorService.getColor()
   }
 }

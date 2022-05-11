@@ -1,15 +1,18 @@
-<div class="container">
+<div class="container" tourAnchor="profile">
   <div class="main-body">
     <div class="row gutters-sm">
       <div class="col-sm-4 text-left">
         <h6>User info</h6>
-        <p class="mb-3">Username:</p>
-        <p class="mb-3"><b>{{email}}</b></p>
-        <p class="mb-3">Private key:</p>
-        <p class="mb-3"><b>{{key}}</b></p>
+        <div class="row">
+        <div class="col-4"><p>Username: </div>
+          <div class="col-8"><b>{{email}}</b></div>
+        </div>
+        <div class="row text-left">
+        <div class="col-4"><p>User ID: </div>
+          <div class="col-8"><b>{{userId}}</b></div>
+        </div>
         <br>
-
-        <nb-accordion style="margin-right: 30%">
+        <nb-accordion >
   <nb-accordion-item>
     <nb-accordion-item-header>
       Change password
@@ -22,31 +25,31 @@
                          placeholder="Enter your old password" [required]="true"
                          [attr.aria-invalid]="formPassword.invalid && formPassword.touched ? true : null">
                   <ng-container *ngIf="formPassword.controls['oldPassword'].invalid && formPassword.touched">
-                    <p class="error-message" style="color: white" *ngIf="formPassword.controls['oldPassword'].errors?.minlength">
+                    <p class="error-message"  *ngIf="formPassword.controls['oldPassword'].errors?.minlength">
                       Password length should be minimum of 8 characters.
                     </p>
                   </ng-container>
                   <br>
                   <br>
 
-                  <input nbInput class="mr-2" type="password" formControlName="password" id="formPassword"
+                  <input nbInput class="mr-2" type="password" formControlName="newPassword" id="formPassword"
                          placeholder="Enter the new password" [required]="true"
                          [attr.aria-invalid]="formPassword.invalid && formPassword.touched ? true : null">
-                  <ng-container *ngIf="formPassword.controls['password'].invalid && formPassword.touched">
-                    <p class="error-message" style="color: white" *ngIf="formPassword.controls['password'].errors?.minlength">
+                  <ng-container *ngIf="formPassword.controls['newPassword'].invalid && formPassword.touched">
+                    <p class="error-message"  *ngIf="formPassword.controls['newPassword'].errors?.minlength">
                       Password length should be minimum of 8 characters.
                     </p>
                   </ng-container>
                   <br>
                   <br>
-                  <input nbInput class="mr-2" type="password" formControlName="passwordRetry" id="formRetryPassword"
+                  <input nbInput class="mr-2" type="password" formControlName="repeatNewPassword" id="formRepeatPassword"
                          placeholder="Repeat the new password" [required]="true"
                          [attr.aria-invalid]="formPassword.invalid && formPassword.touched ? true : null">
                   <ng-container *ngIf="formPassword.touched">
-                    <p class="error-message" style="color: white" *ngIf="formPassword.controls['passwordRetry'].errors?.minlength">
+                    <p class="error-message"  *ngIf="formPassword.controls['repeatNewPassword'].errors?.minlength">
                       Password length should be minimum of 8 characters.
                     </p>
-                    <p class="error-message" style="color: white" *ngIf="!isMatching">
+                    <p class="error-message"  *ngIf="!isMatching">
                       Passwords are not matching
                     </p>
                   </ng-container>
@@ -68,92 +71,167 @@
 
         </div>
 
-      <div class="col-sm-4 text-center">
-        <nb-alert *ngIf="paymentSuccessful=='true'" status="success">The payment was successful!</nb-alert>
-        <nb-alert *ngIf="paymentSuccessful=='false'" status="danger">The payment was not successful, try again!</nb-alert>
-          <h6>Billing plan</h6>
+      <div class="col-sm-2"></div>
 
-          <nb-card>
-            <nb-card-body  align="center">
-
-              <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>
-
-
-              <form [formGroup]="form" (submit)="changeQuantity()" aria-labelledby="title">
-              <div class="row">
-<!--                <div class="col-lg-6 col-xl-8 text-center" style="margin-top: 3px">-->
-<!--                  <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>-->
-                <div class="col">
-                  <input nbInput class="mr-2" type="number" formControlName="name" id="name"
-                         placeholder="Quantity in GBs" [required]="true"
-                         [attr.aria-invalid]="form.invalid && form.touched ? true : null">
-<!--                   <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>-->
-                  <ng-container *ngIf="form.controls['name'].invalid && form.touched">
-                    <p class="error-message" *ngIf="form.controls['email'].errors?.required">
-                      Quantity is required
-                    </p>
-                  </ng-container>
-<!--                </div>-->
-<!--                <div class="col-lg-6 col-xl-4 text-center">-->
-                  <button nbButton style="text-transform: none" class="create-app-btn" status="success" [disabled]="!form.valid">Set quantity</button>
-                </div>
-                  <!--                </div>-->
+            <div class="col-sm-6 justify-content-center">
+    <div class="row">
+            <div class="row ml-2">
+        <h6>Applications</h6>
+        </div>
+      <nb-card style="width: 100%">
+      <div class="row  pl-5 pr-5 pt-5 pb-5 justify-content-center">
+            <form class="col-12 justify-content-center" [formGroup]="form" (submit)="createApplication()"
+                  aria-labelledby="title">
+              <div class="form-control-group">
+                <div class="col-12 justify-content-center">
+                <input nbInput
+                       type="text"
+                       fullWidth
+                       formControlName="name"
+                       id="name"
+                       placeholder="Enter application name"
+                       [required]="true"
+                       [attr.aria-invalid]="form.invalid && form.touched ? true : null">
+                <ng-container *ngIf="form.controls['name'].invalid && form.touched">
+                    <p class="error-message" *ngIf="form.controls['name'].errors">
+                    Application name must follow the following regex pattern ^[a-z0-9_]*$
+                    <br>
+                    Contains alphanumeric and ('-', '_')
+                  </p>
+                </ng-container>
+              </div>
+                <div *ngIf="!isSpinning" class="col-12 justify-content-center">
+                <button nbButton
+                        fullWidth
+                        class="mt-2"
+                        status="success"
+                        shape="round"
+                        [disabled]="!form.valid">
+                  Create
+                </button>
+                  </div>
               </div>
             </form>
+                                          <div class="row justify-content-center mt-2">
+          <div *ngIf="isSpinning" class="spinner-border text-primary" style="position: relative" role="status">
+          </div>
+            </div>
+</div>
+      <div *ngIf="this.applications.length>0" class="row pl-5 pr-5">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Operation</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of applications">
+            <td>{{row.applicationId}}</td>
+            <td>{{row.name}}</td>
+            <td><div class="col-auto"><i (click)="removeApplication(row.applicationId)" [title]='"Delete application"'
+                                   class="ml-3 fas  fa-trash pointer"></i></div></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+         <div *ngIf="this.applications.length==0" class="row pl-5 pr-5 pb-5 justify-content-center">
+        No applications running at the moment.
+      </div>
+  </nb-card>
+      </div>
+            </div>
+
+
+
+<!--      <div class="col-sm-4 text-center">-->
+<!--        <nb-alert *ngIf="paymentSuccessful=='true'" status="success">The payment was successful!</nb-alert>-->
+<!--        <nb-alert *ngIf="paymentSuccessful=='false'" status="danger">The payment was not successful, try again!</nb-alert>-->
+<!--          <h6>Billing plan</h6>-->
+
+<!--          <nb-card>-->
+<!--            <nb-card-body  align="center">-->
+
+<!--              <div><p>Quantity in GB per month.</p> <p>Every GB costs 2 Euro</p></div>-->
+
+
+<!--              <form [formGroup]="form" (submit)="changeQuantity()" aria-labelledby="title">-->
+<!--              <div class="row">-->
+<!--&lt;!&ndash;                <div class="col-lg-6 col-xl-8 text-center" style="margin-top: 3px">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <button nbButton shape="round" (click)="minus()" ><i class="fa fa-minus"></i> </button>&ndash;&gt;-->
+<!--                <div class="col">-->
+<!--                  <input nbInput class="mr-2" type="number" formControlName="name" id="name"-->
+<!--                         placeholder="Quantity in GBs" [required]="true"-->
+<!--                         [attr.aria-invalid]="form.invalid && form.touched ? true : null">-->
+<!--&lt;!&ndash;                   <button nbButton shape="round" (click)="plus()"><i class="fa fa-plus"></i> </button>&ndash;&gt;-->
+<!--                  <ng-container *ngIf="form.controls['name'].invalid && form.touched">-->
+<!--                    <p class="error-message" *ngIf="form.controls['email'].errors?.required">-->
+<!--                      Quantity is required-->
+<!--                    </p>-->
+<!--                  </ng-container>-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="col-lg-6 col-xl-4 text-center">&ndash;&gt;-->
+<!--                  <button nbButton style="text-transform: none" class="create-app-btn" status="success" [disabled]="!form.valid">Set quantity</button>-->
+<!--                </div>-->
+<!--                  &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--              </div>-->
+<!--            </form>-->
 
 
 
 
 
 
-<!--              <input nbInput  style="width: 60%" type="number" [value]="quantity">-->
+<!--&lt;!&ndash;              <input nbInput  style="width: 60%" type="number" [value]="quantity">&ndash;&gt;-->
 
-              <p>Total cost per month: {{quantity * 2}}.00 Euro</p>
-              <div *ngIf="!hasPaid" style="margin-bottom: 10px">
-                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Subscribe <nb-icon icon="info-outline"
-               nbTooltip="Subscription will be monthly charged. You can cancel anytime."
-               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>
-              </div>
-<!--              <div>-->
-<!--                <button nbButton style="width: 60%; text-transform: none" shape="round" (click)="stripeCLickCheckout()" >One-time purchase <nb-icon icon="info-outline"-->
-<!--               nbTooltip="One time purchase enables you to pay for fixed amount of data, independently of the time period."-->
+<!--              <p>Total cost per month: {{quantity * 2}}.00 Euro</p>-->
+<!--              <div *ngIf="!hasPaid" style="margin-bottom: 10px">-->
+<!--                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Subscribe <nb-icon icon="info-outline"-->
+<!--               nbTooltip="Subscription will be monthly charged. You can cancel anytime."-->
 <!--               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>-->
 <!--              </div>-->
-              <div *ngIf="hasPaid">
-                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Update plans <nb-icon icon="info-outline"
-               nbTooltip="If your subscription is not enough, you can subscribe again. Make sure you cancel your previous plan bellow in 'Manage Plan'."
-               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>
-              </div>
-              <div style="margin-top: 10px">
-                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCustomerPortal()">Manage plans <nb-icon icon="info-outline"
-               nbTooltip="Manage your subscriptions, here you can cancel or modify your subscription."
-               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>
-              </div>
-            </nb-card-body>
+<!--&lt;!&ndash;              <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <button nbButton style="width: 60%; text-transform: none" shape="round" (click)="stripeCLickCheckout()" >One-time purchase <nb-icon icon="info-outline"&ndash;&gt;-->
+<!--&lt;!&ndash;               nbTooltip="One time purchase enables you to pay for fixed amount of data, independently of the time period."&ndash;&gt;-->
+<!--&lt;!&ndash;               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--              <div *ngIf="hasPaid">-->
+<!--                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCLickSubscription()">Update plans <nb-icon icon="info-outline"-->
+<!--               nbTooltip="If your subscription is not enough, you can subscribe again. Make sure you cancel your previous plan bellow in 'Manage Plan'."-->
+<!--               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>-->
+<!--              </div>-->
+<!--              <div style="margin-top: 10px">-->
+<!--                <button nbButton style="width: 60%;text-transform: none" shape="round" (click)="stripeCustomerPortal()">Manage plans <nb-icon icon="info-outline"-->
+<!--               nbTooltip="Manage your subscriptions, here you can cancel or modify your subscription."-->
+<!--               nbTooltipStatus="basic" nbButton status="basic"></nb-icon></button>-->
+<!--              </div>-->
+<!--            </nb-card-body>-->
 
-          </nb-card>
-          <h6>Data usage (MBs)</h6>
-          <div align="center">
+<!--          </nb-card>-->
+<!--          <h6>Data usage (MBs)</h6>-->
+<!--          <div align="center">-->
 
-            <ngx-charts-number-card
-              [view]="view"
-              [scheme]="colorScheme"
-              [valueFormatting]="valueFormatter"
-              [results]='[
-                  {
-                    "name": "Data Used",
-                    "value": usedData
-                  },
-                  {
-                    "name": "Data Purchased",
-                    "value": availableData
-                  }]'
-              [cardColor]="cardColor">
-            </ngx-charts-number-card>
+<!--            <ngx-charts-number-card-->
+<!--              [view]="view"-->
+<!--              [scheme]="colorScheme"-->
+<!--              [valueFormatting]="valueFormatter"-->
+<!--              [results]='[-->
+<!--                  {-->
+<!--                    "name": "Data Used",-->
+<!--                    "value": usedData-->
+<!--                  },-->
+<!--                  {-->
+<!--                    "name": "Data Purchased",-->
+<!--                    "value": availableData-->
+<!--                  }]'-->
+<!--              [cardColor]="cardColor">-->
+<!--            </ngx-charts-number-card>-->
 
-          </div>
+<!--          </div>-->
 
-      </div>
+<!--      </div>-->
 
     </div>
   </div>

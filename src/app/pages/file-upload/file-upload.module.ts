@@ -2,16 +2,24 @@ import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
-import {NbButtonModule, NbCardModule, NbInputModule, NbSelectModule, NbTreeGridModule} from '@nebular/theme';
-import { IntegrationPage } from './integration.page';
-import { IntegrationRoutingModule } from './integration-routing.module';
+import {
+  NbAccordionModule,
+  NbButtonModule,
+  NbCardModule,
+  NbInputModule,
+  NbListModule,
+  NbSelectModule, NbSpinnerModule,
+  NbTreeGridModule
+} from '@nebular/theme';
+import { FileUploadPage } from './file-upload.page';
+import { FileUploadRoutingModule } from './file-upload-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HIGHLIGHT_OPTIONS, HighlightModule} from "ngx-highlightjs";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
   imports: [
-    IntegrationRoutingModule,
+    FileUploadRoutingModule,
     ThemeModule,
     NgxChartsModule,
     ChartModule,
@@ -22,10 +30,13 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
     HighlightModule,
     TourMatMenuModule,
     NbSelectModule,
-    NbTreeGridModule
+    NbTreeGridModule,
+    NbListModule,
+    NbSpinnerModule,
+    NbAccordionModule
   ],
   declarations: [
-    IntegrationPage,
+    FileUploadPage,
   ],
 
   providers: [
@@ -38,5 +49,5 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
   ],
 
 })
-export class IntegrationModule {
+export class FileUploadModule {
 }

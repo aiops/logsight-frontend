@@ -26,7 +26,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginService } from './auth/login.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
-import { LandingPage } from './landing-page/landing.page';
 import { ActivateComponent } from './auth/activation/activate.component';
 import { AuthHttpInterceptor } from './auth/auth-http-interceptor';
 import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
@@ -34,9 +33,12 @@ import { TourMatMenuModule } from 'ngx-ui-tour-md-menu';
 import { MatCardModule } from '@angular/material/card';
 import { TooltipModule } from '@swimlane/ngx-charts';
 import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
-
+import $ from 'jquery'
+import {ResendActivationComponent} from "./auth/resend-activation/resend-activation.component";
+import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
+import {LandingPage} from "./landing-page/landing.page";
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent, LandingPage, ActivateComponent, ForgotPasswordComponent],
+  declarations: [LandingPage, AppComponent, LoginComponent, RegisterComponent, ActivateComponent, ForgotPasswordComponent, ResendActivationComponent, ResetPasswordComponent],
   imports: [
     BrowserModule,
     FormsModule,

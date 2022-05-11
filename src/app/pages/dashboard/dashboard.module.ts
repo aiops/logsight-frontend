@@ -1,23 +1,23 @@
-import { NgModule } from '@angular/core';
-import { ThemeModule } from '../../@theme/theme.module';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { ChartModule } from 'angular2-chartjs';
+import {NgModule} from '@angular/core';
+import {ThemeModule} from '../../@theme/theme.module';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {ChartModule} from 'angular2-chartjs';
 import {
-  NbButtonModule,
-  NbCardModule,
-  NbIconModule,
-  NbInputModule,
-  NbPopoverModule,
-  NbTooltipModule
+    NbButtonModule,
+    NbCardModule,
+    NbIconModule,
+    NbInputModule,
+    NbPopoverModule, NbSelectModule,
+    NbTooltipModule, NbTreeGridModule
 } from '@nebular/theme';
-import { DashboardPage } from './dashboard.page';
-import { DashboardRoutingModule } from './dashboard-routing.module';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { ChartsWrapperModule } from '../charts-wrapper-module/charts-wrapper.module';
-import { PagesModule } from '../pages.module';
+import {DashboardPage} from './dashboard.page';
+import {DashboardRoutingModule} from './dashboard-routing.module';
+import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {ChartsWrapperModule} from '../charts-wrapper-module/charts-wrapper.module';
+import {PagesModule} from '../pages.module';
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
-import { ReactiveFormsModule } from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {NgScrollbarModule} from "ngx-scrollbar";
 
 @NgModule({
@@ -38,7 +38,9 @@ import {NgScrollbarModule} from "ngx-scrollbar";
         NbTooltipModule,
         ReactiveFormsModule,
         NbInputModule,
-        NgScrollbarModule
+        NgScrollbarModule,
+        NbSelectModule,
+        NbTreeGridModule
     ],
   declarations: [
     DashboardPage,

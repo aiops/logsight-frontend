@@ -4,7 +4,7 @@
     [results]="data"
     [animations]="false"
     (select)="onSelect($event)"
-    style="fill: white"><!--    [explodeSlices]="true"-->
+><!--    [explodeSlices]="true"-->
     <ng-template #tooltipTemplate let-model="model">
       <div style="text-align: left; max-width: 250px">
         <div *ngFor="let d of data; let i = index">

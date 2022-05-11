@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
-import { map } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
+import {AuthenticationService} from './authentication.service';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,9 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild {
     return this.authService.isUserLoggedIn().pipe(
       map(canActivate => {
         if (!canActivate) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/']).then(() => {
+    window.location.reload();
+  });
           return false
         }
         return true

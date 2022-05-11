@@ -1,6 +1,6 @@
 export class ChangePasswordForm {
-  key: string;
+  userId: string;
   oldPassword: string;
-  password: string;
-  passwordRetry: string;
+  newPassword: string;
+  repeatNewPassword: string;
 }

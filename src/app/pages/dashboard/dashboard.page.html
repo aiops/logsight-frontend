@@ -1,684 +1,703 @@
-<div class="row" style="padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
-  <predefined-times [predefinedTimes]="predefinedTimes" (deletePredefinedTime)="onDeletePredefinedTime($event)"
-                    (selectPredefinedTime)="onSelectPredefinedTime($event)">
+<div class="spinner" id="nb-global-spinner">
+  <div class="blob blob-0"></div>
+  <div class="blob blob-1"></div>
+</div>
+
+<div class="row" style="padding-left: 5%;padding-right: 5%; display: flex; justify-content: flex-end; width: 100%">
+  <div *ngIf="endDateTime == 'now'" class="col-sm my-auto">
+    <nb-icon icon="clock-outline"></nb-icon>
+    <b>{{startDateTime.split('-')[1]}} ago </b></div>
+  <div *ngIf="endDateTime != 'now'" class="col-sm my-auto">
+    <nb-icon icon="clock-outline"></nb-icon>
+    <b>{{startDateTime.concat('Z')|date:'yyyy-MM-dd HH:mm:ss'}}
+      to {{endDateTime.concat('Z')|date:'yyyy-MM-dd HH:mm:ss'}}</b></div>
+  <div class="col-sm text-right"></div>
+  <predefined-times (deletePredefinedTime)="onDeletePredefinedTime($event)"
+                    (selectPredefinedTime)="onSelectPredefinedTime($event)"
+                    [predefinedTimes]="predefinedTimes">
 
   </predefined-times>
-  <button title="Select date range" [nbPopover]="dateTimePicker" nbPopoverPlacement="bottom" nbButton
-          (click)="openPopover()"
-          nbPopoverTrigger="noop" size="small" shape="round"><i class="fa fa-calendar"></i></button>
+  <button (click)="openPopover()" [nbPopover]="dateTimePicker" nbButton nbPopoverPlacement="bottom"
+          nbPopoverTrigger="noop"
+          shape="round" size="small" style="background-color: #dadada;" title="Select date range"><i
+    class="fa fa-calendar"></i></button>
 </div>
+<hr noshade size="30" style="margin-left: 5%; margin-right: 5%; background-color: #bebebe">
 
-<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
-<div class="row" style="padding-left: 5%;padding-right: 5%">
-  <div class="col-3" tourAnchor="anchorLogLevels">
-    <h6 style="font-weight: 600">Log levels
+<div class="row" style="padding-left: 5%;padding-right: 5%;">
+  <div class="col-6" tourAnchor="anchorSystemOverview">
+    <h6 style="font-weight: 600">Application overview
       <nb-icon icon="info-outline"
-               nbTooltip="A log level is information about the severity of a given log message is. It is a powerful way of distinguishing log events from each other. If the log levels are used properly, then troubleshooting becomes easier."
-               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
+               nbButton
+               nbTooltip="Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!"
+               nbTooltipStatus="basic" status="basic"></nb-icon>
+
+      <nb-select (selectedChange)="applicationSelected($event)"
+                 class="period-select pl-3 col-md-2" placeholder="Select application">
+        <nb-option [value]="null">
+          <div class="col-9">All applications</div>
+        </nb-option>
+        <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.applicationId">
+          <div class="col-9">{{ app.name }}</div>
+          <div class="col-auto"><i (click)="removeApplication(app.applicationId)" [title]='"Delete application"'
+                                   class="ml-3 fas  fa-trash pointer"></i></div>
+        </nb-option>
+
+      </nb-select>
     </h6>
-    <piechart [data]="pieChartData"></piechart>
+    <div class="pb-2" style="overflow-y:auto; height: 300px">
+      <ng-scrollbar>
+        <chart-heatmap (select)="onHeatMapSelect($event)" [data]="heatmapData"
+                       [heatmapHeight]="heatmapHeight"></chart-heatmap>
+      </ng-scrollbar>
+    </div>
   </div>
 
-<!--    <div class="col-4" tourAnchor="anchorLogLevelDistribution">-->
-<!--    <h6 style="font-weight: 600">Log level distribution-->
-<!--      <nb-icon icon="info-outline"-->
-<!--               nbTooltip="Log level evolution through time. If you notice any strange changes, it might be an indication of a problem!"-->
-<!--               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>-->
-<!--    </h6>-->
-<!--    <stacked-area-chart [data]="stackedChartData"></stacked-area-chart>-->
-<!--  </div>-->
 
-  <div class="col-9" tourAnchor="anchorCognitiveAnomalies">
-    <h6 style="font-weight: 600">Cognitive anomalies
-      <nb-icon icon="info-outline"
-               nbTooltip="Cognitive anomalies are identified log messages that have negative semantic meaning in software systems. The AI system in the background distinguishes normal and anomaly log messages based on a model that is trained on millions of log messages."
-               nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-    </h6>
-    <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
-  </div>
-
-
-
-</div>
-<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
-<div style="padding-left: 5%;padding-right: 5%; overflow-y:auto; height: 250px" tourAnchor="anchorSystemOverview" >
-    <ng-scrollbar>
-  <h6 style="font-weight: 600">Application overview
-    <nb-icon icon="info-outline"
-             nbTooltip="Color variations from green to red is analogous to system state from normal to anomalous (potential failure). Clicking on a red box will redirect you to a detailed view of the period!"
-             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-  </h6>
-  <chart-heatmap [heatmapHeight]="heatmapHeight" [data]="heatmapData"
-                 (select)="onHeatMapSelect($event)"></chart-heatmap>
-  </ng-scrollbar>
-</div>
-<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">
-<div style="padding-left: 5%;padding-right: 5%" tourAnchor="anchorTopIncidents" align="left">
-  <div class="row" style="margin-bottom: 20px">
-    <div class="col" style="text-align: left">
-  <h6 style="font-weight: 600">Top {{numberOfIncidents}} incidents
-    <nb-icon icon="info-outline"
-             nbTooltip="Top 5 most severe AI detected incidents in the specified time period. Clicking on View Details will show you details of the incident!"
-             nbTooltipStatus="basic" nbButton status="basic"></nb-icon>
-  </h6>
-      </div>
-    <div class="col" style="text-align: right">
-    <form [formGroup]="numberOfIncidentsFormGroup" (submit)="changeTopKIncidents()">
-    <label class="mr-2" for="numberOfIncidents">Number of incidents: </label>
-    <input type="number" style="width: 100px" class="mr-2" nbInput formControlName="numberOfIncidents"
-           id="numberOfIncidents"
-           placeholder="Choose number of incidents"/>
-    <button nbButton type="submit" shape="round" style="text-transform: none" size="small">Select</button>
-  </form>
+  <div class="col-6">
+    <div class="row">
+      <div class="col" tourAnchor="anchorLogLevels">
+        <h6 style="font-weight: 600">Log levels
+          <nb-icon icon="info-outline"
+                   nbButton
+                   nbTooltip="A log level is information about the severity of a given log message is. It is a powerful way of distinguishing log events from each other. If the log levels are used properly, then troubleshooting becomes easier."
+                   nbTooltipStatus="basic" status="basic"></nb-icon>
+        </h6>
+        <piechart [colorScheme]="colorPieData" [data]="pieChartData"></piechart>
       </div>
     </div>
-  <nb-card>
-    <nb-card-body>
-      <div class="col-lg-12">
 
-        <div *ngFor="let topKIncident of topKIncidents">
-          <!--scAnomalies-->
-          <ng-container *ngIf="topKIncident.scAnomalies.length > 0">
-            <div class="row">
-              <div class="col-md-11">
-                <div *ngIf="topKIncident.scAnomalies.length > 1">
-                  <div class="main-row">
-                    <div class="row parent">
-                      <div class="col-md-1">
-                 <span style="float: left; color: yellow; font-weight: 600; font-size: 14px"
-                       [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
-                       [class.severe]="topKIncident.scAnomalies[0]?.actualLevel == 'SEVERE'"
+    <div class="row">
+      <div class="col" tourAnchor="anchorCognitiveAnomalies">
+        <h6 style="font-weight: 600">Threats
+          <nb-icon icon="info-outline"
+                   nbButton
+                   nbTooltip="Threats are identified log messages that have negative semantic meaning in software systems. The AI system in the background distinguishes normal and anomaly log messages based on a model that is trained on millions of log messages."
+                   nbTooltipStatus="basic" status="basic"></nb-icon>
+        </h6>
+        <grouped-vertical-bar-chart-2d [data]="barData"></grouped-vertical-bar-chart-2d>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+<hr noshade size="30" style="margin-left: 5%; margin-right: 5%; background-color: #bebebe">
+
+
+<div class="row" style="padding-left: 5%;padding-right: 5%">
+
+  <div style="width: 100%" tourAnchor="anchorTopIncidents">
+    <div class="row" style="margin-bottom: 20px">
+      <div class="col" style="text-align: left">
+        <h6 style="font-weight: 600">Top {{numberOfIncidents}} incidents
+          <nb-icon icon="info-outline"
+                   nbButton
+                   nbTooltip="Top 5 most severe AI detected incidents in the specified time period. Clicking on View Details will show you details of the incident!"
+                   nbTooltipStatus="basic" status="basic"></nb-icon>
+        </h6>
+      </div>
+      <div class="col" style="text-align: right">
+        <form (submit)="changeTopKIncidents()" [formGroup]="numberOfIncidentsFormGroup">
+          <label class="mr-2" for="numberOfIncidents">Select the number of incidents: </label>
+          <input class="mr-2" formControlName="numberOfIncidents" id="numberOfIncidents" nbInput
+                 placeholder="Choose number of incidents"
+                 style="width: 100px"
+                 type="number"/>
+          <button nbButton shape="round" size="small" style="text-transform: none" type="submit">Select</button>
+        </form>
+      </div>
+    </div>
+    <nb-card style="max-height: 500px">
+      <nb-card-body>
+        <div class="col-12">
+          <div *ngIf="topKIncidents.length == 0">No incidents detected until now ...</div>
+          <div *ngFor="let topKIncident of topKIncidents">
+            <!--scAnomalies-->
+            <ng-container *ngIf="topKIncident.scAnomalies.length > 0">
+              <div class="row">
+                <div class="col-md-11">
+                  <div *ngIf="topKIncident.scAnomalies.length > 1">
+                    <div class="main-row">
+                      <div class="row parent">
+                        <div class="col-md-1">
+                 <span [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
-                       class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}</span>
+                       [class.severe]="topKIncident.scAnomalies[0]?.actualLevel == 'SEVERE'"
+                       class="mr-2"
+                       style="float: left; color: yellow; font-weight: 600; font-size: 14px">{{topKIncident.scAnomalies[0]?.actualLevel}}</span>
+                        </div>
+                        <div class="col-md-11" style="font-weight: 600; font-size: 14px">
+                          <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
+                        </div>
                       </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
+                      <div class="row parent">
+                        <div class="col-md-1">
+                   <span
+                     [class.error]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'ERROR'"
+                     [class.info]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'INFO'"
+                     [class.severe]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'SEVERE'"
+                     class="mr-2"
+                     style="float: left; color: yellow; font-weight: 600; font-size: 14px">
+                {{topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]?.actualLevel}}</span>
+                        </div>
+                        <div class="col-md-11" style="font-weight: 600; font-size: 14px">
+                          <app-ad-banner
+                            [row]="topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]"></app-ad-banner>
+                        </div>
+                      </div>
+                      <div class="row offset-md-1 details">
+                      <span class="pr-2"><button disabled nbButton shape="round"
+                                                 size="tiny" status='danger'
+                                                 style="background-color: #6f5b5c; color: white"><nb-icon
+                        icon="cube"></nb-icon>
+                        {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length
+                          - 1).join(' ')}}</button></span>
+
+                        <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button disabled
+                                                                                               nbButton
+                                                                                               shape="round" size="tiny"
+                                                                                               status='danger'
+                                                                                               style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+                        <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button disabled
+                                                                                              nbButton
+                                                                                              shape="round" size="tiny"
+                                                                                              status='danger'
+                                                                                              style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+
+                        <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button disabled
+                                                                                           nbButton
+                                                                                           shape="round" size="tiny"
+                                                                                           status='danger'
+                                                                                           style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
+                        <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button disabled
+                                                                                            nbButton
+                                                                                            shape="round" size="tiny"
+                                                                                            status='danger'
+                                                                                            style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
+
+                        <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button disabled
+                                                                                                nbButton
+                                                                                                shape="round"
+                                                                                                size="tiny"
+                                                                                                status='danger'
+                                                                                                style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button disabled
+                                                                                                 nbButton
+                                                                                                 shape="round"
+                                                                                                 size="tiny"
+                                                                                                 status='danger'
+                                                                                                 style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span class="pr-2"><button disabled
+                                                   nbButton
+                                                   shape="round"
+                                                   size="tiny"
+                                                   style="background-color: #6f5b5c; color: white; text-transform: none"><nb-icon
+                          icon="clock"></nb-icon>
+                          {{moment(topKIncident?.startTimestamp)}}</button></span>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div *ngIf="topKIncident.scAnomalies.length <= 1">
+                    <div class="row main-row">
+                      <div class="col-md-1">
+                <span [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
+                      [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
+                      [class.severe]="topKIncident.scAnomalies[0]?.actualLevel == 'SEVERE'"
+                      class="mr-2"
+                      style="float: left; color: yellow; font-weight: 600; font-size: 14px">{{topKIncident.scAnomalies[0]?.actualLevel}}
+             </span>
+                      </div>
+                      <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
                         <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
                       </div>
-                    </div>
-                    <div class="row parent">
-                      <div class="col-md-1">
-                   <span style="float: left; color: yellow; font-weight: 600; font-size: 14px"
-                         [class.error]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'ERROR'"
-                         [class.severe]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'SEVERE'"
-                         [class.info]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'INFO'"
-                         class="mr-2">
-                {{topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]?.actualLevel}}</span>
-                      </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
-                        <app-ad-banner
-                          [row]="topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]"></app-ad-banner>
-                      </div>
-                    </div>
-                    <div class="row offset-md-1 details">
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white" disabled
-                                                 status='danger' shape="round" size="tiny"><nb-icon
+                      <div class="row offset-md-1 details">
+                      <span class="pr-2"><button disabled nbButton shape="round"
+                                                 size="tiny" status='danger'
+                                                 style="background-color: #6f5b5c; color: white"><nb-icon
                         icon="cube"></nb-icon>
                         {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length
                           - 1).join(' ')}}</button></span>
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length==0" class="pr-2"> <button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
+
+                        <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button disabled
+                                                                                               nbButton
+                                                                                               shape="round" size="tiny"
                                                                                                status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length>0" class="pr-2"> <button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
+                                                                                               style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+                        <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button disabled
+                                                                                              nbButton
+                                                                                              shape="round" size="tiny"
+                                                                                              status='danger'
+                                                                                              style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
 
-                      <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button nbButton
-                                                                                             style="background-color: #6f5b5c; color: white"
-                                                                                             disabled status='danger'
-                                                                                             shape="round"
-                                                                                             size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
-                      <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button nbButton
-                                                                                            style="background-color: #ff3d71; color: white"
-                                                                                            disabled status='danger'
-                                                                                            shape="round" size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+                        <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button disabled
+                                                                                           nbButton
+                                                                                           shape="round" size="tiny"
+                                                                                           status='danger'
+                                                                                           style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
+                        <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button disabled
+                                                                                            nbButton
+                                                                                            shape="round" size="tiny"
+                                                                                            status='danger'
+                                                                                            style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
 
-                      <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button nbButton
-                                                                                         style="background-color: #ff3d71; color: white"
-                                                                                         disabled status='danger'
-                                                                                         shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-                      <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button nbButton
-                                                                                          style="background-color: #6f5b5c; color: white"
-                                                                                          disabled status='danger'
-                                                                                          shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-
-                      <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
-                                                                                               status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white; text-transform: none" disabled
-                                                 shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                        {{moment(topKIncident?.startTimestamp)}}</button></span>
-                    </div>
-                  </div>
-
-                </div>
-                <div *ngIf="topKIncident.scAnomalies.length <= 1">
-                  <div class="row main-row">
-                    <div class="col-md-1">
-                <span style="float: left; color: yellow; font-weight: 600; font-size: 14px"
-                      [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
-                      [class.severe]="topKIncident.scAnomalies[0]?.actualLevel == 'SEVERE'"
-                      [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
-                      class="mr-2">{{topKIncident.scAnomalies[0]?.actualLevel}}
-             </span>
-                    </div>
-                    <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
-                      <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
-                    </div>
-                    <div class="row offset-md-1 details">
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white" disabled
-                                                 status='danger' shape="round" size="tiny"><nb-icon
-                        icon="cube"></nb-icon>
-                        {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length
-                          - 1).join(' ')}}</button></span>
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length==0" class="pr-2"> <button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
-                                                                                               status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length>0" class="pr-2"> <button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
-
-                      <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button nbButton
-                                                                                             style="background-color: #6f5b5c; color: white"
-                                                                                             disabled status='danger'
-                                                                                             shape="round"
-                                                                                             size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
-                      <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button nbButton
-                                                                                            style="background-color: #ff3d71; color: white"
-                                                                                            disabled status='danger'
-                                                                                            shape="round" size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
-
-                      <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button nbButton
-                                                                                         style="background-color: #ff3d71; color: white"
-                                                                                         disabled status='danger'
-                                                                                         shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-                      <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button nbButton
-                                                                                          style="background-color: #6f5b5c; color: white"
-                                                                                          disabled status='danger'
-                                                                                          shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-
-                      <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
-                                                                                               status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white; text-transform: none;" disabled
-                                                 shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                        {{moment(topKIncident?.startTimestamp)}}</button></span>
+                        <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button disabled
+                                                                                                nbButton
+                                                                                                shape="round"
+                                                                                                size="tiny"
+                                                                                                status='danger'
+                                                                                                style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button disabled
+                                                                                                 nbButton
+                                                                                                 shape="round"
+                                                                                                 size="tiny"
+                                                                                                 status='danger'
+                                                                                                 style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span class="pr-2"><button disabled
+                                                   nbButton
+                                                   shape="round"
+                                                   size="tiny"
+                                                   style="background-color: #6f5b5c; color: white; text-transform: none;"><nb-icon
+                          icon="clock"></nb-icon>
+                          {{moment(topKIncident?.startTimestamp)}}</button></span>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div class="col-md-1 center">
+                  <button
+                    (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
+                    nbButton
+                    shape="round"
+                    size="medium" status='basic' style="text-transform: none"> View details
+                  </button>
+                </div>
               </div>
-              <div class="col-md-1 center">
-                <button style="text-transform: none" nbButton
-                        (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
-                        status='basic' shape="round" size="medium"> View details
-                </button>
-              </div>
-            </div>
-          </ng-container>
+            </ng-container>
 
-          <!--semanticAD-->
-          <ng-container *ngIf="topKIncident.semanticAD.length > 0 && topKIncident?.scAnomalies.length == 0">
-            <div class="row">
+            <!--semanticAD-->
+            <ng-container *ngIf="topKIncident.semanticAD.length > 0 && topKIncident?.scAnomalies.length == 0">
+              <div class="row">
 
-              <div class="col-md-11">
-                <div *ngIf="topKIncident.semanticAD.length > 1">
+                <div class="col-md-11">
+                  <div *ngIf="topKIncident.semanticAD.length > 1">
 
-                  <div class="main-row">
-                    <div class="row parent">
-                      <div class="col-md-1">
-                 <span style="float: left; color: yellow;font-weight: 600; font-size: 14px"
-                       [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
-                       [class.severe]="topKIncident.semanticAD[0]?.actualLevel == 'SEVERE'"
+                    <div class="main-row">
+                      <div class="row parent">
+                        <div class="col-md-1">
+                 <span [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
-                       class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}</span>
+                       [class.severe]="topKIncident.semanticAD[0]?.actualLevel == 'SEVERE'"
+                       class="mr-2"
+                       style="float: left; color: yellow;font-weight: 600; font-size: 14px">{{topKIncident.semanticAD[0]?.actualLevel}}</span>
+                        </div>
+                        <div class="col-md-11" style="font-weight: 600; font-size: 14px">
+                          <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
+                        </div>
                       </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
+                      <div class="row parent">
+                        <div class="col-md-1">
+                   <span
+                     [class.error]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'ERROR'"
+                     [class.info]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'INFO'"
+                     [class.severe]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'SEVERE'"
+                     class="mr-2"
+                     style="float: left; color: yellow;font-size: 14px; font-weight: 600;">
+                {{topKIncident.semanticAD[topKIncident.semanticAD.length - 1]?.actualLevel}}</span>
+                        </div>
+                        <div class="col-md-11" style="font-weight: 600; font-size: 14px">
+                          <app-ad-banner
+                            [row]="topKIncident.semanticAD[topKIncident.semanticAD.length - 1]"></app-ad-banner>
+                        </div>
+                      </div>
+                      <div class="row offset-md-1 details">
+                      <span class="pr-2"><button disabled nbButton shape="round"
+                                                 size="tiny" status='danger'
+                                                 style="background-color: #6f5b5c; color: white"><nb-icon
+                        icon="cube"></nb-icon>
+                        {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length
+                          - 1).join(' ')}}</button></span>
+
+
+                        <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button disabled
+                                                                                               nbButton
+                                                                                               shape="round" size="tiny"
+                                                                                               status='danger'
+                                                                                               style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+                        <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button disabled
+                                                                                              nbButton
+                                                                                              shape="round" size="tiny"
+                                                                                              status='danger'
+                                                                                              style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+
+                        <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button disabled
+                                                                                           nbButton
+                                                                                           shape="round" size="tiny"
+                                                                                           status='danger'
+                                                                                           style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
+                        <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button disabled
+                                                                                            nbButton
+                                                                                            shape="round" size="tiny"
+                                                                                            status='danger'
+                                                                                            style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
+
+                        <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button disabled
+                                                                                                nbButton
+                                                                                                shape="round"
+                                                                                                size="tiny"
+                                                                                                status='danger'
+                                                                                                style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button disabled
+                                                                                                 nbButton
+                                                                                                 shape="round"
+                                                                                                 size="tiny"
+                                                                                                 status='danger'
+                                                                                                 style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span class="pr-2"><button disabled
+                                                   nbButton
+                                                   shape="round"
+                                                   size="tiny"
+                                                   style="background-color: #6f5b5c; color: white; text-transform: none"><nb-icon
+                          icon="clock"></nb-icon>
+                          {{moment(topKIncident?.startTimestamp)}}</button></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="topKIncident.semanticAD.length <= 1">
+                    <div class="row main-row">
+                      <div class="col-md-1">
+                <span [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
+                      [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
+                      [class.severe]="topKIncident.semanticAD[0]?.actualLevel == 'SEVERE'"
+                      class="mr-2"
+                      style="float: left; color: yellow;font-weight: 600; font-size: 14px">{{topKIncident.semanticAD[0]?.actualLevel}}
+             </span>
+                      </div>
+                      <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
                         <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
                       </div>
-                    </div>
-                    <div class="row parent">
-                      <div class="col-md-1">
-                   <span style="float: left; color: yellow;font-size: 14px; font-weight: 600;"
-                         [class.error]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'ERROR'"
-                          [class.severe]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'SEVERE'"
-                         [class.info]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'INFO'"
-                         class="mr-2">
-                {{topKIncident.semanticAD[topKIncident.semanticAD.length - 1]?.actualLevel}}</span>
-                      </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
-                        <app-ad-banner
-                          [row]="topKIncident.semanticAD[topKIncident.semanticAD.length - 1]"></app-ad-banner>
-                      </div>
-                    </div>
-                    <div class="row offset-md-1 details">
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white" disabled
-                                                 status='danger' shape="round" size="tiny"><nb-icon
+                      <div class="row offset-md-1 details">
+                      <span class="pr-2"><button disabled nbButton shape="round"
+                                                 size="tiny" status='danger'
+                                                 style="background-color: #6f5b5c; color: white"><nb-icon
                         icon="cube"></nb-icon>
                         {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length
                           - 1).join(' ')}}</button></span>
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length==0" class="pr-2"> <button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
+
+
+                        <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button disabled
+                                                                                               nbButton
+                                                                                               shape="round" size="tiny"
                                                                                                status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length>0" class="pr-2"> <button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
+                                                                                               style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+                        <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button disabled
+                                                                                              nbButton
+                                                                                              shape="round" size="tiny"
+                                                                                              status='danger'
+                                                                                              style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
 
-                      <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button nbButton
-                                                                                             style="background-color: #6f5b5c; color: white"
-                                                                                             disabled status='danger'
-                                                                                             shape="round"
-                                                                                             size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
-                      <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button nbButton
-                                                                                            style="background-color: #ff3d71; color: white"
-                                                                                            disabled status='danger'
-                                                                                            shape="round" size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+                        <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button disabled
+                                                                                           nbButton
+                                                                                           shape="round" size="tiny"
+                                                                                           status='danger'
+                                                                                           style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
+                        <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button disabled
+                                                                                            nbButton
+                                                                                            shape="round" size="tiny"
+                                                                                            status='danger'
+                                                                                            style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
 
-                      <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button nbButton
-                                                                                         style="background-color: #ff3d71; color: white"
-                                                                                         disabled status='danger'
-                                                                                         shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-                      <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button nbButton
-                                                                                          style="background-color: #6f5b5c; color: white"
-                                                                                          disabled status='danger'
-                                                                                          shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-
-                      <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
-                                                                                               status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white; text-transform: none" disabled
-                                                 shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                        {{moment(topKIncident?.startTimestamp)}}</button></span>
+                        <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button disabled
+                                                                                                nbButton
+                                                                                                shape="round"
+                                                                                                size="tiny"
+                                                                                                status='danger'
+                                                                                                style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button disabled
+                                                                                                 nbButton
+                                                                                                 shape="round"
+                                                                                                 size="tiny"
+                                                                                                 status='danger'
+                                                                                                 style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span class="pr-2"><button disabled
+                                                   nbButton
+                                                   shape="round"
+                                                   size="tiny"
+                                                   style="background-color: #6f5b5c; color: white; text-transform: none;"><nb-icon
+                          icon="clock"></nb-icon>
+                          {{moment(topKIncident?.startTimestamp)}}</button></span>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div *ngIf="topKIncident.semanticAD.length <= 1">
-                  <div class="row main-row">
-                    <div class="col-md-1">
-                <span style="float: left; color: yellow;font-weight: 600; font-size: 14px"
-                      [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
-                      [class.severe]="topKIncident.semanticAD[0]?.actualLevel == 'SEVERE'"
-                      [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
-                      class="mr-2">{{topKIncident.semanticAD[0]?.actualLevel}}
-             </span>
-                    </div>
-                    <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
-                      <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
-                    </div>
-                    <div class="row offset-md-1 details">
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white" disabled
-                                                 status='danger' shape="round" size="tiny"><nb-icon
-                        icon="cube"></nb-icon>
-                        {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length
-                          - 1).join(' ')}}</button></span>
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length==0" class="pr-2"> <button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
-                                                                                               status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length>0" class="pr-2"> <button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
-
-                      <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button nbButton
-                                                                                             style="background-color: #6f5b5c; color: white"
-                                                                                             disabled status='danger'
-                                                                                             shape="round"
-                                                                                             size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
-                      <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button nbButton
-                                                                                            style="background-color: #ff3d71; color: white"
-                                                                                            disabled status='danger'
-                                                                                            shape="round" size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
-
-                      <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button nbButton
-                                                                                         style="background-color: #ff3d71; color: white"
-                                                                                         disabled status='danger'
-                                                                                         shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-                      <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button nbButton
-                                                                                          style="background-color: #6f5b5c; color: white"
-                                                                                          disabled status='danger'
-                                                                                          shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-
-                      <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
-                                                                                               status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white; text-transform: none;" disabled
-                                                 shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                        {{moment(topKIncident?.startTimestamp)}}</button></span>
-                    </div>
-                  </div>
+                <div class="col-md-1 center">
+                  <button
+                    (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
+                    nbButton
+                    shape="round"
+                    size="medium" status='basic' style="text-transform: none"> View details
+                  </button>
                 </div>
               </div>
-              <div class="col-md-1 center">
-                <button style="text-transform: none" nbButton
-                        (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
-                        status='basic' shape="round" size="medium"> View details
-                </button>
-              </div>
-            </div>
-          </ng-container>
+            </ng-container>
 
-          <ng-container
-            *ngIf="topKIncident.newTemplates.length > 0 && topKIncident?.scAnomalies.length == 0 && topKIncident?.semanticAD.length == 0">
-            <div class="row">
-              <div class="col-md-1 center">
-                <button style="text-transform: none" nbButton
-                        (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
-                        status='danger' shape="round" size="tiny"> View details
-                </button>
-              </div>
-              <div class="col-md-11">
-                <div *ngIf="topKIncident.newTemplates.length > 1">
-                  <div class="main-row">
-                    <div class="row parent">
-                      <div class="col-md-1">
-                 <span style="float: left; color: yellow;font-weight: 600; font-size: 14px"
-                       [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
-                       [class.severe]="topKIncident.newTemplates[0]?.actualLevel == 'SEVERE'"
+            <ng-container
+              *ngIf="topKIncident.newTemplates.length > 0 && topKIncident?.scAnomalies.length == 0 && topKIncident?.semanticAD.length == 0">
+              <div class="row">
+                <div class="col-md-1 center">
+                  <button
+                    (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
+                    nbButton
+                    shape="round"
+                    size="tiny" status='danger' style="text-transform: none"> View details
+                  </button>
+                </div>
+                <div class="col-md-11">
+                  <div *ngIf="topKIncident.newTemplates.length > 1">
+                    <div class="main-row">
+                      <div class="row parent">
+                        <div class="col-md-1">
+                 <span [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
                        [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
-                       class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}</span>
+                       [class.severe]="topKIncident.newTemplates[0]?.actualLevel == 'SEVERE'"
+                       class="mr-2"
+                       style="float: left; color: yellow;font-weight: 600; font-size: 14px">{{topKIncident.newTemplates[0]?.actualLevel}}</span>
+                        </div>
+                        <div class="col-md-11" style="font-weight: 600; font-size: 14px">
+                          <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
+                        </div>
                       </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
+                      <div class="row parent">
+                        <div class="col-md-1">
+                   <span
+                     [class.error]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'ERROR'"
+                     [class.info]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'INFO'"
+                     [class.severe]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'SEVERE'"
+                     class="mr-2"
+                     style="float: left; color: yellow;font-weight: 600; font-size: 14px">
+                {{topKIncident.newTemplates[topKIncident.newTemplates.length - 1]?.actualLevel}}</span>
+                        </div>
+                        <div class="col-md-11" style="font-weight: 600; font-size: 14px">
+                          <app-ad-banner
+                            [row]="topKIncident.newTemplates[topKIncident.newTemplates.length - 1]"></app-ad-banner>
+                        </div>
+                      </div>
+                      <div class="row offset-md-1 details">
+                      <span class="pr-2"><button disabled nbButton shape="round"
+                                                 size="tiny" status='danger'
+                                                 style="background-color: #6f5b5c; color: white"><nb-icon
+                        icon="cube"></nb-icon>
+                        {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length
+                          - 1).join(' ')}}</button></span>
+
+
+                        <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button disabled
+                                                                                               nbButton
+                                                                                               shape="round" size="tiny"
+                                                                                               status='danger'
+                                                                                               style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+                        <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button disabled
+                                                                                              nbButton
+                                                                                              shape="round" size="tiny"
+                                                                                              status='danger'
+                                                                                              style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+
+                        <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button disabled
+                                                                                           nbButton
+                                                                                           shape="round" size="tiny"
+                                                                                           status='danger'
+                                                                                           style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
+                        <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button disabled
+                                                                                            nbButton
+                                                                                            shape="round" size="tiny"
+                                                                                            status='danger'
+                                                                                            style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
+
+                        <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button disabled
+                                                                                                nbButton
+                                                                                                shape="round"
+                                                                                                size="tiny"
+                                                                                                status='danger'
+                                                                                                style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button disabled
+                                                                                                 nbButton
+                                                                                                 shape="round"
+                                                                                                 size="tiny"
+                                                                                                 status='danger'
+                                                                                                 style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span class="pr-2"><button disabled
+                                                   nbButton
+                                                   shape="round"
+                                                   size="tiny"
+                                                   style="background-color: #6f5b5c; color: white; text-transform: none"><nb-icon
+                          icon="clock"></nb-icon>
+                          {{moment(topKIncident?.startTimestamp)}}</button></span>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div *ngIf="topKIncident.newTemplates.length <= 1">
+                    <div class="row main-row">
+                      <div class="col-md-1">
+                <span [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
+                      [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
+                      [class.severe]="topKIncident.newTemplates[0]?.actualLevel == 'SEVERE'"
+                      class="mr-2"
+                      style="float: left;  color: yellow;font-weight: 600; font-size: 14px">{{topKIncident.newTemplates[0]?.actualLevel}}
+             </span>
+                      </div>
+                      <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
                         <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
                       </div>
-                    </div>
-                    <div class="row parent">
-                      <div class="col-md-1">
-                   <span style="float: left; color: yellow;font-weight: 600; font-size: 14px"
-                         [class.error]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'ERROR'"
-                         [class.severe]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'SEVERE'"
-                         [class.info]="topKIncident.newTemplates[topKIncident.newTemplates.length-1]?.actualLevel == 'INFO'"
-                         class="mr-2">
-                {{topKIncident.newTemplates[topKIncident.newTemplates.length - 1]?.actualLevel}}</span>
-                      </div>
-                      <div class="col-md-11" style="font-weight: 600; font-size: 14px">
-                        <app-ad-banner
-                          [row]="topKIncident.newTemplates[topKIncident.newTemplates.length - 1]"></app-ad-banner>
-                      </div>
-                    </div>
-                    <div class="row offset-md-1 details">
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white" disabled
-                                                 status='danger' shape="round" size="tiny"><nb-icon
+                      <div class="row offset-md-1 details">
+                      <span class="pr-2"><button disabled nbButton shape="round"
+                                                 size="tiny" status='danger'
+                                                 style="background-color: #6f5b5c; color: white"><nb-icon
                         icon="cube"></nb-icon>
                         {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length
                           - 1).join(' ')}}</button></span>
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length==0" class="pr-2"> <button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
+
+
+                        <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button disabled
+                                                                                               nbButton
+                                                                                               shape="round" size="tiny"
                                                                                                status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length>0" class="pr-2"> <button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
+                                                                                               style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+                        <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button disabled
+                                                                                              nbButton
+                                                                                              shape="round" size="tiny"
+                                                                                              status='danger'
+                                                                                              style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="alert-circle"></nb-icon>
+                          {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
 
-                      <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button nbButton
-                                                                                             style="background-color: #6f5b5c; color: white"
-                                                                                             disabled status='danger'
-                                                                                             shape="round"
-                                                                                             size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
-                      <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button nbButton
-                                                                                            style="background-color: #ff3d71; color: white"
-                                                                                            disabled status='danger'
-                                                                                            shape="round" size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
+                        <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button disabled
+                                                                                           nbButton
+                                                                                           shape="round" size="tiny"
+                                                                                           status='danger'
+                                                                                           style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
+                        <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button disabled
+                                                                                            nbButton
+                                                                                            shape="round" size="tiny"
+                                                                                            status='danger'
+                                                                                            style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="flip-2"></nb-icon>
+                          {{topKIncident?.countAD?.length}} flow anomalies</button></span>
 
-                      <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button nbButton
-                                                                                         style="background-color: #ff3d71; color: white"
-                                                                                         disabled status='danger'
-                                                                                         shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-                      <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button nbButton
-                                                                                          style="background-color: #6f5b5c; color: white"
-                                                                                          disabled status='danger'
-                                                                                          shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-
-                      <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
-                                                                                               status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white; text-transform: none" disabled
-                                                 shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                        {{moment(topKIncident?.startTimestamp)}}</button></span>
-                    </div>
-                  </div>
-
-                </div>
-                <div *ngIf="topKIncident.newTemplates.length <= 1">
-                  <div class="row main-row">
-                    <div class="col-md-1">
-                <span style="float: left;  color: yellow;font-weight: 600; font-size: 14px"
-                      [class.error]="topKIncident.newTemplates[0]?.actualLevel == 'ERROR'"
-                      [class.severe]="topKIncident.newTemplates[0]?.actualLevel == 'SEVERE'"
-                      [class.info]="topKIncident.newTemplates[0]?.actualLevel == 'INFO'"
-                      class="mr-2">{{topKIncident.newTemplates[0]?.actualLevel}}
-             </span>
-                    </div>
-                    <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
-                      <app-ad-banner [row]="topKIncident.newTemplates[0]"></app-ad-banner>
-                    </div>
-                    <div class="row offset-md-1 details">
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white" disabled
-                                                 status='danger' shape="round" size="tiny"><nb-icon
-                        icon="cube"></nb-icon>
-                        {{topKIncident?.appName.split('_').slice(1, topKIncident?.appName.split('_').length
-                          - 1).join(' ')}}</button></span>
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length==0" class="pr-2"> <button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
-                                                                                               status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
-                      <!--<span *ngIf="topKIncident?.scAnomalies?.length>0" class="pr-2"> <button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="alert-triangle"></nb-icon>
-                        {{topKIncident?.scAnomalies?.length}} critical event(s) </button></span>-->
-
-                      <span *ngIf="topKIncident?.semanticAD?.length==0" class="pr-2"><button nbButton
-                                                                                             style="background-color: #6f5b5c; color: white"
-                                                                                             disabled status='danger'
-                                                                                             shape="round"
-                                                                                             size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
-                      <span *ngIf="topKIncident?.semanticAD?.length>0" class="pr-2"><button nbButton
-                                                                                            style="background-color: #ff3d71; color: white"
-                                                                                            disabled status='danger'
-                                                                                            shape="round" size="tiny"><nb-icon
-                        icon="alert-circle"></nb-icon>
-                        {{topKIncident?.semanticAD?.length}} cognitive anomalies</button></span>
-
-                      <span *ngIf="topKIncident?.countAD?.length>0" class="pr-2"><button nbButton
-                                                                                         style="background-color: #ff3d71; color: white"
-                                                                                         disabled status='danger'
-                                                                                         shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-                      <span *ngIf="topKIncident?.countAD?.length==0" class="pr-2"><button nbButton
-                                                                                          style="background-color: #6f5b5c; color: white"
-                                                                                          disabled status='danger'
-                                                                                          shape="round" size="tiny"><nb-icon
-                        icon="flip-2"></nb-icon>
-                        {{topKIncident?.countAD?.length}} flow anomalies</button></span>
-
-                      <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button nbButton
-                                                                                              style="background-color: #ff3d71; color: white"
-                                                                                              disabled status='danger'
-                                                                                              shape="round"
-                                                                                              size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button nbButton
-                                                                                               style="background-color: #6f5b5c; color: white"
-                                                                                               disabled
-                                                                                               status='danger'
-                                                                                               shape="round"
-                                                                                               size="tiny"><nb-icon
-                        icon="bulb"></nb-icon>
-                        {{topKIncident?.newTemplates?.length}} new log types</button></span>
-                      <span class="pr-2"><button nbButton style="background-color: #6f5b5c; color: white" disabled
-                                                 shape="round" size="tiny"><nb-icon icon="clock"></nb-icon>
-                        {{moment(topKIncident?.startTimestamp)}}</button></span>
+                        <span *ngIf="topKIncident?.newTemplates?.length>0" class="pr-2"><button disabled
+                                                                                                nbButton
+                                                                                                shape="round"
+                                                                                                size="tiny"
+                                                                                                status='danger'
+                                                                                                style="background-color: #ff3d71; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span *ngIf="topKIncident?.newTemplates?.length==0" class="pr-2"><button disabled
+                                                                                                 nbButton
+                                                                                                 shape="round"
+                                                                                                 size="tiny"
+                                                                                                 status='danger'
+                                                                                                 style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="bulb"></nb-icon>
+                          {{topKIncident?.newTemplates?.length}} new log types</button></span>
+                        <span class="pr-2"><button disabled nbButton shape="round"
+                                                   size="tiny" style="background-color: #6f5b5c; color: white"><nb-icon
+                          icon="clock"></nb-icon>
+                          {{moment(topKIncident?.startTimestamp)}}</button></span>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div class="col-md-1 center">
+                  <button
+                    (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
+                    nbButton
+                    shape="round"
+                    size="medium" status='basic' style="text-transform: none"> View details
+                  </button>
+                </div>
               </div>
-              <div class="col-md-1 center">
-                <button style="text-transform: none" nbButton
-                        (click)="viewDetails(topKIncident.startTimestamp, topKIncident.stopTimestamp, topKIncident.applicationId)"
-                        status='basic' shape="round" size="medium"> View details
-                </button>
-              </div>
-            </div>
-          </ng-container>
-          <hr noshade="true">
+            </ng-container>
+            <hr noshade="true" style="background-color: #bebebe">
+          </div>
         </div>
-      </div>
-    </nb-card-body>
-  </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
 </div>
+<!--<hr size="30" noshade style="margin-left: 5%; margin-right: 5%; background-color: #4b4b4b">-->
+
+
 <ng-template #dateTimePicker>
-  <elastic-custom-datepicker (search)="onDateTimeSearch($event)"
-                             (savePredefinedTime)="onSavePredefinedTime($event)">
+  <elastic-custom-datepicker (savePredefinedTime)="onSavePredefinedTime($event)"
+                             (search)="onDateTimeSearch($event)">
   </elastic-custom-datepicker>
 </ng-template>
+

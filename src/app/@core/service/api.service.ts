@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import {NotificationsService} from "angular2-notifications";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private notificationsService: NotificationsService) {
     }
 
     get<T>(path: string, options?: any): Observable<any> {
@@ -71,6 +72,33 @@ export class ApiService {
 
     getClient(): HttpClient {
         return this.httpClient;
+    }
+
+    handleErrors(error: any){
+      if(error.errors != null){
+          this.notificationsService.error(error.error, error.errors[0].defaultMessage, {
+      timeOut: 15000,
+      showProgressBar: true,
+      pauseOnHover: true,
+      clickToClose: true
+    })
+        }else{
+          this.notificationsService.error(error.error, error.message, {
+      timeOut: 15000,
+      showProgressBar: true,
+      pauseOnHover: true,
+      clickToClose: true
+    })
+        }
+    }
+
+    getNotificationOpetions(){
+      return {
+      timeOut: 10000,
+      showProgressBar: true,
+      pauseOnHover: true,
+      clickToClose: true
+    }
     }
 
     private handleError<T>(error: any) {

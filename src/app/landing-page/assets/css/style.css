@@ -28,7 +28,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Nunito", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -168,7 +168,7 @@ section {
 .header {
   transition: all 0.5s;
   z-index: 997;
-  padding: 20px 0;
+  padding: 0px 0;
 }
 
 .header.header-scrolled {
@@ -191,7 +191,7 @@ section {
   font-weight: 700;
   letter-spacing: 1px;
   color: #012970;
-  font-family: "Nunito", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   margin-top: 3px;
 }
 
@@ -222,7 +222,7 @@ section {
   align-items: center;
   justify-content: space-between;
   padding: 10px 0 10px 30px;
-  font-family: "Nunito", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #013289;
@@ -456,7 +456,7 @@ section {
 }
 
 .hero .btn-get-started span {
-  font-family: "Nunito", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-weight: 600;
   font-size: 16px;
   letter-spacing: 1px;
@@ -490,11 +490,11 @@ section {
 
   .hero .hero-img {
     text-align: center;
-    margin-top: 80px;
+    margin-top: 40px;
   }
 
   .hero .hero-img img {
-    width: 80%;
+    width: 100%;
   }
 }
 
@@ -556,7 +556,7 @@ section {
 }
 
 .about .btn-read-more span {
-  font-family: "Nunito", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-weight: 600;
   font-size: 16px;
   white-space: nowrap;
@@ -587,7 +587,7 @@ section {
 .values .box img {
   padding: 30px 50px;
   transition: 0.5s;
-  transform: scale(1.1);
+  transform: scale(0.7);
 }
 
 .values .box h3 {
@@ -597,12 +597,19 @@ section {
   margin-bottom: 18px;
 }
 
+.values .box p {
+  font-weight: 510;
+}
+.values .box a {
+  font-weight: 510;
+}
+
 .values .box:hover {
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
 }
 
 .values .box:hover img {
-  transform: scale(1);
+  transform: scale(0.8);
 }
 
 /*--------------------------------------------------------------
@@ -638,7 +645,7 @@ section {
 .counts .count-box p {
   padding: 0;
   margin: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-size: 14px;
 }
 
@@ -795,6 +802,14 @@ section {
   font-weight: 700;
 }
 
+.services .service-box p {
+  font-weight: 500;
+}
+
+.services .service-box span {
+  font-weight: 510;
+}
+
 .services .service-box .read-more {
   display: inline-flex;
   align-items: center;
@@ -946,11 +961,17 @@ section {
 }
 
 .pricing .price {
-  font-size: 36px;
+  font-size: 24px;
   color: #444444;
   font-weight: 600;
-  font-family: "Poppins", sans-serif;
 }
+
+.pricing .price a {
+  font-size: 24px;
+  color: #444444;
+  font-weight: 600;
+}
+
 
 .pricing .price sup {
   font-size: 20px;
@@ -995,7 +1016,7 @@ section {
   transition: none;
   font-size: 16px;
   font-weight: 400;
-  font-family: "Nunito", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-weight: 600;
   transition: 0.3s;
   border: 1px solid #4154f1;
@@ -2286,7 +2307,7 @@ section {
   font-weight: 700;
   letter-spacing: 1px;
   color: #012970;
-  font-family: "Nunito", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   margin-top: 3px;
 }
 
@@ -2294,7 +2315,7 @@ section {
   font-size: 14px;
   line-height: 24px;
   margin-bottom: 0;
-  font-family: "Nunito", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
 .footer .footer-top .social-links a {

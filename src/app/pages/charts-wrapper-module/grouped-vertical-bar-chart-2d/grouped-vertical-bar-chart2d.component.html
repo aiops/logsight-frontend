@@ -1,20 +1,20 @@
-<div [ngStyle]="{'display':'grid', 'height': heatmapHeight}" >
+<div [ngStyle]="{'height': heatmapHeight}" >
 <ngx-charts-bar-vertical-2d
   [scheme]="colorScheme"
   [results]="data"
   [gradient]="false"
-  [groupPadding]="3"
-  [barPadding]="3"
+  [groupPadding]="2"
+  [barPadding]="2"
   [xAxis]="true"
   [yAxis]="true"
-  [legend]="false"
+  [legend]="true"
   [showXAxisLabel]="false"
   [showYAxisLabel]="false"
   [xAxisLabel]="xAxisLabel"
   [yAxisLabel]="yAxisLabel"
   [showGridLines]="true"
-  [showDataLabel]="true"
+  [showDataLabel]="false"
   [legendTitle]="legendTitle"
-  style="fill: white">
+>
 </ngx-charts-bar-vertical-2d>
 </div>

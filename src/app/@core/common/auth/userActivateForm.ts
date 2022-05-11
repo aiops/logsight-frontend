@@ -1,4 +1,4 @@
-export interface UserActivateForm {
-  id: Number;
-  key: string;
+export class UserActivateForm {
+  userId: string;
+  activationToken: string;
 }

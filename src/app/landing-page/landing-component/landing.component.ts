@@ -54,9 +54,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/quickstart'])
-      }, err => {
-
-        this.notificationService.error('Error', 'Incorrect email or password')
+      }, error => {
+          this.notificationService.error('Error', 'Incorrect email or password')
       }
     )
   }

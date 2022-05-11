@@ -12,6 +12,7 @@ import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-b
 import {NbIconModule, NbTooltipModule} from "@nebular/theme";
 import {GroupedHorizontalBarChart2dComponent} from "./grouped-horizontal-bar-chart-2d/grouped-horizontal-bar-chart2d.component";
 import {HeatmapCompareComponent} from "./heatmap-compare/heatmap-compare.component";
+import {dataService} from "./pie-chart/data.service";
 
 @NgModule({
   imports: [
@@ -42,8 +43,10 @@ import {HeatmapCompareComponent} from "./heatmap-compare/heatmap-compare.compone
         GroupedVerticalBarChart2dComponent,
         HorizontalBarChartComponent,
         GroupedHorizontalBarChart2dComponent,
-      HeatmapCompareComponent
-    ]
+      HeatmapCompareComponent],
+  providers: [
+    dataService
+  ]
 })
 export class ChartsWrapperModule {
 }

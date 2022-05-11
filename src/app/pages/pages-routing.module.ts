@@ -9,7 +9,7 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
-      path: 'quickstart',
+      path: 'send-logs',
       loadChildren: () => import('./quickstart/quickstart.module')
         .then(m => m.QuickstartModule),
     },
@@ -19,7 +19,7 @@ const routes: Routes = [{
         .then(m => m.QualityModule),
     },
     {
-      path: 'log-compare',
+      path: 'compare',
       loadChildren: () => import('./log-compare/log-compare.module')
         .then(m => m.LogCompareModule),
     },
@@ -34,9 +34,18 @@ const routes: Routes = [{
         .then(m => m.IncidentsModule),
     },
     {
-      path: 'integration',
-      loadChildren: () => import('./integration/integration.module')
-        .then(m => m.IntegrationModule),
+      path: 'file-upload',
+      loadChildren: () => import('./file-upload/file-upload.module')
+        .then(m => m.FileUploadModule),
+    },{
+      path: 'demo-data',
+      loadChildren: () => import('./sample-data/sample-data.module')
+        .then(m => m.SampleDataModule),
+    },
+    {
+      path: 'elasticsearch-data',
+      loadChildren: () => import('./elasticsearch-data/elasticsearch-data.module')
+        .then(m => m.ElasticsearchDataModule),
     },
     {
       path: 'variable-analysis',

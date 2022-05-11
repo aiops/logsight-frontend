@@ -37,7 +37,7 @@ export class HeatmapComponent {
   };
 
   constructor() {
-    this.data = multi
+    // this.data = multi
   }
 
   // dateTickFormatting(val: any) {
@@ -57,4 +57,5 @@ export class HeatmapComponent {
   onSelect(data): void {
 
   }
+
 }

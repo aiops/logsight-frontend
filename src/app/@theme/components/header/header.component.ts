@@ -19,8 +19,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly: boolean = false;
   menu = MENU_ITEMS;
   user: any;
-  key: string;
+  id: string;
   email: string;
+  userId: string;
   progressValue: number;
   curSec: number;
   horizontal: boolean = true;
@@ -45,7 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [{ title: 'Settings', data: 'profile' }, { title: 'Log out', data: 'log_out' }];
+  userMenu = [{ title: 'Profile', data: 'profile' }, { title: 'Log out', data: 'log_out' }];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -59,127 +60,76 @@ export class HeaderComponent implements OnInit, OnDestroy {
               this.tourService.initialize([
                 {
                 anchorId: 'anchorDashboard',
-                content: 'Get an overview of your system at the Dashboard. This includes the statistics of your log data, as well as top incidents within a period of time',
+                content: 'The Dashboard shows an overview of your system. This includes overview of the observed services, the statistics of their log data, as well as top incidents within a period of time.',
                 enableBackdrop: true,
-                route: '/pages/dashboard'
                 },
                 {
                   anchorId: 'anchorLogLevels',
-                  content: 'Observe the ratio between error and normal logs.',
-                  enableBackdrop: true
-                },
-                {
-                  anchorId: 'anchorLogLevelDistribution',
-                  content: 'Here you see it through time. If you notice any strange changes, it might be an indication of anomaly!',
+                  content: 'The log messages contain an important information about their log level. Here you can observe the counts between error and normal logs. Increased error counts may suggest anomalous behaviour.',
                   enableBackdrop: true
                 },
                 {
                   anchorId: 'anchorCognitiveAnomalies',
-                  content: 'This summarizes one of our deep learning anomaly detection methods. High number of anomalous messages may indicate a failure!',
+                  content: 'This summarizes the deep learning anomaly detection method, which analyzes the semantics of each log message to detect abnormalities. High number of threat messages may indicate a failure!',
                   enableBackdrop: true
                 },
                 {
                   anchorId: 'anchorSystemOverview',
-                  content: 'Get an overview of the system! Clicking on a red box will redirect you to a detailed view of the period!',
+                  content: 'Get an overview of the system! Clicking on a red box will redirect you to a detailed view of the period! Green color represents normal state.',
                   enableBackdrop: true
                 },
                 {
                   anchorId: 'anchorTopIncidents',
-                  content: 'Here you can see the top 5 most severe incidents in the last 24 hours. Clicking on ' +
-                    'View Details will show you details of the incident!',
+                  content: 'Here you can see the top most severe incidents in the last 24 hours. Clicking on ' +
+                    'View Details will show you details of the incident!\n\n For example, the most severe incident detected is from the Resource Manager service. \n\n When multiple threads call the function almost simultaneously, the arguments will be out or order since it was not thread-safe. This needs to be fixed by making it thread-safe.\n' +
+                    '--> [hadoop] MAPREDUCE-3531 Report | Version 0.23.1',
                   enableBackdrop: true
                 },
                 {
                   anchorId: 'anchorIncidentsTab',
-                  content: 'In this tab, all of the incidents are shown with their description!',
+                  content: 'In this view, the details of the selected incident are shown! Clicking on View Details will show you the details of the incident!',
                   enableBackdrop: true,
                   route: '/pages/incidents'
                 },
                 {
-                  anchorId: 'anchorCriticalAnomalies',
-                  content: 'Critical anomalies are most severe. It means that they are deviating from the normal ratio ' +
-                    '(or new log messages) and are recognized as cognitive anomalies by our deep network.',
-                  enableBackdrop: true
-                },
-                {
-                  anchorId: 'anchorFlowAnomalies',
-                  content: 'Flow anomalies are those logs that deviate from the normal flow of the system. For example, ' +
-                    'consider that log statements A and B are always appearing together in a time interval. ' +
-                    'If this ratio is broken then we report a flow anomaly.',
-                  enableBackdrop: true
-                },
-                {
-                  anchorId: 'anchorCogAnomalies',
-                  content: 'Cognitive anomalies are those that have negative semantic meaning. It is very similar to what an experienced developer would detect.',
-                  enableBackdrop: true
-                },
-                {
-                  anchorId: 'anchorNewAnomalies',
-                  content: 'These log types are detected as novel and not seen before. This might happen when there is abnormal system behavior, or simply a new update of the application.',
-                  enableBackdrop: true
-                },
-                {
-                  anchorId: 'anchorParsing',
-                  content: 'We not only analyze the log messages as log types, logsight.ai automatically structures the logs extracting useful information in terms of log variables.',
-                  enableBackdrop: true,
-                    route: '/pages/variable-analysis'
-                },
-                {
-                  anchorId: 'anchorLogs',
-                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
-                  enableBackdrop: true,
-                },
-                {
-                  anchorId: 'qualityOverview',
-                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
-                  enableBackdrop: true,
-                  route: '/pages/quality'
-                },
-                {
-                  anchorId: 'qualityLogLevel',
-                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
-                  enableBackdrop: true,
-                },{
-                  anchorId: 'qualityLinguistic',
-                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
-                  enableBackdrop: true,
-                },
-                {
-                  anchorId: 'qualityLogLevelData',
-                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
-                  enableBackdrop: true,
-                },{
-                  anchorId: 'qualityLinguisticData',
-                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
-                  enableBackdrop: true,
-                },
-                {
                   anchorId: 'compareExplanation',
-                  content: 'Feel free to fully explore your logs, empowered by our automatic log parsing. After the tutorial, try and click on some highlighted word!',
+                  content: 'In this tab, you can compare logs and verify deployments.',
                   enableBackdrop: true,
-                  route: '/pages/log-compare'
+                  route: '/pages/compare'
+                }
+                ,
+                {
+                  anchorId: 'compareVerify',
+                  content: 'Select your application, select the tags, and click on Verify to see the results!',
+                  enableBackdrop: true,
                 },
                 {
-                  anchorId: 'anchorApplications',
-                  content: 'Finally, here you can manage your applications. We offer creation of new applications, deletion, and of course easy steps for integration. Start sending data in less than 5 minutes !',
+                  anchorId: 'profile',
+                  content: 'In this tab, you can manage your user and applications.',
                   enableBackdrop: true,
-                  route: '/pages/integration'
+                  route: '/pages/profile'
+                },
+                {
+                  anchorId: 'anchorDashboard',
+                  content: 'Start exploring on your own.',
+                  route: '/pages/dashboard'
                 }
+
                 ]);
 
             }
   ngOnInit() {
-    this.themeService.changeTheme("dark")
+    this.themeService.changeTheme("default")
     this.curSec = 0;
-    this.authService.getLoggedUser().subscribe(user => {
-      this.key = user.key
+    this.userId = localStorage.getItem('userId')
+    this.authService.getLoggedUser(this.userId).subscribe(user => {
+      // console.log(user)
+      this.id = user.userId
       this.email = user.email
     })
 
-
-    this.apiService.post("/api/auth/kibana/login",
-      '{"key":"'+ this.key + '"}').subscribe(data =>{
-    })
+    // this.apiService.post("/api/v1/external/kibana/login", {}).subscribe(data =>{
+    // })
 
     this.currentTheme = this.themeService.currentTheme;
     this.sidebarService.collapse('menu-sidebar')
@@ -264,9 +214,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: 'Quickstart',
+    title: 'Send Logs',
     icon: 'flash',
-    link: '/pages/quickstart'
+    link: '/pages/send-logs'
   },
   {
     title: 'Dashboard',
@@ -287,6 +237,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Send logs',
     icon: 'link-outline',
-    link: '/pages/integration',
+    link: '/pages/file-upload',
   }
 ]

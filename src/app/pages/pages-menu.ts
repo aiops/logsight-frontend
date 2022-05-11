@@ -23,9 +23,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/variable-analysis',
   },
   {
-    title: 'Send logs',
+    title: 'File upload',
     icon: 'link-outline',
-    link: '/pages/integration',
+    link: '/pages/file-upload',
+  },
+  {
+    title: 'Sample data',
+    icon: 'link-outline',
+    link: '/pages/sample-data',
+  },
+  {
+    title: 'Elasticsearch data',
+    icon: 'link-outline',
+    link: '/pages/elasticsearch-data',
   },
   {
     title: 'Kibana',

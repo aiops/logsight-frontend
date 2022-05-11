@@ -1,0 +1,163 @@
+<div class="row" style="margin-left: 30%; margin-right: 30%;">
+
+  <div class="col" >
+
+    <ng-container *ngIf="uploadFile">
+      <div class="row user_guidance">
+        <!--      <nb-card class="p-2 rows" style="width: 100%">-->
+        <div class="col-sm">
+          <div class="row">
+            <h4>Load elasticsearch log data</h4>
+          <p>Setup the elasticsearch URL, index information, and polling period. This will enable logsight.ai to get the log data periodically from your elasticsearch index.</p>
+            <br>
+            <p>Load the data and check how logsight is able to find the bugs and provide insights!</p>
+            </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <nb-card style="padding: 30px">
+      <div class="row user_guidance">
+
+        <div class="col-sm" align="center">
+          <div *ngIf="!isSpinning" style="width: 50%">
+           <form [formGroup]="formElasticsearch" aria-labelledby="title">
+              Elasticsearch URL<input fullWidth nbInput class="mr-2" type="url" formControlName="elasticsearchUrl" id="elasticsearchUrl"
+                         placeholder="e.g., http://localhost:9200" [required]="true"
+                         >
+             Elasticsearch Index<input fullWidth nbInput class="mr-2" type="text" formControlName="elasticsearchIndex" id="elasticsearchIndex"
+                         placeholder="e.g., myelastic_index" [required]="true"
+                         >
+             Polling period <input fullWidth nbInput class="mr-2" type="text" formControlName="elasticsearchPeriod" id="elasticsearchPeriod"
+                         placeholder="e.g., 30 (in seconds)" [required]="true"
+                         >
+             Elasticsearch user <input fullWidth nbInput class="mr-2" type="text" formControlName="elasticsearchUser" id="elasticsearchUser"
+                         placeholder="Elasticsearch auth user" [required]="true"
+                         >
+             Elasticsearch password <input fullWidth nbInput class="mr-2" type="password" formControlName="elasticsearchPassword" id="elasticsearchPassword"
+                         placeholder="Elasticsearch auth password" [required]="true"
+                         >
+
+             <div class="row justify-content-center">
+             <button  class="mt-2" nbButton (click)="checkElasticsearchConnection()" size="giant" style="text-transform: none" status="basic" shape="round" type="button" [disabled]="!formElasticsearch.valid"
+             >Test connection
+          </button>
+               </div>
+
+             <div *ngIf="isElasticConnection" class="mt-2">Elasticsearch host and index exist and the connection can be setup successfully.</div>
+
+             <div class="row justify-content-center">
+             <button *ngIf="isElasticConnection" class="mt-2" nbButton (click)="requestElasticsearchData()" size="giant" style="text-transform: none" status="basic" shape="round" type="button" [disabled]="!formElasticsearch.valid"
+             >Setup connection
+          </button>
+               </div>
+            </form>
+            </div>
+          <div *ngIf="isSpinning" class="spinner-border text-primary" style="position: relative" role="status">
+          </div>
+        </div>
+
+
+
+        <!--          <div class="row user_guidance">-->
+        <!--            <div class="col">-->
+        <!--              <div class="row">-->
+        <!--                <h6>Integration help?</h6>-->
+        <!--              </div>-->
+        <!--              <div class="row">-->
+        <!--                <p class="dscr">Please contact us, we are happy to assist you with the integration!</p>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+      </div>
+        <div class="pt-2">Be careful when setting up a connection. Successfully set connections, will exist for a maximum of 1 day without data.</div>
+</nb-card>
+
+          <div class="row user_guidance pt-5">
+        <div class="col">
+          <div class="row">
+            <h6>Need help?</h6>
+          </div>
+          <div class="row">
+            <p class="dscr">Are you interested in more details about logsight.ai? Read the docs at
+              <a href="https://docs.logsight.ai">Docs | logsight.ai </a>,
+              or feel free to contact us 24/7 via <a href="mailto:support@logsight.ai">E-Mail</a>
+              or <a target="_blank" href="https://tawk.to/chat/61824e206bb0760a4940e874/1fjig2bmu">Live Chat</a>.</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+
+  <!--  <div class="col" style="margin-left: 50px">-->
+  <!--  <ng-container *ngIf="uploadFile">-->
+  <!--      <h6>Upload log file</h6>-->
+
+  <!--  </ng-container>-->
+
+  <!--  </div>-->
+</div>
+
+
+<!--<div class="row" style="width: 100%">-->
+<!--  <nb-card class="p-3" style="width: 100%">-->
+<!--    <div class="row">-->
+<!--      <div class="col-md-8">-->
+<!--        <h6 class="mb-3">Create new application</h6>-->
+<!--        <form class="col-lg-6 col-lg-8 col-sm-12 pl-0" [formGroup]="form" (submit)="createApplication()"-->
+<!--              aria-labelledby="title">-->
+<!--          <div class="form-control-group">-->
+<!--            <label class="label mr-2" for="name">Application name:</label>-->
+<!--            <input nbInput class="mr-3"-->
+<!--                   type="text"-->
+<!--                   formControlName="name"-->
+<!--                   id="name"-->
+<!--                   placeholder="Application name"-->
+<!--                   [required]="true"-->
+<!--                   [attr.aria-invalid]="form.invalid && form.touched ? true : null">-->
+<!--            <ng-container *ngIf="form.controls['name'].invalid && form.touched">-->
+<!--              <p class="error-message" *ngIf="form.controls['email'].errors?.required">-->
+<!--                Application name is required!-->
+<!--              </p>-->
+<!--            </ng-container>-->
+
+<!--            <button nbButton style="margin-bottom: 3px"-->
+<!--                    status="success"-->
+<!--                    [disabled]="!form.valid">-->
+<!--              Create-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--      <div class="col-md-4">-->
+<!--        <p class="mb-3 text-right">Your key is: <b>{{key}}</b></p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </nb-card>-->
+<!--  <nb-card class="p-3" style="width: 100%">-->
+<!--    <div class="row">-->
+<!--      <div class="col-md-6">-->
+<!--        <h6 class="mb-3">Applications</h6>-->
+<!--        <table class="table table-striped">-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th scope="col">Id</th>-->
+<!--            <th scope="col">Name</th>-->
+<!--            <th scope="col">Status</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr *ngFor="let row of applications">-->
+<!--            <td>{{row.id}}</td>-->
+<!--            <td>{{row.name}}</td>-->
+<!--            <td><i [title]="row.status" *ngIf="row.status == 'IN_PROGRESS'" class="ml-3 fas fa-spinner fa-spin"></i>-->
+<!--              <i [title]="row.status" *ngIf="row.status == 'ACTIVE'" class="ml-3 fas fa-check-circle"></i>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </nb-card>-->
+<!--</div>-->

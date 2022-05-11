@@ -5,119 +5,86 @@
 <!--    Please choose one of the source types below.</p>-->
 <!--</div>-->
 <br>
-<div class="row justify-content-md-center" style="max-width: 100%">
-  <h1 style="color: #ff247c">Explore logsight.ai without any setup</h1>
+<div class="row justify-content-md-center" style="max-width: 100%; padding-bottom: 75px">
+  <h4>Select data source</h4>
   <br>
-<div class="col-md-12 col-lg-12 col-xxxl-12" style="padding-left: 20%; padding-right: 20%">
-<!--  <nb-card>-->
-<!--    <nb-card-body align="center">-->
+</div>
 
-<!--      <div class="row" style="padding-left: 50px">-->
-<!--        <div class="col-sm">-->
-<!--      <p style="font-size: 18px">Use our sample log data to explore logsight AI features.</p>-->
-<!--        </div>-->
-<!--        <div class="col-sm">-->
-<!--          <p style="font-size: 18px">~50000 log messages from Openstack Compute Service</p>-->
-<!--        </div>-->
-<!--          <br>-->
-<!--        <div class="col-sm">-->
-<!--      <img style="max-width: 150px" alt="Python SDK" class="card-img" src="https://object-storage-ca-ymq-1.vexxhost.net/swift/v1/6e4619c416ff4bd19e1c087f27a43eea/www-images-prod/openstack-logo/OpenStack-Logo-Vertical.png" />-->
-<!--        </div>-->
-<!--          <br>-->
-<!--      </div>-->
-<!--      <button nbButton size="large" shape="round"  type="button" (click)="createApplication()"> Try now-->
-<!--      </button>-->
-<!--&lt;!&ndash;      <div ></div>&ndash;&gt;-->
-<!--      <div *ngIf="!progressIsHidden" style="margin-top: 30px">-->
-<!--        <p style="font-size: 18px">Please wait while we send and process sample logs to your account.-->
-<!--          <br> logsight.ai deep learning system is getting the work for you in few seconds..</p>-->
-<!--      <nb-progress-bar [displayValue]="true" status="danger" [hidden]="progressIsHidden" [value]="progressValue"></nb-progress-bar>-->
-<!--      </div>-->
-<!--    </nb-card-body>-->
-<!--  </nb-card>-->
+<div class="row justify-content-md-center" style="padding-left: 20%; padding-right: 20%">
+<div class="col">
+  <nb-card size="small" (click)="redirectToUploadLogFile()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center justify-content-center text-center">
+        <img src="../../../assets/img/upload-file.png" style="width: 70%; height: 70%"> </div>
+        <div class="vertical-center2">
+        <button shape="round"  style="text-transform: none" nbButton size="giant">Upload file</button></div>
+    </nb-card-body>
+  </nb-card>
+</div>
 
-<!--  <nb-card *ngIf="next==1">-->
-<!--    <nb-card-body align="center">-->
-<!--      <p style="font-size: 18px">The data is loaded. Let us take you on a quickstart journey trough logsight.ai</p>-->
-<!--      <br>-->
-<!--      <button nbButton size="large" shape="round"  type="button" (click)="startTutorial()"> Start Tutorial-->
-<!--      </button>-->
+    <div class="col">
+  <nb-card size="small" (click)="redirectToSampleData()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center justify-content-center text-center">
+        <img src="../../../assets/img/sample-data.png"  style="width: 70%; height: 70%"> </div>
+        <div class="vertical-center2">
+        <button nbButton shape="round" style="text-transform: none"  size="giant">Demo data</button></div>
+    </nb-card-body>
+  </nb-card>
+</div>
 
-<!--    </nb-card-body>-->
-<!--  </nb-card>-->
+      <div class="col">
+  <nb-card size="small" (click)="redirectToSwagger()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center justify-content-center text-center">
+        <img src="../../../assets/icons/swagger_logo.svg"  style="width: 70%; height: 70%"> </div>
+        <div class="vertical-center2">
+        <button nbButton shape="round" style="text-transform: none"  size="giant">Open API</button></div>
+    </nb-card-body>
+  </nb-card>
+</div>
 
 
-<!--  <div align="center">-->
-<!--  <h5>OR</h5>-->
-<!--  <p style="font-size: 18px">Send us logs ...</p>-->
-<!--</div>-->
-<!--  <nb-card>-->
-<!--    <nb-card-body align="center">-->
-<!--&lt;!&ndash;      <h1 style="color: #ff247c">Via log file upload</h1>&ndash;&gt;-->
-<!--&lt;!&ndash;      <p style="font-size: 18px">We provide integrations for various platforms</p >&ndash;&gt;-->
-<!--      <div class="mx-auto" align="center">-->
-<!--    <div class="form-group">-->
-<!--      <label for="file">Choose JSON log file.</label><br /> <input nbInput size="giant" fullWidth status="basic" type="file" id="file" (change)="uploadFiles($event.target.files)">-->
-<!--    </div>-->
-
-<!--    <button nbButton size="small" status="basic" shape="round" type="button" (click)="RequestUpload()">Upload logs</button>-->
-<!--      </div>-->
-<!--    </nb-card-body>-->
-<!--  </nb-card>-->
-
-<!--<div align="center">-->
-<!--  <h5>OR</h5>-->
-<!--  <p style="font-size: 18px">Send us logs ...</p>-->
-<!--</div>-->
-<!--  <nb-card>-->
-<!--    <nb-card-body align="center">-->
-<!--      <h1 style="color: #ff247c">Via plugins</h1>-->
-<!--      <p style="font-size: 18px">We provide integrations for various platforms</p >-->
-<!--      <div class="row" align="center">-->
-<!--        <div class="text-white col-md-3 p-3 border-0">-->
-<!--          <div class="card">-->
-<!--            <img alt="Python SDK" class="card-img" src="https://cdn.worldvectorlogo.com/logos/python-5.svg" />-->
-<!--            <div class="card-img-overlay">-->
-<!--              <a href="/pages/integration" class="stretched-link" id="cardlink">-->
-<!--&lt;!&ndash;                <h2 class="card-title">Title here</h2>&ndash;&gt;-->
-<!--              </a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="text-white col-md-3 p-3 border-0">-->
-<!--          <div class="card">-->
-<!--            <img alt="Filebeats" class="card-img" src="data:image/png;base64,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" />-->
-<!--            <div class="card-img-overlay">-->
-<!--              <a href="/pages/integration" class="stretched-link" id="cardlink">-->
-<!--                &lt;!&ndash;                <h2 class="card-title">Title here</h2>&ndash;&gt;-->
-<!--              </a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="text-white col-md-3 p-3 border-0">-->
-<!--          <div class="card">-->
-<!--            <img alt="Logstash" class="card-img" src="https://cdn.worldvectorlogo.com/logos/elastic-logstash.svg" />-->
-<!--            <div class="card-img-overlay">-->
-<!--              <a href="/pages/integration" class="stretched-link" id="cardlink">-->
-<!--                &lt;!&ndash;                <h2 class="card-title">Title here</h2>&ndash;&gt;-->
-<!--              </a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="text-white col-md-3 p-3 border-0">-->
-<!--          <div class="card">-->
-<!--            <img alt="REST API" class="card-img" src="https://logodix.com/logo/875327.png" />-->
-<!--            <div class="card-img-overlay">-->
-<!--              <a href="/pages/integration" class="stretched-link" id="cardlink">-->
-<!--                &lt;!&ndash;                <h2 class="card-title">Title here</h2>&ndash;&gt;-->
-<!--              </a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </nb-card-body>-->
-<!--  </nb-card>-->
 
 </div>
+
+<div class="row justify-content-center" style="padding-left: 20%; padding-right: 20%">
+
+
+    <div class="col">
+  <nb-card size="small" (click)="redirectToGithub()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center justify-content-center text-center">
+        <img src="../../../assets/img/github.png"  style="width: 70%; height: 70%"> </div>
+        <div class="vertical-center2">
+        <button shape="round"  style="text-transform: none" nbButton size="giant">GitHub</button>
+        </div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+  <div class="col">
+  <nb-card size="small" (click)="redirectToLogstash()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center justify-content-center text-center">
+        <img src="../../../assets/img/logstash.png"  style="width: 70%; height: 70%"> </div>
+        <div class="vertical-center2">
+        <button shape="round"  style="text-transform: none" nbButton size="giant">Logstash</button></div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+
+      <div class="col">
+  <nb-card size="small" (click)="redirectToFluentbit()" style="cursor: pointer">
+    <nb-card-body>
+        <div class="vertical-center justify-content-center text-center">
+        <img src="../../../assets/img/logo-fluentbit.png"  style="width: 70%; height: 70%"> </div>
+        <div class="vertical-center2">
+        <button nbButton shape="round" style="text-transform: none"  size="giant">FluentBit</button></div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
 
 </div>

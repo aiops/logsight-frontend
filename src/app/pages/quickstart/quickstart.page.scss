@@ -7,6 +7,29 @@
   }
 }
 
+.container {
+  height: 200px;
+  position: relative;
+  border: 3px solid green;
+}
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.vertical-center2 {
+  margin: 0;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
 
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);

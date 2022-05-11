@@ -13,7 +13,7 @@ import {Observable} from "rxjs";
 @Component({
   selector: 'try-logsight',
   templateUrl: './try-logisght.html',
-  styleUrls: ['../assets/css/style.css','../../pages/integration/integration.page.scss', 'try-logsight.scss',
+  styleUrls: ['../assets/css/style.css', 'try-logsight.scss',
     '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css',
     '../assets/vendor/bootstrap-icons/bootstrap-icons.css',
     '../assets/vendor/swiper/swiper-bundle.min.css', '../assets/vendor/glightbox/css/glightbox.css'],
@@ -68,7 +68,7 @@ export class TryLogsightComponent implements OnInit {
       // if (error.status)
       localStorage.removeItem("token")
       this.loadFileTypes()
-      location.reload()
+      // location.reload()
       }
     )
   }

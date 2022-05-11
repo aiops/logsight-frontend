@@ -14,6 +14,7 @@ import {CommonModule} from "@angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HighlightModule} from "ngx-highlightjs";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
         NbTooltipModule,
         NbIconModule,
         NbAccordionModule,
+        TourMatMenuModule,
     ],
   declarations: [
     ProfilePage,

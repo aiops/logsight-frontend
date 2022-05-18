@@ -37,6 +37,7 @@ import $ from 'jquery'
 import {ResendActivationComponent} from "./auth/resend-activation/resend-activation.component";
 import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
 import {LandingPage} from "./landing-page/landing.page";
+import { VerificationModule } from './verification/verification.module';
 @NgModule({
   declarations: [LandingPage, AppComponent, LoginComponent, RegisterComponent, ActivateComponent, ForgotPasswordComponent, ResendActivationComponent, ResetPasswordComponent],
   imports: [
@@ -65,7 +66,8 @@ import {LandingPage} from "./landing-page/landing.page";
     SimpleNotificationsModule.forRoot(),
     HighlightModule,
     MatCardModule,
-    TooltipModule
+    TooltipModule,
+    VerificationModule
   ],
   bootstrap: [AppComponent],
   providers: [LoginService, {

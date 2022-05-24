@@ -30,9 +30,7 @@ export class SampleDataPage implements OnInit {
   }
 
 
-  redirectToDashboard(result, size) {
-    this.listResults.push(result)
-    if (this.listResults.length == size) {
+  redirectToDashboard() {
       this.isSpinning = false
       this.router.navigate(['/pages', 'dashboard'],{
           queryParams: {
@@ -42,22 +40,13 @@ export class SampleDataPage implements OnInit {
             sample: true
       }
     })
-    }
   }
 
   requestSampleData() {
     this.isSpinning = true
     this.http.post<Receipt[]>(`/api/v1/demo/hadoop`, {})
       .subscribe(receipts => {
-        for (let i = 0; i < receipts.length; i++) {
-          this.http.post<Flush>(`/api/v1/logs/flush`, {"receiptId": receipts[i].receiptId}).subscribe(flush => {
-            this.http.get<Flush>(`/api/v1/logs/flush/${flush.flushId}`).pipe(
-              repeatWhen(obs => obs.pipe(delay(1000))),
-              filter(data => data.status == "DONE"),
-              take(1)
-            ).subscribe(result => this.redirectToDashboard(result, receipts.length));
-          })
-        }
+              setTimeout(_ => this.redirectToDashboard(), 25*1000)
       }, error => {
         this.isSpinning = false
         this.apiService.handleErrors(error.error)

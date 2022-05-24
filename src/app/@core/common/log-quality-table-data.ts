@@ -8,7 +8,7 @@ export interface LogQualityTableData {
     appName: string,
     message: string,
     predictedLevel: string,
-    actualLevel: string,
+    level: string,
     linguisticPrediction: string,
     hasSubject: boolean,
     hasObject: boolean,

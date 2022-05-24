@@ -25,7 +25,10 @@ import {ApiService} from "../../@core/service/api.service";
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ChartConfig} from "../../@core/common/chart-config";
 import {VerificationRequest} from "../../@core/common/verification-request";
-import {Tags} from "../../@core/common/tags";
+import {Tag, TagResponse} from "../../@core/common/tags";
+import {TagRequest} from "../../@core/common/TagRequest";
+import {TagEntry} from "../../@core/common/TagEntry";
+import {mapEntry} from "@angular/compiler/src/output/map_util";
 
 @Component({
   selector: 'compare',
@@ -47,11 +50,18 @@ export class LogComparePage {
   userId: string;
   user: LogsightUser | null;
 
-  tags: Tags[] = [];
+  baselineTags: TagResponse;
+  baselineTagValues: string[];
   baselineTagId: string;
-  matchPercentage = 0.0
-  logBarFirst = []
-  logBarSecond = []
+  baselineTagMap = new Map<string, string>();
+  baselineTagMapKeys = []
+  baselineTagKey: string;
+  candidateTagMap = new Map<string, string>();
+  candidateTagMapKeys = []
+  candidateTagKey: string;
+  candidateTagId: string;
+  candidateTagValues: string[]
+  candidateTags: TagResponse;
   barData = []
   barData$: Observable<any>;
   heatmapData = []
@@ -146,11 +156,8 @@ export class LogComparePage {
   }
 
   loadBarDataUnified() {
-
-    let type = 'barchart'
-    let feature = 'system_overview'
-    let indexType = 'log_ad'
-    let chartRequest = new ChartRequest(new ChartConfig(type, this.startDateTime, this.endDateTime, feature, indexType, ""), this.applicationId)
+    let parameters = {"type":"barchart", "feature": "system_overview", "indexType":"pipeline", "startTime": this.startDateTime, "stopTime": this.endDateTime}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), this.applicationId)
 
     this.logCompareService.loadBarData(this.userId, chartRequest).subscribe(data => {
       data = data.data.data
@@ -175,7 +182,15 @@ export class LogComparePage {
 
   computeLogCompare() {
     this.isSpinning = true
-    let verificationRequest = new VerificationRequest(this.applicationId, this.userId, this.baselineTagId, this.compareTagId)
+    const convBaselineMap = {};
+    this.baselineTagMap.forEach((val: string, key: string) => {
+    convBaselineMap[key] = val;
+    });
+    const convCandidateMap = {};
+    this.candidateTagMap.forEach((val: string, key: string) => {
+    convCandidateMap[key] = val;
+    });
+    let verificationRequest = new VerificationRequest(this.applicationId, convBaselineMap, convCandidateMap)
     this.logCompareService.computeLogCompare(verificationRequest).subscribe(resp => {
       this.tableDataUnified = resp
       // console.log("data:", this.tableDataUnified)
@@ -259,10 +274,79 @@ export class LogComparePage {
   applicationSelected(appId: string) {
     this.applicationId = appId;
     setTimeout(_ => {
-      this.loadApplicationVersions(this.userId, this.applicationId);
+      this.loadAvailableTagKeys(new TagRequest([],  this.applicationId));
     }, 1);
   }
 
+  baselineTagKeySelected(tagKey: string){
+    this.baselineTagKey = tagKey
+    this.loadTagValueForKey(this.baselineTagKey)
+  }
+   candidateTagKeySelected(tagKey: string){
+    this.candidateTagKey = tagKey
+    this.loadCandidateTagValueForKey(this.candidateTagKey)
+  }
+  baselineTagValueSelected(tagVal: string){
+    this.baselineTagId = tagVal
+  }
+  candidateTagValueSelected(tagVal: string){
+    this.candidateTagId = tagVal
+  }
+
+
+  setBaselineTagKeyValue(tagKey: string, tagVal: string){
+    this.baselineTagMap.set(this.baselineTagKey, this.baselineTagId)
+    if(!this.baselineTagMapKeys.includes(this.baselineTagKey)){
+          this.baselineTagMapKeys.push(this.baselineTagKey)
+    }
+    let baselineTagList = []
+    for (let tagK of this.baselineTagMap.keys()){
+        baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
+    }
+    this.loadAvailableBaselineTagKeys(new TagRequest(baselineTagList, this.applicationId))
+  }
+
+
+  setCandidateTagKeyValue(tagKey: string, tagVal: string){
+    this.candidateTagMap.set(this.candidateTagKey, this.candidateTagId)
+    if(!this.candidateTagMapKeys.includes(this.candidateTagKey)){
+          this.candidateTagMapKeys.push(this.candidateTagKey)
+    }
+    let candidateTaglist = []
+    for (let tagK of this.candidateTagMap.keys()){
+        candidateTaglist.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
+    }
+    this.loadAvailableCandidateTagKeys(new TagRequest(candidateTaglist, this.applicationId))
+  }
+
+  onBaselineTagRemove(event){
+    this.baselineTagMap.delete(event.text.split(':')[0])
+    this.baselineTagMapKeys = []
+    this.baselineTagMap.forEach(it => {
+      this.baselineTagMapKeys.push(it)
+    }
+    )
+
+    let baselineTaglist = []
+    for (let tagK of this.baselineTagMap.keys()){
+        baselineTaglist.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
+    }
+    this.loadAvailableBaselineTagKeys(new TagRequest(baselineTaglist, this.applicationId))
+
+  }
+
+    onCandidateTagRemove(event){
+    this.candidateTagMap.delete(event.text.split(':')[0])
+          this.candidateTagMapKeys = []
+    this.candidateTagMap.forEach(it => {
+      this.candidateTagMapKeys.push(it)
+    })
+    let candidateTaglist = []
+    for (let tagK of this.candidateTagMap.keys()){
+        candidateTaglist.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
+    }
+    this.loadAvailableCandidateTagKeys(new TagRequest(candidateTaglist, this.applicationId))
+  }
   baselineTagSelected(tagId: string) {
     this.baselineTagId = tagId;
     this.reload$.next()
@@ -321,18 +405,45 @@ export class LogComparePage {
     this.destroy$.complete()
   }
 
+   private loadTagValueForKey(tagKey: string) {
+    this.logCompareService.loadTagValueForKey(tagKey).subscribe(resp => {
+      this.baselineTagValues = resp
+    },
+      error => {
+        this.apiService.handleErrors(error)
+      })
+  }
 
-  private loadApplicationVersions(userId: string, applicationId: string) {
-    this.logCompareService.loadApplicationVersions(userId, applicationId).subscribe(resp => {
-        this.tags = resp
-        if (resp.length > 1) {
-          this.baselineTagId = this.tags[0].tag
-          this.compareTagId = this.tags[1].tag
-        } else {
-          this.baselineTagId = this.tags[0].tag
-          this.compareTagId = this.tags[0].tag
-        }
-      },
+   private loadCandidateTagValueForKey(tagKey: string) {
+    this.logCompareService.loadTagValueForKey(tagKey).subscribe(resp => {
+      this.candidateTagValues = resp
+    },
+      error => {
+        this.apiService.handleErrors(error)
+      })
+  }
+
+
+
+  private loadAvailableTagKeys(tagRequest: TagRequest) {
+    this.loadAvailableBaselineTagKeys(tagRequest)
+    this.loadAvailableCandidateTagKeys(tagRequest)
+  }
+
+    private loadAvailableBaselineTagKeys(tagRequest: TagRequest) {
+    this.logCompareService.loadAvailableTagKeys(tagRequest).subscribe(resp => {
+      this.baselineTags = resp.tagKeys
+    },
+      error => {
+        this.apiService.handleErrors(error)
+      })
+  }
+
+    private loadAvailableCandidateTagKeys(tagRequest: TagRequest) {
+
+      this.logCompareService.loadAvailableTagKeys(tagRequest).subscribe(resp => {
+      this.candidateTags = resp.tagKeys
+    },
       error => {
         this.apiService.handleErrors(error)
       })

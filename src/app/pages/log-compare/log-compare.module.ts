@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import {LogCompareRoutingModule} from "./log-compare-routing.module";
 import {
-  NbButtonModule,
-  NbCardModule,
-  NbIconModule,
-  NbInputModule,
-  NbPopoverModule, NbRadioModule, NbSelectModule, NbSpinnerModule, NbTooltipModule,
-  NbTreeGridModule
+    NbButtonModule,
+    NbCardModule,
+    NbIconModule,
+    NbInputModule,
+    NbPopoverModule, NbRadioModule, NbSelectModule, NbSpinnerModule, NbTagModule, NbTooltipModule,
+    NbTreeGridModule
 } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -23,29 +23,30 @@ import {NgxGaugeModule} from "ngx-gauge";
 import {NgScrollbarModule} from "ngx-scrollbar";
 
 @NgModule({
-  imports: [
-    LogCompareRoutingModule,
-    NbCardModule,
-    NbTreeGridModule,
-    NbIconModule,
-    NbInputModule,
-    ThemeModule,
-    Ng2SmartTableModule,
-    NvD3Module,
-    FormsModule,
-    NbButtonModule,
-    PagesModule,
-    ChartsWrapperModule,
-    NbPopoverModule,
-    NbTooltipModule,
-    NbSelectModule,
-    BarChartModule,
-    TourMatMenuModule,
-    NgxGaugeModule,
-    NbSpinnerModule,
-    NgScrollbarModule,
-    NbRadioModule
-  ],
+    imports: [
+        LogCompareRoutingModule,
+        NbCardModule,
+        NbTreeGridModule,
+        NbIconModule,
+        NbInputModule,
+        ThemeModule,
+        Ng2SmartTableModule,
+        NvD3Module,
+        FormsModule,
+        NbButtonModule,
+        PagesModule,
+        ChartsWrapperModule,
+        NbPopoverModule,
+        NbTooltipModule,
+        NbSelectModule,
+        BarChartModule,
+        TourMatMenuModule,
+        NgxGaugeModule,
+        NbSpinnerModule,
+        NgScrollbarModule,
+        NbRadioModule,
+        NbTagModule
+    ],
   declarations: [
     LogComparePage,
   ],

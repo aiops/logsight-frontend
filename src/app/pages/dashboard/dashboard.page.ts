@@ -303,38 +303,27 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   loadHeatmapData(startTime: string, endTime: string, applicationId: string) {
-    let type = 'heatmap'
-    let feature = 'system_overview'
-    let indexType = 'incidents'
-    let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+
+    let parameters = {"type":"heatmap", "feature": "system_overview", "indexType":"incidents", "startTime": startTime, "stopTime": endTime}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
     return this.dashboardService.loadHeatmapData(this.userId, chartRequest)
   }
 
   loadBarData(startTime: string, endTime: string, applicationId: string) {
-    let type = 'barchart'
-    let feature = 'system_overview'
-    let indexType = 'log_agg'
-    let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+    let parameters = {"type":"barchart", "feature": "system_overview", "indexType":"log_agg", "startTime": startTime, "stopTime": endTime}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
     return this.dashboardService.loadBarData(this.userId, chartRequest);
   }
 
   loadPieChartData(startTime: string, endTime: string, applicationId: string) {
-    let type = 'piechart'
-    let feature = 'system_overview'
-    let indexType = 'log_agg'
-    let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+    let parameters = {"type":"piechart", "feature": "system_overview", "indexType":"log_agg", "startTime": startTime, "stopTime": endTime}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
     return this.dashboardService.loadPieChartData(this.userId, chartRequest);
   }
 
   loadTopKIncidents(startTime: string, endTime: string, numberOfIncidents: number, applicationId: string) {
-    let type = 'tablechart'
-    let feature = 'system_overview'
-    let indexType = 'incidents'
-    let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone, numberOfIncidents), applicationId)
+    let parameters = {"type":"tablechart", "feature": "system_overview", "indexType":"incidents", "startTime": startTime, "stopTime": endTime, "numElements": numberOfIncidents}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
     return this.dashboardService.loadTopKIncidentsData(this.userId, chartRequest);
   }
 
@@ -359,6 +348,9 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   parseTemplates(data, incident) {
+    if (data[incident] == 'null'){
+      return []
+    }
     return JSON.parse(data[incident]).map(it2 => {
       let params = [];
       Object.keys(it2[0]).forEach(key => {
@@ -370,8 +362,8 @@ export class DashboardPage implements OnInit, OnDestroy {
         message: it2[0].message,
         template: it2[0].template,
         params: params,
-        actualLevel: it2[0].actual_level,
-        timeStamp: new Date(it2[0]['@timestamp']),
+        level: it2[0].level,
+        timeStamp: new Date(it2[0]['timestamp']),
         applicationId: data.applicationId //this should be checked
       }
     });

@@ -146,17 +146,42 @@ export class LogComparePage {
     })
     this.route.queryParamMap.subscribe(queryParams => {
       this.applicationId = queryParams.get('applicationId')
-      this.baselineTagId = queryParams.get('baselineTag')
-      this.compareTagId = queryParams.get('compareTag')
-      if (this.applicationId && this.baselineTagId && this.compareTagId) {
+      for (let i = 0; i < queryParams.keys.length; i++) {
+        let param = queryParams.keys[i].split(":")
+        if (param[0] == "baselineTag") {
+          this.baselineTagMap.set(param[1], queryParams.get(queryParams.keys[i]))
+        }
+        if (param[0] == "candidateTag") {
+          this.candidateTagMap.set(param[1], queryParams.get(queryParams.keys[i]))
+        }
+      }
+
+      this.baselineTagMapKeys = []
+    this.baselineTagMap.forEach((value, key, map) => {
+      this.baselineTagMapKeys.push(key)
+    })
+
+      this.candidateTagMapKeys = []
+    this.candidateTagMap.forEach((value, key, map) => {
+      this.candidateTagMapKeys.push(key)
+    })
+
+      if (this.applicationId && this.baselineTagMap && this.candidateTagMap) {
         setTimeout(_ => this.computeLogCompare(), 100);
       }
+
     });
 
   }
 
   loadBarDataUnified() {
-    let parameters = {"type":"barchart", "feature": "system_overview", "indexType":"pipeline", "startTime": this.startDateTime, "stopTime": this.endDateTime}
+    let parameters = {
+      "type": "barchart",
+      "feature": "system_overview",
+      "indexType": "pipeline",
+      "startTime": this.startDateTime,
+      "stopTime": this.endDateTime
+    }
     let chartRequest = new ChartRequest(new ChartConfig(parameters), this.applicationId)
 
     this.logCompareService.loadBarData(this.userId, chartRequest).subscribe(data => {
@@ -184,11 +209,11 @@ export class LogComparePage {
     this.isSpinning = true
     const convBaselineMap = {};
     this.baselineTagMap.forEach((val: string, key: string) => {
-    convBaselineMap[key] = val;
+      convBaselineMap[key] = val;
     });
     const convCandidateMap = {};
     this.candidateTagMap.forEach((val: string, key: string) => {
-    convCandidateMap[key] = val;
+      convCandidateMap[key] = val;
     });
     let verificationRequest = new VerificationRequest(this.applicationId, convBaselineMap, convCandidateMap)
     this.logCompareService.computeLogCompare(verificationRequest).subscribe(resp => {
@@ -274,79 +299,83 @@ export class LogComparePage {
   applicationSelected(appId: string) {
     this.applicationId = appId;
     setTimeout(_ => {
-      this.loadAvailableTagKeys(new TagRequest([],  this.applicationId));
+      this.loadAvailableTagKeys(new TagRequest([], this.applicationId));
     }, 1);
   }
 
-  baselineTagKeySelected(tagKey: string){
+  baselineTagKeySelected(tagKey: string) {
     this.baselineTagKey = tagKey
     this.loadTagValueForKey(this.baselineTagKey)
   }
-   candidateTagKeySelected(tagKey: string){
+
+  candidateTagKeySelected(tagKey: string) {
     this.candidateTagKey = tagKey
     this.loadCandidateTagValueForKey(this.candidateTagKey)
   }
-  baselineTagValueSelected(tagVal: string){
+
+  baselineTagValueSelected(tagVal: string) {
     this.baselineTagId = tagVal
   }
-  candidateTagValueSelected(tagVal: string){
+
+  candidateTagValueSelected(tagVal: string) {
     this.candidateTagId = tagVal
   }
 
 
-  setBaselineTagKeyValue(tagKey: string, tagVal: string){
+  setBaselineTagKeyValue(tagKey: string, tagVal: string) {
     this.baselineTagMap.set(this.baselineTagKey, this.baselineTagId)
-    if(!this.baselineTagMapKeys.includes(this.baselineTagKey)){
-          this.baselineTagMapKeys.push(this.baselineTagKey)
+    if (!this.baselineTagMapKeys.includes(this.baselineTagKey)) {
+      this.baselineTagMapKeys.push(this.baselineTagKey)
     }
     let baselineTagList = []
-    for (let tagK of this.baselineTagMap.keys()){
-        baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
+    for (let tagK of this.baselineTagMap.keys()) {
+      baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
     }
     this.loadAvailableBaselineTagKeys(new TagRequest(baselineTagList, this.applicationId))
   }
 
 
-  setCandidateTagKeyValue(tagKey: string, tagVal: string){
+  setCandidateTagKeyValue(tagKey: string, tagVal: string) {
     this.candidateTagMap.set(this.candidateTagKey, this.candidateTagId)
-    if(!this.candidateTagMapKeys.includes(this.candidateTagKey)){
-          this.candidateTagMapKeys.push(this.candidateTagKey)
+    if (!this.candidateTagMapKeys.includes(this.candidateTagKey)) {
+      this.candidateTagMapKeys.push(this.candidateTagKey)
     }
     let candidateTaglist = []
-    for (let tagK of this.candidateTagMap.keys()){
-        candidateTaglist.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
+    for (let tagK of this.candidateTagMap.keys()) {
+      candidateTaglist.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
     }
     this.loadAvailableCandidateTagKeys(new TagRequest(candidateTaglist, this.applicationId))
   }
 
-  onBaselineTagRemove(event){
+  onBaselineTagRemove(event) {
     this.baselineTagMap.delete(event.text.split(':')[0])
     this.baselineTagMapKeys = []
-    this.baselineTagMap.forEach(it => {
-      this.baselineTagMapKeys.push(it)
-    }
-    )
+    this.baselineTagMapKeys = []
+    this.baselineTagMap.forEach((value, key, map) => {
+      this.baselineTagMapKeys.push(key)
+    })
 
     let baselineTaglist = []
-    for (let tagK of this.baselineTagMap.keys()){
-        baselineTaglist.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
+    for (let tagK of this.baselineTagMap.keys()) {
+      baselineTaglist.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
     }
     this.loadAvailableBaselineTagKeys(new TagRequest(baselineTaglist, this.applicationId))
 
   }
 
-    onCandidateTagRemove(event){
+  onCandidateTagRemove(event) {
     this.candidateTagMap.delete(event.text.split(':')[0])
-          this.candidateTagMapKeys = []
-    this.candidateTagMap.forEach(it => {
-      this.candidateTagMapKeys.push(it)
+    this.candidateTagMapKeys = []
+    this.candidateTagMap.forEach((value, key, map) => {
+      this.candidateTagMapKeys.push(key)
     })
     let candidateTaglist = []
-    for (let tagK of this.candidateTagMap.keys()){
-        candidateTaglist.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
+    for (let tagK of this.candidateTagMap.keys()) {
+      candidateTaglist.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
     }
     this.loadAvailableCandidateTagKeys(new TagRequest(candidateTaglist, this.applicationId))
   }
+
   baselineTagSelected(tagId: string) {
     this.baselineTagId = tagId;
     this.reload$.next()
@@ -405,24 +434,23 @@ export class LogComparePage {
     this.destroy$.complete()
   }
 
-   private loadTagValueForKey(tagKey: string) {
+  private loadTagValueForKey(tagKey: string) {
     this.logCompareService.loadTagValueForKey(tagKey).subscribe(resp => {
-      this.baselineTagValues = resp
-    },
+        this.baselineTagValues = resp
+      },
       error => {
         this.apiService.handleErrors(error)
       })
   }
 
-   private loadCandidateTagValueForKey(tagKey: string) {
+  private loadCandidateTagValueForKey(tagKey: string) {
     this.logCompareService.loadTagValueForKey(tagKey).subscribe(resp => {
-      this.candidateTagValues = resp
-    },
+        this.candidateTagValues = resp
+      },
       error => {
         this.apiService.handleErrors(error)
       })
   }
-
 
 
   private loadAvailableTagKeys(tagRequest: TagRequest) {
@@ -430,20 +458,20 @@ export class LogComparePage {
     this.loadAvailableCandidateTagKeys(tagRequest)
   }
 
-    private loadAvailableBaselineTagKeys(tagRequest: TagRequest) {
+  private loadAvailableBaselineTagKeys(tagRequest: TagRequest) {
     this.logCompareService.loadAvailableTagKeys(tagRequest).subscribe(resp => {
-      this.baselineTags = resp.tagKeys
-    },
+        this.baselineTags = resp.tagKeys
+      },
       error => {
         this.apiService.handleErrors(error)
       })
   }
 
-    private loadAvailableCandidateTagKeys(tagRequest: TagRequest) {
+  private loadAvailableCandidateTagKeys(tagRequest: TagRequest) {
 
-      this.logCompareService.loadAvailableTagKeys(tagRequest).subscribe(resp => {
-      this.candidateTags = resp.tagKeys
-    },
+    this.logCompareService.loadAvailableTagKeys(tagRequest).subscribe(resp => {
+        this.candidateTags = resp.tagKeys
+      },
       error => {
         this.apiService.handleErrors(error)
       })

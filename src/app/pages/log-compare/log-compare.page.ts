@@ -431,7 +431,7 @@ export class LogComparePage {
 
   private loadTagValueForKey(tagKey: string) {
     this.logCompareService.loadTagValueForKey(tagKey).subscribe(resp => {
-        this.baselineTagValues = resp
+        this.baselineTagValues = resp.tagValues
       },
       error => {
         this.apiService.handleErrors(error)
@@ -440,7 +440,7 @@ export class LogComparePage {
 
   private loadCandidateTagValueForKey(tagKey: string) {
     this.logCompareService.loadTagValueForKey(tagKey).subscribe(resp => {
-        this.candidateTagValues = resp
+        this.candidateTagValues = resp.tagValues
       },
       error => {
         this.apiService.handleErrors(error)

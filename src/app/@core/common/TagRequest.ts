@@ -2,11 +2,9 @@ import {TagEntry} from "./TagEntry";
 
 export class TagRequest {
   listTags: TagEntry []
-  applicationId: string
 
-  constructor(listTags : TagEntry[], applicationId: string) {
+  constructor(listTags : TagEntry[]) {
     this.listTags = listTags
-    this.applicationId = applicationId
   }
 
 }

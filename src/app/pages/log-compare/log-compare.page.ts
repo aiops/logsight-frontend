@@ -145,7 +145,6 @@ export class LogComparePage {
       this.applications = resp.applications
     })
     this.route.queryParamMap.subscribe(queryParams => {
-      this.applicationId = queryParams.get('applicationId')
       for (let i = 0; i < queryParams.keys.length; i++) {
         let param = queryParams.keys[i].split(":")
         if (param[0] == "baselineTag") {
@@ -171,6 +170,8 @@ export class LogComparePage {
       }
 
     });
+
+    this.loadAvailableTagKeys(new TagRequest([]));
 
   }
 
@@ -296,12 +297,6 @@ export class LogComparePage {
   //
   // }
 
-  applicationSelected(appId: string) {
-    this.applicationId = appId;
-    setTimeout(_ => {
-      this.loadAvailableTagKeys(new TagRequest([], this.applicationId));
-    }, 1);
-  }
 
   baselineTagKeySelected(tagKey: string) {
     this.baselineTagKey = tagKey
@@ -331,7 +326,7 @@ export class LogComparePage {
     for (let tagK of this.baselineTagMap.keys()) {
       baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
     }
-    this.loadAvailableBaselineTagKeys(new TagRequest(baselineTagList, this.applicationId))
+    this.loadAvailableBaselineTagKeys(new TagRequest(baselineTagList))
   }
 
 
@@ -344,7 +339,7 @@ export class LogComparePage {
     for (let tagK of this.candidateTagMap.keys()) {
       candidateTaglist.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
     }
-    this.loadAvailableCandidateTagKeys(new TagRequest(candidateTaglist, this.applicationId))
+    this.loadAvailableCandidateTagKeys(new TagRequest(candidateTaglist))
   }
 
   onBaselineTagRemove(event) {
@@ -359,7 +354,7 @@ export class LogComparePage {
     for (let tagK of this.baselineTagMap.keys()) {
       baselineTaglist.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
     }
-    this.loadAvailableBaselineTagKeys(new TagRequest(baselineTaglist, this.applicationId))
+    this.loadAvailableBaselineTagKeys(new TagRequest(baselineTaglist))
 
   }
 
@@ -373,7 +368,7 @@ export class LogComparePage {
     for (let tagK of this.candidateTagMap.keys()) {
       candidateTaglist.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
     }
-    this.loadAvailableCandidateTagKeys(new TagRequest(candidateTaglist, this.applicationId))
+    this.loadAvailableCandidateTagKeys(new TagRequest(candidateTaglist))
   }
 
   baselineTagSelected(tagId: string) {
@@ -463,7 +458,7 @@ export class LogComparePage {
         this.baselineTags = resp.tagKeys
       },
       error => {
-        this.apiService.handleErrors(error)
+        // this.apiService.handleErrors(error)
       })
   }
 
@@ -473,7 +468,7 @@ export class LogComparePage {
         this.candidateTags = resp.tagKeys
       },
       error => {
-        this.apiService.handleErrors(error)
+        // this.apiService.handleErrors(error)
       })
   }
 

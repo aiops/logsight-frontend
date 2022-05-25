@@ -5,7 +5,7 @@ export interface VariableAnalysisHit {
   template: string,
   params: HitParam[],
   result: string,
-  actualLevel: string,
+  level: string,
   timestamp: Date | string,
   applicationId: number,
   smr: number,

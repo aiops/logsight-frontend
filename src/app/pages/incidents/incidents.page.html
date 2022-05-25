@@ -64,11 +64,11 @@
                     <div class="main-row">
                       <div class="row parent">
                         <div class="col-md-1">
-                 <span [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
-                       [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
-                       [class.severe]="topKIncident.scAnomalies[0]?.actualLevel == 'SEVERE'"
+                 <span [class.error]="topKIncident.scAnomalies[0]?.level == 'ERROR'"
+                       [class.info]="topKIncident.scAnomalies[0]?.level == 'INFO'"
+                       [class.severe]="topKIncident.scAnomalies[0]?.level == 'SEVERE'"
                        class="mr-2"
-                       style="float: left; color: yellow; font-weight: 600; font-size: 14px">{{topKIncident.scAnomalies[0]?.actualLevel}}</span>
+                       style="float: left; color: yellow; font-weight: 600; font-size: 14px">{{topKIncident.scAnomalies[0]?.level}}</span>
                         </div>
                         <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                           <app-ad-banner [row]="topKIncident.scAnomalies[0]"></app-ad-banner>
@@ -77,12 +77,12 @@
                       <div class="row parent">
                         <div class="col-md-1">
                    <span
-                     [class.error]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'ERROR'"
-                     [class.info]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'INFO'"
-                     [class.severe]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.actualLevel == 'SEVERE'"
+                     [class.error]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.level == 'ERROR'"
+                     [class.info]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.level == 'INFO'"
+                     [class.severe]="topKIncident.scAnomalies[topKIncident.scAnomalies.length-1]?.level == 'SEVERE'"
                      class="mr-2"
                      style="float: left; color: yellow; font-weight: 600; font-size: 14px">
-                {{topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]?.actualLevel}}</span>
+                {{topKIncident.scAnomalies[topKIncident.scAnomalies.length - 1]?.level}}</span>
                         </div>
                         <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                           <app-ad-banner
@@ -157,11 +157,11 @@
                   <div *ngIf="topKIncident.scAnomalies.length <= 1">
                     <div class="row main-row">
                       <div class="col-md-1">
-                <span [class.error]="topKIncident.scAnomalies[0]?.actualLevel == 'ERROR'"
-                      [class.info]="topKIncident.scAnomalies[0]?.actualLevel == 'INFO'"
-                      [class.severe]="topKIncident.scAnomalies[0]?.actualLevel == 'SEVERE'"
+                <span [class.error]="topKIncident.scAnomalies[0]?.level == 'ERROR'"
+                      [class.info]="topKIncident.scAnomalies[0]?.level == 'INFO'"
+                      [class.severe]="topKIncident.scAnomalies[0]?.level == 'SEVERE'"
                       class="mr-2"
-                      style="float: left; color: yellow; font-weight: 600; font-size: 14px">{{topKIncident.scAnomalies[0]?.actualLevel}}
+                      style="float: left; color: yellow; font-weight: 600; font-size: 14px">{{topKIncident.scAnomalies[0]?.level}}
              </span>
                       </div>
                       <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">
@@ -253,11 +253,11 @@
                     <div class="main-row">
                       <div class="row parent">
                         <div class="col-md-1">
-                 <span [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
-                       [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
-                       [class.severe]="topKIncident.semanticAD[0]?.actualLevel == 'SEVERE'"
+                 <span [class.error]="topKIncident.semanticAD[0]?.level == 'ERROR'"
+                       [class.info]="topKIncident.semanticAD[0]?.level == 'INFO'"
+                       [class.severe]="topKIncident.semanticAD[0]?.level == 'SEVERE'"
                        class="mr-2"
-                       style="float: left; color: yellow;font-weight: 600; font-size: 14px">{{topKIncident.semanticAD[0]?.actualLevel}}</span>
+                       style="float: left; color: yellow;font-weight: 600; font-size: 14px">{{topKIncident.semanticAD[0]?.level}}</span>
                         </div>
                         <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                           <app-ad-banner [row]="topKIncident.semanticAD[0]"></app-ad-banner>
@@ -266,12 +266,12 @@
                       <div class="row parent">
                         <div class="col-md-1">
                    <span
-                     [class.error]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'ERROR'"
-                     [class.info]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'INFO'"
-                     [class.severe]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.actualLevel == 'SEVERE'"
+                     [class.error]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.level == 'ERROR'"
+                     [class.info]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.level == 'INFO'"
+                     [class.severe]="topKIncident.semanticAD[topKIncident.semanticAD.length-1]?.level == 'SEVERE'"
                      class="mr-2"
                      style="float: left; color: yellow;font-size: 14px; font-weight: 600;">
-                {{topKIncident.semanticAD[topKIncident.semanticAD.length - 1]?.actualLevel}}</span>
+                {{topKIncident.semanticAD[topKIncident.semanticAD.length - 1]?.level}}</span>
                         </div>
                         <div class="col-md-11" style="font-weight: 600; font-size: 14px">
                           <app-ad-banner
@@ -346,11 +346,11 @@
                   <div *ngIf="topKIncident.semanticAD.length <= 1">
                     <div class="row main-row">
                       <div class="col-md-1">
-                <span [class.error]="topKIncident.semanticAD[0]?.actualLevel == 'ERROR'"
-                      [class.info]="topKIncident.semanticAD[0]?.actualLevel == 'INFO'"
-                      [class.severe]="topKIncident.semanticAD[0]?.actualLevel == 'SEVERE'"
+                <span [class.error]="topKIncident.semanticAD[0]?.level == 'ERROR'"
+                      [class.info]="topKIncident.semanticAD[0]?.level == 'INFO'"
+                      [class.severe]="topKIncident.semanticAD[0]?.level == 'SEVERE'"
                       class="mr-2"
-                      style="float: left; color: yellow;font-weight: 600; font-size: 14px">{{topKIncident.semanticAD[0]?.actualLevel}}
+                      style="float: left; color: yellow;font-weight: 600; font-size: 14px">{{topKIncident.semanticAD[0]?.level}}
              </span>
                       </div>
                       <div class="offset-md-1 col-md-11" style="font-weight: 600; font-size: 14px">

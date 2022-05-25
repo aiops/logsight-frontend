@@ -1,15 +1,13 @@
 
 export class VerificationRequest {
   applicationId: string;
-  userId: string;
-  baselineTag: string;
-  candidateTag: string;
+  baselineTags: {};
+  candidateTags: {};
 
-  constructor(applicationId: string, userId: string, baselineTag: string, compareTag: string) {
+  constructor(applicationId: string, baselineTags, candidateTags) {
     this.applicationId = applicationId
-    this.userId = userId
-    this.baselineTag = baselineTag
-    this.candidateTag = compareTag
+    this.baselineTags = baselineTags
+    this.candidateTags = candidateTags
   }
 
 }

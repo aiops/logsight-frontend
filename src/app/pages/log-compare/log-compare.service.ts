@@ -3,20 +3,19 @@ import { ApiService } from '../../@core/service/api.service';
 import {Observable} from "rxjs";
 import {ChartRequest} from "../../@core/common/chart-request";
 import {VerificationRequest} from "../../@core/common/verification-request";
+import {TagRequest} from "../../@core/common/TagRequest";
 
 @Injectable()
 export class LogCompareService {
   constructor(private apiService: ApiService) {
   }
 
-  loadApplicationVersions(userId: string, applicationId: string): Observable<any> {
-    let applicationParam = '';
-    let userParam = '';
-    if (applicationId) {
-      applicationParam = `applicationId=${applicationId}`
-      userParam = `&userId=${userId}`
-    }
-    return this.apiService.get(`/api/v1/logs/compare/tags?${applicationParam}${userParam}`);
+  loadAvailableTagKeys(tagRequest: TagRequest): Observable<any> {
+    return this.apiService.post(`/api/v1/logs/tags/filter`, tagRequest);
+  }
+
+  loadTagValueForKey(tagKey: string): Observable<any> {
+    return this.apiService.post(`/api/v1/logs/tags/values`, tagKey);
   }
 
   computeLogCompare(verificationRequest: VerificationRequest){

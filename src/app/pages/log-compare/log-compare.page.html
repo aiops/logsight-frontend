@@ -34,25 +34,113 @@
     <div class="row" tourAnchor="compareVerify">
 
       <div class="col-8 col-md-8 col-lg-8 mb-8 mb-lg-0">
-          <nb-card>
+          <nb-card >
+              <h5 class="card-header">Choose tags</h5>
+              <div class="card-body">
+                <div class="card-text">
+
+                  <div class="row pt-2 pl-4">
+                    <div class="col-2  my-auto">Baseline (B)</div>
+                    <div class="col-10">
+                      <div class="row">
+                      <div class="col">
+          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagKeySelected($event)" [(selected)]="this.baselineTagKey"
+                     class="period-select"
+                     placeholder="Tag name">
+            <nb-option *ngFor="let tag of baselineTags" [nbSort]="tag.tagName" [value]="tag.tagName">
+              {{ tag.tagName}}
+            </nb-option>
+          </nb-select>
+                        </div>
+                                           <div class="col">
+          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagValueSelected($event)" [(selected)]="this.baselineTagId"
+                     class="period-select"
+                     placeholder="Tag value">
+            <nb-option *ngFor="let tagVal of baselineTagValues" [nbSort]="tagVal.tagValue" [value]="tagVal.tagValue">
+              {{ tagVal.tagValue}}
+            </nb-option>
+          </nb-select>
+                        </div>
+                                                                   <div class="col">
+           <button (click)="setBaselineTagKeyValue(this.baselineTagKey, this.baselineTagId)" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" style="padding-left: 10%; padding-right: 10%; text-transform: none; margin-left: 10px">Add tag
+                        </button>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+
+                                    <div class="row pt-2">
+                                      <div class="col-2"></div>
+                                      <div class="col-10 pl-4">
+    <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
+      <nb-tag style="text-transform: none" removable *ngFor="let tagKey of baselineTagMapKeys" status="primary" appearance="filled" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"></nb-tag>
+    </nb-tag-list>
+                    </div>
+</div>
+
+                                    <div class="row pt-2 pl-4">
+                    <div class="col-2  my-auto">Candidate (C)</div>
+                    <div class="col-10">
+                      <div class="row">
+                      <div class="col">
+          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="candidateTagKeySelected($event)" [(selected)]="this.candidateTagKey"
+                     class="period-select"
+                     placeholder="Tag name">
+            <nb-option *ngFor="let tag of candidateTags" [nbSort]="tag.tagName" [value]="tag.tagName">
+              {{ tag.tagName}}
+            </nb-option>
+          </nb-select>
+                        </div>
+                                           <div class="col">
+          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="candidateTagValueSelected($event)" [(selected)]="this.candidateTagId"
+                     class="period-select"
+                     placeholder="Tag value">
+            <nb-option *ngFor="let tagVal of candidateTagValues" [nbSort]="tagVal.tagValue" [value]="tagVal.tagValue">
+              {{ tagVal.tagValue}}
+            </nb-option>
+          </nb-select>
+                        </div>
+                                                                   <div class="col">
+           <button (click)="setCandidateTagKeyValue(this.candidateTagKey, this.candidateTagId)" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" style="padding-left: 10%; padding-right: 10%; text-transform: none; margin-left: 10px">Add tag
+                        </button>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+
+                                    <div class="row pt-2">
+                                      <div class="col-2"></div>
+                                      <div class="col-10 pl-4">
+    <nb-tag-list (tagRemove)="onCandidateTagRemove($event)">
+      <nb-tag style="text-transform: none" removable *ngFor="let tagKey of candidateTagMapKeys" status="basic" appearance="filled" [text]="tagKey + ':' + candidateTagMap.get(tagKey)"></nb-tag>
+    </nb-tag-list>
+                    </div>
+</div>
+
+                </div>
+              </div>
+            </nb-card>
+      </div>
+      <div class="col-4 col-md-4 col-lg-4 mb-4 mb-lg-0">
+          <nb-card style="padding-bottom: 60px">
              <div class="card-description">
-              <h5 class="card-header">Service description</h5>
+              <h5 class="card-header">Create verification</h5>
                   <div class="card-body">
                     <div class="card-text" style="margin-block-end: 5px;">
 
                                         <div class="row">
-                    <div class="col text-right my-auto">
-                      Choose application
-                    </div>
-                    <div class="col">
-                    <nb-select (selectedChange)="applicationSelected($event)" fullWidth [(selected)]="this.applicationId"
-                     class="period-select"
-                     placeholder="Select application">
-                        <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.applicationId">
-                          {{ app.name }}
-                        </nb-option>
-                    </nb-select>
-                      </div>
+<!--                    <div class="col text-right my-auto">-->
+<!--                      Choose application-->
+<!--                    </div>-->
+<!--                    <div class="col">-->
+<!--                    <nb-select (selectedChange)="applicationSelected($event)" fullWidth [(selected)]="this.applicationId"-->
+<!--                     class="period-select"-->
+<!--                     placeholder="Select application">-->
+<!--                        <nb-option *ngFor="let app of applications" [nbSort]="app.name" [value]="app.applicationId">-->
+<!--                          {{ app.name }}-->
+<!--                        </nb-option>-->
+<!--                    </nb-select>-->
+<!--                      </div>-->
 
                       <div class="col justify-content-center">
 <!--                        <button (click)="computeLogCompare()" [nbSpinner]="isSpinning" nbSpinnerStatus="basic" nbButton shape="round" style="padding-left: 10%; padding-right: 10%; text-transform: none; margin-left: 10px">Verify-->
@@ -70,67 +158,6 @@
                </div>
             </nb-card>
       </div>
-
-      <div class="col-4 col-md-4 col-lg-4 mb-4 mb-lg-0">
-          <nb-card style="padding-bottom: 20px">
-              <h5 class="card-header">Choose releases</h5>
-              <div class="card-body">
-                <div class="card-text">
-
-                  <div class="row pt-2 pl-4">
-                    <div class="col-4  my-auto">Baseline (B)</div>
-                    <div class="col-8">
-          <nb-select style="margin-right: 10px"  fullWidth (selectedChange)="baselineTagSelected($event)" [(selected)]="this.baselineTagId"
-                     class="period-select"
-                     placeholder="Baseline">
-            <nb-option *ngFor="let tag of tags" [nbSort]="tag.tagView" [value]="tag.tag">
-              {{ tag.tagView}}
-            </nb-option>
-          </nb-select>
-                      </div>
-                    </div>
-                  <div class="row pt-2 pl-4">
-                    <div class="col-4  my-auto">Candidate (C)</div>
-                    <div class="col-8">
-          <nb-select fullWidth (selectedChange)="compareTagSelected($event)" [(selected)]="this.compareTagId"
-                     class="period-select"
-                     placeholder="Candidate">
-            <nb-option *ngFor="let tag of tags" [nbSort]="tag.tagView" [value]="tag.tag">
-              {{ tag.tagView}}
-            </nb-option>
-          </nb-select>
-                      </div>
-</div>
-                  <div class="row pt-2">
-                    <div class="col-4"></div>
-</div>
-<!--                  <div class="row pt-2 pl-4">-->
-<!--                        <div class="badge badge-pill badge-primary mb-1" style="height: 18px; margin-right: 10px">Branch: production</div>-->
-<!--                        <div class="badge badge-pill badge-secondary mb-1" style="height: 18px; margin-right: 10px">Branch: develop</div>-->
-<!--                        <div class="badge badge-pill badge-warning mb-1" style="height: 18px">Infrastructure: pre-production</div>-->
-<!--                  </div>-->
-
-<!--                  <div class="row pt-2 pl-4">-->
-
-<!--                    <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
-<!--                        <nb-radio value=10>10m</nb-radio>-->
-<!--                    </nb-radio-group>-->
-<!--                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
-<!--                        <nb-radio value=15>15m</nb-radio>-->
-<!--                    </nb-radio-group>-->
-<!--                     <nb-radio-group disabled (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
-<!--                        <nb-radio value=30>30m</nb-radio>-->
-<!--                    </nb-radio-group>-->
-<!--                    <nb-radio-group (valueChange)="radioChange($event)" [(value)]="selectedRadioOption">-->
-<!--                        <nb-radio value=525960 checked>All data</nb-radio>-->
-<!--                    </nb-radio-group>-->
-
-<!--                 </div>-->
-                </div>
-              </div>
-            </nb-card>
-      </div>
-
 
     </div>
 <!--log messages stats-->
@@ -467,7 +494,7 @@
                 <span style="color: #999">{{row.count_base}}</span>
                   </div>
                 <div class="col text-left">
-                  <span class="inlinesparkline">{{row.trend_baseline}}</span>
+<!--                  <span class="inlinesparkline">{{row.trend_baseline}}</span>-->
                 </div>
               </div>
               <div class="row">
@@ -478,7 +505,7 @@
                   <span style="color: #999">{{row.count_cand}}</span>
                 </div>
                 <div class="col text-left">
-                  <span class="inlinesparkline">{{row.trend_candidate}}</span>
+<!--                  <span class="inlinesparkline">{{row.trend_candidate}}</span>-->
                 </div>
               </div>
             </td>

@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { OverviewComponent } from './overview/overview.component';
-import { VerificationComponent } from './verification.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {OverviewComponent} from './overview/overview.component';
+import {VerificationComponent} from './verification.component';
+import {InsightsComponent} from "./insights/insights.component";
 
 const routes: Routes = [
-  { path: 'verification', component: VerificationComponent,
+  {
+    path: '', component: VerificationComponent,
     children: [
-      { path: 'overview', component: OverviewComponent }
+      {path: 'overview', component: OverviewComponent},
+      {path: 'insights', component: InsightsComponent}
     ]
   }
 ];
@@ -15,4 +18,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class VerificationRoutingModule { }
+export class VerificationRoutingModule {
+}

@@ -20,8 +20,8 @@ const routes: Routes = [{
     },
     {
       path: 'compare',
-      loadChildren: () => import('./log-compare/log-compare.module')
-        .then(m => m.LogCompareModule),
+      loadChildren: () => import('../verification/verification.module')
+        .then(m => m.VerificationModule),
     },
     {
       path: 'dashboard',

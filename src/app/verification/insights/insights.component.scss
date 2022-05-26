@@ -1,0 +1,53 @@
+.font-large-2 {
+  font-size: xxx-large;
+}
+
+:host ::ng-deep .p-dropdown,
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-calendar,
+:host ::ng-deep .p-multiselect {
+  width: 100%;
+}
+
+.severity-badge {
+    border-radius: 2px;
+    padding: 0.25em 0.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+
+.severity-Low {
+    background-color: #c8e6c9;
+    color: #256029;
+}
+
+.severity-Medium {
+    background-color: #ffd8b2;
+    color: #805b36;
+}
+
+.severity-High {
+    background-color: #ffcdd2;
+    color: #c63737;
+}
+
+:host ::ng-deep .tabview-custom {
+    i, span {
+        vertical-align: middle;
+    }
+
+    span {
+        margin: 0 .5rem;
+    }
+}
+
+:host ::ng-deep .p-button {
+    margin-right: .25rem;
+}
+
+:host ::ng-deep .p-tabview p {
+    line-height: 1.5;
+    margin: 0;
+}

@@ -11,7 +11,6 @@ import {NotificationsService} from 'angular2-notifications';
 import {NbDialogService, NbPopoverDirective} from '@nebular/theme';
 import * as moment from 'moment'
 import {Moment} from 'moment'
-import {switchMap} from 'rxjs/operators';
 import {DashboardService} from '../dashboard/dashboard.service';
 import {Application} from '../../@core/common/application';
 import {AuthenticationService} from '../../auth/authentication.service';
@@ -25,10 +24,9 @@ import {ApiService} from "../../@core/service/api.service";
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ChartConfig} from "../../@core/common/chart-config";
 import {VerificationRequest} from "../../@core/common/verification-request";
-import {Tag, TagResponse} from "../../@core/common/tags";
+import {TagResponse} from "../../@core/common/tags";
 import {TagRequest} from "../../@core/common/TagRequest";
 import {TagEntry} from "../../@core/common/TagEntry";
-import {mapEntry} from "@angular/compiler/src/output/map_util";
 
 @Component({
   selector: 'compare',
@@ -93,6 +91,7 @@ export class LogComparePage {
   horizontalData$: Observable<any>;
   newTemplatesBarData$: Observable<any>;
   tableDataUnified: VerificationData = {
+    "timestamp": "",
     "risk": "0",
     "risk_color": "red",
     "total_n_log_messages": "0",
@@ -156,14 +155,14 @@ export class LogComparePage {
       }
 
       this.baselineTagMapKeys = []
-    this.baselineTagMap.forEach((value, key, map) => {
-      this.baselineTagMapKeys.push(key)
-    })
+      this.baselineTagMap.forEach((value, key, map) => {
+        this.baselineTagMapKeys.push(key)
+      })
 
       this.candidateTagMapKeys = []
-    this.candidateTagMap.forEach((value, key, map) => {
-      this.candidateTagMapKeys.push(key)
-    })
+      this.candidateTagMap.forEach((value, key, map) => {
+        this.candidateTagMapKeys.push(key)
+      })
 
       if (this.applicationId && this.baselineTagMap && this.candidateTagMap) {
         setTimeout(_ => this.computeLogCompare(), 100);

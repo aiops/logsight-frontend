@@ -1,0 +1,456 @@
+<div class="container-fluid">
+
+  <!--  Filter by verification ID or tags -->
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 mb-12 mb-lg-0">
+      <p-card header="FILTER">
+
+        <div class="row">
+          <div class="col-2 border-right">
+            <div class="row">
+              <div class="col my-auto">Verification ID
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col my-auto">
+                <p-dropdown (onChange)="onVerificationSelect($event)" [(ngModel)]="verificationId"
+                            [filter]="true" [options]="verificationIdList" [showClear]="true"
+                            filterBy="_id"
+                            optionLabel="_id" placeholder="Select ID">
+                  <ng-template pTemplate="selectedItem">
+                    <div *ngIf="verificationId">
+                      <div>{{verificationId._id}}</div>
+                    </div>
+                  </ng-template>
+                  <ng-template let-verificationId pTemplate="item">
+                    <div>
+                      <div>{{verificationId._id}}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col">
+                {{this.tableDataUnified.timestamp | date:'medium'}}
+              </div>
+            </div>
+          </div>
+          <div class="col-5 border-right">
+            <div class="row">
+              <div class="col-2 my-auto">
+                Baseline tags
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div *ngIf="!baselineTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!baselineTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!baselineTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!baselineTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="baselineTagMapKeys.length" class="col">
+                <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
+                  <nb-tag *ngFor="let tagKey of baselineTagMapKeys" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"
+                          appearance="outline"
+                          removable
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
+              </div>
+              <div *ngIf="baselineTagMapKeys.length" class="col-2"></div>
+            </div>
+          </div>
+
+
+          <div class="col-5">
+            <div class="row">
+              <div class="col-2 my-auto">
+                Candidate tags
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div *ngIf="!candidateTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!candidateTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!candidateTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!candidateTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="candidateTagMapKeys.length" class="col">
+                <nb-tag-list (tagRemove)="onCandidateTagRemove($event)">
+                  <nb-tag *ngFor="let tagKey of candidateTagMapKeys" [text]="tagKey + ':' + candidateTagMap.get(tagKey)"
+                          appearance="outline"
+                          removable
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
+              </div>
+              <div *ngIf="candidateTagMapKeys.length" class="col-2"></div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </p-card>
+    </div>
+  </div>
+
+  <!--  Deployment risk and log message overview -->
+  <div class="row pt-5">
+    <div class="col-xl-3 col-sm-6 col-12">
+      <p-card>
+        <div class="media d-flex">
+          <div class="align-self-center" style="color: {{this.tableDataUnified.risk_color}}"><i
+            class="icon-energy font-large-2 float-left"></i>
+          </div>
+          <div class="media-body text-right">
+            <h3 style="color:{{this.tableDataUnified.risk_color}}"> {{this.tableDataUnified.risk}} % </h3>
+            <span>Deployment failure risk</span>
+          </div>
+        </div>
+      </p-card>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+      <p-card>
+        <div class="media d-flex">
+          <div class="align-self-center"><i class="icon-frame text-primary font-large-2 float-left"></i>
+          </div>
+          <div class="media-body text-right">
+            <h3 class="text-primary"> {{this.tableDataUnified.total_n_log_messages}} </h3>
+            <span>Total log messages</span>
+          </div>
+        </div>
+      </p-card>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+      <p-card>
+        <div class="media d-flex">
+          <div class="media-body text-left">
+            <h3 class="text-primary"> {{this.tableDataUnified.count_baseline}} </h3>
+            <span>Baseline</span>
+          </div>
+          <div class="align-self-center"><i class="icon-home text-primary font-large-2 float-right"></i>
+          </div>
+        </div>
+      </p-card>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+      <p-card>
+        <div class="media d-flex">
+          <div class="media-body text-left">
+            <h3 class="text-primary"> {{this.tableDataUnified.candidate_perc}} %</h3>
+            <span>Candidate</span>
+          </div>
+          <div class="align-self-center"><i class="icon-rocket text-primary font-large-2 float-right"></i>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+
+  <div class="row grouped-multiple-statistics-card pt-5">
+    <div class="col-12">
+      <p-card header="STATE OVERVIEW">
+        <div class="row">
+          <div class="col-lg-6 col-xl-3 col-sm-6 col-12 border-right">
+            <div class="d-flex align-items-start mb-sm-1 mb-xl-0 border-right-blue-grey border-right-lighten-5">
+                <span class="card-icon primary d-flex justify-content-center mr-3">
+                  <i class="icon p-1 icon-login customize-icon font-large-2 p-1 text-primary"></i>
+                </span>
+              <div class="stats-amount mr-3">
+                <h3 class="heading-text text-bold-600 text-primary"> {{ this.tableDataUnified.added_states }} </h3>
+                <p class="sub-heading">Added states</p>
+              </div>
+              <span class="inc-dec-percentage">
+                  Report<p class="text-success" style="display:inline"> {{ this.tableDataUnified.added_states_info }}
+                % </p>&nbsp;
+                  Fault<p class="text-danger" style="display:inline"> {{ this.tableDataUnified.added_states_fault }}
+                % </p>
+                </span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-xl-3 col-sm-6 col-12 border-right">
+            <div class="d-flex align-items-start mb-sm-1 mb-xl-0 border-right-blue-grey border-right-lighten-5">
+                <span class="card-icon primary d-flex justify-content-center mr-3">
+                  <i class="icon p-1 icon-logout customize-icon font-large-2 p-1 text-primary"></i>
+                </span>
+              <div class="stats-amount mr-3">
+                <h3 class="heading-text text-bold-600 text-primary"> {{ this.tableDataUnified.deleted_states }} </h3>
+                <p class="sub-heading">Deleted states</p>
+              </div>
+              <span class="inc-dec-percentage">
+                  Report <p class="text-success" style="display:inline"> {{ this.tableDataUnified.deleted_states_info }}
+                % </p>&nbsp;
+                  Fault <p class="text-danger" style="display:inline"> {{ this.tableDataUnified.deleted_states_fault }}
+                % </p>
+                </span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-xl-3 col-sm-6 col-12 border-right">
+            <div class="d-flex align-items-start border-right-blue-grey border-right-lighten-5">
+                <span class="card-icon primary d-flex justify-content-center mr-3">
+                  <i class="icon p-1 icon-loop customize-icon font-large-2 p-1 text-primary"></i>
+                </span>
+              <div class="stats-amount mr-3">
+                <h3 class="heading-text text-bold-600 text-primary"> {{ this.tableDataUnified.recurring_states }} </h3>
+                <p class="sub-heading">Recurring states</p>
+              </div>
+              <span class="inc-dec-percentage">
+                  Report <p class="text-success"
+                            style="display:inline"> {{ this.tableDataUnified.recurring_states_info }}% </p>&nbsp;
+                  Fault <p class="text-danger"
+                           style="display:inline"> {{ this.tableDataUnified.recurring_states_fault }}% </p>
+                </span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
+            <div class="d-flex align-items-start">
+                <span class="card-icon primary d-flex justify-content-center mr-3">
+                  <i class="icon p-1 icon-graph customize-icon font-large-2 p-1 text-primary"></i>
+                </span>
+              <div class="stats-amount mr-3">
+                <h3 class="heading-text text-bold-600 text-primary"> {{ this.tableDataUnified.frequency_change }} </h3>
+                <p class="sub-heading">Frequency change</p>
+              </div>
+              <span class="inc-dec-percentage">
+                 Report &nbsp;<p class="text-success" style="display:inline"><i
+                class="fa fa-long-arrow-alt-down"></i> {{ this.tableDataUnified.frequency_change_info["increase"] }}
+                % </p>&nbsp;
+                  <p class="text-success" style="display:inline"><i
+                    class="fa fa-long-arrow-alt-up"></i> {{ this.tableDataUnified.frequency_change_info["decrease"] }}% </p>
+                  <br>
+                  Fault <p class="text-danger" style="display:inline"><i
+                class="fa fa-long-arrow-alt-down"></i> {{ this.tableDataUnified.frequency_change_fault["increase"] }}% </p>&nbsp;
+                  <p class="text-danger" style="display:inline"><i
+                    class="fa fa-long-arrow-alt-up"></i> {{ this.tableDataUnified.frequency_change_fault["decrease"] }}% </p>
+
+                </span>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <div class="row pt-5">
+    <div class="col-12">
+      <p-card header="STATE ANALYSIS">
+        <p-table
+          #statesTable
+          [paginator]="true"
+          [rowsPerPageOptions]="rowsPerPageOptions"
+          [rows]="rowsPerPageOptions[0]"
+          [value]="tableRows"
+          dataKey="template"
+          sortMode="multiple">
+          <ng-template pTemplate="header">
+
+            <tr style="padding-bottom: 20px">
+              <th [pSortableColumn]="'risk_score'" style="width: 5%">{{this.tableDataUnified.cols[0]}}
+                <p-sortIcon [field]="'risk_score'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'risk_description'" style="width: 7%">{{this.tableDataUnified.cols[1]}}
+                <p-sortIcon [field]="'risk_description'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'perc_baseline'" style="width: 6%">{{this.tableDataUnified.cols[2]}}(B)
+                <p-sortIcon [field]="'perc_baseline'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'perc_candidate'" style="width: 6%">{{this.tableDataUnified.cols[3]}}(C)
+                <p-sortIcon [field]="'perc_candidate'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'template'"
+                  style="width: 36%; overflow: hidden; word-wrap: anywhere">{{this.tableDataUnified.cols[4]}}
+                <p-sortIcon [field]="'template'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'count_base'" class="text-center"
+                  style="width: 7%">{{this.tableDataUnified.cols[6]}} (B)
+                <p-sortIcon [field]="'count_base'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'count_cand'" class="text-center"
+                  style="width: 7%">{{this.tableDataUnified.cols[6]}} (C)
+                <p-sortIcon [field]="'count_cand'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'change_perc'" class="text-center"
+                  style="width: 7%">{{this.tableDataUnified.cols[7]}}
+                <p-sortIcon [field]="'change_perc'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'coverage'" style="width: 7%">{{this.tableDataUnified.cols[8]}}
+                <p-sortIcon [field]="'coverage'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'level'" style="width: 5%">{{this.tableDataUnified.cols[9]}}
+                <p-sortIcon [field]="'level'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'semantics'"
+                  style="width: 7%">{{this.tableDataUnified.cols[10]}}
+                <p-sortIcon [field]="'semantics'"></p-sortIcon>
+              </th>
+            </tr>
+
+            <tr>
+              <th>
+                <p-dropdown
+                  (onChange)="filterBySeverity($event)"
+                  [options]="severityOptions"
+                  [showClear]="true"
+                  placeholder="Select a severity"
+                  styleClass="p-column-filter">
+                  <ng-template let-option pTemplate="item">
+                    <span [class]="'severity-badge severity-' + option.label">{{option.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+              </th>
+              <th>
+                <input
+                  (input)="filterByDescription($event)"
+                  class="p-column-filter"
+                  pInputText
+                  placeholder="Search"
+                  type="text">
+              </th>
+              <th>
+                <p-slider (onSlideEnd)="filterByBaselinePercentage($event)" [min]="0" [ngModel]="[0, 100]"
+                          [range]="true"
+                          max="100"></p-slider>
+
+              </th>
+              <th>
+                <p-slider (onSlideEnd)="filterByCandidatePercentage($event)" [min]="0" [ngModel]="[0, 100]"
+                          [range]="true"
+                          max="100"></p-slider>
+
+              </th>
+              <th>
+                <input
+                  (input)="filterByState($event)"
+                  class="p-column-filter"
+                  pInputText
+                  placeholder="Search"
+                  type="text">
+              </th>
+              <th>
+                <p-slider (onSlideEnd)="filterByCountBaseline($event)" [min]="0" [ngModel]="[0, 100]"
+                          [range]="true"
+                          max="100"></p-slider>
+              </th>
+              <th>
+                <p-slider (onSlideEnd)="filterByCountCandidate($event)" [min]="0" [ngModel]="[0, 100]"
+                          [range]="true"
+                          max="100"></p-slider>
+              </th>
+              <th>
+                <p-slider (onSlideEnd)="filterByChange($event)" [min]="0" [ngModel]="[0, 100]"
+                          [range]="true"
+                          max="100"></p-slider>
+              </th>
+              <th>
+                <p-slider (onSlideEnd)="filterByCoverage($event)" [min]="0" [ngModel]="[0, 100]"
+                          [range]="true"
+                          max="100"></p-slider>
+              </th>
+              <th>
+                <input
+                  (input)="filterByLevel($event)"
+                  class="p-column-filter"
+                  pInputText
+                  placeholder="Search"
+                  type="text">
+              </th>
+              <th>
+                       <input
+                  (input)="filterBySemantics($event)"
+                  class="p-column-filter"
+                  pInputText
+                  placeholder="Search"
+                  type="text">
+              </th>
+            </tr>
+
+          </ng-template>
+          <ng-template let-item let-rowIndex pTemplate="body">
+            <tr>
+              <td>
+                <span
+                  [class]="'severity-badge severity-' + Severity[item.risk_severity]">{{ Severity[item.risk_severity] }}
+                </span>
+              </td>
+
+              <td>
+                {{item.risk_description}}
+              </td>
+
+              <td>
+                <div style="background-color: {{item.b_color}}">{{item.perc_baseline}}%</div>
+                <!--                            <div>{{row.perc_baseline}}%</div>-->
+
+              </td>
+
+              <td>
+                <div style="background-color: {{item.c_color}}">{{item.perc_candidate}}%</div>
+                <!--                            <div>{{row.perc_candidate}}%</div>-->
+
+              </td>
+
+              <td>{{item.template}}</td>
+
+              <!--            <td >-->
+              <!--&lt;!&ndash;                {% if row.template_code %}&ndash;&gt;-->
+              <!--                 <a href="{{ row.template_code }}">-->
+              <!--                     <i class="fa fa-link secondary font-medium-1"></i>-->
+              <!--                 </a>-->
+              <!--&lt;!&ndash;                {% else %}&ndash;&gt;-->
+              <!--&lt;!&ndash;                 <a href="https://github.com/willyblackkeez" id="profile-link">&ndash;&gt;-->
+              <!--&lt;!&ndash;                     <i class="fa fa-external-link font-medium-1" style="color: rgba(0, 0, 0, 0.5)"></i>&ndash;&gt;-->
+              <!--&lt;!&ndash;                 </a>&ndash;&gt;-->
+              <!--&lt;!&ndash;                {% endif %}&ndash;&gt;-->
+              <!--            </td>-->
+
+              <td>
+                <div class="col text-center">
+                  <span style="color: #999">{{item.count_base}}</span>
+                </div>
+              <td>
+                <div class="col text-center">
+                  <span style="color: #999">{{item.count_cand}}</span>
+                </div>
+              </td>
+
+              <td class="text-center" style="color: #999;">
+                <!--                {% if row.change_perc >= 0 %}+{% endif %}{{ (row.change_perc * 100)|round|int }}%-->
+                {{item.change_perc * 100 | ngxRound}}%
+                ({{item.change_count}})
+              </td>
+
+              <td>
+                {{item.coverage}}%
+              </td>
+
+              <td class="level" style="color: {{item.semantic_color[1]}}">
+                <div>{{item.level}}</div>
+              </td>
+
+              <td class="semantics text-left"
+                  style="color: {{item.semantic_color[0]}}">{{item.semantics}}
+              </td>
+
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  </div>
+
+
+

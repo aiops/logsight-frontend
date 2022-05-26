@@ -11,7 +11,7 @@
               <div class="col my-auto">Verification ID
               </div>
             </div>
-            <div class="row pt-2">
+            <div class="row pt-1">
               <div class="col my-auto">
                 <p-dropdown (onChange)="onVerificationSelect($event)" [(ngModel)]="verificationId"
                             [filter]="true" [options]="verificationIdList" [showClear]="true"
@@ -65,6 +65,12 @@
               </div>
               <div *ngIf="baselineTagMapKeys.length" class="col-2"></div>
             </div>
+
+            <div class="row pt-2">
+              <div class="col-3">
+                {{this.tableDataUnified.count_baseline}} messages &nbsp; | &nbsp; {{this.tableDataUnified.recurring_states + this.tableDataUnified.deleted_states}} states
+              </div>
+            </div>
           </div>
 
 
@@ -96,6 +102,12 @@
                 </nb-tag-list>
               </div>
               <div *ngIf="candidateTagMapKeys.length" class="col-2"></div>
+            </div>
+
+            <div class="row pt-2">
+              <div class="col-3">
+                {{this.tableDataUnified.count_candidate}} messages &nbsp; | &nbsp; {{this.tableDataUnified.recurring_states + this.tableDataUnified.added_states}} states
+              </div>
             </div>
           </div>
 

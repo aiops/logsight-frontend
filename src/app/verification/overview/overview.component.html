@@ -1,3 +1,4 @@
+<p-card header="VERIFICATIONS">
 <p-table
     #overviewTable
     [value]="items"
@@ -7,22 +8,6 @@
     [rowsPerPageOptions]="rowsPerPageOptions"
     [rows]="rowsPerPageOptions[0]"
     sortMode="multiple">
-    <ng-template pTemplate="caption">
-        <div class="table-header d-flex justify-content-between align-items-center">
-            <h2>Overview</h2>
-            <div>
-                <button
-                    pButton
-                    type="button"
-                    label="Delete"
-                    class="p-button-danger"
-                    icon="pi pi-trash"
-                    [disabled]="selectedItems.length === 0"
-                    (click)="deleteItems()">
-                </button>
-            </div>
-        </div>
-    </ng-template>
     <ng-template pTemplate="header">
         <tr>
             <th style="width: 5%;" rowspan="2">
@@ -132,3 +117,4 @@
         </tr>
     </ng-template>
 </p-table>
+</p-card>

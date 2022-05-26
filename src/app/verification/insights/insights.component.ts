@@ -50,12 +50,15 @@ export class InsightsComponent implements OnInit {
     // this.loadVerifications();
     this.route.queryParamMap.subscribe(queryParams => {
       let verificationId = queryParams.get("compareId")
-      this.verificationService.loadVerificationByID(verificationId).subscribe(resp => {
+      if(verificationId){
+        this.verificationService.loadVerificationByID(verificationId).subscribe(resp => {
       this.verificationIdList = resp
         this.verificationId = resp[0]
         let event = {"value": resp[0]}
         this.onVerificationSelect(event)
     })
+      }
+
     });
 
   }

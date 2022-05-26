@@ -59,7 +59,6 @@
                 <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
                   <nb-tag *ngFor="let tagKey of baselineTagMapKeys" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"
                           appearance="outline"
-                          removable
                           status="primary" style="text-transform: none"></nb-tag>
                 </nb-tag-list>
               </div>
@@ -96,8 +95,7 @@
               <div *ngIf="candidateTagMapKeys.length" class="col">
                 <nb-tag-list (tagRemove)="onCandidateTagRemove($event)">
                   <nb-tag *ngFor="let tagKey of candidateTagMapKeys" [text]="tagKey + ':' + candidateTagMap.get(tagKey)"
-                          appearance="outline"
-                          removable
+                          appearance="filled"
                           status="primary" style="text-transform: none"></nb-tag>
                 </nb-tag-list>
               </div>

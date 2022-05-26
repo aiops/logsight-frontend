@@ -8,19 +8,35 @@
     [rowsPerPageOptions]="rowsPerPageOptions"
     [rows]="rowsPerPageOptions[0]"
     sortMode="multiple">
+    <ng-template pTemplate="caption">
+        <div class="table-header d-flex justify-content-between align-items-center">
+            <h2></h2>
+            <div>
+                <button
+                    pButton
+                    type="button"
+                    label="Delete"
+                    class="p-button-danger"
+                    icon="pi pi-trash"
+                    [disabled]="selectedItems.length === 0"
+                    (click)="deleteItems()">
+                </button>
+            </div>
+        </div>
+    </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th style="width: 5%;" rowspan="2">
+            <th style="width: 3%;" rowspan="2">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th style="width: 15%" [pSortableColumn]="'date'">Date <p-sortIcon [field]="'date'"></p-sortIcon> </th>
-            <th style="width: 17.5%" [pSortableColumn]="'applicationName'">Application <p-sortIcon [field]="'applicationName'"></p-sortIcon></th>
-            <th style="width: 15%" [pSortableColumn]="'verificationId'">Verification ID <p-sortIcon [field]="'verificationId'"></p-sortIcon></th>
-            <th style="width: 10%">Baseline tags</th>
-            <th style="width: 10%">Candidate tags</th>
-            <th style="width: 7.5%" [pSortableColumn]="'risk'">Risk <p-sortIcon [field]="'risk'"></p-sortIcon></th>
-            <th style="width: 10%" [pSortableColumn]="'severity'">Severity <p-sortIcon [field]="'severity'"></p-sortIcon></th>
+            <th style="width: 10%" [pSortableColumn]="'timestamp'">Date <p-sortIcon [field]="'timestamp'"></p-sortIcon> </th>
+            <th style="width: 10%" [pSortableColumn]="'compareId'">Verification ID <p-sortIcon [field]="'compareId'"></p-sortIcon></th>
+            <th style="width: 20%">Baseline tags</th>
+            <th style="width: 20%">Candidate tags</th>
+            <th style="width: 7%" [pSortableColumn]="'risk'">Risk <p-sortIcon [field]="'risk'"></p-sortIcon></th>
+            <th style="width: 15%" [pSortableColumn]="'severity'">Severity <p-sortIcon [field]="'severity'"></p-sortIcon></th>
             <th style="width: 10%" [pSortableColumn]="'status'">Status <p-sortIcon [field]="'status'"></p-sortIcon></th>
+          <th style="width: 5%">Insights</th>
         </tr>
         <tr>
             <th>
@@ -29,7 +45,7 @@
                     (onClearClick)="filterByDate('')"
                     [showButtonBar]="true"
                     styleClass="p-column-filter"
-                    placeholder="Search by Date"
+                    placeholder="Search"
                     [readonlyInput]="true"
                     dateFormat="mm/dd/yy">
                 </p-calendar>
@@ -38,23 +54,15 @@
                 <input
                     pInputText
                     type="text"
-                    (input)="filterByApplicationName($event)"
-                    placeholder="Search by Application name"
-                    class="p-column-filter">
-            </th>
-            <th>
-                <input
-                    pInputText
-                    type="text"
                     (input)="filterByVerificationId($event)"
-                    placeholder="Search by VerificationId"
+                    placeholder="Search"
                     class="p-column-filter">
             </th>
             <th>
-                <p-multiSelect [options]="tagOptions" (onChange)="filterByBaselineTags($event)" [filter]="true"></p-multiSelect>
+                <p-multiSelect placeholder="Filter" [options]="tagOptionsBaseline" (onChange)="filterByBaselineTags($event)" [filter]="true"></p-multiSelect>
             </th>
             <th>
-                <p-multiSelect [options]="tagOptions" (onChange)="filterByCandidateTags($event)" [filter]="true"></p-multiSelect>
+                <p-multiSelect placeholder="Filter" [options]="tagOptionsCandidate" (onChange)="filterByCandidateTags($event)" [filter]="true"></p-multiSelect>
             </th>
             <th>
                 <p-slider [ngModel]="[0, 100]" [min]="0" max="100" [range]="true" (onSlideEnd)="filterByRisk($event)"></p-slider>
@@ -64,7 +72,7 @@
                     [options]="severityOptions"
                     (onChange)="filterBySeverity($event)"
                     styleClass="p-column-filter"
-                    placeholder="Select a Severity"
+                    placeholder="Select"
                     [showClear]="true">
                     <ng-template let-option pTemplate="item">
                         <span [class]="'severity-badge severity-' + option.label">{{option.label}}</span>
@@ -76,12 +84,15 @@
                     [options]="statusOptions"
                     (onChange)="filterByStatus($event)"
                     styleClass="p-column-filter"
-                    placeholder="Select a Status"
+                    placeholder="Select"
                     [showClear]="true">
                     <ng-template let-option pTemplate="item">
                         <span>{{option.label}}</span>
                     </ng-template>
                 </p-dropdown>
+            </th>
+          <th>
+
             </th>
         </tr>
     </ng-template>
@@ -90,14 +101,21 @@
             <td>
                 <p-tableCheckbox [value]="item"></p-tableCheckbox>
             </td>
-            <td>{{item.date | date: 'MM/dd/YYYY HH:mm:ss'}}</td>
-            <td>{{item.applicationName}}</td>
-            <td>{{item.verificationId}}</td>
+            <td>{{item.timestamp | date: 'medium'}}</td>
+            <td>{{item.compareId}}</td>
             <td>
-                <span *ngFor="let tag of item.baselineTags" class="tag">{{ tag }}</span>
+                <nb-tag-list>
+                  <nb-tag *ngFor="let tagKey of item.baseline_tags_keys" [text]="tagKey"
+                          appearance="outline"
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
             </td>
             <td>
-                <span *ngFor="let tag of item.candidateTags" class="tag">{{ tag }}</span>
+                 <nb-tag-list>
+                  <nb-tag *ngFor="let tagKey of item.candidate_tags_keys" [text]="tagKey"
+                          appearance="filled"
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
             </td>
             <td>
                 {{ item.risk }} %
@@ -113,6 +131,9 @@
                     dataKey="value"
                     optionLabel="label">
                 </p-dropdown>
+            </td>
+           <td>
+                <button (click)="viewInsights(item.compareId)" pButton type="button" label="View insights" ></button>
             </td>
         </tr>
     </ng-template>

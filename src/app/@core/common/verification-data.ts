@@ -1,5 +1,8 @@
 export interface VerificationData {
   timestamp: any,
+  compareId: any,
+  baseline_tags_keys: any,
+  candidate_tags_keys: any,
   risk: any,
   risk_color: any,
   total_n_log_messages: any,
@@ -21,4 +24,10 @@ export interface VerificationData {
   frequency_change_fault: any,
   cols: any[],
   rows: any[]
+}
+
+
+export interface OverviewVerificationData {
+  _id: string,
+  _source: VerificationData
 }

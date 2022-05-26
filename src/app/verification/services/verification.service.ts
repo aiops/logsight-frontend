@@ -1,14 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {overviewData} from '../fake-data/overview';
-import {OverviewItem} from '../models/overview.model';
-import {PaginationData} from '../models/pagination.model';
 import {Status} from '../models/status.enum';
 import {TagRequest} from "../../@core/common/TagRequest";
 import {VerificationRequest} from "../../@core/common/verification-request";
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ApiService} from "../../@core/service/api.service";
+import {OverviewVerificationData} from "../../@core/common/verification-data";
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +16,8 @@ export class VerificationService {
   constructor(private http: HttpClient, private apiService: ApiService) {
   }
 
-  getOverview(): Observable<OverviewItem[]> {
-    return of(overviewData);
+  getOverview(): Observable<OverviewVerificationData[]> {
+    return this.apiService.get(`/api/v1/logs/compare`);
   }
 
   changeStatus(id: string, status: Status) {
@@ -40,7 +38,7 @@ export class VerificationService {
 
   loadVerificationByID(compareId: string): Observable<any> {
     let parameter = ""
-    if (compareId){
+    if (compareId) {
       parameter = `compareId=${compareId}`
     }
     return this.apiService.get(`/api/v1/logs/compare?${parameter}`);

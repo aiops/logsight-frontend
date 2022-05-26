@@ -49,7 +49,7 @@ export class InsightsComponent implements OnInit {
   ngOnInit(): void {
     // this.loadVerifications();
     this.route.queryParamMap.subscribe(queryParams => {
-      let verificationId = queryParams.get("verificationId")
+      let verificationId = queryParams.get("compareId")
       this.verificationService.loadVerificationByID(verificationId).subscribe(resp => {
       this.verificationIdList = resp
         this.verificationId = resp[0]

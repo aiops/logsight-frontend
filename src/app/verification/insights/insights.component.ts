@@ -6,6 +6,7 @@ import {Status} from '../models/status.enum';
 import {VerificationService} from '../services/verification.service';
 import {VerificationData} from "../../@core/common/verification-data";
 import {verificationData} from "../fake-data/verification_data";
+import {ActivatedRoute} from "@angular/router";
 
 interface DropdownOption {
   value: any;
@@ -42,11 +43,21 @@ export class InsightsComponent implements OnInit {
   }, {value: Severity.High, label: Severity[Severity.High]}];
 
 
-  constructor(private verificationService: VerificationService) {
+  constructor(private verificationService: VerificationService, private route: ActivatedRoute,) {
   }
 
   ngOnInit(): void {
-    this.loadVerifications()
+    this.loadVerifications();
+    this.route.queryParamMap.subscribe(queryParams => {
+      let verificationId = queryParams.get("verificationId")
+      this.verificationService.loadVerificationByID(verificationId).subscribe(resp => {
+      this.verificationIdList = resp
+        this.verificationId = resp[0]
+        let event = {"value": resp[0]}
+        this.onVerificationSelect(event)
+    })
+    });
+
   }
 
 
@@ -58,6 +69,7 @@ export class InsightsComponent implements OnInit {
 
 
   onVerificationSelect(event) {
+    console.log(event)
     if (event.value) {
       this.tableDataUnified = event.value._source
       this.tableRows = event.value._source.rows

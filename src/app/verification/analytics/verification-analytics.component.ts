@@ -1,12 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Table} from 'primeng/table';
-import {VerificationStateItem} from '../models/verification_state.model';
+import {Component, OnInit} from '@angular/core';
 import {Severity} from '../models/severity.enum';
-import {Status} from '../models/status.enum';
 import {VerificationService} from '../services/verification.service';
-import {VerificationData} from "../../@core/common/verification-data";
-import {verificationData} from "../fake-data/verification_data";
 import {ActivatedRoute} from "@angular/router";
+import {IssuesKPIVerificationRequest} from "../../@core/common/verification-request";
+import {TagRequest} from "../../@core/common/TagRequest";
+import {TagEntry} from "../../@core/common/TagEntry";
+import {Tag} from "../../@core/common/tags";
+import {Status} from "../models/status.enum";
 
 interface DropdownOption {
   value: any;
@@ -14,29 +14,33 @@ interface DropdownOption {
 }
 
 @Component({
-  selector: 'verification-analytics', templateUrl: './verification-analytics.component.html', styleUrls: ['./verification-analytics.component.scss']
+  selector: 'verification-analytics',
+  templateUrl: './verification-analytics.component.html',
+  styleUrls: ['./verification-analytics.component.scss']
 })
 export class VerificationAnalyticsComponent implements OnInit {
-  @ViewChild('statesTable') tableRef: Table;
-  rowsPerPageOptions: number[] = [20, 50, 100];
 
-  tableDataUnified: VerificationData = verificationData
-  tableRows: VerificationStateItem[]
-  verificationId = [];
-  verificationIdList = [];
-
+  baselineTags: Tag[];
+  baselineTagValues: Tag[];
+  baselineTagId: string;
   baselineTagMap = new Map<string, string>();
   baselineTagMapKeys = [];
+  baselineTagKey: string;
 
+  candidateTags: Tag[];
+  candidateTagValues: Tag[];
+  candidateTagId: string;
   candidateTagMap = new Map<string, string>();
   candidateTagMapKeys = [];
+  candidateTagKey: string;
 
+  compareStatusCounts: Map<number, number>;
+  isLoading = false;
 
-  Severity = Severity;
-  Status = Status;
-
-  baselineTags = []
-  candidateTags = []
+  issuesRaised = 0
+  issuesAssigned = 0
+  issuesSolved = 0
+  totalIssues = 0
 
   severityOptions: DropdownOption[] = [{value: Severity.Low, label: Severity[Severity.Low]}, {
     value: Severity.Medium, label: Severity[Severity.Medium]
@@ -47,86 +51,135 @@ export class VerificationAnalyticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loadVerifications();
-    this.route.queryParamMap.subscribe(queryParams => {
-      let verificationId = queryParams.get("compareId")
-      if(verificationId){
-        this.verificationService.loadVerificationByID(verificationId).subscribe(resp => {
-      this.verificationIdList = resp
-        this.verificationId = resp[0]
-        let event = {"value": resp[0]}
-        this.onVerificationSelect(event)
-    })
+    this.loadAvailableTagKeys(new TagRequest([]))
+  }
+
+  loadIssuesKPI() {
+    const convBaselineMap = {};
+    this.baselineTagMap.forEach((val: string, key: string) => {
+      convBaselineMap[key] = val;
+    });
+    this.verificationService.loadIssuesKPI(new IssuesKPIVerificationRequest(convBaselineMap)).subscribe(resp => {
+      this.compareStatusCounts = resp.listIssueKPIs
+      console.log(this.compareStatusCounts[Status.Raised])
+      if(this.compareStatusCounts[Status.Raised]){
+        this.issuesRaised = this.compareStatusCounts[Status.Raised]
+      }
+      if(this.compareStatusCounts[Status.Assigned]){
+        this.issuesAssigned = this.compareStatusCounts[Status.Assigned]
+      }
+      if(this.compareStatusCounts[Status.Resolved]){
+        this.issuesSolved = this.compareStatusCounts[Status.Resolved]
       }
 
     });
-
   }
 
 
-  onVerificationSelect(event) {
-    if (event.value) {
-      this.tableDataUnified = event.value._source
-      this.tableRows = event.value._source.rows
-      this.baselineTagMapKeys = Object.keys(event.value._source['baseline_tags'])
-      this.baselineTagMap = new Map(Object.entries(event.value._source['baseline_tags']));
-      this.candidateTagMapKeys = Object.keys(event.value._source['candidate_tags'])
-      this.candidateTagMap = new Map(Object.entries(event.value._source['candidate_tags']));
-    } else {
-      this.tableDataUnified = verificationData
-      this.baselineTagMapKeys = []
-      this.tableRows = []
-      this.baselineTagMap = new Map<string, string>();
-      this.candidateTagMapKeys = []
-      this.candidateTagMap = new Map<string, string>();
+  loadAvailableTagKeys(tagRequest: TagRequest) {
+    this.loadAvailableBaselineTagKeys(tagRequest)
+    this.loadAvailableCandidateTagKeys(tagRequest)
+  }
+
+  baselineTagKeySelected(event) {
+    this.baselineTagKey = event.value
+    this.loadBaselineTagValuesForKey(this.baselineTagKey)
+  }
+
+
+  loadBaselineTagValuesForKey(tagKey: string) {
+    this.verificationService.loadTagValueForKey(tagKey).subscribe(resp => {
+      this.baselineTagValues = resp.tagValues
+    })
+  }
+
+  baselineTagValueSelected(event) {
+    this.baselineTagId = event.value
+  }
+
+  setBaselineTagKeyValue() {
+    this.baselineTagValues = []
+    this.baselineTagMap.set(this.baselineTagKey, this.baselineTagId)
+    if (!this.baselineTagMapKeys.includes(this.baselineTagKey)) {
+      this.baselineTagMapKeys.push(this.baselineTagKey)
     }
+    let baselineTagList = []
+    for (let tagK of this.baselineTagMap.keys()) {
+      baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
+    }
+    this.baselineTagKey = null
+    this.baselineTagId = null
+    this.loadAvailableBaselineTagKeys(new TagRequest(baselineTagList))
+  }
+
+  onBaselineTagRemove(event) {
+    this.baselineTagMap.delete(event.text.split(':')[0])
+    this.baselineTagMapKeys = []
+    this.baselineTagMap.forEach((value, key) => {
+      this.baselineTagMapKeys.push(key)
+    })
+    let baselineTagList = []
+    for (let tagK of this.baselineTagMap.keys()) {
+      baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
+    }
+    this.loadAvailableBaselineTagKeys(new TagRequest(baselineTagList))
+  }
+
+  loadAvailableBaselineTagKeys(tagRequest: TagRequest) {
+    this.verificationService.loadAvailableTagKeys(tagRequest).subscribe(resp => {
+      this.baselineTags = resp.tagKeys
+    })
+  }
+
+  loadCandidateTagValueForKey(tagKey: string) {
+    this.verificationService.loadTagValueForKey(tagKey).subscribe(resp => {
+      this.candidateTagValues = resp.tagValues
+    })
+  }
+
+  candidateTagValueSelected(event) {
+    this.candidateTagId = event.value
+  }
+
+  candidateTagKeySelected(event) {
+    this.candidateTagKey = event.value
+    this.loadCandidateTagValueForKey(this.candidateTagKey)
   }
 
 
-  // Table Filters
-
-  filterBySeverity(event) {
-    this.tableRef.filter(event.value, 'risk_severity', 'equals');
+  setCandidateTagKeyValue() {
+    this.candidateTagValues = []
+    this.candidateTagMap.set(this.candidateTagKey, this.candidateTagId)
+    if (!this.candidateTagMapKeys.includes(this.candidateTagKey)) {
+      this.candidateTagMapKeys.push(this.candidateTagKey)
+    }
+    let candidateTagList = []
+    for (let tagK of this.candidateTagMap.keys()) {
+      candidateTagList.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
+    }
+    this.candidateTagKey = null
+    this.candidateTagId = null
+    this.loadAvailableCandidateTagKeys(new TagRequest(candidateTagList))
   }
 
-  filterByDescription(event) {
-    this.tableRef.filter(event.target.value, 'risk_description', 'startsWith');
+  onCandidateTagRemove(event) {
+    this.candidateTagMap.delete(event.text.split(':')[0])
+    this.candidateTagMapKeys = []
+    this.candidateTagMap.forEach((value, key) => {
+      this.candidateTagMapKeys.push(key)
+    })
+    let candidateTagList = []
+    for (let tagK of this.candidateTagMap.keys()) {
+      candidateTagList.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
+    }
+    this.loadAvailableCandidateTagKeys(new TagRequest(candidateTagList))
   }
 
-  filterByState(event) {
-    this.tableRef.filter(event.target.value, 'template', 'contains');
-  }
 
-  filterByLevel(event) {
-    this.tableRef.filter(event.target.value, 'level', 'contains');
-  }
-
-  filterBySemantics(event) {
-    this.tableRef.filter(event.target.value, 'semantics', 'contains');
-  }
-
-  filterByBaselinePercentage(event) {
-    this.tableRef.filter(event.values, 'perc_baseline', 'between');
-  }
-
-  filterByCandidatePercentage(event) {
-    this.tableRef.filter(event.values, 'perc_candidate', 'between');
-  }
-
-  filterByCountBaseline(event) {
-    this.tableRef.filter(event.values, 'count_base', 'between');
-  }
-
-  filterByCountCandidate(event) {
-    this.tableRef.filter(event.values, 'count_cand', 'between');
-  }
-
-  filterByChange(event) {
-    this.tableRef.filter(event.values, 'change_perc', 'between');
-  }
-
-  filterByCoverage(event) {
-    this.tableRef.filter(event.values, 'coverage', 'between');
+  loadAvailableCandidateTagKeys(tagRequest: TagRequest) {
+    this.verificationService.loadAvailableTagKeys(tagRequest).subscribe(resp => {
+      this.candidateTags = resp.tagKeys
+    })
   }
 
 }

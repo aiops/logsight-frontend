@@ -32,3 +32,9 @@ export interface OverviewVerificationData {
   _id: string,
   _source: VerificationData
 }
+
+export interface IssueCountVerificationData {
+  status: number,
+  count: number
+}
+

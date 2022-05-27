@@ -10,6 +10,15 @@ export class VerificationRequest {
 
 }
 
+export class IssuesKPIVerificationRequest {
+  baselineTags: {};
+
+  constructor(baselineTags) {
+    this.baselineTags = baselineTags
+  }
+
+}
+
 export class UpdateVerificationStatusRequest {
   compareId: string;
   compareStatus: number;

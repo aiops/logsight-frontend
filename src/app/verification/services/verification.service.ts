@@ -3,7 +3,11 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Status} from '../models/status.enum';
 import {TagRequest} from "../../@core/common/TagRequest";
-import {UpdateVerificationStatusRequest, VerificationRequest} from "../../@core/common/verification-request";
+import {
+  IssuesKPIVerificationRequest,
+  UpdateVerificationStatusRequest,
+  VerificationRequest
+} from "../../@core/common/verification-request";
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ApiService} from "../../@core/service/api.service";
 import {OverviewVerificationData} from "../../@core/common/verification-data";
@@ -46,6 +50,10 @@ export class VerificationService {
 
   createVerification(verificationRequest: VerificationRequest) {
     return this.apiService.post(`/api/v1/logs/compare/view`, verificationRequest);
+  }
+
+  loadIssuesKPI(issuesKPIVerificationRequest: IssuesKPIVerificationRequest){
+    return this.apiService.post(`/api/v1/logs/compare/issues`, issuesKPIVerificationRequest);
   }
 
 

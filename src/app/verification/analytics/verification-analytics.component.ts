@@ -14,9 +14,9 @@ interface DropdownOption {
 }
 
 @Component({
-  selector: 'insights', templateUrl: './insights.component.html', styleUrls: ['./insights.component.scss']
+  selector: 'verification-analytics', templateUrl: './verification-analytics.component.html', styleUrls: ['./verification-analytics.component.scss']
 })
-export class InsightsComponent implements OnInit {
+export class VerificationAnalyticsComponent implements OnInit {
   @ViewChild('statesTable') tableRef: Table;
   rowsPerPageOptions: number[] = [20, 50, 100];
 

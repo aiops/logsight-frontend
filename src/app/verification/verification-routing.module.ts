@@ -1,15 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {OverviewComponent} from './overview/overview.component';
+import {VerificationOverviewComponent} from './overview/verification-overview.component';
 import {VerificationComponent} from './verification.component';
-import {InsightsComponent} from "./insights/insights.component";
+import {VerificationInsightsComponent} from "./insights/verification-insights.component";
+import {VerificationAnalyticsComponent} from "./analytics/verification-analytics.component";
 
 const routes: Routes = [
   {
     path: '', component: VerificationComponent,
     children: [
-      {path: 'overview', component: OverviewComponent},
-      {path: 'insights', component: InsightsComponent}
+      {path: 'overview', component: VerificationOverviewComponent},
+      {path: 'insights', component: VerificationInsightsComponent},
+      {path: 'analytics', component: VerificationAnalyticsComponent}
     ]
   }
 ];

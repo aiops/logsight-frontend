@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {OverviewComponent} from "./overview/overview.component";
+import {VerificationOverviewComponent} from "./overview/verification-overview.component";
 
 @Component({
   selector: 'ngx-verification',
@@ -12,7 +12,7 @@ export class VerificationComponent implements OnInit {
   insightsTabIndex = 2
   activeIndex = 0
   isVerificationCreated = false
-  @ViewChild(OverviewComponent) overviewComponent;
+  @ViewChild(VerificationOverviewComponent) overviewComponent;
   ngOnInit(): void {
   }
 

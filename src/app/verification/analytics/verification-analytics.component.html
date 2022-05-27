@@ -1,0 +1,131 @@
+<div class="container-fluid">
+
+  <!--  Filter by verification ID or tags -->
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 mb-12 mb-lg-0">
+      <p-card header="FILTER">
+
+        <div class="row">
+          <div class="col-2 border-right">
+            <div class="row">
+              <div class="col my-auto">Verification ID
+              </div>
+            </div>
+            <div class="row pt-1">
+              <div class="col my-auto">
+                <p-dropdown (onChange)="onVerificationSelect($event)" [(ngModel)]="verificationId"
+                            [filter]="true" [options]="verificationIdList" [showClear]="true"
+                            filterBy="_id"
+                            optionLabel="_id" placeholder="Select ID">
+                  <ng-template pTemplate="selectedItem">
+                    <div *ngIf="verificationId">
+                      <div>{{verificationId._id}}</div>
+                    </div>
+                  </ng-template>
+                  <ng-template let-verificationId pTemplate="item">
+                    <div>
+                      <div>{{verificationId._id}}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col">
+                {{this.tableDataUnified.timestamp | date:'medium'}}
+              </div>
+            </div>
+          </div>
+          <div class="col-5 border-right">
+            <div class="row">
+              <div class="col-2 my-auto">
+                Baseline tags
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div *ngIf="!baselineTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!baselineTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!baselineTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!baselineTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="baselineTagMapKeys.length" class="col">
+                <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
+                  <nb-tag *ngFor="let tagKey of baselineTagMapKeys" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"
+                          appearance="outline"
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
+              </div>
+              <div *ngIf="baselineTagMapKeys.length" class="col-2"></div>
+            </div>
+
+            <div class="row pt-2">
+              <div class="col-12">
+                {{this.tableDataUnified.count_baseline}} messages &nbsp; |
+                &nbsp; {{this.tableDataUnified.recurring_states + this.tableDataUnified.deleted_states}} states
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-5">
+            <div class="row">
+              <div class="col-2 my-auto">
+                Candidate tags
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div *ngIf="!candidateTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!candidateTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!candidateTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="!candidateTagMapKeys.length" class="col">
+                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
+              </div>
+              <div *ngIf="candidateTagMapKeys.length" class="col">
+                <nb-tag-list (tagRemove)="onCandidateTagRemove($event)">
+                  <nb-tag *ngFor="let tagKey of candidateTagMapKeys" [text]="tagKey + ':' + candidateTagMap.get(tagKey)"
+                          appearance="filled"
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
+              </div>
+              <div *ngIf="candidateTagMapKeys.length" class="col-2"></div>
+            </div>
+
+            <div class="row pt-2">
+              <div class="col-12">
+                {{this.tableDataUnified.count_candidate}} messages &nbsp; |
+                &nbsp; {{this.tableDataUnified.recurring_states + this.tableDataUnified.added_states}} states
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+
+  <div class="row grouped-multiple-statistics-card pt-5">
+    <div class="col-12">
+      <p-card header="KPI">
+        <div class="row">
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+
+</div>

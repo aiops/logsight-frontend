@@ -1,6 +1,7 @@
 export interface VerificationData {
   timestamp: any,
   compareId: any,
+  status: any,
   baseline_tags_keys: any,
   candidate_tags_keys: any,
   risk: any,

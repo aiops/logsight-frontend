@@ -3,6 +3,7 @@ import {VerificationData} from "../../@core/common/verification-data";
 export const verificationData : VerificationData = {
     "timestamp": "",
     "compareId": "",
+    "status": "1",
     "baseline_tags_keys": [],
     "candidate_tags_keys": [],
     "risk": "0",

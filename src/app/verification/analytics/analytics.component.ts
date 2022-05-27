@@ -1,14 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Table} from 'primeng/table';
 import {Severity} from '../models/severity.enum';
 import {Status} from '../models/status.enum';
@@ -16,7 +6,6 @@ import {VerificationService} from '../services/verification.service';
 import {VerificationData} from "../../@core/common/verification-data";
 import {Router} from "@angular/router";
 import {UpdateVerificationStatusRequest} from "../../@core/common/verification-request";
-import {VerificationSharingService} from "../services/verification-sharing.service";
 
 interface DropdownOption {
   value: any;
@@ -24,16 +13,15 @@ interface DropdownOption {
 }
 
 @Component({
-  selector: 'overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss']
+  selector: 'analytics',
+  templateUrl: './analytics.component.html',
+  styleUrls: ['./analytics.component.scss']
 })
-export class OverviewComponent implements OnInit, AfterViewInit{
-
-  @Output() onInsightsActivated = new EventEmitter<void>();
+export class AnalyticsComponent implements OnInit, AfterViewInit {
   items: VerificationData[] = [];
   @ViewChild('overviewTable') tableRef: Table;
   selectedItems: VerificationData[] = [];
+  activeIndex = 0
 
   rowsPerPageOptions: number[] = [20, 50, 100];
 
@@ -55,37 +43,10 @@ export class OverviewComponent implements OnInit, AfterViewInit{
   tagOptionsCandidate = [];
   tagOptionsBaseline = [];
 
-  constructor(private verificationService: VerificationService, private router: Router, private verificationSharingService: VerificationSharingService) {
+  constructor(private verificationService: VerificationService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.verificationSharingService.currentData.subscribe(data => {
-      this.getOverview()
-    });
-  }
-
-
-  ngAfterViewInit(): void {
-    this.tableRef.filterService.register('includesTags', (tags: string[], filterArray: string[]): boolean => {
-      if (filterArray === undefined || filterArray === null || filterArray.length === 0) {
-        return true;
-      }
-
-      if (tags === undefined || tags === null || tags.length === 0) {
-        return false;
-      }
-
-      for (const filter of filterArray) {
-        if (!tags.includes(filter))
-          return false;
-      }
-
-      return true;
-    });
-  }
-
-  getOverview(){
-    this.items = [];
     this.verificationService.getOverview().subscribe(resp => {
       for (let i of resp) {
         i._source["compareId"] = i._id
@@ -110,6 +71,25 @@ export class OverviewComponent implements OnInit, AfterViewInit{
     });
   }
 
+  ngAfterViewInit(): void {
+    this.tableRef.filterService.register('includesTags', (tags: string[], filterArray: string[]): boolean => {
+      if (filterArray === undefined || filterArray === null || filterArray.length === 0) {
+        return true;
+      }
+
+      if (tags === undefined || tags === null || tags.length === 0) {
+        return false;
+      }
+
+      for (const filter of filterArray) {
+        if (!tags.includes(filter))
+          return false;
+      }
+
+      return true;
+    });
+  }
+
   statusChanged(event: { value: DropdownOption }, item: VerificationData) {
     let request = new UpdateVerificationStatusRequest(item.compareId, event.value.value)
     this.verificationService
@@ -125,7 +105,6 @@ export class OverviewComponent implements OnInit, AfterViewInit{
         compareId: verificationId
       }
     })
-    this.onInsightsActivated.emit();
   }
 
   deleteItems() {

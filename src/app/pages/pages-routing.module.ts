@@ -1,8 +1,8 @@
-import { RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
 
-import { PagesComponent } from './pages.component';
-import { NotFoundComponent } from '../@core/components/not-found/not-found.component';
+import {PagesComponent} from './pages.component';
+import {NotFoundComponent} from '../@core/components/not-found/not-found.component';
 
 const routes: Routes = [{
   path: '',
@@ -37,15 +37,10 @@ const routes: Routes = [{
       path: 'file-upload',
       loadChildren: () => import('./file-upload/file-upload.module')
         .then(m => m.FileUploadModule),
-    },{
+    }, {
       path: 'demo-data',
       loadChildren: () => import('./sample-data/sample-data.module')
         .then(m => m.SampleDataModule),
-    },
-    {
-      path: 'elasticsearch-data',
-      loadChildren: () => import('./elasticsearch-data/elasticsearch-data.module')
-        .then(m => m.ElasticsearchDataModule),
     },
     {
       path: 'variable-analysis',

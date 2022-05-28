@@ -24,6 +24,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import {CreateVerificationComponent} from "./create-verification/create-verification.component";
 import {VerificationSharingService} from "./services/verification-sharing.service";
 import {VerificationAnalyticsComponent} from "./analytics/verification-analytics.component";
+import {ChartModule} from "primeng/chart";
 
 @NgModule({
   declarations: [VerificationComponent, VerificationOverviewComponent, VerificationInsightsComponent, VerificationAnalyticsComponent, CreateVerificationComponent],
@@ -34,7 +35,7 @@ import {VerificationAnalyticsComponent} from "./analytics/verification-analytics
     TableModule, DropdownModule, ButtonModule, CalendarModule, InputTextModule, SliderModule, MultiSelectModule, TabViewModule,
 
     //Application modules
-    VerificationRoutingModule, NbSelectModule, NbSpinnerModule, NbTagModule, NbTreeGridModule, CardModule, ChipModule, SkeletonModule, AutoCompleteModule, ChipsModule, ThemeModule, CheckboxModule],
+    VerificationRoutingModule, NbSelectModule, NbSpinnerModule, NbTagModule, NbTreeGridModule, CardModule, ChipModule, SkeletonModule, AutoCompleteModule, ChipsModule, ThemeModule, CheckboxModule, ChartModule],
   providers: [VerificationSharingService]
 })
 export class VerificationModule {

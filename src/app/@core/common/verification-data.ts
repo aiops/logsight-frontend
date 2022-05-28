@@ -28,6 +28,10 @@ export interface VerificationData {
 }
 
 
+export interface ListOverviewVerificationData {
+  listCompare: OverviewVerificationData
+}
+
 export interface OverviewVerificationData {
   _id: string,
   _source: VerificationData

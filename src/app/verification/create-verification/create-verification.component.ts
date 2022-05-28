@@ -135,11 +135,13 @@ export class CreateVerificationComponent implements OnInit {
     });
     let verificationRequest = new VerificationRequest(convBaselineMap, convCandidateMap)
     this.verificationService.createVerification(verificationRequest).subscribe(resp => {
+      console.log(resp)
       this.isLoading = false
       setTimeout(_ =>{
         this.verificationSharingService.setData(true)
       },1000)
     }, error => {
+      this.isLoading = false
       this.apiService.handleErrors(error)
     })
   }

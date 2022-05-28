@@ -20,7 +20,7 @@ export class VerificationService {
   constructor(private http: HttpClient, private apiService: ApiService) {
   }
 
-  getOverview(): Observable<OverviewVerificationData[]> {
+  getOverview(): Observable<any> {
     return this.apiService.get(`/api/v1/logs/compare`);
   }
 
@@ -49,7 +49,7 @@ export class VerificationService {
   }
 
   createVerification(verificationRequest: VerificationRequest) {
-    return this.apiService.post(`/api/v1/logs/compare/view`, verificationRequest);
+    return this.apiService.post(`/api/v1/logs/compare`, verificationRequest);
   }
 
   loadIssuesKPI(issuesKPIVerificationRequest: IssuesKPIVerificationRequest){

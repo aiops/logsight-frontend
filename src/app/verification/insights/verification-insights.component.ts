@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Table} from 'primeng/table';
 import {VerificationStateItem} from '../models/verification_state.model';
 import {Severity} from '../models/severity.enum';
@@ -14,7 +14,9 @@ interface DropdownOption {
 }
 
 @Component({
-  selector: 'verification-insights', templateUrl: './verification-insights.component.html', styleUrls: ['./verification-insights.component.scss']
+  selector: 'verification-insights',
+  templateUrl: './verification-insights.component.html',
+  styleUrls: ['./verification-insights.component.scss']
 })
 export class VerificationInsightsComponent implements OnInit {
   @ViewChild('statesTable') tableRef: Table;
@@ -38,6 +40,7 @@ export class VerificationInsightsComponent implements OnInit {
   baselineTags = []
   candidateTags = []
 
+  @Output() onInsightsActivated = new EventEmitter<void>();
   severityOptions: DropdownOption[] = [{value: Severity.Low, label: Severity[Severity.Low]}, {
     value: Severity.Medium, label: Severity[Severity.Medium]
   }, {value: Severity.High, label: Severity[Severity.High]}];
@@ -47,24 +50,24 @@ export class VerificationInsightsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loadVerifications();
     this.route.queryParamMap.subscribe(queryParams => {
       let verificationId = queryParams.get("compareId")
-      if(verificationId){
+      if (verificationId) {
         this.verificationService.loadVerificationByID(verificationId).subscribe(resp => {
-      this.verificationIdList = resp
-        this.verificationId = resp[0]
-        let event = {"value": resp[0]}
-        this.onVerificationSelect(event)
-    })
+          this.onInsightsActivated.emit()
+          this.verificationIdList = resp.listCompare
+          this.verificationId = this.verificationIdList[0]
+          let event = {"value": this.verificationIdList[0]}
+          this.onVerificationSelect(event)
+        })
       }
-
     });
 
   }
 
 
   onVerificationSelect(event) {
+    console.log(event)
     if (event.value) {
       this.tableDataUnified = event.value._source
       this.tableRows = event.value._source.rows

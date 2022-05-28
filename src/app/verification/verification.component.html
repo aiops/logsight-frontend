@@ -10,6 +10,6 @@
   </p-tabPanel>
 
     <p-tabPanel header="Insights">
-    <verification-insights></verification-insights>
+    <verification-insights (onInsightsActivated)="onTabIndexChange(insightsTabIndex)"></verification-insights>
   </p-tabPanel>
 </p-tabView>

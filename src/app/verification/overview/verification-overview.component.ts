@@ -86,7 +86,8 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
 
   getOverview(){
     this.items = [];
-    this.verificationService.getOverview().subscribe(resp => {
+    this.verificationService.getOverview().subscribe(r => {
+      let resp = r.listCompare
       for (let i of resp) {
         i._source["compareId"] = i._id
         i._source["baseline_tags_keys"] = Object.keys(i._source['baseline_tags'])

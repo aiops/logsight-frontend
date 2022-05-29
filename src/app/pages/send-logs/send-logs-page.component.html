@@ -1,0 +1,51 @@
+<p-card header="Select data source">
+  <div class="row pt-5">
+    <div (click)="redirectToSampleData()" class="col text-center border-right" style="cursor: pointer">
+      <div class="row justify-content-center text-center my-auto">
+        <img src="../../../assets/img/sample-data.png"></div>
+      <div class="row pt-5 justify-content-center text-center my-auto">
+        <button class="p-button-lg" label="Demo data" pButton style="text-transform: none" type="button"></button>
+      </div>
+    </div>
+
+    <div (click)="redirectToSwagger()" class="col text-center border-right" style="cursor: pointer">
+      <div class="row justify-content-center text-center my-auto">
+        <img src="../../../assets/icons/swagger_logo.svg"></div>
+      <div class="row pt-5 justify-content-center text-center">
+        <button class="p-button-lg" label="Open API" pButton style="text-transform: none" type="button"></button>
+      </div>
+    </div>
+
+    <div class="col text-center border-right">
+      <div (click)="redirectToGithub()" style="cursor: pointer">
+        <div class="row justify-content-center text-center">
+          <img src="../../../assets/img/github.png"></div>
+        <div class="row pt-5 justify-content-center text-center  my-auto">
+          <button class="p-button-lg" label="Github actions" pButton style="text-transform: none"
+                  type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col text-center border-right">
+      <div (click)="redirectToLogstash()" style="cursor: pointer">
+        <div class="row justify-content-center text-center">
+          <img src="../../../assets/img/logstash.png"></div>
+        <div class="row pt-5 justify-content-center text-center  my-auto">
+          <button class="p-button-lg" label="Logstash" pButton style="text-transform: none" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col text-center">
+      <div (click)="redirectToFluentbit()" style="cursor: pointer">
+        <div class="row justify-content-center text-center">
+          <img src="../../../assets/img/logo-fluentbit.png"></div>
+        <div class="row pt-5 justify-content-center text-center my-auto">
+          <button class="p-button-lg" label="FluentBit" pButton style="text-transform: none" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-card>
+

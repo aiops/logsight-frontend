@@ -7,18 +7,14 @@ import {Router} from "@angular/router";
 import {TourService} from "ngx-ui-tour-md-menu";
 import {ApiService} from "../../@core/service/api.service";
 import {Receipt} from "../../@core/common/receipt";
-import {defer, Observable} from "rxjs";
-import {delay, expand, filter, repeatWhen, retry, take, takeWhile, timeout, toArray} from "rxjs/operators";
-import {Flush} from "../../@core/common/flush";
 
 @Component({
   selector: 'demo-data',
-  styleUrls: ['./sample-data.page.scss'],
-  templateUrl: './sample-data.page.html',
+  styleUrls: ['./demo-data.page.scss'],
+  templateUrl: './demo-data.page.html',
 })
-export class SampleDataPage implements OnInit {
+export class DemoDataPage implements OnInit {
   isSpinning = false;
-  listResults = []
   demoStartTime = "2021-12-01T10:17:43.000Z"
   demoEndTime = "2021-12-31T09:17:43.000Z"
 
@@ -29,15 +25,14 @@ export class SampleDataPage implements OnInit {
   ngOnInit(): void {
   }
 
-
   redirectToDashboard() {
-      this.isSpinning = false
-      this.router.navigate(['/pages', 'dashboard'],{
-          queryParams: {
+    this.isSpinning = false
+    this.router.navigate(['/pages', 'dashboard'], {
+      queryParams: {
         startTime: this.demoStartTime,
         endTime: this.demoEndTime,
         dateTimeType: "absolute",
-            sample: true
+        sample: true
       }
     })
   }
@@ -46,7 +41,7 @@ export class SampleDataPage implements OnInit {
     this.isSpinning = true
     this.http.post<Receipt[]>(`/api/v1/demo/hadoop`, {})
       .subscribe(receipts => {
-              setTimeout(_ => this.redirectToDashboard(), 25*1000)
+        setTimeout(_ => this.redirectToDashboard(), 25 * 1000)
       }, error => {
         this.isSpinning = false
         this.apiService.handleErrors(error.error)

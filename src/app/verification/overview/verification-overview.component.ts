@@ -17,6 +17,7 @@ import {VerificationData} from "../../@core/common/verification-data";
 import {Router} from "@angular/router";
 import {UpdateVerificationStatusRequest} from "../../@core/common/verification-request";
 import {VerificationSharingService} from "../services/verification-sharing.service";
+import {ConfirmationService} from "primeng/api";
 
 interface DropdownOption {
   value: any;
@@ -54,8 +55,10 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
 
   tagOptionsCandidate = [];
   tagOptionsBaseline = [];
+  riskSlider = [0,100]
+  riskSliderValues = [0, 100]
 
-  constructor(private verificationService: VerificationService, private router: Router, private verificationSharingService: VerificationSharingService) {
+  constructor(private verificationService: VerificationService, private router: Router, private verificationSharingService: VerificationSharingService, private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -130,11 +133,17 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
   }
 
   deleteItems() {
-    for (let i of this.selectedItems) {
+    this.confirmationService.confirm({
+            message: 'Are you sure that you want to perform this action?',
+            accept: () => {
+                for (let i of this.selectedItems) {
       this.verificationService.delete(i.compareId).subscribe(res => {
         this.tableRef.value = this.tableRef.value.filter(item => i.compareId != item.compareId)
       })
     }
+            }
+        });
+
   }
 
   filterByDate(event) {
@@ -155,6 +164,7 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
   }
 
   filterByRisk(event) {
+    this.riskSliderValues = event.values
     this.tableRef.filter(event.values, 'risk', 'between');
   }
 

@@ -3,6 +3,10 @@
   height: 200px;
 }
 
+::ng-deep
+.ngx-charts g .grid-panel.odd rect {
+  fill: none;
+}
 //::ng-deep{
 //  /* Makes the chart container expand to the full width of the parent container*/
 //  .ngx-charts-outer {

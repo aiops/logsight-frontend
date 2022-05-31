@@ -5,11 +5,11 @@
     <verification-overview (onInsightsActivated)="onTabIndexChange(insightsTabIndex)"></verification-overview>
   </p-tabPanel>
 
-  <p-tabPanel header="Analytics">
-    <verification-analytics></verification-analytics>
-  </p-tabPanel>
-
     <p-tabPanel header="Insights">
     <verification-insights (onInsightsActivated)="onTabIndexChange(insightsTabIndex)"></verification-insights>
+  </p-tabPanel>
+
+    <p-tabPanel header="Analytics">
+    <verification-analytics></verification-analytics>
   </p-tabPanel>
 </p-tabView>

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {VerificationService} from '../services/verification.service';
 import {Tag} from "../../@core/common/tags";
-import {TagRequest} from "../../@core/common/TagRequest";
+import {TagRequest, TagValueRequest} from "../../@core/common/TagRequest";
 import {TagEntry} from "../../@core/common/TagEntry";
 import {VerificationRequest} from "../../@core/common/verification-request";
 import {ApiService} from "../../@core/service/api.service";
@@ -49,7 +49,7 @@ export class CreateVerificationComponent implements OnInit {
 
 
   loadBaselineTagValuesForKey(tagKey: string) {
-    this.verificationService.loadTagValueForKey(tagKey).subscribe(resp => {
+    this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey)).subscribe(resp => {
       this.baselineTagValues = resp.tagValues
     })
   }
@@ -93,7 +93,7 @@ export class CreateVerificationComponent implements OnInit {
   }
 
   loadCandidateTagValueForKey(tagKey: string) {
-    this.verificationService.loadTagValueForKey(tagKey).subscribe(resp => {
+    this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey)).subscribe(resp => {
       this.candidateTagValues = resp.tagValues
     })
   }

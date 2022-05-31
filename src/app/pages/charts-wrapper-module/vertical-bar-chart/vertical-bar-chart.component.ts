@@ -11,17 +11,17 @@ import * as moment from "moment";
 export class VerticalBarChartComponent {
   @Input() data = [];
 
-  showXAxis = true;
-  showYAxis = true;
+  showXAxis = false;
+  showYAxis = false;
   gradient = false;
-  showXAxisLabel = true;
+  showXAxisLabel = false;
   xAxisLabel = 'Time';
-  showYAxisLabel = true;
+  showYAxisLabel = false;
   yAxisLabel = 'Count';
 
   colorScheme = {
     domain: [
-      '#f0ff00'
+      '#007bd0'
     ]
   };
 

@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Status} from '../models/status.enum';
-import {TagRequest} from "../../@core/common/TagRequest";
+import {TagRequest, TagValueRequest} from "../../@core/common/TagRequest";
 import {
   IssuesKPIVerificationRequest,
   UpdateVerificationStatusRequest,
@@ -36,8 +36,8 @@ export class VerificationService {
     return this.apiService.post(`/api/v1/logs/tags/filter`, tagRequest);
   }
 
-  loadTagValueForKey(tagKey: string): Observable<any> {
-    return this.apiService.post(`/api/v1/logs/tags/values`, tagKey);
+  loadTagValueForKey(tagValueRequest: TagValueRequest): Observable<any> {
+    return this.apiService.post(`/api/v1/logs/tags/values`, tagValueRequest);
   }
 
   loadVerificationByID(compareId: string): Observable<any> {

@@ -3,3 +3,12 @@
     text-decoration: none !important;
   }
 }
+
+/** tabs **/
+.ui-tabs.ui-tabs-left > .ui-tabs-nav {
+   width: 100% !important;
+}
+/** panels **/
+.ui-tabs.ui-tabs-left > .ui-tabs-panels {
+   width: 100% !important;
+}

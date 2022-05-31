@@ -39,6 +39,7 @@ export class VerificationInsightsComponent implements OnInit {
 
   baselineTags = []
   candidateTags = []
+  verificationShortId = ""
 
   @Output() onInsightsActivated = new EventEmitter<void>();
   severityOptions: DropdownOption[] = [{value: Severity.Low, label: Severity[Severity.Low]}, {
@@ -57,6 +58,7 @@ export class VerificationInsightsComponent implements OnInit {
           this.onInsightsActivated.emit()
           this.verificationIdList = resp.listCompare
           this.verificationId = this.verificationIdList[0]
+          this.verificationShortId = this.verificationId["_id"].slice(0,7)
           let event = {"value": this.verificationIdList[0]}
           this.onVerificationSelect(event)
         })

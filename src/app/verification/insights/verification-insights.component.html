@@ -3,31 +3,17 @@
   <!--  Filter by verification ID or tags -->
   <div class="row">
     <div class="col-12 col-md-12 col-lg-12 mb-12 mb-lg-0">
-      <p-card header="Filter">
+      <p-card header="Verification">
 
         <div class="row">
           <div class="col-2 border-right">
             <div class="row">
-              <div class="col my-auto">Verification ID
+              <div class="col my-auto">ID
               </div>
             </div>
             <div class="row pt-1">
               <div class="col my-auto">
-                <p-dropdown (onChange)="onVerificationSelect($event)" [(ngModel)]="verificationId"
-                            [filter]="true" [options]="verificationIdList" [showClear]="true"
-                            filterBy="_id"
-                            optionLabel="_id" placeholder="Select ID">
-                  <ng-template pTemplate="selectedItem">
-                    <div *ngIf="verificationId">
-                      <div>{{verificationId._id}}</div>
-                    </div>
-                  </ng-template>
-                  <ng-template let-verificationId pTemplate="item">
-                    <div>
-                      <div>{{verificationId._id}}</div>
-                    </div>
-                  </ng-template>
-                </p-dropdown>
+                <input type="text" pInputText [(ngModel)]="verificationShortId" placeholder="ID must be selected via the Overview tab">
               </div>
             </div>
             <div class="row pt-2">
@@ -135,7 +121,7 @@
     <div class="col-xl-3 col-sm-6 col-12">
       <p-card>
         <div class="media d-flex">
-          <div class="align-self-center"><i class="icon-frame text-primary font-large-2 float-left"></i>
+          <div class="align-self-center"><i class="icon-layers text-primary font-large-2 float-left"></i>
           </div>
           <div class="media-body text-right">
             <h3 class="text-primary"> {{this.tableDataUnified.total_n_log_messages}} </h3>
@@ -151,7 +137,7 @@
             <h3 class="text-primary"> {{this.tableDataUnified.count_baseline}} </h3>
             <span>Baseline</span>
           </div>
-          <div class="align-self-center"><i class="icon-home text-primary font-large-2 float-right"></i>
+          <div class="align-self-center"><i class="icon-graph text-primary font-large-2 float-right"></i>
           </div>
         </div>
       </p-card>
@@ -229,7 +215,7 @@
           <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
             <div class="d-flex align-items-start">
                 <span class="card-icon primary d-flex justify-content-center mr-3">
-                  <i class="icon p-1 icon-graph customize-icon font-large-2 p-1 text-primary"></i>
+                  <i class="icon p-1 icon-bar-chart customize-icon font-large-2 p-1 text-primary"></i>
                 </span>
               <div class="stats-amount mr-3">
                 <h3 class="heading-text text-bold-600 text-primary"> {{ this.tableDataUnified.frequency_change }} </h3>
@@ -258,6 +244,14 @@
   <div class="row pt-5">
     <div class="col-12">
       <p-card header="State analysis">
+        <div class="row text-right">
+          <div class="col text-muted text-right">
+            Baseline (B)
+            <br>
+          Candidate (C)
+            </div>
+        </div>
+
         <p-table
           #statesTable
           [paginator]="true"
@@ -275,10 +269,10 @@
               <th [pSortableColumn]="'risk_description'" style="width: 7%">{{this.tableDataUnified.cols[1]}}
                 <p-sortIcon [field]="'risk_description'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'perc_baseline'" style="width: 6%">{{this.tableDataUnified.cols[2]}}(B)
+              <th [pSortableColumn]="'perc_baseline'" style="width: 6%">{{this.tableDataUnified.cols[2]}}
                 <p-sortIcon [field]="'perc_baseline'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'perc_candidate'" style="width: 6%">{{this.tableDataUnified.cols[3]}}(C)
+              <th [pSortableColumn]="'perc_candidate'" style="width: 6%">{{this.tableDataUnified.cols[3]}}
                 <p-sortIcon [field]="'perc_candidate'"></p-sortIcon>
               </th>
               <th [pSortableColumn]="'template'"
@@ -452,7 +446,7 @@
               </td>
 
               <td class="semantics text-left"
-                  style="color: {{item.semantic_color[0]}}">{{item.semantics}}
+                  style="color: {{item.semantic_color[0]}}">{{item.semantics.toUpperCase()}}
               </td>
 
             </tr>

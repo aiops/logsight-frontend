@@ -1,5 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {VerificationOverviewComponent} from "./overview/verification-overview.component";
 
 @Component({
@@ -8,21 +7,23 @@ import {VerificationOverviewComponent} from "./overview/verification-overview.co
   styleUrls: ['./verification.component.scss']
 })
 export class VerificationComponent implements OnInit {
-  constructor() { }
-  insightsTabIndex = 2
+  constructor() {
+  }
+
+  insightsTabIndex = 1
   activeIndex = 0
   isVerificationCreated = false
   @ViewChild(VerificationOverviewComponent) overviewComponent;
+
   ngOnInit(): void {
   }
 
-  onTabIndexChange(index){
+  onTabIndexChange(index) {
     this.activeIndex = index
   }
 
-  onVerificationCreated(){
+  onVerificationCreated() {
     this.isVerificationCreated = true
-    console.log(this.isVerificationCreated)
   }
 
 }

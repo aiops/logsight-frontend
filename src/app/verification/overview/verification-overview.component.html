@@ -9,9 +9,10 @@
     [rows]="rowsPerPageOptions[0]"
     sortMode="multiple">
     <ng-template pTemplate="caption">
-        <div class="table-header d-flex justify-content-between align-items-center">
+        <div class="table-header  align-items-center">
             <h2></h2>
             <div>
+              <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
                 <button
                     pButton
                     type="button"
@@ -36,7 +37,7 @@
             <th style="width: 7%" [pSortableColumn]="'risk'">Risk <p-sortIcon [field]="'risk'"></p-sortIcon></th>
             <th style="width: 10%" [pSortableColumn]="'severity'">Severity <p-sortIcon [field]="'severity'"></p-sortIcon></th>
             <th style="width: 10%" [pSortableColumn]="'status'">Status <p-sortIcon [field]="'status'"></p-sortIcon></th>
-            <th style="width: 10%" class="text-center">Insights</th>
+            <th style="width: 10%" class="text-center"></th>
         </tr>
         <tr>
             <th>
@@ -64,8 +65,9 @@
             <th>
                 <p-multiSelect placeholder="Filter" [options]="tagOptionsCandidate" (onChange)="filterByCandidateTags($event)" [filter]="true"></p-multiSelect>
             </th>
-            <th>
-                <p-slider [ngModel]="[0, 100]" [min]="0" max="100" [range]="true" (onSlideEnd)="filterByRisk($event)"></p-slider>
+            <th class="text-center">
+              <p>{{riskSliderValues[0]}} to {{riskSliderValues[1]}}</p>
+                <p-slider [ngModel]="riskSlider" [min]="0" max="100" [range]="true" (onSlideEnd)="filterByRisk($event)"></p-slider>
             </th>
             <th>
                 <p-dropdown
@@ -101,7 +103,7 @@
             <td>
               <p-checkbox name="verifications" [value]="item" [(ngModel)]="selectedItems"></p-checkbox>
             </td>
-            <td>{{item.timestamp | date: 'medium'}}</td>
+            <td>{{item.timestamp | date: 'MMM d, y, hh:mm:ss'}}</td>
             <td>{{item.compareId}}</td>
             <td>
                 <nb-tag-list>

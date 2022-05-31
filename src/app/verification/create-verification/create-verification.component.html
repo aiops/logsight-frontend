@@ -21,27 +21,13 @@
                       placeholder="Value"></p-dropdown>
         </div>
         <div class="col-2 my-auto">
-          <button label="Add" (click)="setBaselineTagKeyValue()" pButton style="text-transform: none;"
+          <button class="p-button-lg" label="Add" (click)="setBaselineTagKeyValue()" pButton style="text-transform: none;"
                   type="button">
           </button>
         </div>
       </div>
 
       <div class="row pt-2">
-              <div *ngIf="!baselineTagMapKeys.length" class="col">
-                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-              </div>
-              <div *ngIf="!baselineTagMapKeys.length" class="col">
-                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-              </div>
-              <div *ngIf="!baselineTagMapKeys.length" class="col">
-                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-              </div>
-              <div *ngIf="!baselineTagMapKeys.length" class="col">
-                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-              </div>
-              <div *ngIf="!baselineTagMapKeys.length" class="col-2">
-              </div>
               <div *ngIf="baselineTagMapKeys.length" class="col">
                 <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
                   <nb-tag *ngFor="let tagKey of baselineTagMapKeys" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"
@@ -75,27 +61,13 @@
                       placeholder="Value"></p-dropdown>
         </div>
         <div class="col-2 my-auto">
-          <button label="Add" (click)="setCandidateTagKeyValue()" pButton style="text-transform: none;"
+          <button class="p-button-lg" label="Add" (click)="setCandidateTagKeyValue()" pButton style="text-transform: none;"
                   type="button">
           </button>
         </div>
       </div>
 
       <div class="row pt-2">
-              <div *ngIf="!candidateTagMapKeys.length" class="col">
-                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-              </div>
-              <div *ngIf="!candidateTagMapKeys.length" class="col">
-                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-              </div>
-              <div *ngIf="!candidateTagMapKeys.length" class="col">
-                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-              </div>
-              <div *ngIf="!candidateTagMapKeys.length" class="col">
-                <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-              </div>
-              <div *ngIf="!candidateTagMapKeys.length" class="col-2">
-              </div>
               <div *ngIf="candidateTagMapKeys.length" class="col">
                 <nb-tag-list (tagRemove)="onCandidateTagRemove($event)">
                   <nb-tag *ngFor="let tagKey of candidateTagMapKeys" [text]="tagKey + ':' + candidateTagMap.get(tagKey)"
@@ -110,8 +82,8 @@
 
     <div class="col-2 my-auto text-center">
       <div class="row">
-        <div class="col">
-          <button class="p-button-lg" label="Create verification" (click)="createVerification()" pButton [loading]="isLoading" style="text-transform: none;"
+        <div class="col pt-3">
+          <button class="p-button-lg" label="Create" (click)="createVerification()" pButton [loading]="isLoading" style="text-transform: none;"
                   type="button">
           </button>
         </div>

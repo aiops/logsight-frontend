@@ -1,68 +1,56 @@
 <div class="container-fluid">
 
   <!--  Filter by verification ID or tags -->
-  <div class="row">
-    <div class="col-6">
-      <div class="row">
-        <div class="col">
-          Baseline tags
+  <p-card header="Filter">
+    <div class="row">
+      <div class="col-6">
+        <div class="row">
+          <div class="col">
+            Baseline tags
+          </div>
         </div>
-      </div>
-      <div class="row pt-2">
-        <div class="col-5 my-auto">
-          <p-dropdown (onChange)="baselineTagKeySelected($event)" [(ngModel)]="baselineTagKey" [filter]="true"
-                      [options]="baselineTags"
-                      filterBy="tagName"
-                      optionLabel="tagName" optionValue="tagName" placeholder="Name">
-          </p-dropdown>
+        <div class="row pt-2">
+          <div class="col-5 my-auto">
+            <p-dropdown (onChange)="baselineTagKeySelected($event)" [(ngModel)]="baselineTagKey" [filter]="true"
+                        [options]="baselineTags"
+                        filterBy="tagName"
+                        optionLabel="tagName" optionValue="tagName" placeholder="Name">
+            </p-dropdown>
+          </div>
+          <div class="col-5 my-auto">
+            <p-dropdown (onChange)="baselineTagValueSelected($event)" [(ngModel)]="baselineTagId" [filter]="true"
+                        [options]="baselineTagValues"
+                        filterBy="tagValue" optionLabel="tagValue" optionValue="tagValue"
+                        placeholder="Value"></p-dropdown>
+          </div>
+          <div class="col-1 my-auto border-right text-center">
+            <button class="p-button-lg" (click)="setBaselineTagKeyValue()" label="Add" pButton style="text-transform: none;"
+                    type="button">
+            </button>
+          </div>
+          <div class="col-1 my-auto text-center">
+            <button class="p-button-lg" (click)="loadAnalytics()" [loading]="isLoading" label="Search" pButton
+                    style="text-transform: none;"
+                    type="button">
+            </button>
+          </div>
         </div>
-        <div class="col-5 my-auto">
-          <p-dropdown (onChange)="baselineTagValueSelected($event)" [(ngModel)]="baselineTagId" [filter]="true"
-                      [options]="baselineTagValues"
-                      filterBy="tagValue" optionLabel="tagValue" optionValue="tagValue"
-                      placeholder="Value"></p-dropdown>
-        </div>
-        <div class="col-1 my-auto border-right text-center">
-          <button (click)="setBaselineTagKeyValue()" label="Add" pButton style="text-transform: none;"
-                  type="button">
-          </button>
-        </div>
-        <div class="col-1 my-auto text-center">
-          <button (click)="loadIssuesKPI()" [loading]="isLoading" label="Search" pButton
-                  style="text-transform: none;"
-                  type="button">
-          </button>
+
+        <div class="row pt-2">
+          <div *ngIf="baselineTagMapKeys.length" class="col">
+            <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
+              <nb-tag *ngFor="let tagKey of baselineTagMapKeys" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"
+                      appearance="filled"
+                      removable
+                      status="primary" style="text-transform: none"></nb-tag>
+            </nb-tag-list>
+          </div>
+          <div *ngIf="baselineTagMapKeys.length" class="col-2"></div>
         </div>
       </div>
 
-      <div class="row pt-2">
-        <div *ngIf="!baselineTagMapKeys.length" class="col">
-          <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-        </div>
-        <div *ngIf="!baselineTagMapKeys.length" class="col">
-          <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-        </div>
-        <div *ngIf="!baselineTagMapKeys.length" class="col">
-          <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-        </div>
-        <div *ngIf="!baselineTagMapKeys.length" class="col">
-          <p-skeleton borderRadius="16px" height="2rem"></p-skeleton>
-        </div>
-        <div *ngIf="!baselineTagMapKeys.length" class="col-2">
-        </div>
-        <div *ngIf="baselineTagMapKeys.length" class="col">
-          <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
-            <nb-tag *ngFor="let tagKey of baselineTagMapKeys" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"
-                    appearance="filled"
-                    removable
-                    status="primary" style="text-transform: none"></nb-tag>
-          </nb-tag-list>
-        </div>
-        <div *ngIf="baselineTagMapKeys.length" class="col-2"></div>
-      </div>
     </div>
-
-  </div>
+  </p-card>
 
   <div class="row grouped-multiple-statistics-card pt-5">
     <div class="col-12">
@@ -71,8 +59,12 @@
           <div class="col-4 border-right my-auto">
             <div class="row">
               <div class="col text-center">
-                <h2 class="text-primary">23</h2>
-                Verification frequency / week
+                <h2 class="text-muted">{{verificationFrequencyCount}}</h2>
+                Verification count
+                <div class="row justify-content-center my-auto">
+                  <vertical-bar-chart [data]="verificationFrequencyBarData"></vertical-bar-chart>
+                </div>
+
               </div>
             </div>
             <div class="row">
@@ -82,12 +74,12 @@
             </div>
             <div class="row">
               <div class="col text-center">
-                <div class="row">
-                  <div class="col text-center"><h2 class="text-primary">76</h2>
-                    Avg/month
+                <div class="row pt-3">
+                  <div class="col text-right border-right"><h2 class="text-muted">{{verificationFrequencyAverage}}</h2>
+                    Average
                   </div>
-                  <div class="col text-center"><h2 class="text-primary">1</h2>
-                    Today
+                  <div class="col text-left"><h2 class="text-muted">{{verificationFrequencyWeek }}</h2>
+                    Last week
                   </div>
                 </div>
               </div>
@@ -96,8 +88,11 @@
           <div class="col-4 border-right my-auto">
             <div class="row">
               <div class="col text-center">
-                <h2 class="text-primary">23</h2>
+                <h2 class="text-muted">{{verificationVelocityMeanValue | number:'1.1-1'}} s</h2>
                 Verification velocity
+                <div class="row justify-content-center my-auto">
+                  <vertical-bar-chart [data]="verificationVelocityBarData"></vertical-bar-chart>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -107,11 +102,11 @@
             </div>
             <div class="row">
               <div class="col text-center">
-                <div class="row">
-                  <div class="col text-center"><h2 class="text-primary">10</h2>
+                <div class="row pt-3">
+                  <div class="col text-right border-right"><h2 class="text-muted">{{verificationVelocityMinValue | number:'1.1-1'}} s</h2>
                     Minimum
                   </div>
-                  <div class="col text-center"><h2 class="text-primary">17</h2>
+                  <div class="col text-left"><h2 class="text-muted">{{verificationVelocityMaxValue | number:'1.1-1'}} s</h2>
                     Maximum
                   </div>
                 </div>
@@ -122,8 +117,11 @@
           <div class="col-4 border-right my-auto">
             <div class="row">
               <div class="col text-center">
-                <h2 class="text-primary">0.04</h2>
+                <h2 class="text-danger">{{verificationFailureRatioMeanValue | number:'1.1-2'}}</h2>
                 Failure ratio
+                <div class="row justify-content-center my-auto">
+                  <vertical-bar-chart [data]="verificationFailureRatioBarData"></vertical-bar-chart>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -133,12 +131,12 @@
             </div>
             <div class="row">
               <div class="col text-center">
-                <div class="row">
-                  <div class="col text-center"><h2 class="text-primary">0.08</h2>
-                    1 month
+                <div class="row pt-3">
+                  <div class="col text-right border-right"><h2 class="text-danger">{{verificationFailureRatioMaxValue | number:'1.1-1'}}</h2>
+                    Maximum
                   </div>
-                  <div class="col text-center"><h2 class="text-primary">0.05</h2>
-                    1 week
+                  <div class="col text-left"><h2 class="text-danger">{{verificationFailureRatioWeek | number:'1.1-1'}}</h2>
+                    Last week
                   </div>
                 </div>
               </div>
@@ -158,18 +156,17 @@
               <div class="col text-center">
                 <div class="row">
                   <div class="col text-center">
-                    <h2 class="text-primary">56%</h2>
-                    Median
+                    <h2 class="text-muted">{{meanRisk | number:'1.1-1'}} %</h2>
+                    Mean
                   </div>
                 </div>
                 <div class="row pt-3">
-                  <div class="col text-center border-right">
-                    <h2 class="text-primary">23%</h2>
+                  <div class="col text-right border-right">
+                    <h2 class="text-muted">{{minRisk | number:'1.1-1'}}%</h2>
                     Minimum
                   </div>
-                  <div class="col text-center">
-                    <h2 class="text-primary">97%</h2>
-
+                  <div class="col text-left">
+                    <h2 class="text-muted">{{maxRisk | number:'1.1-1'}}%</h2>
                     Maximum
                   </div>
                 </div>
@@ -179,7 +176,9 @@
           <div class="col-9">
             <div class="row">
               <div class="col">
-                <p-chart [data]="basicData" height="200px" type="bar" width="100%"></p-chart>
+                <!--                <p-chart [data]="basicData" height="200px" type="bar" width="100%"></p-chart>-->
+                <grouped-vertical-bar-chart-2d [colorScheme]="colorBar"
+                                               [data]="riskBarData"></grouped-vertical-bar-chart-2d>
               </div>
             </div>
           </div>
@@ -202,7 +201,7 @@
               </div>
               <div class="col text-center">
                 <div class="row">
-                  <h2 class="text-primary">{{issuesAssigned + issuesRaised + issuesSolved}}</h2>
+                  <h2 class="text-muted">{{issuesAssigned + issuesRaised + issuesSolved}}</h2>
                 </div>
                 <div class="row pt-2">
                   Number of verifications
@@ -219,7 +218,7 @@
               </div>
               <div class="col text-center">
                 <div class="row">
-                  <h2 class="text-primary">{{issuesRaised}}</h2>
+                  <h2 class="text-muted">{{issuesRaised}}</h2>
                 </div>
                 <div class="row pt-2">
                   Issues raised
@@ -236,7 +235,7 @@
               </div>
               <div class="col text-center">
                 <div class="row">
-                  <h2 class="text-primary">{{issuesAssigned}}</h2>
+                  <h2 class="text-muted">{{issuesAssigned}}</h2>
                 </div>
                 <div class="row pt-2">
                   Issues assigned
@@ -253,7 +252,7 @@
               </div>
               <div class="col text-center">
                 <div class="row">
-                  <h2 class="text-primary">{{issuesSolved}}</h2>
+                  <h2 class="text-muted">{{issuesSolved}}</h2>
                 </div>
                 <div class="row pt-2">
                   Issues resolved

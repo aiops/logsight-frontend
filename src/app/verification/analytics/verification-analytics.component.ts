@@ -3,15 +3,19 @@ import {Severity} from '../models/severity.enum';
 import {VerificationService} from '../services/verification.service';
 import {ActivatedRoute} from "@angular/router";
 import {IssuesKPIVerificationRequest} from "../../@core/common/verification-request";
-import {TagRequest} from "../../@core/common/TagRequest";
+import {TagRequest, TagValueRequest} from "../../@core/common/TagRequest";
 import {TagEntry} from "../../@core/common/TagEntry";
 import {Tag} from "../../@core/common/tags";
 import {Status} from "../models/status.enum";
+import {ChartRequest} from "../../@core/common/chart-request";
+import {ChartConfig} from "../../@core/common/chart-config";
+import * as moment from 'moment';
 
 interface DropdownOption {
   value: any;
   label: string;
 }
+
 
 @Component({
   selector: 'verification-analytics',
@@ -20,17 +24,7 @@ interface DropdownOption {
 })
 export class VerificationAnalyticsComponent implements OnInit {
 
-
-  barChartOptions = {
-    responsive: false, maintainAspectRatio: false
-  };
-  basicData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'], datasets: [{
-      label: 'My First dataset', backgroundColor: '#42A5F5', data: [65, 59, 80, 81, 56, 55, 40]
-    }, {
-      label: 'My Second dataset', backgroundColor: '#FFA726', data: [28, 48, 40, 19, 86, 27, 90]
-    }]
-  };
+  userId = ""
 
 
   baselineTags: Tag[];
@@ -50,10 +44,36 @@ export class VerificationAnalyticsComponent implements OnInit {
   compareStatusCounts: Map<number, number>;
   isLoading = false;
 
+
+  riskBarData = []
+  colorBar = {
+    domain: ['#FFA726', '#42A5F5', '#24ff38']
+  };
+  meanRisk = 0
+  minRisk = 0
+  maxRisk = 0
+
+
   issuesRaised = 0
   issuesAssigned = 0
   issuesSolved = 0
   totalIssues = 0
+
+  verificationFrequencyBarData = []
+  verificationFrequencyAverage = 0
+  verificationFrequencyCount = 0
+  verificationFrequencyWeek = 0
+
+  verificationVelocityMinValue = 999
+  verificationVelocityMaxValue = 0
+  verificationVelocityMeanValue = 0
+  verificationVelocityBarData = []
+
+  verificationFailureRatioMaxValue = 0
+  verificationFailureRatioWeek = 0
+  verificationFailureRatioBarData = []
+  verificationFailureRatioMeanValue = 0
+
 
   severityOptions: DropdownOption[] = [{value: Severity.Low, label: Severity[Severity.Low]}, {
     value: Severity.Medium, label: Severity[Severity.Medium]
@@ -64,7 +84,13 @@ export class VerificationAnalyticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAvailableTagKeys(new TagRequest([]))
+    this.userId = localStorage.getItem('userId')
+    this.loadAvailableTagKeys(new TagRequest([], "*_verifications"))
+  }
+
+  loadAnalytics() {
+    this.loadIssuesKPI()
+    this.loadBarChartData()
   }
 
   loadIssuesKPI() {
@@ -87,6 +113,185 @@ export class VerificationAnalyticsComponent implements OnInit {
     });
   }
 
+  loadBarChartData() {
+    const convBaselineMap = {};
+    this.baselineTagMap.forEach((val: string, key: string) => {
+      convBaselineMap[key] = val;
+    });
+    let parametersRisk = {
+      "type": "barchart",
+      "feature": "compare_analytics_risk",
+      "indexType": "verifications",
+      "baselineTags": convBaselineMap
+    }
+    let chartRequestRisk = new ChartRequest(new ChartConfig(parametersRisk), null)
+    this.verificationService.loadBarData(this.userId, chartRequestRisk).subscribe(data => {
+      data = data.data.data
+      let count = 0
+      if (data) {
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].series.length; j++) {
+            if (data[i].series[j].name == "Min risk" && data[i].series[j].value != 0) {
+              this.minRisk += Number(data[i].series[j].value)
+            } else if (data[i].series[j].name == "Max risk" && data[i].series[j].value != 0) {
+              this.maxRisk += Number(data[i].series[j].value)
+            } else if (data[i].series[j].name == "Mean risk" && data[i].series[j].value != 0) {
+              this.meanRisk += Number(data[i].series[j].value)
+            }
+            if (data[i].series[j].value != 0) {
+              count += 1
+            }
+          }
+          var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
+          data[i].name = local.toString()
+        }
+        this.meanRisk = this.meanRisk / (count / 3)
+        this.maxRisk = this.maxRisk / (count / 3)
+        this.minRisk = this.minRisk / (count / 3)
+        this.riskBarData = data;
+      }
+    });
+    let parametersVerificationFrequency = {
+      "type": "barchart",
+      "feature": "compare_analytics_verification_frequency",
+      "indexType": "verifications",
+      "baselineTags": convBaselineMap
+    }
+    let chartRequestVerificationFrequency = new ChartRequest(new ChartConfig(parametersVerificationFrequency), null)
+    this.verificationService.loadBarData(this.userId, chartRequestVerificationFrequency).subscribe(data => {
+      data = data.data.data
+      let count = 0
+      this.verificationFrequencyAverage = 0
+      this.verificationFrequencyWeek = 0
+      this.verificationFrequencyAverage = 0
+      if (data) {
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].series.length; j++) {
+            if (data[i].series[j].name == "Count" && data[i].series[j].value != 0) {
+              this.verificationFrequencyAverage += Number(data[i].series[j].value)
+              this.verificationFrequencyCount += Number(data[i].series[j].value)
+              count += 1
+              this.verificationFrequencyWeek = Number(data[i].series[j].value)
+            }
+          }
+          var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
+          data[i].name = local.toString()
+        }
+        this.verificationFrequencyAverage = this.verificationFrequencyAverage / count
+        this.verificationFrequencyBarData = data;
+      }
+    });
+
+    let parametersVerificationVelocity = {
+      "type": "barchart",
+      "feature": "compare_analytics_verification_velocity",
+      "indexType": "verifications",
+      "baselineTags": convBaselineMap
+    }
+    let chartRequestVerificationVelocity = new ChartRequest(new ChartConfig(parametersVerificationVelocity), null)
+    this.verificationService.loadBarData(this.userId, chartRequestVerificationVelocity).subscribe(data => {
+      data = data.data.data
+      if (data) {
+        let count = 0
+        this.verificationVelocityMeanValue = 0
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].series.length; j++) {
+            if (data[i].series[j].name == "Velocity" && data[i].series[j].value != 0) {
+              this.verificationVelocityMeanValue += data[i].series[j].value
+              count += 1
+            }
+          }
+          var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
+          data[i].name = local.toString()
+        }
+        this.verificationVelocityMeanValue = this.verificationVelocityMeanValue / count
+        this.verificationVelocityBarData = data;
+      }
+    });
+
+    let parametersVerificationVelocityMinMax = {
+      "type": "barchart",
+      "feature": "compare_analytics_verification_velocity_min_max",
+      "indexType": "verifications",
+      "baselineTags": convBaselineMap
+    }
+    let chartRequestVerificationVelocityMinMax = new ChartRequest(new ChartConfig(parametersVerificationVelocityMinMax), null)
+    this.verificationService.loadBarData(this.userId, chartRequestVerificationVelocityMinMax).subscribe(data => {
+      data = data.data.data
+      let count = 0
+      let minValue = 9999
+      let maxValue = 0
+      this.verificationVelocityMinValue = 0
+      this.verificationVelocityMaxValue = 0
+      if (data) {
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].series.length; j++) {
+            if (data[i].series[j].name == "Min velocity" && data[i].series[j].value != 0) {
+              if (minValue > data[i].series[j].value) {
+                minValue = data[i].series[j].value
+              }
+            }
+            if (data[i].series[j].name == "Max velocity" && data[i].series[j].value != 0) {
+              if (maxValue < data[i].series[j].value) {
+                maxValue = data[i].series[j].value
+              }
+            }
+          }
+        }
+        this.verificationVelocityMinValue = minValue
+        this.verificationVelocityMaxValue = maxValue
+      }
+    });
+
+    let parametersVerificationFailureRatio = {
+      "type": "barchart",
+      "feature": "compare_analytics_verification_failure_ratio",
+      "indexType": "verifications",
+      "baselineTags": convBaselineMap
+    }
+    let chartRequestVerificationFailureRatio = new ChartRequest(new ChartConfig(parametersVerificationFailureRatio), null)
+    this.verificationService.loadBarData(this.userId, chartRequestVerificationFailureRatio).subscribe(data => {
+      data = data.data.data
+      let count = 0
+      this.verificationFailureRatioMaxValue = 0
+      this.verificationFailureRatioMeanValue = 0
+      console.log(data)
+      if (data) {
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].series.length; j++) {
+            if (data[i].series[j].name == "Failure ratio" && data[i].series[j].value != 0) {
+              this.verificationFailureRatioWeek = data[i].series[j].value
+              this.verificationFailureRatioMeanValue += data[i].series[j].value
+              count += 1
+              if (this.verificationFailureRatioMaxValue < data[i].series[j].value) {
+                this.verificationFailureRatioMaxValue = data[i].series[j].value
+              }
+            }
+          }
+          var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
+          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
+          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
+          data[i].name = local.toString()
+
+        }
+        this.verificationFailureRatioBarData = data
+        if (this.verificationFailureRatioMeanValue == 0) {
+          this.verificationFailureRatioMeanValue = 0
+        } else {
+          this.verificationFailureRatioMeanValue = this.verificationFailureRatioMeanValue / count
+        }
+        console.log(this.verificationFailureRatioMeanValue)
+      }
+    });
+
+  }
+
 
   loadAvailableTagKeys(tagRequest: TagRequest) {
     this.loadAvailableBaselineTagKeys(tagRequest)
@@ -100,7 +305,7 @@ export class VerificationAnalyticsComponent implements OnInit {
 
 
   loadBaselineTagValuesForKey(tagKey: string) {
-    this.verificationService.loadTagValueForKey(tagKey).subscribe(resp => {
+    this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey, "*_verifications")).subscribe(resp => {
       this.baselineTagValues = resp.tagValues
     })
   }
@@ -141,21 +346,6 @@ export class VerificationAnalyticsComponent implements OnInit {
     this.verificationService.loadAvailableTagKeys(tagRequest).subscribe(resp => {
       this.baselineTags = resp.tagKeys
     })
-  }
-
-  loadCandidateTagValueForKey(tagKey: string) {
-    this.verificationService.loadTagValueForKey(tagKey).subscribe(resp => {
-      this.candidateTagValues = resp.tagValues
-    })
-  }
-
-  candidateTagValueSelected(event) {
-    this.candidateTagId = event.value
-  }
-
-  candidateTagKeySelected(event) {
-    this.candidateTagKey = event.value
-    this.loadCandidateTagValueForKey(this.candidateTagKey)
   }
 
 

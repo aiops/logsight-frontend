@@ -9,7 +9,6 @@ import {
     NbTreeGridModule
 } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { QualityService} from './quality.service';
 import { NvD3Module } from 'ng2-nvd3';
 import { QualityPage } from './quality.page';
@@ -30,7 +29,6 @@ import {NgScrollbarModule} from "ngx-scrollbar";
     NbIconModule,
     NbInputModule,
     ThemeModule,
-    Ng2SmartTableModule,
     NvD3Module,
     FormsModule,
     NbButtonModule,

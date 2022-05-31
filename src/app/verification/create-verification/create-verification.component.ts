@@ -60,7 +60,8 @@ export class CreateVerificationComponent implements OnInit {
 
   setBaselineTagKeyValue() {
     this.baselineTagValues = []
-    this.baselineTagMap.set(this.baselineTagKey, this.baselineTagId)
+    if(this.baselineTagKey && this.baselineTagId){
+      this.baselineTagMap.set(this.baselineTagKey, this.baselineTagId)
     if (!this.baselineTagMapKeys.includes(this.baselineTagKey)) {
       this.baselineTagMapKeys.push(this.baselineTagKey)
     }
@@ -71,6 +72,10 @@ export class CreateVerificationComponent implements OnInit {
     this.baselineTagKey = null
     this.baselineTagId = null
     this.loadAvailableBaselineTagKeys(new TagRequest(baselineTagList))
+    }else{
+      this.apiService.handleNotification("Please select tag name and value!")
+    }
+
   }
 
   onBaselineTagRemove(event) {
@@ -110,7 +115,8 @@ export class CreateVerificationComponent implements OnInit {
 
   setCandidateTagKeyValue() {
     this.candidateTagValues = []
-    this.candidateTagMap.set(this.candidateTagKey, this.candidateTagId)
+    if(this.candidateTagKey && this.candidateTagId){
+          this.candidateTagMap.set(this.candidateTagKey, this.candidateTagId)
     if (!this.candidateTagMapKeys.includes(this.candidateTagKey)) {
       this.candidateTagMapKeys.push(this.candidateTagKey)
     }
@@ -121,6 +127,10 @@ export class CreateVerificationComponent implements OnInit {
     this.candidateTagKey = null
     this.candidateTagId = null
     this.loadAvailableCandidateTagKeys(new TagRequest(candidateTagList))
+    }else{
+      this.apiService.handleNotification("Please select tag name and value!")
+    }
+
   }
 
   createVerification() {
@@ -137,9 +147,9 @@ export class CreateVerificationComponent implements OnInit {
     this.verificationService.createVerification(verificationRequest).subscribe(resp => {
       console.log(resp)
       this.isLoading = false
-      setTimeout(_ =>{
+      setTimeout(_ => {
         this.verificationSharingService.setData(true)
-      },1000)
+      }, 1000)
     }, error => {
       this.isLoading = false
       this.apiService.handleErrors(error)

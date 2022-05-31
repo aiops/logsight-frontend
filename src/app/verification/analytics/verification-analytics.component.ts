@@ -10,6 +10,7 @@ import {Status} from "../models/status.enum";
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ChartConfig} from "../../@core/common/chart-config";
 import * as moment from 'moment';
+import {ApiService} from "../../@core/service/api.service";
 
 interface DropdownOption {
   value: any;
@@ -47,7 +48,7 @@ export class VerificationAnalyticsComponent implements OnInit {
 
   riskBarData = []
   colorBar = {
-    domain: ['#FFA726', '#42A5F5', '#24ff38']
+    domain: ['#005f9d', '#007bd0', '#0090f5']
   };
   meanRisk = 0
   minRisk = 0
@@ -80,7 +81,7 @@ export class VerificationAnalyticsComponent implements OnInit {
   }, {value: Severity.High, label: Severity[Severity.High]}];
 
 
-  constructor(private verificationService: VerificationService, private route: ActivatedRoute,) {
+  constructor(private verificationService: VerificationService, private route: ActivatedRoute, private apiService: ApiService) {
   }
 
   ngOnInit(): void {
@@ -89,8 +90,13 @@ export class VerificationAnalyticsComponent implements OnInit {
   }
 
   loadAnalytics() {
-    this.loadIssuesKPI()
-    this.loadBarChartData()
+    if (this.baselineTagMap.size > 0) {
+      this.loadIssuesKPI()
+      this.loadBarChartData()
+    } else {
+      this.apiService.handleNotification("Please select tag name and value!")
+    }
+
   }
 
   loadIssuesKPI() {
@@ -128,6 +134,9 @@ export class VerificationAnalyticsComponent implements OnInit {
     this.verificationService.loadBarData(this.userId, chartRequestRisk).subscribe(data => {
       data = data.data.data
       let count = 0
+      this.meanRisk = 0
+      this.maxRisk = 0
+      this.minRisk = 0
       if (data) {
         for (let i = 0; i < data.length; i++) {
           for (let j = 0; j < data[i].series.length; j++) {
@@ -166,6 +175,7 @@ export class VerificationAnalyticsComponent implements OnInit {
       this.verificationFrequencyAverage = 0
       this.verificationFrequencyWeek = 0
       this.verificationFrequencyAverage = 0
+      this.verificationFrequencyCount = 0
       if (data) {
         for (let i = 0; i < data.length; i++) {
           for (let j = 0; j < data[i].series.length; j++) {
@@ -261,7 +271,6 @@ export class VerificationAnalyticsComponent implements OnInit {
       let count = 0
       this.verificationFailureRatioMaxValue = 0
       this.verificationFailureRatioMeanValue = 0
-      console.log(data)
       if (data) {
         for (let i = 0; i < data.length; i++) {
           for (let j = 0; j < data[i].series.length; j++) {
@@ -286,7 +295,6 @@ export class VerificationAnalyticsComponent implements OnInit {
         } else {
           this.verificationFailureRatioMeanValue = this.verificationFailureRatioMeanValue / count
         }
-        console.log(this.verificationFailureRatioMeanValue)
       }
     });
 
@@ -316,17 +324,22 @@ export class VerificationAnalyticsComponent implements OnInit {
 
   setBaselineTagKeyValue() {
     this.baselineTagValues = []
-    this.baselineTagMap.set(this.baselineTagKey, this.baselineTagId)
-    if (!this.baselineTagMapKeys.includes(this.baselineTagKey)) {
-      this.baselineTagMapKeys.push(this.baselineTagKey)
+    if (this.baselineTagKey && this.baselineTagId) {
+      this.baselineTagMap.set(this.baselineTagKey, this.baselineTagId)
+      if (!this.baselineTagMapKeys.includes(this.baselineTagKey)) {
+        this.baselineTagMapKeys.push(this.baselineTagKey)
+      }
+      let baselineTagList = []
+      for (let tagK of this.baselineTagMap.keys()) {
+        baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
+      }
+      this.baselineTagKey = null
+      this.baselineTagId = null
+      this.loadAvailableBaselineTagKeys(new TagRequest(baselineTagList))
+    } else {
+      this.apiService.handleNotification("Please select tag name and value!")
     }
-    let baselineTagList = []
-    for (let tagK of this.baselineTagMap.keys()) {
-      baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
-    }
-    this.baselineTagKey = null
-    this.baselineTagId = null
-    this.loadAvailableBaselineTagKeys(new TagRequest(baselineTagList))
+
   }
 
   onBaselineTagRemove(event) {

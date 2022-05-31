@@ -52,8 +52,8 @@ export class VerificationService {
     return this.apiService.post(`/api/v1/logs/compare`, verificationRequest);
   }
 
-  loadIssuesKPI(issuesKPIVerificationRequest: IssuesKPIVerificationRequest){
-    return this.apiService.post(`/api/v1/logs/compare/issues`, issuesKPIVerificationRequest);
+  loadIssuesKPI(userId: string, issuesKPIVerificationRequest: IssuesKPIVerificationRequest){
+    return this.apiService.post(`/api/v1/users/${userId}/charts/map`, issuesKPIVerificationRequest);
   }
 
 

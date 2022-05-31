@@ -104,7 +104,7 @@ export class VerificationAnalyticsComponent implements OnInit {
     this.baselineTagMap.forEach((val: string, key: string) => {
       convBaselineMap[key] = val;
     });
-    this.verificationService.loadIssuesKPI(new IssuesKPIVerificationRequest(convBaselineMap)).subscribe(resp => {
+    this.verificationService.loadIssuesKPI(this.userId, new IssuesKPIVerificationRequest(convBaselineMap)).subscribe(resp => {
       this.compareStatusCounts = resp.listIssueKPIs
       if (this.compareStatusCounts[Status.Raised]) {
         this.issuesRaised = this.compareStatusCounts[Status.Raised]

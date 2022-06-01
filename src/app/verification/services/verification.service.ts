@@ -41,11 +41,7 @@ export class VerificationService {
   }
 
   loadVerificationByID(compareId: string): Observable<any> {
-    let parameter = ""
-    if (compareId) {
-      parameter = `compareId=${compareId}`
-    }
-    return this.apiService.get(`/api/v1/logs/compare?${parameter}`);
+    return this.apiService.get(`/api/v1/logs/compare/${compareId}`);
   }
 
   createVerification(verificationRequest: VerificationRequest) {

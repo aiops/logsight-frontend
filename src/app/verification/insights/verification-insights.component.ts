@@ -69,7 +69,6 @@ export class VerificationInsightsComponent implements OnInit {
 
 
   onVerificationSelect(event) {
-    console.log(event)
     if (event.value) {
       this.tableDataUnified = event.value._source
       this.tableRows = event.value._source.rows

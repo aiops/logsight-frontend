@@ -1,16 +1,18 @@
 <div id="chart-parent">
-  <ngx-charts-bar-vertical
-    [scheme]="colorScheme"
+  <ngx-charts-bar-vertical-2d
+    [legend]="false"
     [results]="data"
-    [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [showGridLines]="false"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
+    [barPadding]="2"
+    [groupPadding]="2"
+    [roundEdges]="false"
+    [scheme]="colorScheme"
+    [showDataLabel]="false"
+    [showXAxisLabel]="false"
+    [showYAxisLabel]="false"
     [xAxisLabel]="xAxisLabel"
+    [xAxis]="false"
     [yAxisLabel]="yAxisLabel"
-    [xAxisTickFormatting]='dateTickFormatting'
->
-  </ngx-charts-bar-vertical>
+    [yAxis]="false"
+
+  ></ngx-charts-bar-vertical-2d>
 </div>

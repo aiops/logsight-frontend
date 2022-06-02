@@ -1,39 +1,33 @@
-import { NgModule } from '@angular/core';
-import {
-    NbAccordionModule,
-    NbAlertModule,
-    NbButtonModule,
-    NbCardModule,
-    NbContextMenuModule, NbIconModule,
-    NbInputModule, NbTooltipModule,
-    NbUserModule
-} from '@nebular/theme';
-import { ProfilePage} from './profile.page';
-import { ProfileRoutingModule} from "./profile-routing.module";
+import {NgModule} from '@angular/core';
+import {NbContextMenuModule} from '@nebular/theme';
+import {ProfilePage} from './profile.page';
+import {ProfileRoutingModule} from "./profile-routing.module";
 import {CommonModule} from "@angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HighlightModule} from "ngx-highlightjs";
-import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
+import {CardModule} from "primeng/card";
+import {AccordionModule} from "primeng/accordion";
+import {PasswordModule} from "primeng/password";
+import {ButtonModule} from "primeng/button";
+import {InputTextModule} from "primeng/inputtext";
+import {TableModule} from "primeng/table";
 
 @NgModule({
-    imports: [
-        NbCardModule,
-        ProfileRoutingModule,
-        CommonModule,
-        NbButtonModule,
-        NbInputModule,
-        ReactiveFormsModule,
-        HighlightModule,
-        NbUserModule,
-        NbContextMenuModule,
-        NgxChartsModule,
-        NbAlertModule,
-        NbTooltipModule,
-        NbIconModule,
-        NbAccordionModule,
-        TourMatMenuModule,
-    ],
+  imports: [
+    ProfileRoutingModule,
+    CommonModule,
+    ReactiveFormsModule,
+    HighlightModule,
+    NbContextMenuModule,
+    TourMatMenuModule,
+    CardModule,
+    AccordionModule,
+    PasswordModule,
+    ButtonModule,
+    InputTextModule,
+    TableModule,
+  ],
   declarations: [
     ProfilePage,
   ],

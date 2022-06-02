@@ -1,4 +1,9 @@
 export interface VerificationData {
+  timestamp: any,
+  compareId: any,
+  status: any,
+  baseline_tags_keys: any,
+  candidate_tags_keys: any,
   risk: any,
   risk_color: any,
   total_n_log_messages: any,
@@ -21,3 +26,19 @@ export interface VerificationData {
   cols: any[],
   rows: any[]
 }
+
+
+export interface ListOverviewVerificationData {
+  listCompare: OverviewVerificationData
+}
+
+export interface OverviewVerificationData {
+  _id: string,
+  _source: VerificationData
+}
+
+export interface IssueCountVerificationData {
+  status: number,
+  count: number
+}
+

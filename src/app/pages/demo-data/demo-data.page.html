@@ -1,0 +1,23 @@
+<p-card header="Use demo data">
+  <div class="row">
+    <div class="col border-right">
+      <p>The demo data contains logs from Apache™ Hadoop®. The logs in the demo data are snapshot of few of the system's
+        services that had bugs in the past.</p>
+      <p>Load the data and check how logsight.ai is able to find the bugs and provide insights!</p>
+    </div>
+    <div class="col text-center my-auto">
+      <div *ngIf="!isSpinning">
+        <button (click)="requestSampleData()" class="p-button-lg" label="Load demo data" pButton
+                style="text-transform: none" type="button"></button>
+      </div>
+      <div *ngIf="isSpinning" class="pt-1">Loading demo data...</div>
+      <div *ngIf="isSpinning" class="pt-1">It may take up to a minute for the data to load... You will be automatically
+        redirected once it is ready.
+      </div>
+      <br>
+      <div *ngIf="isSpinning" class="spinner-border text-primary pt-3" role="status" style="position: relative">
+      </div>
+    </div>
+
+  </div>
+</p-card>

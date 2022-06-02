@@ -1,15 +1,30 @@
 
 export class VerificationRequest {
-  applicationId: string;
-  userId: string;
-  baselineTag: string;
-  candidateTag: string;
+  baselineTags: {};
+  candidateTags: {};
 
-  constructor(applicationId: string, userId: string, baselineTag: string, compareTag: string) {
-    this.applicationId = applicationId
-    this.userId = userId
-    this.baselineTag = baselineTag
-    this.candidateTag = compareTag
+  constructor(baselineTags, candidateTags) {
+    this.baselineTags = baselineTags
+    this.candidateTags = candidateTags
   }
 
+}
+
+export class IssuesKPIVerificationRequest {
+  baselineTags: {};
+
+  constructor(baselineTags) {
+    this.baselineTags = baselineTags
+  }
+
+}
+
+export class UpdateVerificationStatusRequest {
+  compareId: string;
+  compareStatus: number;
+
+  constructor(compareId: string, compareStatus: number) {
+    this.compareId = compareId
+    this.compareStatus = compareStatus
+  }
 }

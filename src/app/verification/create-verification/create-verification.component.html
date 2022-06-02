@@ -1,0 +1,99 @@
+<p-card header="Create verification">
+  <div class="row">
+    <div class="col-5 border-right">
+      <div class="row">
+        <div class="col">
+          Baseline tags
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-5 my-auto">
+          <p-dropdown (onChange)="baselineTagKeySelected($event)" [(ngModel)]="baselineTagKey" [filter]="true"
+                      [options]="baselineTags"
+                      filterBy="tagName"
+                      optionLabel="tagName" optionValue="tagName" placeholder="Name">
+          </p-dropdown>
+        </div>
+        <div class="col-5 my-auto">
+          <p-dropdown (onChange)="baselineTagValueSelected($event)" [(ngModel)]="baselineTagId" [filter]="true"
+                      [options]="baselineTagValues"
+                      filterBy="tagValue" optionLabel="tagValue" optionValue="tagValue"
+                      placeholder="Value"></p-dropdown>
+        </div>
+        <div class="col-2 my-auto">
+          <button class="p-button-lg" label="Add" (click)="setBaselineTagKeyValue()" pButton style="text-transform: none;"
+                  type="button">
+          </button>
+        </div>
+      </div>
+
+      <div class="row pt-2">
+              <div *ngIf="baselineTagMapKeys.length" class="col">
+                <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
+                  <nb-tag *ngFor="let tagKey of baselineTagMapKeys" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"
+                          appearance="filled"
+                          removable
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
+              </div>
+              <div *ngIf="baselineTagMapKeys.length" class="col-2"></div>
+            </div>
+    </div>
+
+    <div class="col-5 border-right">
+      <div class="row">
+        <div class="col">
+          Candidate tags
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-5 my-auto">
+          <p-dropdown (onChange)="candidateTagKeySelected($event)" [(ngModel)]="candidateTagKey" [filter]="true"
+                      [options]="candidateTags"
+                      filterBy="tagName"
+                      optionLabel="tagName" optionValue="tagName" placeholder="Name">
+          </p-dropdown>
+        </div>
+        <div class="col-5 my-auto">
+          <p-dropdown (onChange)="candidateTagValueSelected($event)" [(ngModel)]="candidateTagId" [filter]="true"
+                      [options]="candidateTagValues"
+                      filterBy="tagValue" optionLabel="tagValue" optionValue="tagValue"
+                      placeholder="Value"></p-dropdown>
+        </div>
+        <div class="col-2 my-auto">
+          <button class="p-button-lg" label="Add" (click)="setCandidateTagKeyValue()" pButton style="text-transform: none;"
+                  type="button">
+          </button>
+        </div>
+      </div>
+
+      <div class="row pt-2">
+              <div *ngIf="candidateTagMapKeys.length" class="col">
+                <nb-tag-list (tagRemove)="onCandidateTagRemove($event)">
+                  <nb-tag *ngFor="let tagKey of candidateTagMapKeys" [text]="tagKey + ':' + candidateTagMap.get(tagKey)"
+                          appearance="filled"
+                          removable
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
+              </div>
+              <div *ngIf="candidateTagMapKeys.length" class="col-2"></div>
+            </div>
+    </div>
+
+    <div class="col-2 text-center">
+      <div class="row">
+        <div class="col">
+          &nbsp;
+        </div>
+      </div>
+      <div class="row">
+        <div class="col pt-2">
+          <button class="p-button-lg" label="Create" (click)="createVerification()" pButton [loading]="isLoading" style="text-transform: none;"
+                  type="button">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-card>
+<div class="pt-5"></div>

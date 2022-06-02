@@ -49,7 +49,11 @@ export class CreateVerificationComponent implements OnInit {
 
 
   loadBaselineTagValuesForKey(tagKey: string) {
-    this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey)).subscribe(resp => {
+    let baselineTagList = []
+    for (let tagK of this.baselineTagMap.keys()) {
+      baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
+    }
+    this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey, "*", baselineTagList)).subscribe(resp => {
       this.baselineTagValues = resp.tagValues
     })
   }
@@ -98,7 +102,11 @@ export class CreateVerificationComponent implements OnInit {
   }
 
   loadCandidateTagValueForKey(tagKey: string) {
-    this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey)).subscribe(resp => {
+    let candidateTagList = []
+    for (let tagK of this.candidateTagMap.keys()) {
+      candidateTagList.push(new TagEntry(tagK, this.candidateTagMap.get(tagK)))
+    }
+    this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey, "*", candidateTagList)).subscribe(resp => {
       this.candidateTagValues = resp.tagValues
     })
   }

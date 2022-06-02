@@ -313,7 +313,12 @@ export class VerificationAnalyticsComponent implements OnInit {
 
 
   loadBaselineTagValuesForKey(tagKey: string) {
-    this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey, "*_verifications")).subscribe(resp => {
+    let baselineTagList = []
+    for (let tagK of this.baselineTagMap.keys()) {
+      baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
+    }
+    console.log(baselineTagList)
+    this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey, "*_verifications", baselineTagList)).subscribe(resp => {
       this.baselineTagValues = resp.tagValues
     })
   }

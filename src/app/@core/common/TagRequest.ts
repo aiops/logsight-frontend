@@ -14,10 +14,12 @@ export class TagRequest {
 export class TagValueRequest {
   tagName: string
   indexType: string
+  listTags: TagEntry[]
 
-  constructor(tagName : string, indexType:string="*") {
+  constructor(tagName : string, indexType:string="*", listTags: TagEntry[]) {
     this.tagName = tagName
     this.indexType = indexType
+    this.listTags = listTags
   }
 
 }

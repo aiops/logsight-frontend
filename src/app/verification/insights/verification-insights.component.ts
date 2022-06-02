@@ -33,6 +33,12 @@ export class VerificationInsightsComponent implements OnInit {
   candidateTagMap = new Map<string, string>();
   candidateTagMapKeys = [];
 
+  baselinePercentageSliderValues = [0, 100];
+  candidatePercentageSliderValues = [0, 100];
+  baselineCountSliderValues = [0, 100];
+  candidateCountSliderValues = [0, 100];
+  changeSliderValues = [0, 100];
+  coverageSliderValues = [0, 100];
 
   Severity = Severity;
   Status = Status;
@@ -58,7 +64,7 @@ export class VerificationInsightsComponent implements OnInit {
           this.onInsightsActivated.emit()
           this.verificationIdList = resp.listCompare
           this.verificationId = this.verificationIdList[0]
-          this.verificationShortId = this.verificationId["_id"].slice(0,7)
+          this.verificationShortId = this.verificationId["_id"]
           let event = {"value": this.verificationIdList[0]}
           this.onVerificationSelect(event)
         })

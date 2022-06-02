@@ -28,17 +28,18 @@ import {ChartModule} from "primeng/chart";
 import {ChartsWrapperModule} from "../pages/charts-wrapper-module/charts-wrapper.module";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
+import {TooltipModule} from "primeng/tooltip";
 
 @NgModule({
   declarations: [VerificationComponent, VerificationOverviewComponent, VerificationInsightsComponent, VerificationAnalyticsComponent, CreateVerificationComponent],
-  imports: [//Angular modules
-    CommonModule, FormsModule,
+    imports: [//Angular modules
+        CommonModule, FormsModule,
 
-    //Modules from the installed libraries
-    TableModule, DropdownModule, ButtonModule, CalendarModule, InputTextModule, SliderModule, MultiSelectModule, TabViewModule,
+        //Modules from the installed libraries
+        TableModule, DropdownModule, ButtonModule, CalendarModule, InputTextModule, SliderModule, MultiSelectModule, TabViewModule,
 
-    //Application modules
-    VerificationRoutingModule, NbSelectModule, NbSpinnerModule, NbTagModule, NbTreeGridModule, CardModule, ChipModule, SkeletonModule, AutoCompleteModule, ChipsModule, ThemeModule, CheckboxModule, ChartModule, ChartsWrapperModule, ConfirmDialogModule],
+        //Application modules
+        VerificationRoutingModule, NbSelectModule, NbSpinnerModule, NbTagModule, NbTreeGridModule, CardModule, ChipModule, SkeletonModule, AutoCompleteModule, ChipsModule, ThemeModule, CheckboxModule, ChartModule, ChartsWrapperModule, ConfirmDialogModule, TooltipModule],
   providers: [VerificationSharingService, ConfirmationService]
 })
 export class VerificationModule {

@@ -108,11 +108,11 @@
     <div class="col-xl-3 col-sm-6 col-12">
       <p-card>
         <div class="media d-flex">
-          <div class="align-self-center" style="color: {{this.tableDataUnified.risk_color}}"><i
+          <div class="align-self-center text-danger"><i
             class="icon-energy font-large-2 float-left"></i>
           </div>
           <div class="media-body text-right">
-            <h3 style="color:{{this.tableDataUnified.risk_color}}"> {{this.tableDataUnified.risk}} % </h3>
+            <h3 class="text-danger"> {{this.tableDataUnified.risk}} % </h3>
             <span>Deployment failure risk</span>
           </div>
         </div>
@@ -324,13 +324,15 @@
                   placeholder="Search"
                   type="text">
               </th>
-              <th>
+              <th class="text-center">
+                 <p>{{baselinePercentageSliderValues[0]}} to {{baselinePercentageSliderValues[1]}}</p>
                 <p-slider (onSlideEnd)="filterByBaselinePercentage($event)" [min]="0" [ngModel]="[0, 100]"
                           [range]="true"
                           max="100"></p-slider>
 
               </th>
-              <th>
+              <th class="text-center">
+                <p>{{candidatePercentageSliderValues[0]}} to {{candidatePercentageSliderValues[1]}}</p>
                 <p-slider (onSlideEnd)="filterByCandidatePercentage($event)" [min]="0" [ngModel]="[0, 100]"
                           [range]="true"
                           max="100"></p-slider>
@@ -344,22 +346,26 @@
                   placeholder="Search"
                   type="text">
               </th>
-              <th>
+              <th class="text-center">
+                <p>{{baselineCountSliderValues[0]}} to {{baselineCountSliderValues[1]}}</p>
                 <p-slider (onSlideEnd)="filterByCountBaseline($event)" [min]="0" [ngModel]="[0, 100]"
                           [range]="true"
                           max="100"></p-slider>
               </th>
-              <th>
+              <th class="text-center">
+                <p>{{candidateCountSliderValues[0]}} to {{candidateCountSliderValues[1]}}</p>
                 <p-slider (onSlideEnd)="filterByCountCandidate($event)" [min]="0" [ngModel]="[0, 100]"
                           [range]="true"
                           max="100"></p-slider>
               </th>
-              <th>
+              <th class="text-center">
+                <p>{{changeSliderValues[0]}} to {{changeSliderValues[1]}}</p>
                 <p-slider (onSlideEnd)="filterByChange($event)" [min]="0" [ngModel]="[0, 100]"
                           [range]="true"
                           max="100"></p-slider>
               </th>
-              <th>
+              <th class="text-center">
+                <p>{{coverageSliderValues[0]}} to {{coverageSliderValues[1]}}</p>
                 <p-slider (onSlideEnd)="filterByCoverage($event)" [min]="0" [ngModel]="[0, 100]"
                           [range]="true"
                           max="100"></p-slider>

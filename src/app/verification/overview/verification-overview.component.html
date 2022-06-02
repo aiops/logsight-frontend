@@ -104,7 +104,7 @@
               <p-checkbox name="verifications" [value]="item" [(ngModel)]="selectedItems"></p-checkbox>
             </td>
             <td>{{item.timestamp | date: 'MMM d, y, hh:mm:ss'}}</td>
-            <td>{{item.compareId}}</td>
+            <td><p pTooltip="{{item.compareId}}" tooltipPosition="top">{{item.compareId.slice(0,7)}}</p></td>
             <td>
                 <nb-tag-list>
                   <nb-tag *ngFor="let tagKey of item.baseline_tags_keys" [text]="tagKey"

@@ -317,7 +317,6 @@ export class VerificationAnalyticsComponent implements OnInit {
     for (let tagK of this.baselineTagMap.keys()) {
       baselineTagList.push(new TagEntry(tagK, this.baselineTagMap.get(tagK)))
     }
-    console.log(baselineTagList)
     this.verificationService.loadTagValueForKey(new TagValueRequest(tagKey, "*_verifications", baselineTagList)).subscribe(resp => {
       this.baselineTagValues = resp.tagValues
     })

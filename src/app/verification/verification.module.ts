@@ -29,6 +29,7 @@ import {ChartsWrapperModule} from "../pages/charts-wrapper-module/charts-wrapper
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import {TooltipModule} from "primeng/tooltip";
+import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 
 @NgModule({
   declarations: [VerificationComponent, VerificationOverviewComponent, VerificationInsightsComponent, VerificationAnalyticsComponent, CreateVerificationComponent],
@@ -39,7 +40,7 @@ import {TooltipModule} from "primeng/tooltip";
         TableModule, DropdownModule, ButtonModule, CalendarModule, InputTextModule, SliderModule, MultiSelectModule, TabViewModule,
 
         //Application modules
-        VerificationRoutingModule, NbSelectModule, NbSpinnerModule, NbTagModule, NbTreeGridModule, CardModule, ChipModule, SkeletonModule, AutoCompleteModule, ChipsModule, ThemeModule, CheckboxModule, ChartModule, ChartsWrapperModule, ConfirmDialogModule, TooltipModule],
+        VerificationRoutingModule, NbSelectModule, NbSpinnerModule, NbTagModule, NbTreeGridModule, CardModule, ChipModule, SkeletonModule, AutoCompleteModule, ChipsModule, ThemeModule, CheckboxModule, ChartModule, ChartsWrapperModule, ConfirmDialogModule, TooltipModule, TourMatMenuModule],
   providers: [VerificationSharingService, ConfirmationService]
 })
 export class VerificationModule {

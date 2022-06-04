@@ -101,6 +101,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 {
                   anchorId: 'compareVerify',
                   content: 'Select your application, select the tags, and click on Verify to see the results!',
+                  route: '/pages/compare',
                   enableBackdrop: true,
                 },
                 {
@@ -110,9 +111,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
                   route: '/pages/profile'
                 },
                 {
-                  anchorId: 'anchorDashboard',
-                  content: 'Start exploring on your own.',
-                  route: '/pages/dashboard'
+                  anchorId: 'compareVerify',
+                  content: 'Select baseline tags -> applicationName: resource_manager, version: v1.0.0, and candidate tags -> applicationName: resource_manager, version: v1.1.0, click Create and start exploring on your own.',
+                  route: '/pages/compare',
+                  enableBackdrop: true,
                 }
 
                 ]);

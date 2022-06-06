@@ -1,0 +1,143 @@
+<p-card>
+<p-table
+    #overviewTable
+    [value]="items"
+    [(selection)]="selectedItems"
+    dataKey="verificationId"
+    [paginator]="true"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [rows]="rowsPerPageOptions[0]"
+    sortMode="multiple">
+    <ng-template pTemplate="caption">
+        <div class="table-header  align-items-center">
+            <h2></h2>
+            <div>
+              <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+                <button
+                    pButton
+                    type="button"
+                    label="Delete"
+                    class="p-button-danger"
+                    icon="pi pi-trash"
+                    [disabled]="selectedItems.length === 0"
+                    (click)="deleteItems()">
+                </button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3%;" rowspan="2">
+                <p-tableHeaderCheckbox name="verifications" ></p-tableHeaderCheckbox>
+            </th>
+            <th style="width: 10%" [pSortableColumn]="'timestamp'">Date <p-sortIcon [field]="'timestamp'"></p-sortIcon> </th>
+            <th style="width: 10%" [pSortableColumn]="'compareId'">Verification ID <p-sortIcon [field]="'compareId'"></p-sortIcon></th>
+            <th style="width: 20%">Baseline tags</th>
+            <th style="width: 20%">Candidate tags</th>
+            <th style="width: 7%" [pSortableColumn]="'risk'">Risk <p-sortIcon [field]="'risk'"></p-sortIcon></th>
+            <th style="width: 10%" [pSortableColumn]="'severity'">Severity <p-sortIcon [field]="'severity'"></p-sortIcon></th>
+            <th style="width: 10%" [pSortableColumn]="'status'">Status <p-sortIcon [field]="'status'"></p-sortIcon></th>
+            <th style="width: 10%" class="text-center"></th>
+        </tr>
+        <tr>
+            <th>
+                <p-calendar
+                    (onSelect)="filterByDate($event)"
+                    (onClearClick)="filterByDate('')"
+                    [showButtonBar]="true"
+                    styleClass="p-column-filter"
+                    placeholder="Search"
+                    [readonlyInput]="true"
+                    dateFormat="mm/dd/yy">
+                </p-calendar>
+            </th>
+            <th>
+                <input
+                    pInputText
+                    type="text"
+                    (input)="filterByVerificationId($event)"
+                    placeholder="Search"
+                    class="p-column-filter">
+            </th>
+            <th>
+                <p-multiSelect placeholder="Filter" [options]="tagOptionsBaseline" (onChange)="filterByBaselineTags($event)" [filter]="true"></p-multiSelect>
+            </th>
+            <th>
+                <p-multiSelect placeholder="Filter" [options]="tagOptionsCandidate" (onChange)="filterByCandidateTags($event)" [filter]="true"></p-multiSelect>
+            </th>
+            <th class="text-center">
+              <p>{{riskSliderValues[0]}} to {{riskSliderValues[1]}}</p>
+                <p-slider [ngModel]="riskSlider" [min]="0" max="100" [range]="true" (onSlideEnd)="filterByRisk($event)"></p-slider>
+            </th>
+            <th>
+                <p-dropdown
+                    [options]="severityOptions"
+                    (onChange)="filterBySeverity($event)"
+                    styleClass="p-column-filter"
+                    placeholder="Select"
+                    [showClear]="true">
+                    <ng-template let-option pTemplate="item">
+                        <span [class]="'severity-badge severity-' + option.label">{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </th>
+            <th>
+                <p-dropdown
+                    [options]="statusOptions"
+                    (onChange)="filterByStatus($event)"
+                    styleClass="p-column-filter"
+                    placeholder="Select"
+                    [showClear]="true">
+                    <ng-template let-option pTemplate="item">
+                        <span>{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </th>
+          <th>
+          </th>
+          <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-rowIndex>
+        <tr>
+            <td>
+              <p-checkbox name="verifications" [value]="item" [(ngModel)]="selectedItems"></p-checkbox>
+            </td>
+            <td>{{item.timestamp | date: 'MMM d, y, hh:mm:ss'}}</td>
+            <td><p pTooltip="{{item.compareId}}" tooltipPosition="top">{{item.compareId.slice(0,7)}}</p></td>
+            <td>
+                <nb-tag-list>
+                  <nb-tag *ngFor="let tagKey of item.baseline_tags_keys" [text]="tagKey"
+                          appearance="outline"
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
+            </td>
+            <td>
+                 <nb-tag-list>
+                  <nb-tag *ngFor="let tagKey of item.candidate_tags_keys" [text]="tagKey"
+                          appearance="filled"
+                          status="primary" style="text-transform: none"></nb-tag>
+                </nb-tag-list>
+            </td>
+            <td>
+                {{ item.risk }} %
+            </td>
+            <td>
+                <span [class]="'severity-badge severity-' + Severity[item.severity]">{{ Severity[item.severity] }}</span>
+            </td>
+            <td>
+                <p-dropdown
+                    [options]="statusOptions"
+                    [ngModel]="{ value: item.status }"
+                    (onChange)="statusChanged($event, item)"
+                    dataKey="value"
+                    optionLabel="label">
+                </p-dropdown>
+            </td>
+           <td class="text-center">
+                <button (click)="viewInsights(item.compareId)" pButton type="button" label="View insights" ></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+</p-card>

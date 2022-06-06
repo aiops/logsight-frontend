@@ -6,10 +6,10 @@ import {VariableAnalysisService} from '../../@core/service/variable-analysis.ser
 import {MessagingService} from '../../@core/service/messaging.service';
 import {NotificationsService} from 'angular2-notifications';
 import {AuthenticationService} from '../../auth/authentication.service';
-import {share, switchMap, takeUntil} from 'rxjs/operators';
+import {catchError, share, switchMap, takeUntil} from 'rxjs/operators';
 import {Application} from '../../@core/common/application';
 import {IntegrationService} from '../../@core/service/integration.service';
-import {combineLatest, Observable, Subject, timer} from 'rxjs';
+import {combineLatest, empty, Observable, Subject, timer} from 'rxjs';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 import {TourService} from 'ngx-ui-tour-md-menu';
@@ -20,6 +20,7 @@ import {ChartConfig} from "../../@core/common/chart-config";
 import {IncidentTableData} from "../../@core/common/incident-table-data";
 import {LogsightUser} from "../../@core/common/logsight-user";
 import {ApiService} from "../../@core/service/api.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'dashboard',
@@ -78,25 +79,25 @@ export class DashboardPage implements OnInit, OnDestroy {
               private apiService: ApiService) {
 
     this.heatmapData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId)),
+      switchMap(() => this.loadHeatmapData(this.startDateTime, this.endDateTime, this.applicationId).pipe(catchError((error) => this.handleError(error)))),
       share(),
       takeUntil(this.stopPolling)
     );
 
     this.pieChartData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadPieChartData(this.startDateTime, this.endDateTime, this.applicationId)),
+      switchMap(() => this.loadPieChartData(this.startDateTime, this.endDateTime, this.applicationId).pipe(catchError((error) => this.handleError(error)))),
       share(),
       takeUntil(this.stopPolling),
     );
 
     this.barData$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId)),
+      switchMap(() => this.loadBarData(this.startDateTime, this.endDateTime, this.applicationId).pipe(catchError((error) => this.handleError(error)))),
       share(),
       takeUntil(this.stopPolling)
     );
 
     this.topKIncidents$ = combineLatest([timer(1, 10000), this.reload$]).pipe(
-      switchMap(() => this.loadTopKIncidents(this.startDateTime, this.endDateTime, this.numberOfIncidents, this.applicationId)),
+      switchMap(() => this.loadTopKIncidents(this.startDateTime, this.endDateTime, this.numberOfIncidents, this.applicationId).pipe(catchError((error) => this.handleError(error)))),
       share(),
       takeUntil(this.stopPolling)
     );
@@ -131,10 +132,12 @@ export class DashboardPage implements OnInit, OnDestroy {
           for (let j = 0; j < data.data[i].series.length; j++) {
             data.data[i].series[j].extra = data.data[i].name
           }
-          var date = moment.utc(data.data[i].name, 'YYYY-MM-DDTHH:mmZ[UTC]').format('YYYY-MM-DD HH:mm');
+          console.log(data.data[i].name)
+          var date = moment.utc(data.data[i].name, 'YYYY-MM-DDTHH:mmZ[UTC]').format('DD-MM-YYYY HH:mm');
           var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
           var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
           data.data[i].name = local.toString()
+
         }
 
         for (let i = 0; i < data.data.length; i++) {
@@ -209,7 +212,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       data = data.data.data
       if (data) {
         for (let i = 0; i < data.length; i++) {
-          var date = moment.utc(data[i].name, 'DD-MM-YYYY HH:mm').format('DD-MM-YYYY HH:mm');
+          var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
           var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
           var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
           data[i].name = local.toString()
@@ -285,6 +288,10 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.destroy$.complete()
   }
 
+  private handleError(error: HttpErrorResponse) {
+    return empty();
+  }
+
   loadPredefinedTimes(userId: string) {
     this.dashboardService.getAllTimeRanges(userId).subscribe(resp => {
       this.predefinedTimes = resp.timeSelectionList
@@ -303,38 +310,27 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   loadHeatmapData(startTime: string, endTime: string, applicationId: string) {
-    let type = 'heatmap'
-    let feature = 'system_overview'
-    let indexType = 'incidents'
-    let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+
+    let parameters = {"type":"heatmap", "feature": "system_overview", "indexType":"incidents", "startTime": startTime, "stopTime": endTime}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
     return this.dashboardService.loadHeatmapData(this.userId, chartRequest)
   }
 
   loadBarData(startTime: string, endTime: string, applicationId: string) {
-    let type = 'barchart'
-    let feature = 'system_overview'
-    let indexType = 'log_agg'
-    let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+    let parameters = {"type":"barchart", "feature": "system_overview", "indexType":"log_agg", "startTime": startTime, "stopTime": endTime}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
     return this.dashboardService.loadBarData(this.userId, chartRequest);
   }
 
   loadPieChartData(startTime: string, endTime: string, applicationId: string) {
-    let type = 'piechart'
-    let feature = 'system_overview'
-    let indexType = 'log_agg'
-    let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+    let parameters = {"type":"piechart", "feature": "system_overview", "indexType":"log_agg", "startTime": startTime, "stopTime": endTime}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
     return this.dashboardService.loadPieChartData(this.userId, chartRequest);
   }
 
   loadTopKIncidents(startTime: string, endTime: string, numberOfIncidents: number, applicationId: string) {
-    let type = 'tablechart'
-    let feature = 'system_overview'
-    let indexType = 'incidents'
-    let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone, numberOfIncidents), applicationId)
+    let parameters = {"type":"tablechart", "feature": "system_overview", "indexType":"incidents", "startTime": startTime, "stopTime": endTime, "numElements": numberOfIncidents}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
     return this.dashboardService.loadTopKIncidentsData(this.userId, chartRequest);
   }
 
@@ -359,6 +355,9 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   parseTemplates(data, incident) {
+    if (data[incident] == 'null'){
+      return []
+    }
     return JSON.parse(data[incident]).map(it2 => {
       let params = [];
       Object.keys(it2[0]).forEach(key => {
@@ -370,8 +369,8 @@ export class DashboardPage implements OnInit, OnDestroy {
         message: it2[0].message,
         template: it2[0].template,
         params: params,
-        actualLevel: it2[0].actual_level,
-        timeStamp: new Date(it2[0]['@timestamp']),
+        level: it2[0].level,
+        timeStamp: new Date(it2[0]['timestamp']),
         applicationId: data.applicationId //this should be checked
       }
     });

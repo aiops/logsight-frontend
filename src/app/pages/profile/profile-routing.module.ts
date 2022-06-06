@@ -1,6 +1,6 @@
-import { RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { ProfilePage} from "./profile.page";
+import {RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
+import {ProfilePage} from "./profile.page";
 
 const routes: Routes = [{
   path: '',

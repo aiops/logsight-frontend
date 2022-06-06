@@ -92,6 +92,16 @@ export class ApiService {
         }
     }
 
+    handleNotification(msg: any){
+    this.notificationsService.error("", msg, {
+      timeOut: 15000,
+      showProgressBar: true,
+      pauseOnHover: true,
+      clickToClose: true
+    })
+
+    }
+
     getNotificationOpetions(){
       return {
       timeOut: 10000,

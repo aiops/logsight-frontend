@@ -156,7 +156,7 @@ export class IncidentsPage implements OnInit, OnDestroy {
       let stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm:ss.SSS');
       let local = moment(stillUtc, 'DD-MM-YYYY HH:mm:ss.SSS').local().format('DD-MM-YYYY HH:mm:ss.SSS');
       data[i].timestamp = local.toString()
-      if (data[i].actualLevel == 'ERROR' || data[i].actualLevel == 'CRITICAL' || data[i].actualLevel == 'SEVERE') {
+      if (data[i].level == 'ERROR' || data[i].level == 'CRITICAL' || data[i].level == 'SEVERE') {
         this.hasError = true
       }
 
@@ -165,11 +165,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
   }
 
   private loadIncidentsTableData(startTime: string, endTime: string, applicationId: string | null) {
-    let type = 'tablechart'
-    let feature = 'incidents'
-    let indexType = 'incidents'
-    let timeZone = this.clientTimezoneOffset
-    let chartRequest = new ChartRequest(new ChartConfig(type, startTime, endTime, feature, indexType, timeZone), applicationId)
+    let parameters = {"type":"tablechart", "feature": "incidents", "indexType":"incidents", "startTime": startTime, "stopTime": endTime}
+    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
     this.incidentsService.loadIncidentsTableData(this.userId, chartRequest).subscribe(data => {
       data = data.data.data
       if (data) {
@@ -223,6 +220,9 @@ export class IncidentsPage implements OnInit, OnDestroy {
   }
 
   parseTemplates(data, incident) {
+    if (data[incident] == 'null'){
+      return []
+    }
     return JSON.parse(data[incident]).map(it2 => {
       let params = [];
       Object.keys(it2[0]).forEach(key => {
@@ -234,8 +234,8 @@ export class IncidentsPage implements OnInit, OnDestroy {
         message: it2[0].message,
         template: it2[0].template,
         params: params,
-        actualLevel: it2[0].actual_level,
-        timeStamp:  it2[0]['@timestamp'],
+        level: it2[0].level,
+        timeStamp: new Date(it2[0]['timestamp']),
         applicationId: data.applicationId //this should be checked
       }
     });

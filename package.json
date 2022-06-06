@@ -90,7 +90,7 @@
     "ngx-tour-ngx-popper": "^4.1.1",
     "ngx-ui-tour-core": "^5.2.0",
     "ngx-ui-tour-md-menu": "^5.2.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "normalize.css": "6.0.0",
     "pace-js": "1.0.2",
     "primeicons": "^4.1.0",

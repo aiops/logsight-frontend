@@ -18,7 +18,7 @@ const routes: Routes = [{
     path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module')
       .then(m => m.DashboardModule),
   }, {
-    path: 'incidents', loadChildren: () => import('./incidents/incidents.module')
+    path: 'incidents', loadChildren: () => import('../incidents/incidents.module')
       .then(m => m.IncidentsModule),
   }, {
     path: 'file-upload', loadChildren: () => import('./file-upload/file-upload.module')

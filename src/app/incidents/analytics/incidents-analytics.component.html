@@ -1,0 +1,274 @@
+<div class="container-fluid">
+
+  <!--  Filter by verification ID or tags -->
+  <p-card header="Filter">
+    <div class="row">
+      <div class="col-8">
+        <div class="row">
+          <div class="col">
+            Baseline tags
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col-4 my-auto">
+            <p-dropdown (onChange)="baselineTagKeySelected($event)" [(ngModel)]="baselineTagKey" [filter]="true"
+                        [options]="baselineTags"
+                        filterBy="tagName"
+                        optionLabel="tagName" optionValue="tagName" placeholder="Name">
+            </p-dropdown>
+          </div>
+          <div class="col-4 my-auto">
+            <p-dropdown (onChange)="baselineTagValueSelected($event)" [(ngModel)]="baselineTagId" [filter]="true"
+                        [options]="baselineTagValues"
+                        filterBy="tagValue" optionLabel="tagValue" optionValue="tagValue"
+                        placeholder="Value"></p-dropdown>
+          </div>
+          <div class="col-2 my-auto border-right text-center">
+            <button (click)="setBaselineTagKeyValue()" class="p-button-lg" label="Add" pButton
+                    style="text-transform: none;"
+                    type="button">
+            </button>
+          </div>
+          <div class="col-2 my-auto text-right">
+            <button (click)="loadAnalytics()" [loading]="isLoading" class="p-button-lg" label="Search" pButton
+                    style="text-transform: none;"
+                    type="button">
+            </button>
+          </div>
+        </div>
+
+        <div class="row pt-2">
+          <div *ngIf="baselineTagMapKeys.length" class="col">
+            <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
+              <nb-tag *ngFor="let tagKey of baselineTagMapKeys" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"
+                      appearance="filled"
+                      removable
+                      status="primary" style="text-transform: none"></nb-tag>
+            </nb-tag-list>
+          </div>
+          <div *ngIf="baselineTagMapKeys.length" class="col-2"></div>
+        </div>
+      </div>
+
+    </div>
+  </p-card>
+
+  <div class="row grouped-multiple-statistics-card pt-5">
+    <div class="col-12">
+      <p-card header="KPI">
+        <div class="row">
+          <div class="col-4 border-right my-auto">
+            <div class="row">
+              <div class="col text-center">
+                <h3 class="text-primary">{{verificationFrequencyCount}}</h3>
+                Verification count
+                <div class="row justify-content-center my-auto">
+                  <vertical-bar-chart [data]="verificationFrequencyBarData"></vertical-bar-chart>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+                <div class="row pt-3">
+                  <div class="col text-right border-right"><h3 class="text-primary">{{verificationFrequencyAverage}}</h3>
+                    Average
+                  </div>
+                  <div class="col text-left"><h3 class="text-primary">{{verificationFrequencyWeek }}</h3>
+                    Last week
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 border-right my-auto">
+            <div class="row">
+              <div class="col text-center">
+                <h3 class="text-primary">{{verificationVelocityMeanValue | number:'1.0-0'}} s</h3>
+                Verification velocity
+                <div class="row justify-content-center my-auto">
+                  <vertical-bar-chart [data]="verificationVelocityBarData"></vertical-bar-chart>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+                <div class="row pt-3">
+                  <div class="col text-right border-right"><h3
+                    class="text-primary">{{verificationVelocityMinValue | number:'1.0-0'}} s</h3>
+                    Minimum
+                  </div>
+                  <div class="col text-left"><h3 class="text-primary">{{verificationVelocityMaxValue | number:'1.0-0'}}
+                    s</h3>
+                    Maximum
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4 border-right my-auto">
+            <div class="row">
+              <div class="col text-center">
+                <h3 class="text-danger">{{verificationFailureRatioMeanValue | number:'1.1-2'}}</h3>
+                Failure ratio
+                <div class="row justify-content-center my-auto">
+                  <vertical-bar-chart [data]="verificationFailureRatioBarData"></vertical-bar-chart>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+                <div class="row pt-3">
+                  <div class="col text-right border-right"><h3
+                    class="text-danger">{{verificationFailureRatioMaxValue | number:'1.0-0'}}</h3>
+                    Maximum
+                  </div>
+                  <div class="col text-left"><h3
+                    class="text-danger">{{verificationFailureRatioWeek | number:'1.0-0'}}</h3>
+                    Last week
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <div class="row grouped-multiple-statistics-card pt-5">
+    <div class="col-12">
+      <p-card header="Risk">
+        <div class="row">
+          <div class="col-3 border-right my-auto">
+            <div class="row">
+              <div class="col text-center">
+                <div class="row">
+                  <div class="col text-center">
+                    <h3 class="text-primary">{{meanRisk | number:'1.0-0'}} %</h3>
+                    Mean
+                  </div>
+                </div>
+                <div class="row pt-3">
+                  <div class="col text-right border-right">
+                    <h3 class="text-primary">{{minRisk | number:'1.0-0'}}%</h3>
+                    Minimum
+                  </div>
+                  <div class="col text-left">
+                    <h3 class="text-primary">{{maxRisk | number:'1.0-0'}}%</h3>
+                    Maximum
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="row">
+              <div class="col">
+                <!--                <p-chart [data]="basicData" height="200px" type="bar" width="100%"></p-chart>-->
+                <grouped-vertical-bar-chart-2d [colorScheme]="colorBar"
+                                               [data]="riskBarData"></grouped-vertical-bar-chart-2d>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+
+  <div class="row grouped-multiple-statistics-card pt-5">
+    <div class="col-12">
+      <p-card header="Issues">
+        <div class="row">
+          <div class="col border-right">
+            <div class="row">
+              <div class="col text-center">
+                <span class="card-icon primary d-flex justify-content-center mr-3">
+                  <i class="icon p-1 icon-pie-chart customize-icon font-large-2 p-1 text-primary"></i>
+                </span>
+              </div>
+              <div class="col text-center">
+                <div class="row">
+                  <h3 class="text-primary">{{issuesAssigned + issuesRaised + issuesSolved}}</h3>
+                </div>
+                <div class="row pt-2">
+                  Number of verifications
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col border-right">
+            <div class="row">
+              <div class="col text-center">
+                <span class="card-icon primary d-flex justify-content-center mr-3">
+                  <i class="icon p-1 icon-energy customize-icon font-large-2 p-1 text-primary"></i>
+                </span>
+              </div>
+              <div class="col text-center">
+                <div class="row">
+                  <h3 class="text-primary">{{issuesRaised}}</h3>
+                </div>
+                <div class="row pt-2">
+                  Issues raised
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col border-right">
+            <div class="row">
+              <div class="col text-center">
+                <span class="card-icon primary d-flex justify-content-center mr-3">
+                  <i class="icon p-1 icon-user-follow customize-icon font-large-2 p-1 text-primary"></i>
+                </span>
+              </div>
+              <div class="col text-center">
+                <div class="row">
+                  <h3 class="text-primary">{{issuesAssigned}}</h3>
+                </div>
+                <div class="row pt-2">
+                  Issues assigned
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col text-center">
+                <span class="card-icon primary d-flex justify-content-center mr-3">
+                  <i class="icon p-1 icon-like customize-icon font-large-2 p-1 text-primary"></i>
+                </span>
+              </div>
+              <div class="col text-center">
+                <div class="row">
+                  <h3 class="text-primary">{{issuesSolved}}</h3>
+                </div>
+                <div class="row pt-2">
+                  Issues resolved
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+
+</div>

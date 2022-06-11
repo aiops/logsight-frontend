@@ -1,37 +1,44 @@
 .severity-badge {
-    border-radius: 2px;
-    padding: 0.25em 0.5rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: .3px;
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
 }
 
 .severity-Low {
-    background-color: #c8e6c9;
-    color: #256029;
+  background-color: #c8e6c9;
+  color: #256029;
+}
+
+.time-text {
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .severity-Medium {
-    background-color: #ffd8b2;
-    color: #805b36;
+  background-color: #ffd8b2;
+  color: #805b36;
 }
 
 .severity-High {
-    background-color: #ffcdd2;
-    color: #c63737;
+  background-color: #ffcdd2;
+  color: #c63737;
 }
 
 .tag {
-    display: block;
+  display: block;
 }
 
 .p-table {
   table-layout: fixed;
 }
+
 td {
   overflow-wrap: break-word;
 }
+
 th {
   overflow-wrap: break-word;
 }
@@ -40,7 +47,7 @@ th {
 :host ::ng-deep .p-inputtext,
 :host ::ng-deep .p-calendar,
 :host ::ng-deep .p-multiselect {
-    width: 100%;
+  width: 100%;
 }
 
 

@@ -19,7 +19,7 @@ interface DropdownOption {
 
 
 @Component({
-  selector: 'verification-analytics',
+  selector: 'incidents-analytics',
   templateUrl: './incidents-analytics.component.html',
   styleUrls: ['./incidents-analytics.component.scss']
 })
@@ -85,8 +85,8 @@ export class IncidentsAnalyticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId = localStorage.getItem('userId')
-    this.loadAvailableTagKeys(new TagRequest([], "*_verifications"))
+    // this.userId = localStorage.getItem('userId')
+    // this.loadAvailableTagKeys(new TagRequest([], "*_verifications"))
   }
 
   loadAnalytics() {

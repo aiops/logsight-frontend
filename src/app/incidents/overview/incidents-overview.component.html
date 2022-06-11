@@ -67,15 +67,18 @@
         <th style="width: 10%" [pSortableColumn]="'incidentId'">Incident ID
           <p-sortIcon [field]="'incidentId'"></p-sortIcon>
         </th>
-        <th style="max-width: 20%;" [pSortableColumn]="'message'">Description
+        <th style="max-width: 15%;" [pSortableColumn]="'message'">Description
           <p-sortIcon [field]="'message'"></p-sortIcon>
         </th>
         <th style="width: 10%">Tags</th>
-        <th style="width: 7%" [pSortableColumn]="'risk'">Risk
+        <th style="width: 5%" [pSortableColumn]="'risk'">Risk
           <p-sortIcon [field]="'risk'"></p-sortIcon>
         </th>
-        <th style="width: 10%" [pSortableColumn]="'severity'">Severity
+        <th style="width: 8%" [pSortableColumn]="'severity'">Severity
           <p-sortIcon [field]="'severity'"></p-sortIcon>
+        </th>
+         <th style="width: 9%" [pSortableColumn]="'added_states'">Added states
+          <p-sortIcon [field]="'added_states'"></p-sortIcon>
         </th>
         <th style="width: 10%" [pSortableColumn]="'status'">Status
           <p-sortIcon [field]="'status'"></p-sortIcon>
@@ -123,6 +126,8 @@
           </p-dropdown>
         </th>
         <th>
+        </th>
+        <th>
           <p-dropdown
             [options]="statusOptions"
             (onChange)="filterByStatus($event)"
@@ -159,6 +164,9 @@
         </td>
         <td>
           <span [class]="'severity-badge severity-' + Severity[item.severity]">{{ Severity[item.severity] }}</span>
+        </td>
+         <td>
+          {{ item.added_states }}
         </td>
         <td>
           <p-dropdown

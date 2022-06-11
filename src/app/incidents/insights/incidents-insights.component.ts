@@ -66,7 +66,6 @@ export class IncidentsInsightsComponent implements OnInit {
     if (event.value) {
       this.tableDataUnified = event.value._source
       this.tableRows = event.value._source.data
-      console.log(this.tableRows)
       this.baselineTagMapKeys = Object.keys(event.value._source['tags'])
       this.baselineTagMap = new Map(Object.entries(event.value._source['tags']));
     } else {

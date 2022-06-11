@@ -3,7 +3,7 @@ import {Table} from 'primeng/table';
 import {Severity} from '../models/severity.enum';
 import {Status} from '../models/status.enum';
 import {IncidentsService} from '../services/incidents.service';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {IncidentsSharingService} from "../services/incidents-sharing.service";
 import {ConfirmationService} from "primeng/api";
 import {IncidentData} from "../../@core/common/incident-data";
@@ -54,12 +54,15 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
   riskSlider = [0, 100]
   riskSliderValues = [0, 100]
 
+  addedStateSlider = [0, Number.MAX_SAFE_INTEGER]
+  addedStateSliderValues = [0, Number.MAX_SAFE_INTEGER]
+
   startDateTime = 'now-720m';
   endDateTime = 'now'
 
   userId = ""
 
-  constructor(private dashboardService: DashboardService, private incidentService: IncidentsService, private router: Router, private incidentSharingService: IncidentsSharingService, private confirmationService: ConfirmationService) {
+  constructor(private route: ActivatedRoute, private dashboardService: DashboardService, private incidentService: IncidentsService, private router: Router, private incidentSharingService: IncidentsSharingService, private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -69,6 +72,12 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
       this.startDateTime = params['startTime'];
       this.endDateTime = params['endTime'];
     }
+    this.route.queryParamMap.subscribe(queryParams => {
+      if(queryParams.get("sample")){
+        this.startDateTime = queryParams.get("startTime")
+        this.endDateTime = queryParams.get("endTime")
+      }
+    });
     this.userId = localStorage.getItem('userId')
     this.incidentSharingService.currentData.subscribe(() => {
       this.getOverview()
@@ -97,7 +106,7 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
 
   getOverview() {
     this.items = [];
-    this.incidentService.getOverview(this.startDateTime, this.endDateTime).subscribe(r => {
+    this.incidentService.getOverview(moment(this.startDateTime).format(), moment(this.endDateTime).format()).subscribe(r => {
       let resp = r.listIncident
       for (let i of resp) {
         i._source["incidentId"] = i._id
@@ -110,6 +119,7 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
         i._source["tags_keys"] = tagList
         this.items.push(i._source)
       }
+      this.getTags()
     });
   }
 
@@ -206,12 +216,27 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
     this.tableRef.filter(event.values, 'risk', 'between');
   }
 
+
   filterBySeverity(event) {
     this.tableRef.filter(event.value, 'severity', 'equals');
   }
 
   filterByStatus(event) {
     this.tableRef.filter(event.value, 'status', 'equals');
+  }
+
+  private getTags() {
+    let tagList = []
+    for (let j of this.items) {
+      let tagMap = new Map(Object.entries(j.tags))
+      for (let i of Array.from(tagMap.keys())){
+          tagList.push(`${i}:${tagMap.get(i)}`)
+      }
+    }
+    let uniqueTags = [...new Set(tagList)].sort();
+    this.tagOptions = uniqueTags.map(tag => {
+      return {label: tag, value: tag}
+    });
   }
 
 }

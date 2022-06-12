@@ -24,7 +24,7 @@ export class IncidentsInsightsComponent implements OnInit {
 
   tableDataUnified: IncidentData = incidentData
   tableRows: IncidentStateItem[]
-  incidentId = [];
+  incident: IncidentData;
 
   baselineTagMap = new Map<string, string>();
   baselineTagMapKeys = [];
@@ -51,9 +51,9 @@ export class IncidentsInsightsComponent implements OnInit {
       if (incidentId) {
         this.incidentsService.loadIncidentByID(incidentId).subscribe(resp => {
           this.onInsightsActivated.emit()
-          this.incidentId = resp.listIncident[0]
-          this.incidentShortId = this.incidentId["_id"]
-          let event = {"value": this.incidentId}
+          this.incident = resp.incidentData
+          this.incidentShortId = this.incident.incidentId
+          let event = {"value": this.incident}
           this.onIncidentSelect(event)
         })
       }
@@ -64,10 +64,10 @@ export class IncidentsInsightsComponent implements OnInit {
 
   onIncidentSelect(event) {
     if (event.value) {
-      this.tableDataUnified = event.value._source
-      this.tableRows = event.value._source.data
-      this.baselineTagMapKeys = Object.keys(event.value._source['tags'])
-      this.baselineTagMap = new Map(Object.entries(event.value._source['tags']));
+      this.tableDataUnified = event.value.source
+      this.tableRows = event.value.source.data
+      this.baselineTagMapKeys = Object.keys(event.value.source.tags)
+      this.baselineTagMap = new Map(Object.entries(event.value.source.tags));
     } else {
       this.tableDataUnified = incidentData
       this.baselineTagMapKeys = []
@@ -77,10 +77,6 @@ export class IncidentsInsightsComponent implements OnInit {
   }
 
   // Table Filters
-
-  decimalToIntCeil(num) {
-    return Math.ceil(num)
-  }
 
   semanticAnomalyToText(num) {
     if (num == 0) {
@@ -123,20 +119,13 @@ export class IncidentsInsightsComponent implements OnInit {
   }
 
   filterBySeverity(event) {
-    this.tableRef.filter(event.value, 'risk_severity', 'equals');
+    this.tableRef.filter(event.value, 'riskSeverity', 'equals');
   }
 
   filterByMessage(event) {
     this.tableRef.filter(event.target.value, 'message', 'contains');
   }
 
-  filterByLevel(event) {
-    this.tableRef.filter(event.target.value, 'level', 'contains');
-  }
-
-  filterBySemantics(event) {
-    this.tableRef.filter(event.target.value, 'semantics', 'contains');
-  }
 
 
 }

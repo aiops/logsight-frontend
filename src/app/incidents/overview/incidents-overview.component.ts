@@ -54,9 +54,6 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
   riskSlider = [0, 100]
   riskSliderValues = [0, 100]
 
-  addedStateSlider = [0, Number.MAX_SAFE_INTEGER]
-  addedStateSliderValues = [0, Number.MAX_SAFE_INTEGER]
-
   startDateTime = 'now-720m';
   endDateTime = 'now'
 
@@ -106,18 +103,18 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
 
   getOverview() {
     this.items = [];
-    this.incidentService.getOverview(moment(this.startDateTime).format(), moment(this.endDateTime).format()).subscribe(r => {
+    this.incidentService.getOverview(this.startDateTime, this.endDateTime).subscribe(r => {
       let resp = r.listIncident
       for (let i of resp) {
-        i._source["incidentId"] = i._id
-        i._source["tags_keys"] = Object.keys(i._source['tags'])
-        i._source["tags_map"] = new Map(Object.entries(i._source['tags']));
+        i.source.incidentId = i.incidentId
+        i.source.tagKeys = Object.keys(i.source.tags)
+        i.source.tagMap = new Map(Object.entries(i.source.tags));
         let tagList = []
-        for (let j of i._source["tags_keys"]) {
-          tagList.push(`${j}:${i._source["tags_map"].get(j)}`)
+        for (let j of i.source.tagKeys) {
+          tagList.push(`${j}:${i.source.tagMap.get(j)}`)
         }
-        i._source["tags_keys"] = tagList
-        this.items.push(i._source)
+        i.source.tagKeys = tagList
+        this.items.push(i.source)
       }
       this.getTags()
     });
@@ -208,7 +205,7 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
   }
 
   filterByTags(event) {
-    this.tableRef.filter(event.value, 'tags_keys', 'includesTags');
+    this.tableRef.filter(event.value, 'tagKeys', 'includesTags');
   }
 
   filterByRisk(event) {

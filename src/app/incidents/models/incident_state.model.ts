@@ -1,9 +1,12 @@
 export interface IncidentStateItem {
   level: string;
   timestamp: string,
-  risk_score: number,
+  riskSeverity: number,
   message: string,
-  added_state: number,
+  addedState: number,
   prediction: number,
-  template: string;
+  template: string,
+  riskScore: number,
+  tagString: string,
+  tags: any,
 }

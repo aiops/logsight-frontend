@@ -54,7 +54,7 @@
 
             <div class="row pt-2">
               <div class="col-12">
-                {{this.tableDataUnified.count_messages}} messages &nbsp; | &nbsp; {{this.tableDataUnified.count_states}}
+                {{this.tableDataUnified.countMessages}} messages &nbsp; | &nbsp; {{this.tableDataUnified.countStates}}
                 states
               </div>
             </div>
@@ -88,7 +88,7 @@
           <div class="align-self-center"><i class="icon-book-open text-primary font-large-2 float-left"></i>
           </div>
           <div class="media-body text-right">
-            <h3 class="text-primary"> {{this.tableDataUnified.semantic_anomalies}} </h3>
+            <h3 class="text-primary"> {{this.tableDataUnified.countSemanticAnomaly}} </h3>
             <span>Semantics</span>
           </div>
         </div>
@@ -98,7 +98,7 @@
       <p-card>
         <div class="media d-flex">
           <div class="media-body text-left">
-            <h3 class="text-primary"> {{this.tableDataUnified.level_faults}} </h3>
+            <h3 class="text-primary"> {{this.tableDataUnified.countLevelFault}} </h3>
             <span>Level errors</span>
           </div>
           <div class="align-self-center"><i class="pi pi-exclamation-circle text-primary font-large-2 float-right"></i>
@@ -110,7 +110,7 @@
       <p-card>
         <div class="media d-flex">
           <div class="media-body text-left">
-            <h3 class="text-primary"> {{this.tableDataUnified.added_states}}</h3>
+            <h3 class="text-primary"> {{this.tableDataUnified.countAddedState}}</h3>
             <span>Added states</span>
           </div>
           <div class="align-self-center"><i class="icon-login text-primary font-large-2 float-right"></i>
@@ -133,11 +133,11 @@
           sortMode="multiple">
           <ng-template pTemplate="header">
             <tr style="padding-bottom: 20px">
-              <th [pSortableColumn]="'risk_severity'" style="width: 10%">Risk
-                <p-sortIcon [field]="'risk_severity'"></p-sortIcon>
-              </th>
               <th [pSortableColumn]="'timestamp'" style="width: 10%">Date
                 <p-sortIcon [field]="'timestamp'"></p-sortIcon>
+              </th>
+              <th [pSortableColumn]="'riskSeverity'" style="width: 10%">Risk
+                <p-sortIcon [field]="'riskSeverity'"></p-sortIcon>
               </th>
               <th [pSortableColumn]="'message'" style="width: 60%">Message
                 <p-sortIcon [field]="'message'"></p-sortIcon>
@@ -149,13 +149,15 @@
                   style="width: 10%; overflow: hidden; word-wrap: anywhere">Semantic anomaly
                 <p-sortIcon [field]="'prediction'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'added_state'" class="text-center"
+              <th [pSortableColumn]="'addedState'" class="text-center"
                   style="width: 10%"> Added state
-                <p-sortIcon [field]="'added_state'"></p-sortIcon>
+                <p-sortIcon [field]="'addedState'"></p-sortIcon>
               </th>
             </tr>
 
             <tr>
+              <th>
+              </th>
               <th>
                 <p-dropdown
                   (onChange)="filterBySeverity($event)"
@@ -167,8 +169,6 @@
                     <span [class]="'severity-badge severity-' + option.label">{{option.label}}</span>
                   </ng-template>
                 </p-dropdown>
-              </th>
-              <th>
               </th>
               <th>
                 <input
@@ -192,13 +192,13 @@
           <ng-template let-item let-rowIndex pTemplate="body">
             <tr>
               <td>
-                <span
-                  [class]="'severity-badge severity-' + Severity[item.risk_severity]">{{ Severity[item.risk_severity] }}
-                </span>
+                <div>{{item.timestamp  | date: 'MMM d, y, hh:mm:ss'}}</div>
               </td>
 
               <td>
-                <div>{{item.timestamp  | date: 'MMM d, y, hh:mm:ss'}}</div>
+                <span
+                  [class]="'severity-badge severity-' + Severity[item.riskSeverity]">{{ Severity[item.riskSeverity] }}
+                </span>
               </td>
 
               <td>{{item.message}}</td>
@@ -211,8 +211,8 @@
               >{{semanticAnomalyToText(item.prediction)}}
               </td>
 
-              <td class="semantics text-center" style="color: {{addedToColor(item.added_state)}}"
-              >{{addedStateToText(item.added_state)}}
+              <td class="semantics text-center" style="color: {{addedToColor(item.addedState)}}"
+              >{{addedStateToText(item.addedState)}}
               </td>
 
             </tr>

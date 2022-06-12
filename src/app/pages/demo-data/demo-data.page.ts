@@ -11,9 +11,7 @@ import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {IncidentsService} from "../../incidents/services/incidents.service";
 
 @Component({
-  selector: 'demo-data',
-  styleUrls: ['./demo-data.page.scss'],
-  templateUrl: './demo-data.page.html',
+  selector: 'demo-data', styleUrls: ['./demo-data.page.scss'], templateUrl: './demo-data.page.html',
 })
 export class DemoDataPage implements OnInit, OnDestroy {
   isSpinning = false;
@@ -28,20 +26,15 @@ export class DemoDataPage implements OnInit, OnDestroy {
   isLoadDemo = 0;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private integrationService: IntegrationService, private incidentsService: IncidentsService, private authService: AuthenticationService, private apiService: ApiService,
-              private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
+  constructor(private integrationService: IntegrationService, private incidentsService: IncidentsService, private authService: AuthenticationService, private apiService: ApiService, private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
 
-    this.topIncidents$ = combineLatest([timer(2, 5000), this.r$]).pipe(
-      switchMap(() => this.loadIncidents().pipe(catchError((error) => this.handleError(error)))),
-      share(),
-      takeUntil(this.stopPolling)
-    );
+    this.topIncidents$ = combineLatest([timer(2, 5000), this.r$]).pipe(switchMap(() => this.loadIncidents().pipe(catchError((error) => this.handleError(error)))), share(), takeUntil(this.stopPolling));
   }
 
   ngOnInit(): void {
     setTimeout(_ => this.r$.next(), 1000); //hack to start first refresh
     this.topIncidents$.subscribe(data => {
-      if (data.length > 0) {
+      if (data.listIncident.length > 0 && this.isLoadDemo != 0) {
         if (this.isLoadDemo == 2) {
           this.redirectToIncidents()
           this.isLoadDemo = 0
@@ -68,13 +61,11 @@ export class DemoDataPage implements OnInit, OnDestroy {
   }
 
   redirectToIncidents() {
+    console.log("redirect")
     this.isSpinning = false
     this.router.navigate(['/pages', 'incidents'], {
       queryParams: {
-        startTime: this.demoStartTime,
-        endTime: this.demoEndTime,
-        dateTimeType: "absolute",
-        sample: true
+        startTime: this.demoStartTime, endTime: this.demoEndTime, dateTimeType: "absolute", sample: true
       }
     })
   }
@@ -83,7 +74,7 @@ export class DemoDataPage implements OnInit, OnDestroy {
     this.isSpinning = true
     this.isLoadDemo = 1
     this.http.post<Receipt[]>(`/api/v1/demo/hadoop`, {})
-      .subscribe(() => {
+      .subscribe(receipts => {
       }, error => {
         this.isSpinning = false
         this.apiService.handleErrors(error.error)

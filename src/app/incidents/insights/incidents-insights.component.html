@@ -19,14 +19,14 @@
             </div>
             <div class="row pt-2">
               <div class="col">
-                {{this.tableDataUnified.timestamp | date:'medium'}}
+                {{this.tableDataUnified.timestamp | date:'MMM dd, yyyy, HH:mm:ss'}}
               </div>
             </div>
           </div>
           <div class="col">
             <div class="row">
               <div class="col-2 my-auto">
-                Baseline tags
+                Tags
               </div>
             </div>
             <div class="row pt-2">
@@ -89,7 +89,7 @@
           </div>
           <div class="media-body text-right">
             <h3 class="text-primary"> {{this.tableDataUnified.countSemanticAnomaly}} </h3>
-            <span>Semantics</span>
+            <span>Semantic anomalies</span>
           </div>
         </div>
       </p-card>
@@ -111,7 +111,7 @@
         <div class="media d-flex">
           <div class="media-body text-left">
             <h3 class="text-primary"> {{this.tableDataUnified.countAddedState}}</h3>
-            <span>Added states</span>
+            <span>New states</span>
           </div>
           <div class="align-self-center"><i class="icon-login text-primary font-large-2 float-right"></i>
           </div>
@@ -122,7 +122,7 @@
 
   <div class="row pt-5">
     <div class="col-12">
-      <p-card header="State analysis">
+      <p-card header="Incident analysis">
         <p-table
           #statesTable
           [paginator]="true"
@@ -142,15 +142,15 @@
               <th [pSortableColumn]="'message'" style="width: 60%">Message
                 <p-sortIcon [field]="'message'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'level'" style="width: 10%">Level
-                <p-sortIcon [field]="'level'"></p-sortIcon>
-              </th>
               <th [pSortableColumn]="'prediction'"
-                  style="width: 10%; overflow: hidden; word-wrap: anywhere">Semantic anomaly
+                  style="width: 13%; overflow: hidden; word-wrap: anywhere">Semantic anomaly
                 <p-sortIcon [field]="'prediction'"></p-sortIcon>
               </th>
+              <th [pSortableColumn]="'level'" style="width: 7%">Level
+                <p-sortIcon [field]="'level'"></p-sortIcon>
+              </th>
               <th [pSortableColumn]="'addedState'" class="text-center"
-                  style="width: 10%"> Added state
+                  style="width: 10%"> New state
                 <p-sortIcon [field]="'addedState'"></p-sortIcon>
               </th>
             </tr>
@@ -192,7 +192,7 @@
           <ng-template let-item let-rowIndex pTemplate="body">
             <tr>
               <td>
-                <div>{{item.timestamp  | date: 'MMM d, y, hh:mm:ss'}}</div>
+                <div>{{item.timestamp  | date: 'MMM dd, yyyy, HH:mm:ss'}}</div>
               </td>
 
               <td>
@@ -203,12 +203,12 @@
 
               <td>{{item.message}}</td>
 
-              <td class="level" style="color: {{levelToColor(item.level)}}">
-                <div>{{item.level}}</div>
+              <td class="semantics" style="color: {{predictionToColor(item.prediction)}}"
+              >{{semanticAnomalyToText(item.prediction)}}
               </td>
 
-              <td class="semantics text-center" style="color: {{predictionToColor(item.prediction)}}"
-              >{{semanticAnomalyToText(item.prediction)}}
+              <td class="level" style="color: {{levelToColor(item.level)}}">
+                <div>{{item.level}}</div>
               </td>
 
               <td class="semantics text-center" style="color: {{addedToColor(item.addedState)}}"
@@ -221,6 +221,4 @@
       </p-card>
     </div>
   </div>
-
-
-
+</div>

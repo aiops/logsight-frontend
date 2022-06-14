@@ -7,9 +7,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {IncidentsSharingService} from "../services/incidents-sharing.service";
 import {ConfirmationService} from "primeng/api";
 import {IncidentData} from "../../@core/common/incident-data";
-import {PredefinedTime} from "../../@core/common/predefined-time";
-import {DashboardService} from "../../pages/dashboard/dashboard.service";
-import {NbPopoverDirective} from "@nebular/theme";
 import * as moment from 'moment';
 import {UpdateIncidentStatusRequest} from "../../@core/common/incident-request";
 
@@ -45,21 +42,17 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
     label: Status[Status.Assigned]
   }, {value: Status.Resolved, label: Status[Status.Resolved]}];
 
-
-  predefinedTimes: PredefinedTime[] = [];
-  @ViewChild('dateTimePicker', {read: TemplateRef}) dateTimePicker: TemplateRef<any>;
-  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
-
   tagOptions = [];
   riskSlider = [0, 100]
   riskSliderValues = [0, 100]
 
-  startDateTime = 'now-720m';
-  endDateTime = 'now'
+  @ViewChild('dateTimePicker', {read: TemplateRef}) dateTimePicker: TemplateRef<any>;
+  dateFormat = 'YYYY-MM-DDTHH:mm:ss.SSS'
+  endDateTime =  moment().utc(false).subtract(0, "minutes").format(this.dateFormat)
+  startDateTime =  moment().utc(false).subtract(720, "minutes").format(this.dateFormat)
 
-  userId = ""
 
-  constructor(private route: ActivatedRoute, private dashboardService: DashboardService, private incidentService: IncidentsService, private router: Router, private incidentSharingService: IncidentsSharingService, private confirmationService: ConfirmationService) {
+  constructor(private route: ActivatedRoute, private incidentService: IncidentsService, private router: Router, private incidentSharingService: IncidentsSharingService, private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -75,11 +68,9 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
         this.endDateTime = queryParams.get("endTime")
       }
     });
-    this.userId = localStorage.getItem('userId')
     this.incidentSharingService.currentData.subscribe(() => {
       this.getOverview()
     });
-    this.loadPredefinedTimes(this.userId)
   }
 
 
@@ -109,6 +100,8 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
         i.source.incidentId = i.incidentId
         i.source.tagKeys = Object.keys(i.source.tags)
         i.source.tagMap = new Map(Object.entries(i.source.tags));
+
+        i.source.similarIncidents =  [i.source]
         let tagList = []
         for (let j of i.source.tagKeys) {
           tagList.push(`${j}:${i.source.tagMap.get(j)}`)
@@ -117,6 +110,7 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
         this.items.push(i.source)
       }
       this.getTags()
+      this.tableRef.reset()
     });
   }
 
@@ -151,24 +145,18 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
 
   }
 
-  onDeletePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.deleteTimeRange(this.userId, predefinedTime).subscribe(() => this.loadPredefinedTimes(this.userId))
-  }
-
-  onSavePredefinedTime(predefinedTime: PredefinedTime) {
-    this.dashboardService.createTimeRange(this.userId, predefinedTime).subscribe(() => this.loadPredefinedTimes(this.userId))
-  }
-
   onDateTimeSearch(event) {
-    localStorage.setItem('selectedTime', JSON.stringify(event));
     let dateTimeType = 'absolute';
     if (event.relativeTimeChecked) {
       this.startDateTime = event.relativeDateTime
-      this.endDateTime = 'now'
-      dateTimeType = 'relative';
+      let minutesString = this.startDateTime.split("-")[1]
+      let minutesNumber = Number(minutesString.slice(0,minutesString.length-1))
+      this.endDateTime = moment().utc(false).format(this.dateFormat)
+      this.startDateTime = moment().utc(false).subtract(minutesNumber, "minutes").format(this.dateFormat)
+      dateTimeType = 'absolute';
     } else if (event.absoluteTimeChecked) {
-      this.startDateTime = moment(event.absoluteDateTime.startDateTime).format()
-      this.endDateTime = moment(event.absoluteDateTime.endDateTime).format()
+      this.startDateTime = moment(event.absoluteDateTime.startDateTime).format(this.dateFormat)
+      this.endDateTime = moment(event.absoluteDateTime.endDateTime).format(this.dateFormat)
     }
     localStorage.setItem("selectedTime", JSON.stringify({
       startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType
@@ -176,24 +164,6 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
     this.getOverview()
   }
 
-
-  onSelectPredefinedTime(pt: PredefinedTime) {
-    if (pt.dateTimeType == 'RELATIVE') {
-      this.onDateTimeSearch({relativeTimeChecked: true, relativeDateTime: pt.startTime})
-    } else {
-      this.onDateTimeSearch({
-        absoluteTimeChecked: true, absoluteDateTime: {
-          startDateTime: pt.startTime, endDateTime: pt.endTime
-        }
-      })
-    }
-  }
-
-  loadPredefinedTimes(userId: string) {
-    this.dashboardService.getAllTimeRanges(userId).subscribe(resp => {
-      this.predefinedTimes = resp.timeSelectionList
-    })
-  }
 
 
   filterByIncidentId(event) {

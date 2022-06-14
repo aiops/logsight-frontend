@@ -33,6 +33,7 @@ export const verificationData: VerificationData = {
 export const incidentData: IncidentData = {
   "timestamp": "",
   "incidentId": "",
+  "similarIncidents": [],
   "tags": [],
   "tagKeys": "",
   "status": "1",

@@ -23,25 +23,18 @@
           </button>
         </div>
         <div class="col">
-          <div class="row float-right">
-            <div *ngIf="endDateTime == 'now'" class="col my-auto">
-              <p class="time-text my-auto">{{startDateTime.split('-')[1]}} ago</p>
-            </div>
-            <div *ngIf="endDateTime != 'now'" class="col my-auto">
-              <p class="time-text my-auto"> {{startDateTime |date:'medium'}}
+          <div class="row">
+            <div class="col-9"></div>
+
+            <div class="col-2 text-right">
+              <p class="my-auto"> {{startDateTime |date:'MMM dd, yyyy, HH:mm:ss'}}
                 <br>
-                {{endDateTime |date:'medium'}} </p>
+                {{endDateTime | date:'MMM dd, yyyy, HH:mm:ss'}} </p>
             </div>
-            <div class="col">
-              <predefined-times (deletePredefinedTime)="onDeletePredefinedTime($event)"
-                                (selectPredefinedTime)="onSelectPredefinedTime($event)"
-                                [predefinedTimes]="predefinedTimes">
-              </predefined-times>
-            </div>
-            <div class="col-1">
+            <div class="col-1 text-center">
               <p-overlayPanel #op [dismissable]="false" [appendTo]="'body'">
                 <ng-template pTemplate>
-                  <elastic-custom-datepicker (savePredefinedTime)="onSavePredefinedTime($event)"
+                  <elastic-custom-datepicker
                                              (search)="onDateTimeSearch($event)">
                   </elastic-custom-datepicker>
                 </ng-template>
@@ -53,12 +46,12 @@
           </div>
         </div>
       </div>
-
-
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 3%;" rowspan="2">
+        <th style="width: 3%;">
+        </th>
+        <th style="width: 3%;">
           <p-tableHeaderCheckbox name="incidents"></p-tableHeaderCheckbox>
         </th>
         <th style="width: 10%" [pSortableColumn]="'timestampStart'">Date
@@ -67,17 +60,17 @@
         <th style="width: 10%" [pSortableColumn]="'incidentId'">Incident ID
           <p-sortIcon [field]="'incidentId'"></p-sortIcon>
         </th>
-        <th style="max-width: 15%;" [pSortableColumn]="'message'">Description
+        <th style="max-width: 25%;" [pSortableColumn]="'message'">Description
           <p-sortIcon [field]="'message'"></p-sortIcon>
         </th>
         <th style="width: 10%">Tags</th>
         <th style="width: 5%" [pSortableColumn]="'risk'">Risk
           <p-sortIcon [field]="'risk'"></p-sortIcon>
         </th>
-        <th style="width: 8%" [pSortableColumn]="'severity'">Severity
+        <th style="width: 7%" [pSortableColumn]="'severity'">Severity
           <p-sortIcon [field]="'severity'"></p-sortIcon>
         </th>
-         <th style="width: 9%" [pSortableColumn]="'added_states'">Added states
+        <th style="width: 7%" [pSortableColumn]="'added_states'">New states
           <p-sortIcon [field]="'added_states'"></p-sortIcon>
         </th>
         <th style="width: 10%" [pSortableColumn]="'status'">Status
@@ -86,6 +79,10 @@
         <th style="width: 10%" class="text-center"></th>
       </tr>
       <tr>
+        <th>
+        </th>
+        <th>
+        </th>
         <th>
         </th>
         <th>
@@ -141,14 +138,20 @@
         </th>
         <th>
         </th>
+
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-item>
+    <ng-template pTemplate="body" let-expanded="expanded" let-item let-rowIndex>
       <tr>
+        <td>
+          <button type="button" pButton pRipple [pRowToggler]="item"
+                  class="p-button-text p-button-rounded p-button-plain"
+                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+        </td>
         <td>
           <p-checkbox name="incidents" [value]="item" [(ngModel)]="selectedItems"></p-checkbox>
         </td>
-        <td>{{item.timestamp | date: 'MMM d, y, hh:mm:ss'}}</td>
+        <td>{{item.timestamp | date: 'MMM dd, yyyy, HH:mm:ss'}}</td>
         <td><p pTooltip="{{item.incidentId}}" tooltipPosition="top">{{item.incidentId.slice(0, 7)}}</p></td>
         <td style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">{{item.message.template}}</td>
         <td>
@@ -165,7 +168,7 @@
         <td>
           <span [class]="'severity-badge severity-' + Severity[item.severity]">{{ Severity[item.severity] }}</span>
         </td>
-         <td>
+        <td>
           {{ item.countAddedState }}
         </td>
         <td>
@@ -182,6 +185,22 @@
         </td>
       </tr>
     </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-item>
+
+      <p-table [value]="item.similarIncidents" dataKey="incidentId">
+        <ng-template pTemplate="body" let-similar>
+          <tr>
+            <td>
+              <p-checkbox name="incidents" [value]="item" [(ngModel)]="selectedItems"></p-checkbox>
+            </td>
+            <td>{{similar.incidentId}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </ng-template>
+
   </p-table>
 </p-card>
 

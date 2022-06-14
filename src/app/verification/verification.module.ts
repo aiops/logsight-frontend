@@ -30,17 +30,19 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import {TooltipModule} from "primeng/tooltip";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
+import {OverlayPanelModule} from "primeng/overlaypanel";
+import {PagesModule} from "../pages/pages.module";
 
 @NgModule({
   declarations: [VerificationComponent, VerificationOverviewComponent, VerificationInsightsComponent, VerificationAnalyticsComponent, CreateVerificationComponent],
-    imports: [//Angular modules
-        CommonModule, FormsModule,
+  imports: [//Angular modules
+    CommonModule, FormsModule,
 
-        //Modules from the installed libraries
-        TableModule, DropdownModule, ButtonModule, CalendarModule, InputTextModule, SliderModule, MultiSelectModule, TabViewModule,
+    //Modules from the installed libraries
+    TableModule, DropdownModule, ButtonModule, CalendarModule, InputTextModule, SliderModule, MultiSelectModule, TabViewModule,
 
-        //Application modules
-        VerificationRoutingModule, NbSelectModule, NbSpinnerModule, NbTagModule, NbTreeGridModule, CardModule, ChipModule, SkeletonModule, AutoCompleteModule, ChipsModule, ThemeModule, CheckboxModule, ChartModule, ChartsWrapperModule, ConfirmDialogModule, TooltipModule, TourMatMenuModule],
+    //Application modules
+    VerificationRoutingModule, NbSelectModule, NbSpinnerModule, NbTagModule, NbTreeGridModule, CardModule, ChipModule, SkeletonModule, AutoCompleteModule, ChipsModule, ThemeModule, CheckboxModule, ChartModule, ChartsWrapperModule, ConfirmDialogModule, TooltipModule, TourMatMenuModule, OverlayPanelModule, PagesModule],
   providers: [VerificationSharingService, ConfirmationService]
 })
 export class VerificationModule {

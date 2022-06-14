@@ -74,13 +74,7 @@ import { VerificationModule } from './verification/verification.module';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthHttpInterceptor,
     multi: true
-  },
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: {
-        fullLibraryLoader: () => import('highlight.js'),
-      }
-    },
+  }
   ]
 })
 export class AppModule {

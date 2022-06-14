@@ -1,5 +1,6 @@
 export interface IncidentData {
   incidentId: any,
+  similarIncidents: any,
   timestamp: any,
   tags: any,
   tagKeys: any,

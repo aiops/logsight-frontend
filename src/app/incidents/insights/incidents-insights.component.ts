@@ -88,7 +88,7 @@ export class IncidentsInsightsComponent implements OnInit {
 
   addedStateToText(num) {
     if (num == 1) {
-      return "ADDED"
+      return "YES"
     } else {
       return ""
     }
@@ -98,7 +98,7 @@ export class IncidentsInsightsComponent implements OnInit {
     if (num == 0) {
       return "#495057"
     } else {
-      return "#00a800"
+      return "#495057"
     }
   }
 
@@ -125,7 +125,6 @@ export class IncidentsInsightsComponent implements OnInit {
   filterByMessage(event) {
     this.tableRef.filter(event.target.value, 'message', 'contains');
   }
-
 
 
 }

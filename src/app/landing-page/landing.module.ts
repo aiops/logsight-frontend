@@ -5,8 +5,6 @@ import {LandingComponent} from './landing-component/landing.component';
 import {TermsconditionsComponent} from './terms-and-conditions/termsconditions.component';
 import {PrivacyPolicyComponent} from './privacy-policy/privacy-policy.component';
 import {ImpressumComponent} from './Impressum/impressum.component';
-import {SwiperModule} from "swiper/angular";
-import {TryLogsightComponent} from "./try-logsight/try-logsight";
 import {NbIconModule, NbSelectModule, NbSpinnerModule} from "@nebular/theme";
 import {MatIconModule} from "@angular/material/icon";
 import {CommonModule} from "@angular/common";
@@ -15,7 +13,6 @@ import {CommonModule} from "@angular/common";
   imports: [
     LandingRoutingModule,
     ReactiveFormsModule,
-    SwiperModule,
     MatIconModule,
     CommonModule,
     NbIconModule,
@@ -23,7 +20,7 @@ import {CommonModule} from "@angular/common";
     NbSelectModule,
   ],
   declarations: [
-    LandingComponent, TermsconditionsComponent, PrivacyPolicyComponent, ImpressumComponent, TryLogsightComponent
+    LandingComponent, TermsconditionsComponent, PrivacyPolicyComponent, ImpressumComponent
   ],
 })
 export class LandingModule {

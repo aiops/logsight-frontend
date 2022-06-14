@@ -42,7 +42,6 @@
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
               "node_modules/leaflet/dist/leaflet.css",
               "src/app/@theme/styles/styles.scss",
-              "node_modules/highlight.js/styles/an-old-hope.css",
               "node_modules/ngx-app-tour/styles/styles.css"
             ],
             "scripts": [
@@ -94,7 +93,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-admin-demo:build",
+            "browserTarget": "ngx-admin-demo:build"
           },
           "configurations": {
             "production": {
@@ -136,7 +135,7 @@
               "node_modules/socicon/css/socicon.css",
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-              "src/app/@theme/styles/styles.scss",
+              "src/app/@theme/styles/styles.scss"
             ],
             "assets": [
               "src/assets",

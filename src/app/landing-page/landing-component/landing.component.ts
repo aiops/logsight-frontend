@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit, HostListener, AfterViewInit } from '@angular/core';
-import { NotificationsService } from 'angular2-notifications';
-import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
+import {NotificationsService} from 'angular2-notifications';
+import {Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as AOS from 'aos';
-import { LoginService } from '../../auth/login.service';
+import {LoginService} from '../../auth/login.service';
 
-import Swiper, { Navigation, Pagination } from 'swiper';
+import Swiper, {Navigation, Pagination} from 'swiper';
 
 // configure Swiper to use modules
 Swiper.use([Navigation, Pagination]);
@@ -14,8 +14,7 @@ Swiper.use([Navigation, Pagination]);
   selector: 'landing',
   styleUrls: ['../assets/css/style.css',
     '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css',
-    '../assets/vendor/bootstrap-icons/bootstrap-icons.css',
-    '../assets/vendor/swiper/swiper-bundle.min.css', '../assets/vendor/glightbox/css/glightbox.css'],
+    '../assets/vendor/bootstrap-icons/bootstrap-icons.css'],
   templateUrl: './landing.component.html',
 })
 export class LandingComponent implements OnInit, AfterViewInit {
@@ -26,6 +25,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
   });
   message = '';
   isSpinning = false;
+
   constructor(private authService: LoginService,
               private notificationService: NotificationsService,
               private router: Router) {
@@ -55,22 +55,22 @@ export class LandingComponent implements OnInit, AfterViewInit {
     this.authService.login(this.form.value).subscribe(resp => {
         this.router.navigate(['/pages/quickstart'])
       }, error => {
-          this.notificationService.error('Error', 'Incorrect email or password')
+        this.notificationService.error('Error', 'Incorrect email or password')
       }
     )
   }
 
   onSignUp() {
     localStorage.removeItem('token')
-    this.router.navigate(['/auth/register'], { queryParams: { email: this.form.value.email } })
-      // this.authService.register(this.form.value).subscribe(resp => {
-      //     this.notificationService.success('Success',
-      //       'You are successfully registered. Please check your email to activate')
-      //   }, err => {
-      //
-      //     this.notificationService.error('Error', 'User already exists, please sign in!')
-      //   }
-      // )
+    this.router.navigate(['/auth/register'], {queryParams: {email: this.form.value.email}})
+    // this.authService.register(this.form.value).subscribe(resp => {
+    //     this.notificationService.success('Success',
+    //       'You are successfully registered. Please check your email to activate')
+    //   }, err => {
+    //
+    //     this.notificationService.error('Error', 'User already exists, please sign in!')
+    //   }
+    // )
   }
 
   redirectToLogin() {

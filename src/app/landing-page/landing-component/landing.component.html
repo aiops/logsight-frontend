@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-lg-5 d-flex flex-column justify-content-center">
         <h1 data-aos="fade-up">Your Ally for Intelligent DevOps Pipelines</h1>
-        <h2 data-aos="fade-up">logsight.ai infuses deep learning and AI-powered analytics to enable continuous software
-          delivery and proactive troubleshooting</h2>
+        <h5 data-aos="fade-up">Infuse analytics to enable continuous software
+          delivery, proactive troubleshooting, and data insights.</h5>
         <div data-aos="fade-up">
           <div class="text-center text-lg-start" style="margin-top: 2rem">
             <form (submit)="onSignUp()" [formGroup]="form" accept-charset="UTF-8" autocomplete="off"
@@ -12,11 +12,11 @@
                   enctype="application/x-www-form-urlencoded" id="chimp-form" novalidate>
               <table>
                 <tr style="width: 100%">
-                  <td style="width: 80%"><input autocomplete="off" class="form-control" formControlName="email"
+                  <td style="width: 90%"><input autocomplete="off" class="form-control" formControlName="email"
                                                 id="chimp-email" name="email"
                                                 placeholder="Enter your email"
                                                 style="width: 100%; height: 3.5rem" type="email"></td>
-                  <td style="padding-left: 1em; width: 30%"><input
+                  <td style="padding-left: 1em; width: 20%"><input
                     class="btn btn-primary mb-0"
                     style="text-transform: none; font-weight: 700; background-color: #4154f1; width: 100%; height: 3.5rem"
                     type="submit"
@@ -38,7 +38,7 @@
       <div class="col-lg-1 hero-img" data-aos="zoom-out" style="image-rendering: crisp-edges">
       </div>
       <div class="col-lg-6 hero-img" data-aos="zoom-out" style="image-rendering: crisp-edges">
-        <img alt="" class="img-fluid" src="assets/img/hero.svg">
+        <img alt="" class="img-fluid" src="assets/img/hero.svg" style="width: 80%">
       </div>
     </div>
   </div>
@@ -47,13 +47,36 @@
 
 <main id="main">
 
+<!--  Partners section-->
+  <section class="logo-list">
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-2 col-md-4 col-6 my-auto"></div>
+            <div class="col-lg-2 col-md-4 col-6 my-auto">
+                <a href="#"><img src="../assets/img/clients/bundesdruckerei.svg" style="max-height: 60px" class="img-fluid" alt="Bundesdruckerei logo"></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6 my-auto">
+                <a href="#"><img src="../assets/img/clients/epam.svg" style="max-height: 60px" class="img-fluid" alt="EPAM logo"></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6 my-auto">
+                <a href="#"><img src="../assets/img/clients/atos.svg" style="max-height: 60px" class="img-fluid" alt="ATOS logo"></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6 my-auto">
+                <a href="#"><img src="../assets/img/clients/siemens.svg" style="max-height: 60px" class="img-fluid" alt="Siemens logo"></a>
+            </div>
+           <div class="col-lg-2 col-md-4 col-6 my-auto"></div>
+        </div>
+    </div>
+</section>
+<!--  end of partners section-->
+
   <!-- ======= Values Section ======= -->
   <section class="values" data-aos="fade-up" id="values">
 
     <div class="container">
       <header class="section-header">
 <!--        <h2>Spotlight</h2>-->
-        <p>AI Partner for Reliable DevOps Pipelines</p>
+        <p>Innovative Partner for Reliable Development and Operation</p>
       </header>
 
       <div class="row justify-content-center">
@@ -61,7 +84,7 @@
 
 
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-5 col-md-6">
           <div class="box">
             <img alt="" class="img-fluid" src="assets/img/stage_verifier.svg">
             <h3>Stage Verifier</h3>
@@ -70,7 +93,7 @@
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-5 col-md-6">
           <div class="box">
             <img alt="" class="img-fluid" src="assets/img/incident_detector.svg">
             <h3>Incident Detector</h3>
@@ -86,6 +109,7 @@
     </div>
 
   </section><!-- End Values Section -->
+
 
   <!-- ======= Counts Section ======= -->
   <!--  <section id="counts" class="counts">-->
@@ -142,6 +166,38 @@
   <!--    </div>-->
   <!--  </section>&lt;!&ndash; End Counts Section &ndash;&gt;-->
 
+
+<!--  Integrations section-->
+  <section class="logo-list"  style="background-color: #f6f9ff">
+    <div class="container">
+      <header class="section-header">
+<!--        <h2>Features</h2>-->
+        <p>Integration with the most popular logging technologies</p>
+      </header>
+        <div class="row">
+          <div class="col-lg-1 col-md-4 col-6 my-auto"></div>
+            <div class="col-lg-2 col-md-4 col-6 my-auto">
+                <a href="https://docs.logsight.ai/#/./integration/fluentbit"><img src="../assets/img/logo-fluentbit.png" style="max-height: 70px" class="img-fluid" alt="Bundesdruckerei logo"></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6 my-auto">
+                <a href="https://docs.logsight.ai/#/integration/github_action"><img src="../assets/img/github.png" style="max-height: 70px" class="img-fluid" alt="EPAM logo"></a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6 my-auto">
+                <a href="https://docs.logsight.ai/#/tutorials/dataset_import_short"><img src="../assets/img/filebeats-logo.png" style="max-height: 70px" class="img-fluid" alt="Siemens logo"></a>
+            </div>
+          <div class="col-lg-2 col-md-4 col-6 my-auto">
+                <a href="https://pypi.org/project/logsight-sdk-py/"><img src="../assets/img/python-logo.png" style="max-height: 70px" class="img-fluid" alt="Siemens logo"></a>
+            </div>
+                      <div class="col-lg-2 col-md-4 col-6 my-auto">
+                <a href="https://logsight.ai/swagger-ui/index.html"><img src="../assets/img/swagger_logo.svg" style="max-height: 70px" class="img-fluid" alt="ATOS logo"></a>
+            </div>
+           <div class="col-lg-1 col-md-4 col-6 my-auto"></div>
+        </div>
+    </div>
+</section>
+<!--  end of Integrations section-->
+
+
   <!-- ======= Features Section ======= -->
   <section class="features" data-aos="fade-up" id="features">
 
@@ -149,13 +205,13 @@
 
       <header class="section-header">
 <!--        <h2>Features</h2>-->
-        <p>AI-powered Log Analytics with Scalable Performance</p>
+        <p>Novel Features with Scalable Performance</p>
       </header>
 
       <div class="row">
 
         <div class="col-lg-3">
-          <img alt="" class="img-fluid" src="assets/img/imgfeatures.svg">
+          <img alt="" class="img-fluid" src="assets/img/imgfeatures.svg" style="width: 70%">
         </div>
 
         <div class="col-lg-9 mt-5 mt-lg-0 d-flex">

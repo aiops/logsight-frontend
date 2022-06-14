@@ -587,7 +587,7 @@ section {
 .values .box img {
   padding: 10px 10px;
   transition: 0.5s;
-  transform: scale(0.7);
+  transform: scale(0.85);
 }
 
 .values .box h3 {
@@ -609,7 +609,7 @@ section {
 }
 
 .values .box:hover img {
-  transform: scale(0.8);
+  transform: scale(0.9);
 }
 
 /*--------------------------------------------------------------

@@ -1,7 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {Status} from '../models/status.enum';
 import {TagRequest, TagValueRequest} from "../../@core/common/TagRequest";
 import {
   IssuesKPIVerificationRequest,
@@ -10,7 +9,9 @@ import {
 } from "../../@core/common/verification-request";
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ApiService} from "../../@core/service/api.service";
-import {OverviewVerificationData} from "../../@core/common/verification-data";
+import { map } from 'rxjs/operators';
+import { mapOverview } from '../mapping/overview.mapping';
+import { OverviewItem } from '../models/overview.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,10 @@ export class VerificationService {
   constructor(private http: HttpClient, private apiService: ApiService) {
   }
 
-  getOverview(): Observable<any> {
-    return this.apiService.get(`/api/v1/logs/compare`);
+  getOverview(): Observable<OverviewItem[]> {
+    return this.apiService.get(`/api/v1/logs/compare`).pipe(
+      map(mapOverview)
+    );
   }
 
   changeStatus(request: UpdateVerificationStatusRequest) {

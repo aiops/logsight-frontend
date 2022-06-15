@@ -107,14 +107,14 @@
             <td><p pTooltip="{{item.compareId}}" tooltipPosition="top">{{item.compareId.slice(0,7)}}</p></td>
             <td>
                 <nb-tag-list>
-                  <nb-tag *ngFor="let tagKey of item.baseline_tags_keys" [text]="tagKey"
+                  <nb-tag *ngFor="let tagKey of item.baselineTags" [text]="tagKey"
                           appearance="outline"
                           status="primary" style="text-transform: none"></nb-tag>
                 </nb-tag-list>
             </td>
             <td>
                  <nb-tag-list>
-                  <nb-tag *ngFor="let tagKey of item.candidate_tags_keys" [text]="tagKey"
+                  <nb-tag *ngFor="let tagKey of item.candidateTags" [text]="tagKey"
                           appearance="filled"
                           status="primary" style="text-transform: none"></nb-tag>
                 </nb-tag-list>

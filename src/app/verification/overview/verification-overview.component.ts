@@ -18,6 +18,7 @@ import {Router} from "@angular/router";
 import {UpdateVerificationStatusRequest} from "../../@core/common/verification-request";
 import {VerificationSharingService} from "../services/verification-sharing.service";
 import {ConfirmationService} from "primeng/api";
+import { OverviewItem } from '../models/overview.model';
 
 interface DropdownOption {
   value: any;
@@ -32,9 +33,9 @@ interface DropdownOption {
 export class VerificationOverviewComponent implements OnInit, AfterViewInit{
 
   @Output() onInsightsActivated = new EventEmitter<void>();
-  items: VerificationData[] = [];
+  items: OverviewItem[] = [];
   @ViewChild('overviewTable') tableRef: Table;
-  selectedItems: VerificationData[] = [];
+  selectedItems: OverviewItem[] = [];
 
   rowsPerPageOptions: number[] = [20, 50, 100];
 
@@ -89,28 +90,9 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
 
   getOverview(){
     this.items = [];
-    this.verificationService.getOverview().subscribe(r => {
-      let resp = r.listCompare
-      for (let i of resp) {
-        i._source["compareId"] = i._id
-        i._source["baseline_tags_keys"] = Object.keys(i._source['baseline_tags'])
-        i._source["baseline_tags_map"] = new Map(Object.entries(i._source['baseline_tags']));
-        let tagList = []
-        for (let j of i._source["baseline_tags_keys"]) {
-          tagList.push(`${j}:${i._source["baseline_tags_map"].get(j)}`)
-        }
-        i._source["baseline_tags_keys"] = tagList
-
-        i._source["candidate_tags_keys"] = Object.keys(i._source['candidate_tags'])
-        i._source["candidate_tags_map"] = new Map(Object.entries(i._source['candidate_tags']));
-        tagList = []
-        for (let j of i._source["candidate_tags_keys"]) {
-          tagList.push(`${j}:${i._source["candidate_tags_map"].get(j)}`)
-        }
-        i._source["candidate_tags_keys"] = tagList
-        this.items.push(i._source)
-      }
-      this.getTags()
+    this.verificationService.getOverview().subscribe(res => {
+      this.items = res;
+      this.getTags();
     });
   }
 
@@ -134,16 +116,15 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
 
   deleteItems() {
     this.confirmationService.confirm({
-            message: 'Are you sure that you want to perform this action?',
-            accept: () => {
-                for (let i of this.selectedItems) {
-      this.verificationService.delete(i.compareId).subscribe(res => {
-        this.tableRef.value = this.tableRef.value.filter(item => i.compareId != item.compareId)
-      })
-    }
-            }
-        });
-
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        for (let i of this.selectedItems) {
+          this.verificationService.delete(i.compareId).subscribe(res => {
+            this.tableRef.value = this.tableRef.value.filter(item => i.compareId != item.compareId)
+          })
+        }
+      }
+    });
   }
 
   filterByDate(event) {
@@ -156,11 +137,11 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
   }
 
   filterByBaselineTags(event) {
-    this.tableRef.filter(event.value, 'baseline_tags_keys', 'includesTags');
+    this.tableRef.filter(event.value, 'baselineTags', 'includesTags');
   }
 
   filterByCandidateTags(event) {
-    this.tableRef.filter(event.value, 'candidate_tags_keys', 'includesTags');
+    this.tableRef.filter(event.value, 'candidateTags', 'includesTags');
   }
 
   filterByRisk(event) {
@@ -177,16 +158,10 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
   }
 
   private getTags() {
-    let tags = this.items.map(item => item.baseline_tags_keys).reduce((a, b) => a.concat(b), []);
-    let uniqueTags = [...new Set(tags)].sort();
-    this.tagOptionsBaseline = uniqueTags.map(tag => {
-      return {label: tag, value: tag}
-    });
+    let baselineTags = this.items.map(item => item.baselineTags).reduce((a, b) => a.concat(b), []);
+    this.tagOptionsBaseline = [...new Set(baselineTags)].sort();
 
-    tags = this.items.map(item => item.candidate_tags_keys).reduce((a, b) => a.concat(b), []);
-    uniqueTags = [...new Set(tags)].sort();
-    this.tagOptionsCandidate = uniqueTags.map(tag => {
-      return {label: tag, value: tag}
-    });
+    let candidateTags = this.items.map(item => item.candidateTags).reduce((a, b) => a.concat(b), []);
+    this.tagOptionsCandidate = [...new Set(candidateTags)].sort();
   }
 }

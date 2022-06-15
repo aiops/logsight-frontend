@@ -1,6 +1,5 @@
-export interface IncidentData {
+export interface Incident {
   incidentId: any,
-  similarIncidents: any,
   timestamp: any,
   tags: any,
   tagKeys: any,
@@ -15,17 +14,26 @@ export interface IncidentData {
   countStates: any,
 }
 
-export interface ListOverviewIncidentData {
-  listIncident: OverviewIncidentData[]
+
+export interface IncidentGroup {
+  incidentId: any,
+  timestamp: any,
+  tags: any,
+  tagKeys: any,
+  status: any,
+  severity: any,
+  message: any,
+  risk: any,
+  countAddedState: any,
+  countLevelFault: any,
+  countSemanticAnomaly: any,
+  countMessages: any,
+  countStates: any,
+  head: Incident,
+  incidents: Incident[]
 }
 
-export interface OverviewIncidentData {
-  incidentId: string,
-  source: IncidentData
-}
-
-export interface IssueCountVerificationData {
-  status: number,
-  count: number
+export interface IncidentGroups {
+  incidentGroups: IncidentGroup[]
 }
 

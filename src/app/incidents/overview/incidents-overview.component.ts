@@ -6,7 +6,7 @@ import {IncidentsService} from '../services/incidents.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {IncidentsSharingService} from "../services/incidents-sharing.service";
 import {ConfirmationService} from "primeng/api";
-import {IncidentData} from "../../@core/common/incident-data";
+import {Incident, IncidentGroup} from "../../@core/common/incident-data";
 import * as moment from 'moment';
 import {UpdateIncidentStatusRequest} from "../../@core/common/incident-request";
 
@@ -23,23 +23,21 @@ interface DropdownOption {
 export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
 
   @Output() onInsightsActivated = new EventEmitter<void>();
-  items: IncidentData[] = [];
+  items: IncidentGroup[] = [];
   @ViewChild('overviewTable') tableRef: Table;
-  selectedItems: IncidentData[] = [];
-
+  selectedItems: Incident[] = [];
+  selectedItemsExpandRow: Incident[] = [];
   rowsPerPageOptions: number[] = [20, 50, 100];
 
   Severity = Severity;
   Status = Status;
 
   severityOptions: DropdownOption[] = [{value: Severity.Low, label: Severity[Severity.Low]}, {
-    value: Severity.Medium,
-    label: Severity[Severity.Medium]
+    value: Severity.Medium, label: Severity[Severity.Medium]
   }, {value: Severity.High, label: Severity[Severity.High]}];
 
   statusOptions: DropdownOption[] = [{value: Status.Raised, label: Status[Status.Raised]}, {
-    value: Status.Assigned,
-    label: Status[Status.Assigned]
+    value: Status.Assigned, label: Status[Status.Assigned]
   }, {value: Status.Resolved, label: Status[Status.Resolved]}];
 
   tagOptions = [];
@@ -48,8 +46,8 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
 
   @ViewChild('dateTimePicker', {read: TemplateRef}) dateTimePicker: TemplateRef<any>;
   dateFormat = 'YYYY-MM-DDTHH:mm:ss.SSS'
-  endDateTime =  moment().utc(false).subtract(0, "minutes").format(this.dateFormat)
-  startDateTime =  moment().utc(false).subtract(720, "minutes").format(this.dateFormat)
+  endDateTime = moment().utc(false).subtract(0, "minutes").format(this.dateFormat)
+  startDateTime = moment().utc(false).subtract(720, "minutes").format(this.dateFormat)
 
 
   constructor(private route: ActivatedRoute, private incidentService: IncidentsService, private router: Router, private incidentSharingService: IncidentsSharingService, private confirmationService: ConfirmationService) {
@@ -63,7 +61,7 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
       this.endDateTime = params['endTime'];
     }
     this.route.queryParamMap.subscribe(queryParams => {
-      if(queryParams.get("sample")){
+      if (queryParams.get("sample")) {
         this.startDateTime = queryParams.get("startTime")
         this.endDateTime = queryParams.get("endTime")
       }
@@ -95,27 +93,48 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
   getOverview() {
     this.items = [];
     this.incidentService.getOverview(this.startDateTime, this.endDateTime).subscribe(r => {
-      let resp = r.listIncident
-      for (let i of resp) {
-        i.source.incidentId = i.incidentId
-        i.source.tagKeys = Object.keys(i.source.tags)
-        i.source.tagMap = new Map(Object.entries(i.source.tags));
+      let resp = r.incidentGroups
+      for (let incidentGroup of resp) {
 
-        i.source.similarIncidents =  [i.source]
-        let tagList = []
-        for (let j of i.source.tagKeys) {
-          tagList.push(`${j}:${i.source.tagMap.get(j)}`)
-        }
-        i.source.tagKeys = tagList
-        this.items.push(i.source)
+          incidentGroup.incidentId = incidentGroup.head.incidentId
+          incidentGroup.timestamp = incidentGroup.head.timestamp
+          incidentGroup.tags = incidentGroup.head.tags
+          incidentGroup.status = incidentGroup.head.status
+          incidentGroup.severity = incidentGroup.head.severity
+          incidentGroup.message = incidentGroup.head.message
+          incidentGroup.risk = incidentGroup.head.risk
+          incidentGroup.countAddedState = incidentGroup.head.countAddedState
+          incidentGroup.countLevelFault = incidentGroup.head.countLevelFault
+          incidentGroup.countSemanticAnomaly = incidentGroup.head.countSemanticAnomaly
+          incidentGroup.countMessages = incidentGroup.head.countMessages
+          incidentGroup.countStates = incidentGroup.head.countStates
+          incidentGroup.tagKeys = Object.keys(incidentGroup.head.tags)
+          incidentGroup.tagMap = new Map(Object.entries(incidentGroup.head.tags));
+          let tagList = []
+          for (let tagKey of incidentGroup.tagKeys) {
+            tagList.push(`${tagKey}:${incidentGroup.tagMap.get(tagKey)}`)
+          }
+          incidentGroup.tagKeys = tagList
+          for (let i=0; i < incidentGroup.incidents.length; i++){
+                incidentGroup.incidents[i].tagKeys = Object.keys(incidentGroup.incidents[i].tags)
+                incidentGroup.incidents[i].tagMap = new Map(Object.entries(incidentGroup.incidents[i].tags));
+                tagList = []
+                for (let tagKey of incidentGroup.incidents[i].tagKeys) {
+                      tagList.push(`${tagKey}:${incidentGroup.incidents[i].tagMap.get(tagKey)}`)
+                    }
+                   incidentGroup.incidents[i].tagKeys = tagList
+          }
+          this.items.push(incidentGroup)
       }
       this.getTags()
       this.tableRef.reset()
     });
   }
 
-  statusChanged(event: { value: DropdownOption }, item: IncidentData) {
-    let request = new UpdateIncidentStatusRequest(item.incidentId, event.value.value)
+  statusChanged(event: { value: DropdownOption }, item: IncidentGroup) {
+    item.head.status = event.value.value
+    let request = new UpdateIncidentStatusRequest(item.head)
+
     this.incidentService
       .changeStatus(request)
       .subscribe(() => {
@@ -137,7 +156,12 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
       message: 'Are you sure that you want to perform this action?', accept: () => {
         for (let i of this.selectedItems) {
           this.incidentService.delete(i.incidentId).subscribe(() => {
-            this.tableRef.value = this.tableRef.value.filter(item => i.incidentId != item.incidentId)
+            this.getOverview()
+          })
+        }
+        for (let i of this.selectedItemsExpandRow) {
+          this.incidentService.delete(i.incidentId).subscribe(() => {
+            this.getOverview()
           })
         }
       }
@@ -150,7 +174,7 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
     if (event.relativeTimeChecked) {
       this.startDateTime = event.relativeDateTime
       let minutesString = this.startDateTime.split("-")[1]
-      let minutesNumber = Number(minutesString.slice(0,minutesString.length-1))
+      let minutesNumber = Number(minutesString.slice(0, minutesString.length - 1))
       this.endDateTime = moment().utc(false).format(this.dateFormat)
       this.startDateTime = moment().utc(false).subtract(minutesNumber, "minutes").format(this.dateFormat)
       dateTimeType = 'absolute';
@@ -163,7 +187,6 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
     }))
     this.getOverview()
   }
-
 
 
   filterByIncidentId(event) {
@@ -195,9 +218,11 @@ export class IncidentsOverviewComponent implements OnInit, AfterViewInit {
   private getTags() {
     let tagList = []
     for (let j of this.items) {
-      let tagMap = new Map(Object.entries(j.tags))
-      for (let i of Array.from(tagMap.keys())){
+      for (let k of j.incidents){
+        let tagMap = new Map(Object.entries(k.tags))
+        for (let i of Array.from(tagMap.keys())) {
           tagList.push(`${i}:${tagMap.get(i)}`)
+        }
       }
     }
     let uniqueTags = [...new Set(tagList)].sort();

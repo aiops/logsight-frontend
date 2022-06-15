@@ -3,6 +3,7 @@
     #overviewTable
     [value]="items"
     [(selection)]="selectedItems"
+    selectionMode="multiple"
     dataKey="incidentId"
     [paginator]="true"
     [rowsPerPageOptions]="rowsPerPageOptions"
@@ -35,7 +36,7 @@
               <p-overlayPanel #op [dismissable]="false" [appendTo]="'body'">
                 <ng-template pTemplate>
                   <elastic-custom-datepicker
-                                             (search)="onDateTimeSearch($event)">
+                    (search)="onDateTimeSearch($event)">
                   </elastic-custom-datepicker>
                 </ng-template>
               </p-overlayPanel>
@@ -54,8 +55,8 @@
         <th style="width: 3%;">
           <p-tableHeaderCheckbox name="incidents"></p-tableHeaderCheckbox>
         </th>
-        <th style="width: 10%" [pSortableColumn]="'timestampStart'">Date
-          <p-sortIcon [field]="'timestampStart'"></p-sortIcon>
+        <th style="width: 10%" [pSortableColumn]="'timestamp'">Date
+          <p-sortIcon [field]="'timestamp'"></p-sortIcon>
         </th>
         <th style="width: 10%" [pSortableColumn]="'incidentId'">Incident ID
           <p-sortIcon [field]="'incidentId'"></p-sortIcon>
@@ -70,8 +71,8 @@
         <th style="width: 7%" [pSortableColumn]="'severity'">Severity
           <p-sortIcon [field]="'severity'"></p-sortIcon>
         </th>
-        <th style="width: 7%" [pSortableColumn]="'added_states'">New states
-          <p-sortIcon [field]="'added_states'"></p-sortIcon>
+        <th style="width: 7%" [pSortableColumn]="'countAddedState'">New states
+          <p-sortIcon [field]="'countAddedState'"></p-sortIcon>
         </th>
         <th style="width: 10%" [pSortableColumn]="'status'">Status
           <p-sortIcon [field]="'status'"></p-sortIcon>
@@ -86,12 +87,6 @@
         <th>
         </th>
         <th>
-          <input
-            pInputText
-            type="text"
-            (input)="filterByIncidentId($event)"
-            placeholder="Search"
-            class="p-column-filter">
         </th>
         <th>
           <input
@@ -187,19 +182,80 @@
     </ng-template>
 
     <ng-template pTemplate="rowexpansion" let-item>
-
-      <p-table [value]="item.similarIncidents" dataKey="incidentId">
-        <ng-template pTemplate="body" let-similar>
-          <tr>
-            <td>
-              <p-checkbox name="incidents" [value]="item" [(ngModel)]="selectedItems"></p-checkbox>
-            </td>
-            <td>{{similar.incidentId}}</td>
-          </tr>
-        </ng-template>
-      </p-table>
-
+      <tr *ngIf="(item.incidents.length-1) > 0">
+        <td colspan="11" style="padding: 0; margin: 0">
+            <p-table  [value]="item.incidents.slice(1, item.incidents.length)"  dataKey="incidentId">
+              <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3%;">
+        </th>
+        <th style="width: 3%;">
+        </th>
+        <th style="width: 10%" [pSortableColumn]="'timestamp'">
+        </th>
+        <th style="width: 10%" [pSortableColumn]="'incidentId'">
+        </th>
+        <th style="max-width: 25%;" [pSortableColumn]="'message'">
+        </th>
+        <th style="width: 10%"></th>
+        <th style="width: 5%" [pSortableColumn]="'risk'">
+        </th>
+        <th style="width: 7%" [pSortableColumn]="'severity'">
+        </th>
+        <th style="width: 7%" [pSortableColumn]="'countAddedState'">
+        </th>
+        <th style="width: 10%" [pSortableColumn]="'status'">
+        </th>
+        <th style="width: 10%" class="text-center"></th>
+      </tr>
     </ng-template>
+
+    <ng-template pTemplate="body" let-similar>
+      <tr >
+        <td></td>
+        <td>
+          <p-checkbox name="incidentsRowExpand" [value]="similar"  [(ngModel)]="selectedItemsExpandRow"></p-checkbox>
+        </td>
+        <td>{{similar.timestamp | date: 'MMM dd, yyyy, HH:mm:ss'}}</td>
+        <td><p pTooltip="{{similar.incidentId}}" tooltipPosition="top">{{similar.incidentId.slice(0, 7)}}</p></td>
+      <td style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">{{similar.message.template}}</td>
+      <td>
+        <nb-tag-list>
+          <nb-tag *ngFor="let tagKey of similar.tagKeys" [text]="tagKey"
+                  appearance="outline"
+                  status="primary" style="text-transform: none"></nb-tag>
+        </nb-tag-list>
+      </td>
+
+        <td>
+          {{ similar.risk }} %
+        </td>
+        <td>
+              <span
+                [class]="'severity-badge severity-' + Severity[similar.severity]">{{ Severity[similar.severity] }}</span>
+        </td>
+        <td>
+          {{ similar.countAddedState }}
+        </td>
+        <td>
+          <p-dropdown
+            [options]="statusOptions"
+            [ngModel]="{ value: similar.status }"
+            (onChange)="statusChanged($event, similar)"
+            dataKey="value"
+            optionLabel="label">
+          </p-dropdown>
+        </td>
+        <td class="text-center">
+          <button (click)="viewInsights(similar.incidentId)" pButton type="button" label="View insights"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+    <hr style="height: 30px; background: #f8f9fa">
+  </td>
+  </tr>
+  </ng-template>
 
   </p-table>
 </p-card>

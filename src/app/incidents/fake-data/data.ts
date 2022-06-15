@@ -1,5 +1,5 @@
 import {VerificationData} from "../../@core/common/verification-data";
-import {IncidentData} from "../../@core/common/incident-data";
+import {Incident} from "../../@core/common/incident-data";
 
 export const verificationData: VerificationData = {
   "timestamp": "",
@@ -30,10 +30,9 @@ export const verificationData: VerificationData = {
   "rows": []
 }
 
-export const incidentData: IncidentData = {
+export const incidentData: Incident = {
   "timestamp": "",
   "incidentId": "",
-  "similarIncidents": [],
   "tags": [],
   "tagKeys": "",
   "status": "1",

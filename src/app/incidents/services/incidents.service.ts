@@ -16,11 +16,15 @@ export class IncidentsService {
   }
 
   getOverview(startTime: string, stopTime: string): Observable<any> {
+    return this.apiService.post(`/api/v1/logs/incidents/grouped`, new GetIncidentOverviewRequest(startTime, stopTime));
+  }
+
+  getOverviewIncidents(startTime: string, stopTime: string): Observable<any> {
     return this.apiService.post(`/api/v1/logs/incidents`, new GetIncidentOverviewRequest(startTime, stopTime));
   }
 
   changeStatus(request: UpdateIncidentStatusRequest) {
-    return this.apiService.post(`/api/v1/logs/incidents/status`, request);
+    return this.apiService.put(`/api/v1/logs/incidents/${request.incident.incidentId}`, request);
   }
 
   delete(incidentId: string) {

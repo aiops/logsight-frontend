@@ -28,13 +28,13 @@ export class DemoDataPage implements OnInit, OnDestroy {
 
   constructor(private integrationService: IntegrationService, private incidentsService: IncidentsService, private authService: AuthenticationService, private apiService: ApiService, private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
 
-    this.topIncidents$ = combineLatest([timer(2, 5000), this.r$]).pipe(switchMap(() => this.loadIncidents().pipe(catchError((error) => this.handleError(error)))), share(), takeUntil(this.stopPolling));
+    this.topIncidents$ = combineLatest([timer(2, 2000), this.r$]).pipe(switchMap(() => this.loadIncidents().pipe(catchError((error) => this.handleError(error)))), share(), takeUntil(this.stopPolling));
   }
 
   ngOnInit(): void {
     setTimeout(_ => this.r$.next(), 1000); //hack to start first refresh
     this.topIncidents$.subscribe(data => {
-      if (data.listIncident.length > 0 && this.isLoadDemo != 0) {
+      if (data.incidents.length > 0 && this.isLoadDemo != 0) {
         if (this.isLoadDemo == 2) {
           this.redirectToIncidents()
           this.isLoadDemo = 0
@@ -57,7 +57,7 @@ export class DemoDataPage implements OnInit, OnDestroy {
   }
 
   loadIncidents() {
-    return this.incidentsService.getOverview(this.demoStartTime, this.demoEndTime);
+    return this.incidentsService.getOverviewIncidents(this.demoStartTime, this.demoEndTime);
   }
 
   redirectToIncidents() {

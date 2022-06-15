@@ -5,8 +5,8 @@ import {Status} from '../models/status.enum';
 import {IncidentsService} from '../services/incidents.service';
 import {incidentData} from "../fake-data/data";
 import {ActivatedRoute} from "@angular/router";
-import {IncidentData} from "../../@core/common/incident-data";
 import {IncidentStateItem} from "../models/incident_state.model";
+import {Incident} from "../../@core/common/incident-data";
 
 interface DropdownOption {
   value: any;
@@ -22,9 +22,9 @@ export class IncidentsInsightsComponent implements OnInit {
   @ViewChild('statesTable') tableRef: Table;
   rowsPerPageOptions: number[] = [20, 50, 100];
 
-  tableDataUnified: IncidentData = incidentData
+  tableDataUnified = incidentData
   tableRows: IncidentStateItem[]
-  incident: IncidentData;
+  incident: Incident;
 
   baselineTagMap = new Map<string, string>();
   baselineTagMapKeys = [];
@@ -51,7 +51,7 @@ export class IncidentsInsightsComponent implements OnInit {
       if (incidentId) {
         this.incidentsService.loadIncidentByID(incidentId).subscribe(resp => {
           this.onInsightsActivated.emit()
-          this.incident = resp.incidentData
+          this.incident = resp.incident
           this.incidentShortId = this.incident.incidentId
           let event = {"value": this.incident}
           this.onIncidentSelect(event)
@@ -64,10 +64,10 @@ export class IncidentsInsightsComponent implements OnInit {
 
   onIncidentSelect(event) {
     if (event.value) {
-      this.tableDataUnified = event.value.source
-      this.tableRows = event.value.source.data
-      this.baselineTagMapKeys = Object.keys(event.value.source.tags)
-      this.baselineTagMap = new Map(Object.entries(event.value.source.tags));
+      this.tableDataUnified = event.value
+      this.tableRows = event.value.data
+      this.baselineTagMapKeys = Object.keys(event.value.tags)
+      this.baselineTagMap = new Map(Object.entries(event.value.tags));
     } else {
       this.tableDataUnified = incidentData
       this.baselineTagMapKeys = []

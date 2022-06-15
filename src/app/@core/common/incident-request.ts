@@ -1,3 +1,4 @@
+import {Incident} from "./incident-data";
 
 export class GetIncidentOverviewRequest {
   startTime: string;
@@ -10,11 +11,8 @@ export class GetIncidentOverviewRequest {
 }
 
 export class UpdateIncidentStatusRequest {
-  incidentId: string;
-  incidentStatus: number;
-
-  constructor(incidentId: string, incidentStatus: number) {
-    this.incidentId = incidentId
-    this.incidentStatus = incidentStatus
+  incident: Incident;
+  constructor(incident: Incident) {
+    this.incident = incident
   }
 }

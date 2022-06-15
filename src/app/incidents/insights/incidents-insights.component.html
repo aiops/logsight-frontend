@@ -125,6 +125,7 @@
       <p-card header="Incident analysis">
         <p-table
           #statesTable
+          [multiSortMeta]="[{field: 'riskSeverity', order: -1}]"
           [paginator]="true"
           [rowsPerPageOptions]="rowsPerPageOptions"
           [rows]="rowsPerPageOptions[0]"

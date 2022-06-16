@@ -9,6 +9,8 @@ import {Receipt} from "../../@core/common/receipt";
 import {combineLatest, empty, Observable, Subject, timer} from "rxjs";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {IncidentsService} from "../../incidents/services/incidents.service";
+import {VerificationService} from "../../verification/services/verification.service";
+import {TagRequest} from "../../@core/common/TagRequest";
 
 @Component({
   selector: 'demo-data', styleUrls: ['./demo-data.page.scss'], templateUrl: './demo-data.page.html',
@@ -26,7 +28,7 @@ export class DemoDataPage implements OnInit, OnDestroy {
   isLoadDemo = 0;
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private integrationService: IntegrationService, private incidentsService: IncidentsService, private authService: AuthenticationService, private apiService: ApiService, private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
+  constructor(private integrationService: IntegrationService, private verificationService: VerificationService, private authService: AuthenticationService, private apiService: ApiService, private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
 
     this.topIncidents$ = combineLatest([timer(2, 2000), this.r$]).pipe(switchMap(() => this.loadIncidents().pipe(catchError((error) => this.handleError(error)))), share(), takeUntil(this.stopPolling));
   }
@@ -34,9 +36,9 @@ export class DemoDataPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     setTimeout(_ => this.r$.next(), 1000); //hack to start first refresh
     this.topIncidents$.subscribe(data => {
-      if (data.incidents.length > 0 && this.isLoadDemo != 0) {
+      if (data.tagKeys.length > 0 && this.isLoadDemo != 0) {
         if (this.isLoadDemo == 2) {
-          this.redirectToIncidents()
+          this.redirectToVerification()
           this.isLoadDemo = 0
         }
         this.isLoadDemo = 2
@@ -57,11 +59,10 @@ export class DemoDataPage implements OnInit, OnDestroy {
   }
 
   loadIncidents() {
-    return this.incidentsService.getOverviewIncidents(this.demoStartTime, this.demoEndTime);
+    return this.verificationService.loadAvailableTagKeys(new TagRequest([]));
   }
 
-  redirectToIncidents() {
-    console.log("redirect")
+  redirectToVerification() {
     this.isSpinning = false
     this.router.navigate(['/pages', 'incidents'], {
       queryParams: {

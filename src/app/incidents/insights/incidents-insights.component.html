@@ -69,7 +69,7 @@
 
   <!--  Deployment risk and log message overview -->
   <div class="row pt-5">
-    <div class="col-xl-3 col-sm-6 col-12">
+    <div class="col-xl-4 col-sm-6 col-12">
       <p-card>
         <div class="media d-flex">
           <div class="align-self-center text-danger"><i
@@ -82,7 +82,7 @@
         </div>
       </p-card>
     </div>
-    <div class="col-xl-3 col-sm-6 col-12">
+    <div class="col-xl-4 col-sm-6 col-12">
       <p-card>
         <div class="media d-flex">
           <div class="align-self-center"><i class="icon-book-open text-primary font-large-2 float-left"></i>
@@ -94,7 +94,7 @@
         </div>
       </p-card>
     </div>
-    <div class="col-xl-3 col-sm-6 col-12">
+    <div class="col-xl-4 col-sm-6 col-12">
       <p-card>
         <div class="media d-flex">
           <div class="media-body text-left">
@@ -106,18 +106,18 @@
         </div>
       </p-card>
     </div>
-    <div class="col-xl-3 col-sm-6 col-12">
-      <p-card>
-        <div class="media d-flex">
-          <div class="media-body text-left">
-            <h3 class="text-primary"> {{this.tableDataUnified.countAddedState}}</h3>
-            <span>New states</span>
-          </div>
-          <div class="align-self-center"><i class="icon-login text-primary font-large-2 float-right"></i>
-          </div>
-        </div>
-      </p-card>
-    </div>
+<!--    <div class="col-xl-3 col-sm-6 col-12">-->
+<!--      <p-card>-->
+<!--        <div class="media d-flex">-->
+<!--          <div class="media-body text-left">-->
+<!--            <h3 class="text-primary"> {{this.tableDataUnified.countAddedState}}</h3>-->
+<!--            <span>New states</span>-->
+<!--          </div>-->
+<!--          <div class="align-self-center"><i class="icon-login text-primary font-large-2 float-right"></i>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </p-card>-->
+<!--    </div>-->
   </div>
 
   <div class="row pt-5">
@@ -140,7 +140,7 @@
               <th [pSortableColumn]="'riskSeverity'" style="width: 10%">Risk
                 <p-sortIcon [field]="'riskSeverity'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'message'" style="width: 60%">Message
+              <th [pSortableColumn]="'message'" style="width: 70%">Message
                 <p-sortIcon [field]="'message'"></p-sortIcon>
               </th>
               <th [pSortableColumn]="'prediction'"
@@ -150,10 +150,10 @@
               <th [pSortableColumn]="'level'" style="width: 7%">Level
                 <p-sortIcon [field]="'level'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'addedState'" class="text-center"
-                  style="width: 10%"> New state
-                <p-sortIcon [field]="'addedState'"></p-sortIcon>
-              </th>
+<!--              <th [pSortableColumn]="'addedState'" class="text-center"-->
+<!--                  style="width: 10%"> New state-->
+<!--                <p-sortIcon [field]="'addedState'"></p-sortIcon>-->
+<!--              </th>-->
             </tr>
 
             <tr>
@@ -184,9 +184,6 @@
               <th>
 
               </th>
-              <th>
-
-              </th>
             </tr>
 
           </ng-template>
@@ -212,9 +209,9 @@
                 <div>{{item.level}}</div>
               </td>
 
-              <td class="semantics text-center" style="color: {{addedToColor(item.addedState)}}"
-              >{{addedStateToText(item.addedState)}}
-              </td>
+<!--              <td class="semantics text-center" style="color: {{addedToColor(item.addedState)}}"-->
+<!--              >{{addedStateToText(item.addedState)}}-->
+<!--              </td>-->
 
             </tr>
           </ng-template>

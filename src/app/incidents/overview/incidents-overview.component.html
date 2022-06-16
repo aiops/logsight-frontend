@@ -65,15 +65,15 @@
           <p-sortIcon [field]="'message'"></p-sortIcon>
         </th>
         <th style="width: 10%">Tags</th>
-        <th style="width: 5%" [pSortableColumn]="'risk'">Risk
+        <th style="width: 8%" [pSortableColumn]="'risk'">Risk
           <p-sortIcon [field]="'risk'"></p-sortIcon>
         </th>
-        <th style="width: 7%" [pSortableColumn]="'severity'">Severity
+        <th style="width: 11%" [pSortableColumn]="'severity'">Severity
           <p-sortIcon [field]="'severity'"></p-sortIcon>
         </th>
-        <th style="width: 7%" [pSortableColumn]="'countAddedState'">New states
-          <p-sortIcon [field]="'countAddedState'"></p-sortIcon>
-        </th>
+<!--        <th style="width: 7%" [pSortableColumn]="'countAddedState'">New states-->
+<!--          <p-sortIcon [field]="'countAddedState'"></p-sortIcon>-->
+<!--        </th>-->
         <th style="width: 10%" [pSortableColumn]="'status'">Status
           <p-sortIcon [field]="'status'"></p-sortIcon>
         </th>
@@ -119,18 +119,18 @@
         </th>
         <th>
         </th>
-        <th>
-          <p-dropdown
-            [options]="statusOptions"
-            (onChange)="filterByStatus($event)"
-            styleClass="p-column-filter"
-            placeholder="Select"
-            [showClear]="true">
-            <ng-template let-option pTemplate="item">
-              <span>{{option.label}}</span>
-            </ng-template>
-          </p-dropdown>
-        </th>
+<!--        <th>-->
+<!--          <p-dropdown-->
+<!--            [options]="statusOptions"-->
+<!--            (onChange)="filterByStatus($event)"-->
+<!--            styleClass="p-column-filter"-->
+<!--            placeholder="Select"-->
+<!--            [showClear]="true">-->
+<!--            <ng-template let-option pTemplate="item">-->
+<!--              <span>{{option.label}}</span>-->
+<!--            </ng-template>-->
+<!--          </p-dropdown>-->
+<!--        </th>-->
         <th>
         </th>
 
@@ -163,9 +163,9 @@
         <td>
           <span [class]="'severity-badge severity-' + Severity[item.severity]">{{ Severity[item.severity] }}</span>
         </td>
-        <td>
-          {{ item.countAddedState }}
-        </td>
+<!--        <td>-->
+<!--          {{ item.countAddedState }}-->
+<!--        </td>-->
         <td>
           <p-dropdown
             [options]="statusOptions"
@@ -198,12 +198,12 @@
         <th style="max-width: 25%;" [pSortableColumn]="'message'">
         </th>
         <th style="width: 10%"></th>
-        <th style="width: 5%" [pSortableColumn]="'risk'">
+        <th style="width: 7%" [pSortableColumn]="'risk'">
         </th>
-        <th style="width: 7%" [pSortableColumn]="'severity'">
+        <th style="width: 11%" [pSortableColumn]="'severity'">
         </th>
-        <th style="width: 7%" [pSortableColumn]="'countAddedState'">
-        </th>
+<!--        <th style="width: 7%" [pSortableColumn]="'countAddedState'">-->
+<!--        </th>-->
         <th style="width: 10%" [pSortableColumn]="'status'">
         </th>
         <th style="width: 10%" class="text-center"></th>
@@ -234,9 +234,9 @@
               <span
                 [class]="'severity-badge severity-' + Severity[similar.severity]">{{ Severity[similar.severity] }}</span>
         </td>
-        <td>
-          {{ similar.countAddedState }}
-        </td>
+<!--        <td>-->
+<!--          {{ similar.countAddedState }}-->
+<!--        </td>-->
         <td>
           <p-dropdown
             [options]="statusOptions"

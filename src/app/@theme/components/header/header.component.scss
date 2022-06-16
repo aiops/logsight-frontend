@@ -3,7 +3,6 @@
 @import '../../styles/themes';
 
 @include nb-install-component() {
-  display: flex;
   justify-content: space-between;
   width: 100%;
   height: fit-content;
@@ -15,7 +14,7 @@
   }
   .logo-container {
     padding-top: 5px;
-    padding-left: 10%;
+    padding-left: 3%;
     display: flex;
     align-items: center;
     width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
@@ -43,8 +42,7 @@
   }
 
   .header-container {
-    display: flex;
-    align-items: center;
+    float: right;
     width: auto;
 
     .sidebar-toggle {

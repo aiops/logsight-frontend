@@ -1,0 +1,15 @@
+<create-verification *ngIf="activeIndex==0"></create-verification>
+
+<p-tabView (onChange)="onTabIndexChange($event.index)" [activeIndex]="activeIndex">
+  <p-tabPanel header="Overview">
+    <incidents-overview (onInsightsActivated)="onTabIndexChange(insightsTabIndex)"></incidents-overview>
+  </p-tabPanel>
+
+    <p-tabPanel header="Insights">
+    <incidents-insights (onInsightsActivated)="onTabIndexChange(insightsTabIndex)"></incidents-insights>
+  </p-tabPanel>
+
+<!--    <p-tabPanel header="Analytics">-->
+<!--    <incidents-analytics></incidents-analytics>-->
+<!--  </p-tabPanel>-->
+</p-tabView>

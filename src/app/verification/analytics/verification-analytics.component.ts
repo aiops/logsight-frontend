@@ -12,6 +12,7 @@ import {ChartConfig} from "../../@core/common/chart-config";
 import * as moment from 'moment';
 import {ApiService} from "../../@core/service/api.service";
 import { DropdownOption } from '../models/dropdown-option.model';
+import { ChartConfigParameters, ChartFeatures } from '../models/chart-config-parameters.model';
 @Component({
   selector: 'verification-analytics',
   templateUrl: './verification-analytics.component.html',
@@ -70,9 +71,11 @@ export class VerificationAnalyticsComponent implements OnInit {
   verificationFailureRatioMeanValue = 0
 
 
-  severityOptions: DropdownOption[] = [{value: Severity.Low, label: Severity[Severity.Low]}, {
-    value: Severity.Medium, label: Severity[Severity.Medium]
-  }, {value: Severity.High, label: Severity[Severity.High]}];
+  severityOptions: DropdownOption[] = [
+    {value: Severity.Low, label: Severity[Severity.Low]}, 
+    {value: Severity.Medium, label: Severity[Severity.Medium]}, 
+    {value: Severity.High, label: Severity[Severity.High]}
+  ];
 
 
   constructor(private verificationService: VerificationService, private route: ActivatedRoute, private apiService: ApiService) {
@@ -121,12 +124,7 @@ export class VerificationAnalyticsComponent implements OnInit {
 
     // Refactoring: move this to a class so it takes only one row to create the object.
     // Index type can be an enum or constants.
-    let parametersRisk = {
-      "type": "barchart",
-      "feature": "compare_analytics_risk",
-      "indexType": "verifications",
-      "baselineTags": convBaselineMap
-    }
+    let parametersRisk = new ChartConfigParameters(ChartFeatures.Risk, convBaselineMap);
     let chartRequestRisk = new ChartRequest(new ChartConfig(parametersRisk), null)
     this.verificationService.loadBarData(this.userId, chartRequestRisk).subscribe(data => {
       data = data.data.data
@@ -159,12 +157,7 @@ export class VerificationAnalyticsComponent implements OnInit {
         this.riskBarData = data;
       }
     });
-    let parametersVerificationFrequency = {
-      "type": "barchart",
-      "feature": "compare_analytics_verification_frequency",
-      "indexType": "verifications",
-      "baselineTags": convBaselineMap
-    }
+    let parametersVerificationFrequency = new ChartConfigParameters(ChartFeatures.Frequency, convBaselineMap);
     let chartRequestVerificationFrequency = new ChartRequest(new ChartConfig(parametersVerificationFrequency), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationFrequency).subscribe(data => {
       data = data.data.data
@@ -193,12 +186,7 @@ export class VerificationAnalyticsComponent implements OnInit {
       }
     });
 
-    let parametersVerificationVelocity = {
-      "type": "barchart",
-      "feature": "compare_analytics_verification_velocity",
-      "indexType": "verifications",
-      "baselineTags": convBaselineMap
-    }
+    let parametersVerificationVelocity = new ChartConfigParameters(ChartFeatures.Velocity, convBaselineMap);
 
     // Refactoring: Create a mapper which returns data.data.data 
     // For each element convert the name (date) into a proper date format
@@ -225,12 +213,7 @@ export class VerificationAnalyticsComponent implements OnInit {
       }
     });
 
-    let parametersVerificationVelocityMinMax = {
-      "type": "barchart",
-      "feature": "compare_analytics_verification_velocity_min_max",
-      "indexType": "verifications",
-      "baselineTags": convBaselineMap
-    }
+    let parametersVerificationVelocityMinMax = new ChartConfigParameters(ChartFeatures.VelocityMinMax, convBaselineMap);
     let chartRequestVerificationVelocityMinMax = new ChartRequest(new ChartConfig(parametersVerificationVelocityMinMax), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationVelocityMinMax).subscribe(data => {
       data = data.data.data
@@ -259,12 +242,7 @@ export class VerificationAnalyticsComponent implements OnInit {
       }
     });
 
-    let parametersVerificationFailureRatio = {
-      "type": "barchart",
-      "feature": "compare_analytics_verification_failure_ratio",
-      "indexType": "verifications",
-      "baselineTags": convBaselineMap
-    }
+    let parametersVerificationFailureRatio = new ChartConfigParameters(ChartFeatures.FailureRatio, convBaselineMap);
     let chartRequestVerificationFailureRatio = new ChartRequest(new ChartConfig(parametersVerificationFailureRatio), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationFailureRatio).subscribe(data => {
       data = data.data.data

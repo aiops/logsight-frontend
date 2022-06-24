@@ -19,11 +19,7 @@ import {UpdateVerificationStatusRequest} from "../../@core/common/verification-r
 import {VerificationSharingService} from "../services/verification-sharing.service";
 import {ConfirmationService} from "primeng/api";
 import { OverviewItem } from '../models/overview.model';
-
-interface DropdownOption {
-  value: any;
-  label: string;
-}
+import { DropdownOption } from '../models/dropdown-option.model';
 
 @Component({
   selector: 'verification-overview',

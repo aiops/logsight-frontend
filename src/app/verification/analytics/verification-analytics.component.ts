@@ -11,13 +11,7 @@ import {ChartRequest} from "../../@core/common/chart-request";
 import {ChartConfig} from "../../@core/common/chart-config";
 import * as moment from 'moment';
 import {ApiService} from "../../@core/service/api.service";
-
-interface DropdownOption {
-  value: any;
-  label: string;
-}
-
-
+import { DropdownOption } from '../models/dropdown-option.model';
 @Component({
   selector: 'verification-analytics',
   templateUrl: './verification-analytics.component.html',
@@ -124,6 +118,9 @@ export class VerificationAnalyticsComponent implements OnInit {
     this.baselineTagMap.forEach((val: string, key: string) => {
       convBaselineMap[key] = val;
     });
+
+    // Refactoring: move this to a class so it takes only one row to create the object.
+    // Index type can be an enum or constants.
     let parametersRisk = {
       "type": "barchart",
       "feature": "compare_analytics_risk",
@@ -202,6 +199,9 @@ export class VerificationAnalyticsComponent implements OnInit {
       "indexType": "verifications",
       "baselineTags": convBaselineMap
     }
+
+    // Refactoring: Create a mapper which returns data.data.data 
+    // For each element convert the name (date) into a proper date format
     let chartRequestVerificationVelocity = new ChartRequest(new ChartConfig(parametersVerificationVelocity), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationVelocity).subscribe(data => {
       data = data.data.data

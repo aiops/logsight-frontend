@@ -1,7 +1,7 @@
 export class ChartConfigParameters {
     constructor(feature: ChartFeatures, baselineTags: any) {
         this.type = 'barchart',
-        this.feature = ChartFeatures[feature],
+        this.feature = feature.toString(),
         this.indexType = 'verifications',
         this.baselineTags = baselineTags;
     }

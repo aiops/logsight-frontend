@@ -127,7 +127,6 @@ export class VerificationAnalyticsComponent implements OnInit {
     let parametersRisk = new ChartConfigParameters(ChartFeatures.Risk, convBaselineMap);
     let chartRequestRisk = new ChartRequest(new ChartConfig(parametersRisk), null)
     this.verificationService.loadBarData(this.userId, chartRequestRisk).subscribe(data => {
-      data = data.data.data
       let count = 0
       this.meanRisk = 0
       this.maxRisk = 0
@@ -146,10 +145,6 @@ export class VerificationAnalyticsComponent implements OnInit {
               count += 1
             }
           }
-          var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
-          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
-          data[i].name = local.toString()
         }
         this.meanRisk = this.meanRisk / (count / 3)
         this.maxRisk = this.maxRisk / (count / 3)
@@ -160,7 +155,6 @@ export class VerificationAnalyticsComponent implements OnInit {
     let parametersVerificationFrequency = new ChartConfigParameters(ChartFeatures.Frequency, convBaselineMap);
     let chartRequestVerificationFrequency = new ChartRequest(new ChartConfig(parametersVerificationFrequency), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationFrequency).subscribe(data => {
-      data = data.data.data
       let count = 0
       this.verificationFrequencyAverage = 0
       this.verificationFrequencyWeek = 0
@@ -176,10 +170,6 @@ export class VerificationAnalyticsComponent implements OnInit {
               this.verificationFrequencyWeek = Number(data[i].series[j].value)
             }
           }
-          var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
-          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
-          data[i].name = local.toString()
         }
         this.verificationFrequencyAverage = this.verificationFrequencyAverage / count
         this.verificationFrequencyBarData = data;
@@ -192,7 +182,6 @@ export class VerificationAnalyticsComponent implements OnInit {
     // For each element convert the name (date) into a proper date format
     let chartRequestVerificationVelocity = new ChartRequest(new ChartConfig(parametersVerificationVelocity), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationVelocity).subscribe(data => {
-      data = data.data.data
       if (data) {
         let count = 0
         this.verificationVelocityMeanValue = 0
@@ -203,10 +192,6 @@ export class VerificationAnalyticsComponent implements OnInit {
               count += 1
             }
           }
-          var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
-          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
-          data[i].name = local.toString()
         }
         this.verificationVelocityMeanValue = this.verificationVelocityMeanValue / count
         this.verificationVelocityBarData = data;
@@ -216,7 +201,6 @@ export class VerificationAnalyticsComponent implements OnInit {
     let parametersVerificationVelocityMinMax = new ChartConfigParameters(ChartFeatures.VelocityMinMax, convBaselineMap);
     let chartRequestVerificationVelocityMinMax = new ChartRequest(new ChartConfig(parametersVerificationVelocityMinMax), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationVelocityMinMax).subscribe(data => {
-      data = data.data.data
       let count = 0
       let minValue = 9999
       let maxValue = 0
@@ -245,7 +229,6 @@ export class VerificationAnalyticsComponent implements OnInit {
     let parametersVerificationFailureRatio = new ChartConfigParameters(ChartFeatures.FailureRatio, convBaselineMap);
     let chartRequestVerificationFailureRatio = new ChartRequest(new ChartConfig(parametersVerificationFailureRatio), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationFailureRatio).subscribe(data => {
-      data = data.data.data
       let count = 0
       this.verificationFailureRatioMaxValue = 0
       this.verificationFailureRatioMeanValue = 0
@@ -261,11 +244,6 @@ export class VerificationAnalyticsComponent implements OnInit {
               }
             }
           }
-          var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
-          var stillUtc = moment.utc(date, 'DD-MM-YYYY HH:mm');
-          var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
-          data[i].name = local.toString()
-
         }
         this.verificationFailureRatioBarData = data
         if (this.verificationFailureRatioMeanValue == 0) {

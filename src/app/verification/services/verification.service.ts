@@ -12,6 +12,7 @@ import {ApiService} from "../../@core/service/api.service";
 import { map } from 'rxjs/operators';
 import { mapOverview } from '../mapping/overview.mapping';
 import { OverviewItem } from '../models/overview.model';
+import { mapAnalytics } from '../mapping/analytics.mapping';
 
 @Injectable({
   providedIn: 'root'
@@ -55,9 +56,9 @@ export class VerificationService {
     return this.apiService.post(`/api/v1/users/${userId}/charts/map`, issuesKPIVerificationRequest);
   }
 
-
   loadBarData(userId: string, chartRequest: ChartRequest) {
-    return this.apiService.post(`/api/v1/users/${userId}/charts/barchart`, chartRequest);
+    return this.apiService.post(`/api/v1/users/${userId}/charts/barchart`, chartRequest).pipe(
+      map(mapAnalytics)
+    );
   }
-
 }

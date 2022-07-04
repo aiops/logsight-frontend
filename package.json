@@ -29,7 +29,6 @@
     "postinstall": "ngcc --properties es2015 es5 browser module main --first-only --create-ivy-entry-points --tsconfig \"./src/tsconfig.app.json\""
   },
   "dependencies": {
-    "@akveo/ng2-completer": "^9.0.1",
     "@angular/animations": "^11.2.14",
     "@angular/cdk": "^11.0.4",
     "@angular/common": "^11.0.9",
@@ -76,7 +75,6 @@
     "ng-pick-datetime": "^7.0.0",
     "ng2-ckeditor": "^1.2.9",
     "ng2-nvd3": "^2.0.0",
-    "ng2-smart-table": "^1.6.0",
     "ngx-app-tour": "^1.2.0",
     "ngx-echarts": "^4.2.2",
     "ngx-gauge": "^3.0.0",

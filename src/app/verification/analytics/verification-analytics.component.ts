@@ -127,53 +127,41 @@ export class VerificationAnalyticsComponent implements OnInit {
     let parametersRisk = new ChartConfigParameters(ChartFeatures.Risk, convBaselineMap);
     let chartRequestRisk = new ChartRequest(new ChartConfig(parametersRisk), null)
     this.verificationService.loadBarData(this.userId, chartRequestRisk).subscribe(data => {
-      let count = 0
       this.meanRisk = 0
       this.maxRisk = 0
       this.minRisk = 0
-      if (data) {
-        for (let i = 0; i < data.length; i++) {
-          for (let j = 0; j < data[i].series.length; j++) {
-            if (data[i].series[j].name == "Min risk" && data[i].series[j].value != 0) {
-              this.minRisk += Number(data[i].series[j].value)
-            } else if (data[i].series[j].name == "Max risk" && data[i].series[j].value != 0) {
-              this.maxRisk += Number(data[i].series[j].value)
-            } else if (data[i].series[j].name == "Mean risk" && data[i].series[j].value != 0) {
-              this.meanRisk += Number(data[i].series[j].value)
-            }
-            if (data[i].series[j].value != 0) {
-              count += 1
-            }
-          }
-        }
-        this.meanRisk = this.meanRisk / (count / 3)
-        this.maxRisk = this.maxRisk / (count / 3)
-        this.minRisk = this.minRisk / (count / 3)
-        this.riskBarData = data;
-      }
+
+      let series = data.flatMap(item => item.series).filter(current => Number(current.value) != 0);
+      series.forEach(current => {
+        if (current.name === 'Mean risk') this.meanRisk += Number(current.value);
+        else if (current.name === 'Max risk') this.maxRisk += Number(current.value);
+        else if (current.name === 'Min risk') this.minRisk += Number(current.value);
+      });
+
+      let count = series.length;
+      this.meanRisk /= count / 3;
+      this.maxRisk /= count / 3;
+      this.minRisk /= count / 3;
+      this.riskBarData = data;
     });
+
     let parametersVerificationFrequency = new ChartConfigParameters(ChartFeatures.Frequency, convBaselineMap);
     let chartRequestVerificationFrequency = new ChartRequest(new ChartConfig(parametersVerificationFrequency), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationFrequency).subscribe(data => {
-      let count = 0
       this.verificationFrequencyAverage = 0
       this.verificationFrequencyWeek = 0
-      this.verificationFrequencyAverage = 0
       this.verificationFrequencyCount = 0
-      if (data) {
-        for (let i = 0; i < data.length; i++) {
-          for (let j = 0; j < data[i].series.length; j++) {
-            if (data[i].series[j].name == "Count" && data[i].series[j].value != 0) {
-              this.verificationFrequencyAverage += Number(data[i].series[j].value)
-              this.verificationFrequencyCount += Number(data[i].series[j].value)
-              count += 1
-              this.verificationFrequencyWeek = Number(data[i].series[j].value)
-            }
-          }
-        }
-        this.verificationFrequencyAverage = this.verificationFrequencyAverage / count
-        this.verificationFrequencyBarData = data;
-      }
+
+      let series = data
+        .flatMap(item => item.series)
+        .filter(current => current.name === 'Count' && Number(current.value) != 0);
+      series.forEach(current => {
+          this.verificationFrequencyCount += current.value;
+          this.verificationFrequencyWeek = current.value;
+      });
+
+      this.verificationFrequencyAverage = this.verificationFrequencyCount / series.length;
+      this.verificationFrequencyBarData = data;
     });
 
     let parametersVerificationVelocity = new ChartConfigParameters(ChartFeatures.Velocity, convBaselineMap);
@@ -182,78 +170,55 @@ export class VerificationAnalyticsComponent implements OnInit {
     // For each element convert the name (date) into a proper date format
     let chartRequestVerificationVelocity = new ChartRequest(new ChartConfig(parametersVerificationVelocity), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationVelocity).subscribe(data => {
-      if (data) {
-        let count = 0
-        this.verificationVelocityMeanValue = 0
-        for (let i = 0; i < data.length; i++) {
-          for (let j = 0; j < data[i].series.length; j++) {
-            if (data[i].series[j].name == "Velocity" && data[i].series[j].value != 0) {
-              this.verificationVelocityMeanValue += data[i].series[j].value
-              count += 1
-            }
-          }
-        }
-        this.verificationVelocityMeanValue = this.verificationVelocityMeanValue / count
-        this.verificationVelocityBarData = data;
-      }
+      
+      let series = data
+        .flatMap(item => item.series)
+        .filter(item => item.value != 0 && item.name === 'Velocity');
+      let sum = series.reduce((previous, current) => previous + current, 0);
+
+      this.verificationVelocityMeanValue = sum / series.length;
+      this.verificationVelocityBarData = data;
     });
 
     let parametersVerificationVelocityMinMax = new ChartConfigParameters(ChartFeatures.VelocityMinMax, convBaselineMap);
     let chartRequestVerificationVelocityMinMax = new ChartRequest(new ChartConfig(parametersVerificationVelocityMinMax), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationVelocityMinMax).subscribe(data => {
-      let count = 0
-      let minValue = 9999
-      let maxValue = 0
-      this.verificationVelocityMinValue = 0
+      this.verificationVelocityMinValue = 9999
       this.verificationVelocityMaxValue = 0
-      if (data) {
-        for (let i = 0; i < data.length; i++) {
-          for (let j = 0; j < data[i].series.length; j++) {
-            if (data[i].series[j].name == "Min velocity" && data[i].series[j].value != 0) {
-              if (minValue > data[i].series[j].value) {
-                minValue = data[i].series[j].value
-              }
-            }
-            if (data[i].series[j].name == "Max velocity" && data[i].series[j].value != 0) {
-              if (maxValue < data[i].series[j].value) {
-                maxValue = data[i].series[j].value
-              }
-            }
-          }
-        }
-        this.verificationVelocityMinValue = minValue
-        this.verificationVelocityMaxValue = maxValue
-      }
+
+      data
+        .flatMap(item => item.series)
+        .forEach(current => {
+          if (current.name === 'Min velocity' && this.verificationVelocityMinValue > current.value) 
+            this.verificationVelocityMinValue = current.value;
+          else if (current.name === 'Max velocity' && this.verificationVelocityMaxValue < current.value) 
+            this.verificationVelocityMaxValue = current.value;
+        });
     });
 
     let parametersVerificationFailureRatio = new ChartConfigParameters(ChartFeatures.FailureRatio, convBaselineMap);
     let chartRequestVerificationFailureRatio = new ChartRequest(new ChartConfig(parametersVerificationFailureRatio), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationFailureRatio).subscribe(data => {
-      let count = 0
       this.verificationFailureRatioMaxValue = 0
       this.verificationFailureRatioMeanValue = 0
-      if (data) {
-        for (let i = 0; i < data.length; i++) {
-          for (let j = 0; j < data[i].series.length; j++) {
-            if (data[i].series[j].name == "Failure ratio" && data[i].series[j].value != 0) {
-              this.verificationFailureRatioWeek = data[i].series[j].value
-              this.verificationFailureRatioMeanValue += data[i].series[j].value
-              count += 1
-              if (this.verificationFailureRatioMaxValue < data[i].series[j].value) {
-                this.verificationFailureRatioMaxValue = data[i].series[j].value
-              }
-            }
-          }
-        }
-        this.verificationFailureRatioBarData = data
-        if (this.verificationFailureRatioMeanValue == 0) {
-          this.verificationFailureRatioMeanValue = 0
-        } else {
-          this.verificationFailureRatioMeanValue = this.verificationFailureRatioMeanValue / count
-        }
-      }
-    });
 
+      let series = data
+        .flatMap(item => item.series)
+        .filter(item => item.name === 'Failure ratio' && item.value != 0);
+
+      series.forEach(current => {
+        this.verificationFailureRatioWeek = current.value;
+        this.verificationFailureRatioMeanValue += current.value;
+        if (this.verificationVelocityMaxValue < current.value) 
+          this.verificationVelocityMaxValue = current.value;
+      });
+      
+      this.verificationFailureRatioBarData = data;
+      if (this.verificationFailureRatioMeanValue != 0)
+        this.verificationFailureRatioMeanValue /= series.length;
+      else
+        this.verificationFailureRatioMeanValue = 0;
+    });
   }
 
 

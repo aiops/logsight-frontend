@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col">
+      {{ tagType }} tags
+    </div>
+  </div>
+<div class="row pt-2">
+    <div class="col-5 my-auto">
+        <p-dropdown (onChange)="tagKeySelected($event)" [(ngModel)]="tagKey" [filter]="true"
+                    [options]="tagKeyOptions"
+                    filterBy="tagName"
+                    optionLabel="tagName" optionValue="tagName" placeholder="Name">
+        </p-dropdown>
+    </div>
+    <div class="col-5 my-auto">
+        <p-dropdown (onChange)="tagValueSelected($event)" [(ngModel)]="tagId" [filter]="true"
+                    [options]="tagValueOptions"
+                    filterBy="tagValue" optionLabel="tagValue" optionValue="tagValue"
+                    placeholder="Value"></p-dropdown>
+    </div>
+    <div class="col-2 my-auto">
+        <button class="p-button-lg" label="Add" (click)="setTagKeyValue()" pButton style="text-transform: none;"
+                type="button">
+        </button>
+    </div>
+</div>
+
+<div class="row pt-2">
+    <div *ngIf="tagMapKeys.length" class="col">
+    <nb-tag-list (tagRemove)="onTagRemove($event)">
+        <nb-tag *ngFor="let tagKey of tagMapKeys" [text]="tagKey + ':' + tagMap.get(tagKey)"
+                appearance="filled"
+                removable
+                status="primary" style="text-transform: none"></nb-tag>
+    </nb-tag-list>
+    </div>
+    <div *ngIf="tagMapKeys.length" class="col-2"></div>
+</div>

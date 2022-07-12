@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { ChartConfig } from "../../@core/common/chart-config";
 import { ChartRequest } from "../../@core/common/chart-request";
-import { TagEntry } from "../../@core/common/TagEntry";
-import { TagRequest, TagValueRequest } from "../../@core/common/TagRequest";
-import { Tag } from "../../@core/common/tags";
 import { IssuesKPIVerificationRequest } from "../../@core/common/verification-request";
 import { ApiService } from "../../@core/service/api.service";
 import { ChartConfigParameters, ChartFeatures } from '../models/chart-config-parameters.model';
@@ -136,6 +133,7 @@ export class VerificationAnalyticsComponent implements OnInit {
     let parametersVerificationFrequency = new ChartConfigParameters(ChartFeatures.Frequency, convBaselineMap);
     let chartRequestVerificationFrequency = new ChartRequest(new ChartConfig(parametersVerificationFrequency), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationFrequency).subscribe(data => {
+      // This and the other loadBarData() calls can be improved by defining a mapping function for each of the chart types and passing a reference to it to the service. For now it's left like that so that we have more control and it's easier to modify.
       this.verificationFrequencyAverage = 0
       this.verificationFrequencyWeek = 0
       this.verificationFrequencyCount = 0
@@ -154,8 +152,6 @@ export class VerificationAnalyticsComponent implements OnInit {
 
     let parametersVerificationVelocity = new ChartConfigParameters(ChartFeatures.Velocity, convBaselineMap);
 
-    // Refactoring: Create a mapper which returns data.data.data 
-    // For each element convert the name (date) into a proper date format
     let chartRequestVerificationVelocity = new ChartRequest(new ChartConfig(parametersVerificationVelocity), null)
     this.verificationService.loadBarData(this.userId, chartRequestVerificationVelocity).subscribe(data => {
       

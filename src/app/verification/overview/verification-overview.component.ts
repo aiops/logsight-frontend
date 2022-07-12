@@ -1,25 +1,22 @@
 import {
   AfterViewInit,
   Component,
-  EventEmitter,
-  Input,
-  OnChanges,
+  EventEmitter, 
   OnInit,
-  Output,
-  SimpleChanges,
+  Output, 
   ViewChild
 } from '@angular/core';
-import {Table} from 'primeng/table';
-import {Severity} from '../models/severity.enum';
-import {Status} from '../models/status.enum';
-import {VerificationService} from '../services/verification.service';
-import {VerificationData} from "../../@core/common/verification-data";
-import {Router} from "@angular/router";
-import {UpdateVerificationStatusRequest} from "../../@core/common/verification-request";
-import {VerificationSharingService} from "../services/verification-sharing.service";
-import {ConfirmationService} from "primeng/api";
-import { OverviewItem } from '../models/overview.model';
+import { Router } from "@angular/router";
+import { ConfirmationService } from "primeng/api";
+import { Table } from 'primeng/table';
+import { VerificationData } from "../../@core/common/verification-data";
+import { UpdateVerificationStatusRequest } from "../../@core/common/verification-request";
 import { DropdownOption } from '../models/dropdown-option.model';
+import { OverviewItem } from '../models/overview.model';
+import { Severity } from '../models/severity.enum';
+import { Status } from '../models/status.enum';
+import { VerificationSharingService } from "../services/verification-sharing.service";
+import { VerificationService } from '../services/verification.service';
 
 @Component({
   selector: 'verification-overview',

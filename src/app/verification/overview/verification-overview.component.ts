@@ -4,9 +4,11 @@ import {
   EventEmitter, 
   OnInit,
   Output, 
+  TemplateRef, 
   ViewChild
 } from '@angular/core';
 import { Router } from "@angular/router";
+import * as moment from 'moment';
 import { ConfirmationService } from "primeng/api";
 import { Table } from 'primeng/table';
 import { VerificationData } from "../../@core/common/verification-data";

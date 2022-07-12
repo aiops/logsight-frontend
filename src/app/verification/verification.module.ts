@@ -75,7 +75,9 @@ import {PagesModule} from "../pages/pages.module";
     ChartsWrapperModule, 
     ConfirmDialogModule, 
     TooltipModule, 
-    TourMatMenuModule
+    TourMatMenuModule,
+    OverlayPanelModule,
+    PagesModule
   ],
   providers: [VerificationSharingService, ConfirmationService]
 })

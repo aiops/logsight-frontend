@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-lg-5 d-flex flex-column justify-content-center">
         <h1 data-aos="fade-up">Your Ally for Intelligent DevOps Pipelines</h1>
-        <h2 data-aos="fade-up">logsight.ai infuses deep learning and AI-powered analytics to enable continuous software
-          delivery and proactive troubleshooting</h2>
+        <h5 data-aos="fade-up">Infuse analytics to enable continuous software
+          delivery, proactive troubleshooting, and data insights.</h5>
         <div data-aos="fade-up">
           <div class="text-center text-lg-start" style="margin-top: 2rem">
             <form (submit)="onSignUp()" [formGroup]="form" accept-charset="UTF-8" autocomplete="off"
@@ -12,11 +12,11 @@
                   enctype="application/x-www-form-urlencoded" id="chimp-form" novalidate>
               <table>
                 <tr style="width: 100%">
-                  <td style="width: 80%"><input autocomplete="off" class="form-control" formControlName="email"
+                  <td style="width: 90%"><input autocomplete="off" class="form-control" formControlName="email"
                                                 id="chimp-email" name="email"
                                                 placeholder="Enter your email"
                                                 style="width: 100%; height: 3.5rem" type="email"></td>
-                  <td style="padding-left: 1em; width: 30%"><input
+                  <td style="padding-left: 1em; width: 20%"><input
                     class="btn btn-primary mb-0"
                     style="text-transform: none; font-weight: 700; background-color: #4154f1; width: 100%; height: 3.5rem"
                     type="submit"
@@ -38,7 +38,7 @@
       <div class="col-lg-1 hero-img" data-aos="zoom-out" style="image-rendering: crisp-edges">
       </div>
       <div class="col-lg-6 hero-img" data-aos="zoom-out" style="image-rendering: crisp-edges">
-        <img alt="" class="img-fluid" src="assets/img/hero.svg">
+        <img alt="" class="img-fluid" src="assets/img/hero.svg" style="width: 80%">
       </div>
     </div>
   </div>
@@ -47,45 +47,84 @@
 
 <main id="main">
 
+  <!--  Partners section-->
+  <section class="logo-list">
+    <div class="container">
+      <div class="row">
+        <div class="col-md my-auto text-center pt-1">
+          <img src="../assets/img/clients/bundesdruckerei.svg" style="max-height: 60px" class="img-fluid"
+                           alt="Bundesdruckerei logo">
+        </div>
+        <div class="col-md  my-auto text-center pt-1">
+          <img src="../assets/img/clients/epam.svg" style="max-height: 60px" class="img-fluid"
+                           alt="EPAM logo">
+        </div>
+        <div class="col-md  my-auto text-center pt-1">
+          <img src="../assets/img/clients/siemens.svg" style="max-height: 60px" class="img-fluid"
+                           alt="Siemens logo">
+        </div>
+        <div class="col-md my-auto text-center pt-1">
+          <img src="../assets/img/clients/atos.svg" style="max-height: 60px" class="img-fluid"
+                           alt="ATOS logo">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--  end of partners section-->
+
   <!-- ======= Values Section ======= -->
   <section class="values" data-aos="fade-up" id="values">
 
-    <div class="container">
+    <div class="container-xl">
       <header class="section-header">
-<!--        <h2>Spotlight</h2>-->
-        <p>AI Partner for Reliable DevOps Pipelines</p>
+        <!--        <h2>Spotlight</h2>-->
+        <p>Innovative Partner for Reliable Development and Operation</p>
       </header>
 
       <div class="row justify-content-center">
-
-
-
-
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-5 col-md-6">
           <div class="box">
-            <img alt="" class="img-fluid" src="assets/img/stage_verifier.svg">
+            <a href="assets/img/verification.png" target="_blank">
+            <img alt="" class="img-fluid" src="assets/img/verification.png">
+            </a>
+<!--            <img alt="" class="img-fluid" src="assets/img/github_action.png" style="max-height: 50%">-->
             <h3>Stage Verifier</h3>
-            <p>AI-powered system that verifies software releases across deployment stages such as testing, staging, and production, ensuring their reliability.</p>
+            <div class="row d-flex justify-content-center text-center">
+              <div class="col-6">
+                <p>System that verifies software releases across deployment stages such as testing, staging, and
+              production, ensuring their reliability.</p>
             <a href="https://docs.logsight.ai/#/stage_verification/overview" target="_blank">Read more</a>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+                <div class="col-lg-5 col-md-6">
           <div class="box">
-            <img alt="" class="img-fluid" src="assets/img/incident_detector.svg">
+            <a href="assets/img/incidents.png" target="_blank">
+            <img alt="" class="img-fluid" src="assets/img/incidents.png">
+            </a>
+<!--            <img alt="" class="img-fluid" src="assets/img/github_action.png" style="max-height: 50%">-->
             <h3>Incident Detector</h3>
+            <div class="row d-flex justify-content-center text-center">
+              <div class="col-6">
             <p>Proactively identifies incidents in production and in real-time. It uses semantic technologies and AI to
               infer the meaning and risk of log records.</p>
-            <a href="https://docs.logsight.ai/#/incident_detection/overview" target="_blank">Read more</a>
+            <a href="https://docs.logsight.ai/#/stage_verification/overview" target="_blank">Read more</a>
+              </div>
+            </div>
 
           </div>
         </div>
 
       </div>
 
+
     </div>
 
   </section><!-- End Values Section -->
+
 
   <!-- ======= Counts Section ======= -->
   <!--  <section id="counts" class="counts">-->
@@ -142,20 +181,79 @@
   <!--    </div>-->
   <!--  </section>&lt;!&ndash; End Counts Section &ndash;&gt;-->
 
+
+  <!--  Integrations section-->
+  <section class="logo-list" style="background-color: #f6f9ff">
+    <div class="container">
+      <header class="section-header">
+        <!--        <h2>Features</h2>-->
+        <p>Integration with the most popular logging technologies</p>
+      </header>
+      <div class="row">
+        <div class="col-md  my-auto text-center pt-1">
+          <a href="https://docs.logsight.ai/#/./integration/fluentbit"><img src="../assets/img/logo-fluentbit.png"
+                                                                            style="max-height: 60px" class="img-fluid"
+                                                                            alt="Bundesdruckerei logo"></a>
+        </div>
+        <div class="col-md  my-auto text-center pt-1">
+          <a href="https://docs.logsight.ai/#/integration/github_action"><img src="../assets/img/github.png"
+                                                                              style="max-height: 60px" class="img-fluid"
+                                                                              alt="EPAM logo"></a>
+        </div>
+        <div class="col-md  my-auto text-center pt-1">
+          <a href="https://docs.logsight.ai/#/tutorials/dataset_import_short"><img
+            src="../assets/img/filebeats-logo.png" style="max-height: 70px" class="img-fluid" alt="Siemens logo"></a>
+        </div>
+        <div class="col-md my-auto text-center pt-1">
+          <a href="https://pypi.org/project/logsight-sdk-py/"><img src="../assets/img/python-logo.png"
+                                                                   style="max-height: 60px"class="img-fluid"
+                                                                   alt="Siemens logo"></a>
+        </div>
+        <div class="col-md my-auto text-center pt-1">
+          <a href="https://logsight.ai/swagger-ui/index.html"><img src="../assets/img/rest-api.jpg"
+                                                                   style="max-height: 60px" class="img-fluid"
+                                                                   alt="ATOS logo"></a>
+        </div>
+        <div class="col-md my-auto text-center pt-1">
+          <a href="https://docs.logsight.ai/"><img src="../assets/img/elasticsearch_logo.svg"
+                                                                   style="max-height: 60px" class="img-fluid"
+                                                                   alt="ATOS logo"></a>
+        </div>
+        <div class="col-md my-auto text-center pt-1">
+          <a href="https://docs.logsight.ai/"><img src="../assets/img/fluentd_horizontal.png"
+                                                                   style="max-height: 60px" class="img-fluid"
+                                                                   alt="ATOS logo"></a>
+        </div>
+        <div class="col-md my-auto text-center">
+          <a href="https://docs.logsight.ai/"><img src="../assets/img/elastic-logstash-logo.png"
+                                                                   style="max-height: 60px" class="img-fluid"
+                                                                   alt="ATOS logo"></a>
+        </div>
+        <div class="col-md my-auto text-center pt-1">
+          <a href="https://docs.logsight.ai/"><img src="../assets/img/jenkins_logo_with_title.svg"
+                                                                   style="max-height: 60px" class="img-fluid"
+                                                                   alt="ATOS logo"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--  end of Integrations section-->
+
+
   <!-- ======= Features Section ======= -->
   <section class="features" data-aos="fade-up" id="features">
 
     <div class="container">
 
       <header class="section-header">
-<!--        <h2>Features</h2>-->
-        <p>AI-powered Log Analytics with Scalable Performance</p>
+        <!--        <h2>Features</h2>-->
+        <p>Novel Features with Scalable Performance</p>
       </header>
 
       <div class="row">
 
         <div class="col-lg-3">
-          <img alt="" class="img-fluid" src="assets/img/imgfeatures.svg">
+          <img alt="" class="img-fluid" src="assets/img/imgfeatures.svg" style="width: 70%">
         </div>
 
         <div class="col-lg-9 mt-5 mt-lg-0 d-flex">
@@ -291,223 +389,226 @@
       <!--      </div>&lt;!&ndash; End Feature Tabs &ndash;&gt;-->
 
       <!-- Feature Icons -->
-<!--      <div class="row feature-icons">-->
-<!--        <div class="container">-->
-<!--          <header class="section-header">-->
-<!--            &lt;!&ndash;        <h2></h2>&ndash;&gt;-->
-<!--            <p>Benefits</p>-->
-<!--          </header>-->
-<!--          <div class="row">-->
-<!--            <div class="col-xl-4 text-center">-->
+      <!--      <div class="row feature-icons">-->
+      <!--        <div class="container">-->
+      <!--          <header class="section-header">-->
+      <!--            &lt;!&ndash;        <h2></h2>&ndash;&gt;-->
+      <!--            <p>Benefits</p>-->
+      <!--          </header>-->
+      <!--          <div class="row">-->
+      <!--            <div class="col-xl-4 text-center">-->
 
-<!--              <img alt="" class="img-fluid p-4" src="assets/img/features-2.png">-->
-<!--            </div>-->
+      <!--              <img alt="" class="img-fluid p-4" src="assets/img/features-2.png">-->
+      <!--            </div>-->
 
-<!--            <div class="col-xl-8 d-flex content">-->
-<!--              <div class="row align-self-center gy-4">-->
+      <!--            <div class="col-xl-8 d-flex content">-->
+      <!--              <div class="row align-self-center gy-4">-->
 
-<!--                <div class="col-md-6 icon-box">-->
-<!--                  <i class="ri-line-chart-line"></i>-->
-<!--                  <div>-->
-<!--                    <h4>Time & Cost Savings</h4>-->
-<!--                    <p>Automated log analytics enables lower troubleshooting costs by up to 60x</p>-->
-<!--                  </div>-->
-<!--                </div>-->
+      <!--                <div class="col-md-6 icon-box">-->
+      <!--                  <i class="ri-line-chart-line"></i>-->
+      <!--                  <div>-->
+      <!--                    <h4>Time & Cost Savings</h4>-->
+      <!--                    <p>Automated log analytics enables lower troubleshooting costs by up to 60x</p>-->
+      <!--                  </div>-->
+      <!--                </div>-->
 
-<!--                <div class="col-md-6 icon-box">-->
-<!--                  <i class="ri-scan-line"></i>-->
-<!--                  <div>-->
-<!--                    <h4>Real-Time Incident Detection</h4>-->
-<!--                    <p>Pre-trained deep learning detection models identify incidents in real-time</p>-->
-<!--                  </div>-->
-<!--                </div>-->
-
-
-<!--                <div class="col-md-6 icon-box">-->
-<!--                  <i class="ri-focus-3-line"></i>-->
-<!--                  <div>-->
-<!--                    <h4>High Accuracy</h4>-->
-<!--                    <p>Extracts key signals out of noisy data to generate alerts and dramatically reduces the number of-->
-<!--                      false positives</p>-->
-<!--                  </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-md-6 icon-box">-->
-<!--                  <i class="ri-brush-4-line"></i>-->
-<!--                  <div>-->
-<!--                    <h4>Customizable Models</h4>-->
-<!--                    <p>Specialized models to understand your critical systems</p>-->
-<!--                  </div>-->
-<!--                </div>-->
+      <!--                <div class="col-md-6 icon-box">-->
+      <!--                  <i class="ri-scan-line"></i>-->
+      <!--                  <div>-->
+      <!--                    <h4>Real-Time Incident Detection</h4>-->
+      <!--                    <p>Pre-trained deep learning detection models identify incidents in real-time</p>-->
+      <!--                  </div>-->
+      <!--                </div>-->
 
 
-<!--                <div class="col-md-6 icon-box">-->
-<!--                  <i class="ri-server-line"></i>-->
-<!--                  <div>-->
-<!--                    <h4>Application Domains</h4>-->
-<!--                    <p>IT troubleshooting, proactive incident detection, high velocity CI/CD pipelines, compliance, and-->
-<!--                      security</p>-->
-<!--                  </div>-->
-<!--                </div>-->
+      <!--                <div class="col-md-6 icon-box">-->
+      <!--                  <i class="ri-focus-3-line"></i>-->
+      <!--                  <div>-->
+      <!--                    <h4>High Accuracy</h4>-->
+      <!--                    <p>Extracts key signals out of noisy data to generate alerts and dramatically reduces the number of-->
+      <!--                      false positives</p>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+
+      <!--                <div class="col-md-6 icon-box">-->
+      <!--                  <i class="ri-brush-4-line"></i>-->
+      <!--                  <div>-->
+      <!--                    <h4>Customizable Models</h4>-->
+      <!--                    <p>Specialized models to understand your critical systems</p>-->
+      <!--                  </div>-->
+      <!--                </div>-->
 
 
-<!--                <div class="col-md-6 icon-box">-->
-<!--                  <i class="ri-link"></i>-->
-<!--                  <div>-->
-<!--                    <h4>Lightweight Integration</h4>-->
-<!--                    <p>Integrates seamlessly on top of existing monitoring platforms</p>-->
-<!--                  </div>-->
-<!--                </div>-->
+      <!--                <div class="col-md-6 icon-box">-->
+      <!--                  <i class="ri-server-line"></i>-->
+      <!--                  <div>-->
+      <!--                    <h4>Application Domains</h4>-->
+      <!--                    <p>IT troubleshooting, proactive incident detection, high velocity CI/CD pipelines, compliance, and-->
+      <!--                      security</p>-->
+      <!--                  </div>-->
+      <!--                </div>-->
 
-<!--              </div>-->
-<!--            </div>-->
 
-<!--          </div>-->
+      <!--                <div class="col-md-6 icon-box">-->
+      <!--                  <i class="ri-link"></i>-->
+      <!--                  <div>-->
+      <!--                    <h4>Lightweight Integration</h4>-->
+      <!--                    <p>Integrates seamlessly on top of existing monitoring platforms</p>-->
+      <!--                  </div>-->
+      <!--                </div>-->
 
-<!--        </div>&lt;!&ndash; End Feature Icons &ndash;&gt;-->
-<!--      </div>-->
+      <!--              </div>-->
+      <!--            </div>-->
+
+      <!--          </div>-->
+
+      <!--        </div>&lt;!&ndash; End Feature Icons &ndash;&gt;-->
+      <!--      </div>-->
     </div>
 
   </section><!-- End Features Section -->
 
   <!--   ======= Services Section =======-->
-    <section id="services" class="services">
+  <section id="services" class="services"  style="background-color: #f6f9ff">
 
-      <div class="container">
+    <div class="container">
 
-        <header class="section-header">
-<!--          <h2>Recommended reading</h2>-->
-          <p>Recommended Materials</p>
-        </header>
+      <header class="section-header">
+        <!--          <h2>Recommended reading</h2>-->
+        <p>Recommended Materials</p>
+      </header>
 
-        <div class="row gy-4">
+      <div class="row gy-4">
 
-          <div class="col-lg-4 col-md-6" >
-            <div class="service-box blue">
-              <i class="ri-file-2-line icon"></i>
-              <h3>Semantic log analysis</h3>
-              <p>Existing solutions to detect incidents typically let users set a static alerts and thresholds for an application
-                in a certain timeframe. Logsight Incident Detection takes a different approach.</p>
-                              <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"
-                   href="https://arxiv.org/pdf/2008.09340.pdf" target="_blank">
-                  <span class="p-2">Read more</span>
-                  <!--                <i class="bi bi-arrow-right"></i>-->
-                </a>
-            </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="service-box blue">
+            <i class="ri-file-2-line icon"></i>
+            <h3>Semantic log analysis</h3>
+            <p>Existing solutions to detect incidents typically let users set a static alerts and thresholds for an
+              application
+              in a certain timeframe. Logsight Incident Detection takes a different approach.</p>
+            <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"
+               href="https://arxiv.org/pdf/2008.09340.pdf" target="_blank">
+              <span class="p-2">Read more</span>
+              <!--                <i class="bi bi-arrow-right"></i>-->
+            </a>
           </div>
+        </div>
 
-          <div class="col-lg-4 col-md-6">
-            <div class="service-box orange">
-              <i class="ri-file-list-2-line icon"></i>
-              <h3>Automated log parsing</h3>
-              <p>Parsing semi-structured log records with free-form text log messages into structured templates is the first and crucial step that enables further advanced analysis and obtain insights.</p>
-              <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"
-                   href="https://arxiv.org/abs/2003.07905" target="_blank">
-                  <span class="p-2">Read more</span>
-                  <!--                <i class="bi bi-arrow-right"></i>-->
-                </a>
-            </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="service-box orange">
+            <i class="ri-file-list-2-line icon"></i>
+            <h3>Automated log parsing</h3>
+            <p>Parsing semi-structured log records with free-form text log messages into structured templates is the
+              first and crucial step that enables further advanced analysis and obtain insights.</p>
+            <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"
+               href="https://arxiv.org/abs/2003.07905" target="_blank">
+              <span class="p-2">Read more</span>
+              <!--                <i class="bi bi-arrow-right"></i>-->
+            </a>
           </div>
+        </div>
 
-          <div class="col-lg-4 col-md-6" >
-            <div class="service-box green">
-<!--              <i class="ri-discuss-line icon"></i>-->
-<!--              <h3>Ledo Markt</h3>-->
-              <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"
+        <div class="col-lg-4 col-md-6">
+          <div class="service-box green">
+            <!--              <i class="ri-discuss-line icon"></i>-->
+            <!--              <h3>Ledo Markt</h3>-->
+            <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen frameborder="0"
                     height="350" src="https://www.youtube.com/embed/z1Gg_y_6-C0"
                     title="YouTube video player"
                     width="100%"></iframe>
-            </div>
           </div>
-
-<!--          <div class="col-lg-4 col-md-6">-->
-<!--            <div class="service-box red">-->
-<!--              <i class="ri-discuss-line icon"></i>-->
-<!--              <h3>Asperiores Commodi</h3>-->
-<!--              <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident-->
-<!--                adipisci neque.</p>-->
-<!--              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          <div class="col-lg-4 col-md-6">-->
-<!--            <div class="service-box purple">-->
-<!--              <i class="ri-discuss-line icon"></i>-->
-<!--              <h3>Velit Doloremque.</h3>-->
-<!--              <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem-->
-<!--                alias eius labore.</p>-->
-<!--              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          <div class="col-lg-4 col-md-6">-->
-<!--            <div class="service-box pink">-->
-<!--              <i class="ri-discuss-line icon"></i>-->
-<!--              <h3>Dolori Architecto</h3>-->
-<!--              <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti recusandae-->
-<!--                ducimus enim.</p>-->
-<!--              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
-<!--            </div>-->
-<!--          </div>-->
-
         </div>
+
+        <!--          <div class="col-lg-4 col-md-6">-->
+        <!--            <div class="service-box red">-->
+        <!--              <i class="ri-discuss-line icon"></i>-->
+        <!--              <h3>Asperiores Commodi</h3>-->
+        <!--              <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident-->
+        <!--                adipisci neque.</p>-->
+        <!--              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
+        <!--            </div>-->
+        <!--          </div>-->
+
+        <!--          <div class="col-lg-4 col-md-6">-->
+        <!--            <div class="service-box purple">-->
+        <!--              <i class="ri-discuss-line icon"></i>-->
+        <!--              <h3>Velit Doloremque.</h3>-->
+        <!--              <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem-->
+        <!--                alias eius labore.</p>-->
+        <!--              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
+        <!--            </div>-->
+        <!--          </div>-->
+
+        <!--          <div class="col-lg-4 col-md-6">-->
+        <!--            <div class="service-box pink">-->
+        <!--              <i class="ri-discuss-line icon"></i>-->
+        <!--              <h3>Dolori Architecto</h3>-->
+        <!--              <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti recusandae-->
+        <!--                ducimus enim.</p>-->
+        <!--              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>-->
+        <!--            </div>-->
+        <!--          </div>-->
 
       </div>
 
-    </section><!-- End Services Section -->
+    </div>
+
+  </section><!-- End Services Section -->
 
 
   <!-- ======= About Section ======= -->
-<!--  <section class="about" id="about">-->
+  <!--  <section class="about" id="about">-->
 
-<!--    <div class="container">-->
-<!--      <div class="row gx-0">-->
+  <!--    <div class="container">-->
+  <!--      <div class="row gx-0">-->
 
-<!--        <div class="col-lg-6 d-flex flex-column justify-content-center">-->
-<!--          <div class="content">-->
-<!--            <h3>R & D</h3>-->
-<!--            <h2>Science behind logsight.ai</h2>-->
-<!--            <p>Deep learning is the heart of intelligent log analytics.-->
-<!--              Five minute introduction to logsight.ai-->
-<!--            </p>-->
-<!--            <div class="row">-->
-<!--              <div class="col-sm p-2" style="width: 100%">-->
-<!--                <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"-->
-<!--                   href="https://arxiv.org/pdf/2008.09340.pdf">-->
-<!--                  <span class="p-2">Cogn. Anomalies</span>-->
-<!--                  &lt;!&ndash;                <i class="bi bi-arrow-right"></i>&ndash;&gt;-->
-<!--                </a>-->
-<!--              </div>-->
-<!--              <div class="col-sm p-2" style="width: 100%">-->
-<!--                <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"-->
-<!--                   href="https://arxiv.org/abs/2003.07905">-->
-<!--                  <span class="p-2">Variable Analysis</span>-->
-<!--                  &lt;!&ndash;                <i class="bi bi-arrow-right"></i>&ndash;&gt;-->
-<!--                </a>-->
-<!--              </div>-->
-<!--            </div>-->
+  <!--        <div class="col-lg-6 d-flex flex-column justify-content-center">-->
+  <!--          <div class="content">-->
+  <!--            <h3>R & D</h3>-->
+  <!--            <h2>Science behind logsight.ai</h2>-->
+  <!--            <p>Deep learning is the heart of intelligent log analytics.-->
+  <!--              Five minute introduction to logsight.ai-->
+  <!--            </p>-->
+  <!--            <div class="row">-->
+  <!--              <div class="col-sm p-2" style="width: 100%">-->
+  <!--                <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"-->
+  <!--                   href="https://arxiv.org/pdf/2008.09340.pdf">-->
+  <!--                  <span class="p-2">Cogn. Anomalies</span>-->
+  <!--                  &lt;!&ndash;                <i class="bi bi-arrow-right"></i>&ndash;&gt;-->
+  <!--                </a>-->
+  <!--              </div>-->
+  <!--              <div class="col-sm p-2" style="width: 100%">-->
+  <!--                <a class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"-->
+  <!--                   href="https://arxiv.org/abs/2003.07905">-->
+  <!--                  <span class="p-2">Variable Analysis</span>-->
+  <!--                  &lt;!&ndash;                <i class="bi bi-arrow-right"></i>&ndash;&gt;-->
+  <!--                </a>-->
+  <!--              </div>-->
+  <!--            </div>-->
 
 
-<!--          </div>-->
-<!--        </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        <div class="col-lg-6 d-flex align-items-center">-->
-<!--          <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;">-->
-<!--            <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"-->
-<!--                    height="350" src="https://www.youtube.com/embed/z1Gg_y_6-C0"-->
-<!--                    title="YouTube video player"-->
-<!--                    width="100%"></iframe>-->
-<!--          </div>-->
-<!--        </div>-->
+  <!--        <div class="col-lg-6 d-flex align-items-center">-->
+  <!--          <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;">-->
+  <!--            <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"-->
+  <!--                    height="350" src="https://www.youtube.com/embed/z1Gg_y_6-C0"-->
+  <!--                    title="YouTube video player"-->
+  <!--                    width="100%"></iframe>-->
+  <!--          </div>-->
+  <!--        </div>-->
 
-<!--        &lt;!&ndash;        <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out">&ndash;&gt;-->
-<!--        &lt;!&ndash;          <img src="assets/img/about.jpg" class="img-fluid" alt="">&ndash;&gt;-->
-<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+  <!--        &lt;!&ndash;        <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out">&ndash;&gt;-->
+  <!--        &lt;!&ndash;          <img src="assets/img/about.jpg" class="img-fluid" alt="">&ndash;&gt;-->
+  <!--        &lt;!&ndash;        </div>&ndash;&gt;-->
 
-<!--      </div>-->
-<!--    </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
 
-<!--  </section>&lt;!&ndash; End About Section &ndash;&gt;-->
+  <!--  </section>&lt;!&ndash; End About Section &ndash;&gt;-->
 
 
   <!-- ======= Pricing Section ======= -->
@@ -515,10 +616,10 @@
 
     <div class="container">
 
-      <header class="section-header">
-<!--        <h2>Pricing</h2>-->
-        <p>Pricing</p>
-      </header>
+<!--      <header class="section-header">-->
+<!--        &lt;!&ndash;        <h2>Pricing</h2>&ndash;&gt;-->
+<!--        <p>Pricing</p>-->
+<!--      </header>-->
 
       <div class="row justify-content-center">
 
@@ -527,21 +628,21 @@
           <div class="box">
             <h2>Community</h2>
             <h3>Loved by individual developers</h3>
-            <div class="price"><sup>€</sup>0</div>
+            <div class="price">Free</div>
             <!--            <img src="assets/img/pricing-free.png" class="img-fluid" alt="">-->
             <p><b>All of the following features:</b></p>
             <ul>
-              <li>Up to 5 Applications</li>
+              <li>Up to 1GB data daily</li>
+              <li>Stage Verifier</li>
               <li>Semantic Anomalies</li>
               <li>Incident Detection</li>
-              <li>Stage Verifier (up to 10k logs)</li>
               <li class="na">Flow Anomalies</li>
               <li class="na">Log Quality Analysis</li>
               <li class="na">Variable Analysis</li>
               <li class="na">Customized AI DevOps Pipelines</li>
               <li class="na">Support</li>
             </ul>
-                        <a href="#" class="btn-buy">Sign Up</a>
+            <a href="#" class="btn-buy">Sign Up</a>
           </div>
         </div>
 
@@ -553,20 +654,19 @@
             <!--            <img src="assets/img/pricing-business.png" class="img-fluid" alt="">-->
             <p><b>All of the following features:</b></p>
             <ul>
-              <li>Unlimited Applications</li>
+              <li>Unlimited data</li>
+              <li>Stage Verifier</li>
               <li>Semantic Anomalies</li>
               <li>Incident Detection</li>
-              <li>Stage Verifier (up to 10k logs)</li>
               <li>Flow Anomalies</li>
               <li>Log Quality Analysis</li>
               <li>Variable Analysis</li>
               <li>Customized AI DevOps Pipelines</li>
               <li>Support</li>
             </ul>
-                        <a href="mailto:support@logsight.ai" class="btn-buy">Contact Us</a>
+            <a href="mailto:support@logsight.ai" class="btn-buy">Contact Us</a>
           </div>
         </div>
-
 
 
         <!--        <div class="col-lg-3 col-md-6" >-->

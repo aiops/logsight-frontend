@@ -23,7 +23,7 @@ import { VerificationService } from '../services/verification.service';
   templateUrl: './verification-overview.component.html',
   styleUrls: ['./verification-overview.component.scss']
 })
-export class VerificationOverviewComponent implements OnInit, AfterViewInit{
+export class VerificationOverviewComponent implements OnInit, AfterViewInit {
 
   @Output() onInsightsActivated = new EventEmitter<void>();
   items: OverviewItem[] = [];
@@ -49,13 +49,26 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
 
   tagOptionsCandidate = [];
   tagOptionsBaseline = [];
-  riskSlider = [0,100]
+  riskSlider = [0, 100]
   riskSliderValues = [0, 100]
+
+
+  @ViewChild('dateTimePicker', {read: TemplateRef}) dateTimePicker: TemplateRef<any>;
+  dateFormat = 'YYYY-MM-DDTHH:mm:ss.SSS'
+  endDateTime =  moment().utc(false).subtract(0, "minutes").format(this.dateFormat)
+  startDateTime =  moment().utc(false).subtract(720, "minutes").format(this.dateFormat)
+
 
   constructor(private verificationService: VerificationService, private router: Router, private verificationSharingService: VerificationSharingService, private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
+    let selectedTime = localStorage.getItem("selectedTime")
+    if (selectedTime) {
+      let params = JSON.parse(selectedTime)
+      this.startDateTime = params['startTime'];
+      this.endDateTime = params['endTime'];
+    }
     this.verificationSharingService.currentData.subscribe(data => {
       this.getOverview()
     });
@@ -81,7 +94,7 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
     });
   }
 
-  getOverview(){
+  getOverview() {
     this.items = [];
     this.verificationService.getOverview().subscribe(res => {
       this.items = res;
@@ -120,10 +133,10 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
     });
   }
 
-  filterByDate(event) {
-    //TODO: Discuss if the filter should be range or equals.
-    this.tableRef.filter(event, 'timestamp', 'equals');
-  }
+  // filterByDate(event) {
+  //   //TODO: Discuss if the filter should be range or equals.
+  //   this.tableRef.filter(event, 'timestamp', 'equals');
+  // }
 
   filterByVerificationId(event) {
     this.tableRef.filter(event.target.value, 'compareId', 'startsWith');
@@ -156,5 +169,24 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit{
 
     let candidateTags = this.items.map(item => item.candidateTags).reduce((a, b) => a.concat(b), []);
     this.tagOptionsCandidate = [...new Set(candidateTags)].sort();
+  }
+
+    onDateTimeSearch(event) {
+    let dateTimeType = 'absolute';
+    if (event.relativeTimeChecked) {
+      this.startDateTime = event.relativeDateTime
+      let minutesString = this.startDateTime.split("-")[1]
+      let minutesNumber = Number(minutesString.slice(0,minutesString.length-1))
+      this.endDateTime = moment().utc(false).format(this.dateFormat)
+      this.startDateTime = moment().utc(false).subtract(minutesNumber, "minutes").format(this.dateFormat)
+      dateTimeType = 'absolute';
+    } else if (event.absoluteTimeChecked) {
+      this.startDateTime = moment(event.absoluteDateTime.startDateTime).format(this.dateFormat)
+      this.endDateTime = moment(event.absoluteDateTime.endDateTime).format(this.dateFormat)
+    }
+    localStorage.setItem("selectedTime", JSON.stringify({
+      startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType
+    }))
+    this.getOverview()
   }
 }

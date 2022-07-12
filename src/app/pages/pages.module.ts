@@ -22,22 +22,24 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import { SortDirective } from '../@core/directives/sort-directive';
 import { CreatePredefinedTimeModal } from '../@core/components/create-predefined-time-modal/create-predefined-time-modal.component';
 import { PredefinedTimesComponent } from '../@core/components/predefined-times/predefined-times.component';
+import {ButtonModule} from "primeng/button";
 
 @NgModule({
-  imports: [
-    PagesRoutingModule,
-    ThemeModule,
-    NbMenuModule,
-    ReactiveFormsModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    NbSelectModule,
-    NbCardModule,
-    ChartsWrapperModule,
-    FormsModule,
-    NbButtonModule,
-    TourMatMenuModule
-  ],
+    imports: [
+        PagesRoutingModule,
+        ThemeModule,
+        NbMenuModule,
+        ReactiveFormsModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
+        NbSelectModule,
+        NbCardModule,
+        ChartsWrapperModule,
+        FormsModule,
+        NbButtonModule,
+        TourMatMenuModule,
+        ButtonModule
+    ],
   declarations: [
     PagesComponent,
     LoadingComponent,

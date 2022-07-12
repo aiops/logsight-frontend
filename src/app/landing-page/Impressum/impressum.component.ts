@@ -1,36 +1,27 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { NotificationsService } from 'angular2-notifications';
-import { Router } from '@angular/router';
-import { LoginService } from '../../auth/login.service';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConnectionService } from './connectionService';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {NotificationsService} from 'angular2-notifications';
+import {Router} from '@angular/router';
+import {LoginService} from '../../auth/login.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ConnectionService} from './connectionService';
 import {ApiService} from "../../@core/service/api.service";
 
 @Component({
   selector: 'impressum',
   templateUrl: './impressum.component.html',
-  styleUrls: ['../assets/css/style.css',
-    '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css',
-    '../assets/vendor/bootstrap-icons/bootstrap-icons.css',
-    '../assets/vendor/swiper/swiper-bundle.min.css', '../assets/vendor/glightbox/css/glightbox.css'],
+  styleUrls: ['../assets/css/style.css', '../assets/vendor/aos/aos.css', '../assets/vendor/remixicon/remixicon.css', '../assets/vendor/bootstrap-icons/bootstrap-icons.css'],
 })
 export class ImpressumComponent implements OnInit {
 
   //DELETE EVERYTHING HERE IF NOT USED ON THE PAGE
   form = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('demo')
+    email: new FormControl('', Validators.required), password: new FormControl('demo')
   });
   contactForm: FormGroup;
   disabledSubmitButton: boolean = true;
   optionsSelect: Array<any>;
 
-  constructor(private authService: LoginService,
-              private notificationService: NotificationsService,
-              private router: Router,
-              private apiService: ApiService,
-              fb: FormBuilder,
-              private connectionService: ConnectionService) {
+  constructor(private authService: LoginService, private notificationService: NotificationsService, private router: Router, private apiService: ApiService, fb: FormBuilder, private connectionService: ConnectionService) {
     this.contactForm = fb.group({
       'contactFormSubject': ['', Validators.required],
       'contactFormEmail': ['', Validators.compose([Validators.required, Validators.email])],
@@ -46,16 +37,14 @@ export class ImpressumComponent implements OnInit {
       el.style['display'] = 'none';
     }
 
-    this.optionsSelect = [
-      { value: 'Feedback', label: 'Feedback' },
-      { value: 'Report a bug', label: 'Report a bug' },
-      { value: 'Feature request', label: 'Feature request' },
-      { value: 'Other stuff', label: 'Other stuff' },
-    ];
+    this.optionsSelect = [{value: 'Feedback', label: 'Feedback'}, {
+      value: 'Report a bug',
+      label: 'Report a bug'
+    }, {value: 'Feature request', label: 'Feature request'}, {value: 'Other stuff', label: 'Other stuff'},];
   }
 
   ngAfterViewInit() {
-   window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }
 
   @HostListener('input') oninput() {
@@ -65,8 +54,7 @@ export class ImpressumComponent implements OnInit {
     }
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll(e) {
+  @HostListener('window:scroll', ['$event']) onWindowScroll(e) {
     if (window.pageYOffset > 0) {
       let element = document.getElementById('navbar');
       element.classList.add('sticky');
@@ -78,11 +66,10 @@ export class ImpressumComponent implements OnInit {
 
   onLogin() {
     this.authService.login(this.form.value).subscribe(resp => {
-        this.router.navigate(['/pages/quickstart'])
-      }, error => {
-        this.apiService.handleErrors(error)
-      }
-    )
+      this.router.navigate(['/pages/quickstart'])
+    }, error => {
+      this.apiService.handleErrors(error)
+    })
   }
 
   get name() {

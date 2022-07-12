@@ -31,6 +31,8 @@ import {ConfirmationService} from "primeng/api";
 import {TooltipModule} from "primeng/tooltip";
 import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
 import { TagControlComponent } from './tag-control/tag-control.component';
+import {OverlayPanelModule} from "primeng/overlaypanel";
+import {PagesModule} from "../pages/pages.module";
 
 @NgModule({
   declarations: [

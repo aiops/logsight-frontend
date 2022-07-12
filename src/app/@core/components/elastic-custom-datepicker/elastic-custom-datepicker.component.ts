@@ -5,6 +5,7 @@ import { PredefinedTime } from '../../common/predefined-time';
 import { NbDialogService } from '@nebular/theme';
 import { SpecificTemplateModalComponent } from '../specific-template-modal/specific-template-modal.component';
 import { CreatePredefinedTimeModal } from '../create-predefined-time-modal/create-predefined-time-modal.component';
+import * as moment from 'moment';
 
 @Component({
     selector: 'elastic-custom-datepicker',
@@ -26,7 +27,7 @@ export class ElasticCustomDatepickerComponent {
 
     onAbsoluteDateChange(dateRange: { startDateTime: Date, endDateTime: Date }) {
         this.absoluteDateTime =
-            { startDateTime: dateRange.startDateTime.toISOString(), endDateTime: dateRange.endDateTime.toISOString() }
+            { startDateTime: moment(dateRange.startDateTime).format(), endDateTime: moment(dateRange.endDateTime).format() }
     }
 
     onRelativeDateChange(value) {

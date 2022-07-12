@@ -18,16 +18,10 @@
     </div>
     <range-date-time [disabled]="!absoluteTimeChecked" (change)="onAbsoluteDateChange($event)"></range-date-time>
   </div>
-  <button style="text-transform: none" [disabled]="!relativeDateTime && !absoluteDateTime" nbButton status='basic'
-          shape="round" type="button"
-          class="search-button"
+  <div class="mt-2">
+  <button style="text-transform: none" [disabled]="!relativeDateTime && !absoluteDateTime" pButton type="button"
           (click)="submit()">
     Search
   </button>
-  <button style="text-transform: none" nbButton status='basic'
-          shape="round" type="button"
-          class="search-button ml-2"
-          (click)="openSaveTimeDialog()">
-    Save time
-  </button>
+    </div>
 </div>

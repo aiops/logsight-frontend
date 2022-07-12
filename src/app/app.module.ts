@@ -33,7 +33,6 @@ import { TourMatMenuModule } from 'ngx-ui-tour-md-menu';
 import { MatCardModule } from '@angular/material/card';
 import { TooltipModule } from '@swimlane/ngx-charts';
 import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
-import $ from 'jquery'
 import {ResendActivationComponent} from "./auth/resend-activation/resend-activation.component";
 import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
 import {LandingPage} from "./landing-page/landing.page";
@@ -74,13 +73,7 @@ import { VerificationModule } from './verification/verification.module';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthHttpInterceptor,
     multi: true
-  },
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: {
-        fullLibraryLoader: () => import('highlight.js'),
-      }
-    },
+  }
   ]
 })
 export class AppModule {

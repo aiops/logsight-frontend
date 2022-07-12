@@ -9,7 +9,7 @@ import {DOCUMENT} from "@angular/common";
   selector: 'landing-page',
   styleUrls: ['./assets/css/style.css', './assets/vendor/bootstrap-icons/bootstrap-icons.css',
     './assets/vendor/aos/aos.css', './assets/vendor/remixicon/remixicon.css',
-    './assets/vendor/swiper/swiper-bundle.min.css', './assets/vendor/glightbox/css/glightbox.css', 'landing-page.css'],
+    'landing-page.css'],
   templateUrl: './landing.page.html',
 })
 export class LandingPage implements OnInit, AfterViewInit {

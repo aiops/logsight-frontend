@@ -19,6 +19,7 @@ export class DemoDataPage implements OnInit, OnDestroy {
   isSpinning = false;
   demoStartTime = "2021-12-01T10:17:43.000"
   demoEndTime = "2021-12-31T09:17:43.000"
+  dateTimeType = "absolute"
 
   topIncidents$: Observable<any>;
   applicationId = null;
@@ -64,7 +65,7 @@ export class DemoDataPage implements OnInit, OnDestroy {
 
   redirectToVerification() {
     this.isSpinning = false
-    this.router.navigate(['/pages', 'incidents'], {
+    this.router.navigate(['/pages', 'compare'], {
       queryParams: {
         startTime: this.demoStartTime, endTime: this.demoEndTime, dateTimeType: "absolute", sample: true
       }

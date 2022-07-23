@@ -93,7 +93,7 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit {
 
   getOverview() {
     this.items = [];
-    this.verificationService.getOverview().subscribe(r => {
+    this.verificationService.getOverview(this.startDateTime, this.endDateTime).subscribe(r => {
       let resp = r.listCompare
       for (let i of resp) {
         i._source["compareId"] = i._id

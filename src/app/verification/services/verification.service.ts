@@ -20,8 +20,9 @@ export class VerificationService {
   constructor(private http: HttpClient, private apiService: ApiService) {
   }
 
-  getOverview(): Observable<any> {
-    return this.apiService.get(`/api/v1/logs/compare`);
+  getOverview(startDateTime, endDateTime): Observable<any> {
+    console.log(startDateTime, endDateTime)
+    return this.apiService.get(`/api/v1/logs/compare?startTime=${startDateTime}&stopTime=${endDateTime}`);
   }
 
   changeStatus(request: UpdateVerificationStatusRequest) {

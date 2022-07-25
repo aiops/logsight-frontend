@@ -221,10 +221,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/send-logs'
   },
   {
-    title: 'Dashboard',
-    icon: 'grid-outline',
-    link: '/pages/dashboard',
-    home: true
+    title: 'Profile',
+    link: '/pages/profile',
   },
   {
     title: 'Incidents',
@@ -232,13 +230,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/incidents',
   },
   {
-    title: 'Variable analysis',
+    title: 'Compare',
     icon: 'bar-chart',
-    link: '/pages/variable-analysis',
+    link: '/pages/compare',
+    home: true
   },
-  {
-    title: 'Send logs',
-    icon: 'link-outline',
-    link: '/pages/file-upload',
-  }
 ]

@@ -3,7 +3,7 @@
     <div class="col-5 border-right">
       <div class="row">
         <div class="col">
-          Baseline tags
+          Baseline tags <i class="pi pi-info-circle" pTooltip="Used to select the log data which is used as baseline (for example, the past version of the application. Click on the dropdown menu, select the tags and set them by clicking Add."></i>
         </div>
       </div>
       <div class="row pt-2">
@@ -43,7 +43,7 @@
     <div class="col-5 border-right">
       <div class="row">
         <div class="col">
-          Candidate tags
+          Candidate tags <i class="pi pi-info-circle" pTooltip="Used to select the log data which we want to verify against the selected baseline. Multiple tags can be selected by adding them sequentially."></i>
         </div>
       </div>
       <div class="row pt-2">
@@ -88,7 +88,7 @@
       </div>
       <div class="row">
         <div class="col pt-2">
-          <button class="p-button-lg" label="Create" (click)="createVerification()" pButton [loading]="isLoading" style="text-transform: none;"
+          <button pTooltip="Verifies the candidate logs against the baseline. It may take up to few seconds to execute until the results are observable." class="p-button-lg" label="Create" (click)="createVerification()" pButton [loading]="isLoading" style="text-transform: none;"
                   type="button">
           </button>
         </div>

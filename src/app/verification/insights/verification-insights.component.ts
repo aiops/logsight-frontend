@@ -7,6 +7,9 @@ import {VerificationService} from '../services/verification.service';
 import {VerificationData} from "../../@core/common/verification-data";
 import {verificationData} from "../fake-data/verification_data";
 import {ActivatedRoute} from "@angular/router";
+import {SemanticsEnum} from "../models/semantics.enum";
+import {SemanticsColorEnum} from "../models/semantics-color.enum";
+import {LevelColorEnum} from "../models/level-color.enum";
 
 interface DropdownOption {
   value: any;
@@ -41,6 +44,9 @@ export class VerificationInsightsComponent implements OnInit {
   coverageSliderValues = [0, 100];
 
   Severity = Severity;
+  Semantics = SemanticsEnum;
+  SemanticsColor = SemanticsColorEnum;
+  LevelColor = LevelColorEnum;
   Status = Status;
 
   baselineTags = []
@@ -137,6 +143,21 @@ export class VerificationInsightsComponent implements OnInit {
 
   filterByCoverage(event) {
     this.tableRef.filter(event.values, 'coverage', 'between');
+  }
+
+  levelColor(level){
+    if (level == "INFO" || level == "DEBUG"){
+      return "black"
+    }else if(level == "ERROR" || level == "CRITICAL" || level == "FATAL"){
+      return "red"
+    }else{
+      return "orange"
+    }
+  }
+
+  riskToDescription(risk){
+    let riskDescription = Math.floor(risk / 34)
+    return riskDescription + 1
   }
 
 }

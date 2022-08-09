@@ -24,11 +24,18 @@ export class TagControlComponent implements OnInit {
   tagId: string;
   tagMapKeys = [];
   tagKey: string;
+
+  tooltipText: string = '';
+
+  baselineTooltipText: string = 'Used to select the log data which is used as baseline (for example, the past version of the application. Click on the dropdown menu, select the tags and set them by clicking Add.';
+  candidateTooltipText: string = 'Used to select the log data which we want to verify against the selected baseline. Multiple tags can be selected by adding them sequentially.';
   
   constructor(private verificationService: VerificationService, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.loadAvailableTagKeys(new TagRequest([], this.indexType));
+
+    this.tooltipText = this.tagType === TagType.Baseline ? this.baselineTooltipText : this.candidateTooltipText;
   }
 
   loadAvailableTagKeys(tagRequest: TagRequest) {

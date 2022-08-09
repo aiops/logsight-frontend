@@ -8,11 +8,11 @@
         <div class="row">
           <div class="col-2 border-right">
             <div class="row">
-              <div class="col my-auto">ID
+              <div class="col my-auto">ID <i class="pi pi-info-circle" pTooltip="Unique identifier for each performed verification."></i>
               </div>
             </div>
             <div class="row pt-1">
-              <div class="col my-auto">
+              <div class="col my-auto"><i class="pi pi-info-circle" pTooltip="Unique identifier for each performed verification."></i>
                 <input type="text" pInputText [(ngModel)]="verificationShortId" placeholder="ID must be selected via the Overview tab">
               </div>
             </div>
@@ -25,7 +25,7 @@
           <div class="col-5 border-right">
             <div class="row">
               <div class="col-2 my-auto">
-                Baseline tags
+                Baseline tags <i class="pi pi-info-circle" pTooltip="Tags that describe the selected baseline log data."></i>
               </div>
             </div>
             <div class="row pt-2">
@@ -53,7 +53,7 @@
 
             <div class="row pt-2">
               <div class="col-12">
-                {{this.tableDataUnified.count_baseline}} messages &nbsp; | &nbsp; {{this.tableDataUnified.recurring_states + this.tableDataUnified.deleted_states}} states
+                {{this.tableDataUnified.count_baseline}} messages &nbsp; | &nbsp; {{this.tableDataUnified.recurring_states + this.tableDataUnified.deleted_states}} states   <i class="pi pi-info-circle" pTooltip="A state is a representation of similar log messages. For example: 'Execution finished in 5s' and 'Execution finished in 10s' share a common state, which is 'Execution finished in <NUM>s'"></i>
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@
           <div class="col-5">
             <div class="row">
               <div class="col-2 my-auto">
-                Candidate tags
+                Candidate tags <i class="pi pi-info-circle" pTooltip="Tags that describe the selected candidate log data."></i>
               </div>
             </div>
             <div class="row pt-2">
@@ -90,7 +90,7 @@
 
             <div class="row pt-2">
               <div class="col-12">
-                {{this.tableDataUnified.count_candidate}} messages &nbsp; | &nbsp; {{this.tableDataUnified.recurring_states + this.tableDataUnified.added_states}} states
+                {{this.tableDataUnified.count_candidate}} messages &nbsp; | &nbsp; {{this.tableDataUnified.recurring_states + this.tableDataUnified.added_states}} states <i class="pi pi-info-circle" pTooltip="A state is a representation of similar log messages. For example: 'Execution finished in 5s' and 'Execution finished in 10s' share a common state, which is 'Execution finished in <NUM>s'"></i>
               </div>
             </div>
           </div>
@@ -113,7 +113,7 @@
           </div>
           <div class="media-body text-right">
             <h3 class="text-danger"> {{this.tableDataUnified.risk}} % </h3>
-            <span>Deployment failure risk</span>
+            <span>Deployment failure risk <i class="pi pi-info-circle" pTooltip="Deployment risk quantifies how different are the candidate logs when compared to the baseline. The score is estimated by aggregated function of added states, added errors, recurrent errors, and changes in the appearance of the logs."></i></span>
           </div>
         </div>
       </p-card>
@@ -125,7 +125,7 @@
           </div>
           <div class="media-body text-right">
             <h3 class="text-primary"> {{this.tableDataUnified.total_n_log_messages}} </h3>
-            <span>Total log messages</span>
+            <span>Total log messages <i class="pi pi-info-circle" pTooltip="The sum of the number of log messages in both baseline and candidate data."></i></span>
           </div>
         </div>
       </p-card>
@@ -135,7 +135,7 @@
         <div class="media d-flex">
           <div class="media-body text-left">
             <h3 class="text-primary"> {{this.tableDataUnified.count_baseline}} </h3>
-            <span>Baseline</span>
+            <span>Baseline <i class="pi pi-info-circle" pTooltip="The number of log messages in the baseline data."></i></span>
           </div>
           <div class="align-self-center"><i class="icon-graph text-primary font-large-2 float-right"></i>
           </div>
@@ -147,7 +147,7 @@
         <div class="media d-flex">
           <div class="media-body text-left">
             <h3 class="text-primary"> {{this.tableDataUnified.candidate_perc}} %</h3>
-            <span>Candidate</span>
+            <span>Candidate <i class="pi pi-info-circle" pTooltip="Change in percentage of the number of logs from the baseline to the candidate. 50% change means that the candidate has 50% more logs than the baseline."></i></span>
           </div>
           <div class="align-self-center"><i class="icon-rocket text-primary font-large-2 float-right"></i>
           </div>
@@ -168,7 +168,7 @@
                 </span>
               <div class="stats-amount mr-3">
                 <h3 class="heading-text text-bold-600 text-primary"> {{ this.tableDataUnified.added_states }} </h3>
-                <p class="sub-heading">Added states</p>
+                <p class="sub-heading">Added states <i class="pi pi-info-circle" pTooltip="Represents the count of states that exist in candidate logs but not in baseline. These are new states, which are classified in 'Report' and 'Fault'. High number of faulty new states increases the estimated risk."></i></p>
               </div>
               <span class="inc-dec-percentage">
                   Report<p class="text-success" style="display:inline"> {{ this.tableDataUnified.added_states_info }}
@@ -185,7 +185,7 @@
                 </span>
               <div class="stats-amount mr-3">
                 <h3 class="heading-text text-bold-600 text-primary"> {{ this.tableDataUnified.deleted_states }} </h3>
-                <p class="sub-heading">Deleted states</p>
+                <p class="sub-heading">Deleted states <i class="pi pi-info-circle" pTooltip="Represents the count of states that exist in baseline logs but not in candidate. These are states that disappeared in the candidate, which are classified in 'Report' and 'Fault'."></i></p>
               </div>
               <span class="inc-dec-percentage">
                   Report <p class="text-success" style="display:inline"> {{ this.tableDataUnified.deleted_states_info }}
@@ -202,7 +202,7 @@
                 </span>
               <div class="stats-amount mr-3">
                 <h3 class="heading-text text-bold-600 text-primary"> {{ this.tableDataUnified.recurring_states }} </h3>
-                <p class="sub-heading">Recurring states</p>
+                <p class="sub-heading">Recurring states <i class="pi pi-info-circle" pTooltip="Represents the count of states that exist in both baseline logs and in candidate. These are also further classified in 'Report' and 'Fault'. Large number of recurring faulty states increases the estimated risk."></i></p>
               </div>
               <span class="inc-dec-percentage">
                   Report <p class="text-success"
@@ -219,7 +219,7 @@
                 </span>
               <div class="stats-amount mr-3">
                 <h3 class="heading-text text-bold-600 text-primary"> {{ this.tableDataUnified.frequency_change }} </h3>
-                <p class="sub-heading">Frequency change</p>
+                <p class="sub-heading">Frequency change <i class="pi pi-info-circle" pTooltip="Represents the count of states that exist in both baseline logs and in candidate but changed frequency of appearance drastically. Large number of states that changed frequency, especially faulty ones increases the estimated risk."></i></p>
               </div>
               <span class="inc-dec-percentage">
                  Report &nbsp;<p class="text-success" style="display:inline"><i
@@ -245,6 +245,9 @@
     <div class="col-12">
       <p-card header="State analysis">
         <div class="row text-right">
+          <div class="col text-muted text-left">
+            Guideline <i class="pi pi-info-circle" pTooltip="Start analyzing the states by first looking/sorting the high risk states, error levels, and states that have faulty semantics. As a next step is to observe the changes in frequency. Fixing the problems contributes to reducing the risk."></i>
+            </div>
           <div class="col text-muted text-right">
             Baseline (B)
             <br>

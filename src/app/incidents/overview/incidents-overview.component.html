@@ -17,6 +17,7 @@
             pButton
             type="button"
             label="Delete"
+            pTooltip="Performs deletion on selected incidents from the table."
             class="p-button-danger"
             icon="pi pi-trash"
             [disabled]="selectedItems.length === 0"
@@ -27,7 +28,7 @@
           <div class="row">
             <div class="col-9"></div>
 
-            <div class="col-2 text-right">
+            <div class="col-2 text-right" pTooltip="To manage and search trough the history of incidents much easily, a time range can be selected by clicking on the datepicker icon." >
               <p class="my-auto"> {{startDateTime |date:'MMM dd, yyyy, HH:mm:ss'}}
                 <br>
                 {{endDateTime | date:'MMM dd, yyyy, HH:mm:ss'}} </p>
@@ -65,30 +66,30 @@
           <p-sortIcon [field]="'message'"></p-sortIcon>
         </th>
         <th style="width: 10%">Tags</th>
-        <th style="width: 8%" [pSortableColumn]="'risk'">Risk
+        <th pTooltip="Indicates the estimated risk of the detected incident." style="width: 8%" [pSortableColumn]="'risk'">Risk
           <p-sortIcon [field]="'risk'"></p-sortIcon>
         </th>
-        <th style="width: 11%" [pSortableColumn]="'severity'">Severity
+        <th pTooltip="Human readable classification of the estimated risk."  style="width: 11%" [pSortableColumn]="'severity'">Severity
           <p-sortIcon [field]="'severity'"></p-sortIcon>
         </th>
 <!--        <th style="width: 7%" [pSortableColumn]="'countAddedState'">New states-->
 <!--          <p-sortIcon [field]="'countAddedState'"></p-sortIcon>-->
 <!--        </th>-->
-        <th style="width: 10%" [pSortableColumn]="'status'">Status
+        <th pTooltip="By default all detected incidents get status Raised. If a particular incident is under investigation by developers, one can change the status to Assigned, or if completed to Resolved." style="width: 10%" [pSortableColumn]="'status'">Status
           <p-sortIcon [field]="'status'"></p-sortIcon>
         </th>
         <th style="width: 10%" class="text-center"></th>
       </tr>
       <tr>
-        <th>
+        <th style="width: 3%;">
         </th>
-        <th>
+        <th style="width: 3%;">
         </th>
-        <th>
+        <th style="width: 10%;">
         </th>
-        <th>
+        <th style="width: 10%;">
         </th>
-        <th>
+        <th style="width: 25%;">
           <input
             pInputText
             type="text"
@@ -96,16 +97,16 @@
             placeholder="Search"
             class="p-column-filter">
         </th>
-        <th>
+        <th style="width: 10%;">
           <p-multiSelect placeholder="Filter" [options]="tagOptions" (onChange)="filterByTags($event)"
                          [filter]="true"></p-multiSelect>
         </th>
-        <th class="text-center">
+        <th class="text-center" style="width: 8%;">
           <p>{{riskSliderValues[0]}} to {{riskSliderValues[1]}}</p>
           <p-slider [ngModel]="riskSlider" [min]="0" max="100" [range]="true"
                     (onSlideEnd)="filterByRisk($event)"></p-slider>
         </th>
-        <th>
+        <th style="width: 11%;">
           <p-dropdown
             [options]="severityOptions"
             (onChange)="filterBySeverity($event)"
@@ -117,21 +118,9 @@
             </ng-template>
           </p-dropdown>
         </th>
-        <th>
+        <th style="width: 10%;">
         </th>
-<!--        <th>-->
-<!--          <p-dropdown-->
-<!--            [options]="statusOptions"-->
-<!--            (onChange)="filterByStatus($event)"-->
-<!--            styleClass="p-column-filter"-->
-<!--            placeholder="Select"-->
-<!--            [showClear]="true">-->
-<!--            <ng-template let-option pTemplate="item">-->
-<!--              <span>{{option.label}}</span>-->
-<!--            </ng-template>-->
-<!--          </p-dropdown>-->
-<!--        </th>-->
-        <th>
+        <th style="width: 10%;">
         </th>
 
       </tr>
@@ -183,35 +172,35 @@
 
     <ng-template pTemplate="rowexpansion" let-item>
       <tr *ngIf="(item.incidents.length-1) > 0">
-        <td colspan="11" style="padding: 0; margin: 0">
+        <td colspan="10" style="padding: 0; margin: 0">
             <p-table  [value]="item.incidents.slice(1, item.incidents.length)"  dataKey="incidentId">
               <ng-template pTemplate="header">
-      <tr>
-        <th style="width: 3%;">
-        </th>
-        <th style="width: 3%;">
-        </th>
-        <th style="width: 10%" [pSortableColumn]="'timestamp'">
-        </th>
-        <th style="width: 10%" [pSortableColumn]="'incidentId'">
-        </th>
-        <th style="max-width: 25%;" [pSortableColumn]="'message'">
-        </th>
-        <th style="width: 10%"></th>
-        <th style="width: 7%" [pSortableColumn]="'risk'">
-        </th>
-        <th style="width: 11%" [pSortableColumn]="'severity'">
-        </th>
-<!--        <th style="width: 7%" [pSortableColumn]="'countAddedState'">-->
-<!--        </th>-->
-        <th style="width: 10%" [pSortableColumn]="'status'">
-        </th>
-        <th style="width: 10%" class="text-center"></th>
-      </tr>
-    </ng-template>
+                <tr>
+                  <th style="width: 3%;">
+                  </th>
+                  <th style="width: 3%;">
+                  </th>
+                  <th style="width: 10%" [pSortableColumn]="'timestamp'">
+                  </th>
+                  <th style="width: 10%" [pSortableColumn]="'incidentId'">
+                  </th>
+                  <th style="max-width: 25%;" [pSortableColumn]="'message'">
+                  </th>
+                  <th style="width: 10%"></th>
+                  <th style="width: 8%" [pSortableColumn]="'risk'">
+                  </th>
+                  <th style="width: 11%" [pSortableColumn]="'severity'">
+                  </th>
+          <!--        <th style="width: 7%" [pSortableColumn]="'countAddedState'">-->
+          <!--        </th>-->
+                  <th style="width: 10%" [pSortableColumn]="'status'">
+                  </th>
+                  <th style="width: 10%" class="text-center"></th>
+                </tr>
+            </ng-template>
 
     <ng-template pTemplate="body" let-similar>
-      <tr >
+      <tr>
         <td></td>
         <td>
           <p-checkbox name="incidentsRowExpand" [value]="similar"  [(ngModel)]="selectedItemsExpandRow"></p-checkbox>

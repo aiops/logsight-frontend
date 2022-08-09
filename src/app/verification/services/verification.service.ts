@@ -22,8 +22,8 @@ export class VerificationService {
   constructor(private http: HttpClient, private apiService: ApiService) {
   }
 
-  getOverview(): Observable<OverviewItem[]> {
-    return this.apiService.get(`/api/v1/logs/compare`).pipe(
+  getOverview(startDateTime, endDateTime): Observable<OverviewItem[]> {
+    return this.apiService.get(`/api/v1/logs/compare?startTime=${startDateTime}&stopTime=${endDateTime}`).pipe(
       map(mapOverview)
     );
   }

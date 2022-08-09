@@ -8,7 +8,7 @@
         <div class="row">
           <div class="col-2 border-right">
             <div class="row">
-              <div class="col my-auto">ID
+              <div class="col my-auto">ID <i class="pi pi-info-circle" pTooltip="Unique identifier for each detected incident."></i>
               </div>
             </div>
             <div class="row pt-1">
@@ -26,7 +26,7 @@
           <div class="col">
             <div class="row">
               <div class="col-2 my-auto">
-                Tags
+                Tags  <i class="pi pi-info-circle" pTooltip="Tags that describe log data where the incident was found."> </i>
               </div>
             </div>
             <div class="row pt-2">
@@ -55,7 +55,7 @@
             <div class="row pt-2">
               <div class="col-12">
                 {{this.tableDataUnified.countMessages}} messages &nbsp; | &nbsp; {{this.tableDataUnified.countStates}}
-                states
+                states <i class="pi pi-info-circle" pTooltip="A state is a representation of similar log messages. For example: 'Execution finished in 5s' and 'Execution finished in 10s' share a common state, which is 'Execution finished in <NUM>s'"></i>
               </div>
             </div>
           </div>
@@ -77,7 +77,7 @@
           </div>
           <div class="media-body text-right">
             <h3 class="text-danger"> {{this.tableDataUnified.risk}} % </h3>
-            <span>Incident risk</span>
+            <span>Incident risk <i class="pi pi-info-circle" pTooltip="Deployment risk quantifies how erroneous is the detected incident. The score is estimated by aggregated function of added states, added errors, recurrent errors, and changes in the appearance of the logs during the execution."></i></span>
           </div>
         </div>
       </p-card>
@@ -89,7 +89,7 @@
           </div>
           <div class="media-body text-right">
             <h3 class="text-primary"> {{this.tableDataUnified.countSemanticAnomaly}} </h3>
-            <span>Semantic anomalies</span>
+            <span>Semantic anomalies <i class="pi pi-info-circle" pTooltip="Number of semantic anomalies. Semantic anomalies are log messages that our AI models estimate to represent faulty application behaviour. Semantic comes from the fact that the models are semantically analyzing the log message text and assigning predictions by analyzing the semantic meaning of the message."></i></span>
           </div>
         </div>
       </p-card>
@@ -99,7 +99,7 @@
         <div class="media d-flex">
           <div class="media-body text-left">
             <h3 class="text-primary"> {{this.tableDataUnified.countLevelFault}} </h3>
-            <span>Level errors</span>
+            <span>Level errors <i class="pi pi-info-circle" pTooltip="Number of log messages that have log level ERROR."></i></span>
           </div>
           <div class="align-self-center"><i class="pi pi-exclamation-circle text-primary font-large-2 float-right"></i>
           </div>
@@ -123,6 +123,11 @@
   <div class="row pt-5">
     <div class="col-12">
       <p-card header="Incident analysis">
+        <div class="row">
+        <div class="col text-muted text-left">
+            Guideline <i class="pi pi-info-circle" pTooltip="Start analyzing the states by first looking/sorting the high risk states, error levels, and states that have faulty semantics. Fixing the problems contributes to reducing the risk."></i>
+            </div>
+          </div>
         <p-table
           #statesTable
           [multiSortMeta]="[{field: 'riskSeverity', order: -1}]"

@@ -433,14 +433,14 @@ section {
 
 .hero h1 {
   margin: 0;
-  font-size: 48px;
+  font-size: 50px;
   font-weight: 700;
   color: #012970;
 }
 
 .hero h2 {
   color: #444444;
-  margin: 15px 0 0 0;
+  margin: 25px 0 0 0;
   font-size: 26px;
 }
 

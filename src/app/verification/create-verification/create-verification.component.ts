@@ -41,7 +41,7 @@ export class CreateVerificationComponent implements OnInit {
       this.isLoading = false
       setTimeout(_ => {
         this.verificationSharingService.setData(true)
-      }, 1000)
+      }, 500)
     }, error => {
       this.isLoading = false
       this.apiService.handleErrors(error)

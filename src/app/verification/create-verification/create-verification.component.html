@@ -16,7 +16,7 @@
       </div>
       <div class="row">
         <div class="col pt-2">
-          <button class="p-button-lg" label="Create" (click)="createVerification()" pButton [loading]="isLoading" style="text-transform: none;"
+          <button pTooltip="Verifies the candidate logs against the baseline. It may take up to few seconds to execute until the results are observable." class="p-button-lg" label="Create" (click)="createVerification()" pButton [loading]="isLoading" style="text-transform: none;"
                   type="button">
           </button>
         </div>

@@ -72,7 +72,9 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit {
       this.endDateTime = params['endTime'];
     }
     this.verificationSharingService.currentData.subscribe(data => {
-      this.getOverview()
+      this.endDateTime =  moment().utc(false).subtract(0, "minutes").format(this.dateFormat)
+      this.startDateTime =  moment().utc(false).subtract(720, "minutes").format(this.dateFormat)
+      this.getOverview(this.startDateTime, this.endDateTime)
     });
   }
 
@@ -96,9 +98,9 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getOverview() {
+  getOverview(startTime, stopTime) {
     this.items = [];
-    this.verificationService.getOverview().subscribe(res => {
+    this.verificationService.getOverview(startTime, stopTime).subscribe(res => {
       this.items = res;
       this.getTags();
     });
@@ -189,6 +191,6 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit {
     localStorage.setItem("selectedTime", JSON.stringify({
       startTime: this.startDateTime, endTime: this.endDateTime, dateTimeType
     }))
-    this.getOverview()
+    this.getOverview(this.startDateTime, this.endDateTime)
   }
 }

@@ -67,9 +67,9 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit {
       this.endDateTime = params['endTime'];
     }
     this.verificationSharingService.currentData.subscribe(data => {
-      this.endDateTime =  moment().utc(false).subtract(0, "minutes").format(this.dateFormat)
-      this.startDateTime =  moment().utc(false).subtract(720, "minutes").format(this.dateFormat)
-      this.getOverview(this.startDateTime, this.endDateTime)
+      this.endDateTime =  moment().utc(false).add(1, "minutes").format(this.dateFormat)
+      // this.startDateTime =  moment().utc(false).subtract(720, "minutes").format(this.dateFormat)
+      setTimeout(_ => this.getOverview(this.startDateTime, this.endDateTime), 300)
     });
   }
 

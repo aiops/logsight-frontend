@@ -12,7 +12,7 @@
               </div>
             </div>
             <div class="row pt-1">
-              <div class="col my-auto"><i class="pi pi-info-circle" pTooltip="Unique identifier for each performed verification."></i>
+              <div class="col my-auto">
                 <input type="text" pInputText [(ngModel)]="verificationShortId" placeholder="ID must be selected via the Overview tab">
               </div>
             </div>
@@ -261,47 +261,48 @@
           [rowsPerPageOptions]="rowsPerPageOptions"
           [rows]="rowsPerPageOptions[0]"
           [value]="tableRows"
+          [multiSortMeta]="[{field: 'risk_score', order: -1}]"
           dataKey="template"
           sortMode="multiple">
           <ng-template pTemplate="header">
 
             <tr style="padding-bottom: 20px">
-              <th [pSortableColumn]="'risk_score'" style="width: 5%">{{this.tableDataUnified.cols[0]}}
+              <th [pSortableColumn]="'risk_score'" style="width: 5%">Risk
                 <p-sortIcon [field]="'risk_score'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'risk_description'" style="width: 7%">{{this.tableDataUnified.cols[1]}}
+              <th [pSortableColumn]="'risk_description'" style="width: 7%">Description
                 <p-sortIcon [field]="'risk_description'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'perc_baseline'" style="width: 6%">{{this.tableDataUnified.cols[2]}}
+              <th [pSortableColumn]="'perc_baseline'" style="width: 6%">Baseline
                 <p-sortIcon [field]="'perc_baseline'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'perc_candidate'" style="width: 6%">{{this.tableDataUnified.cols[3]}}
+              <th [pSortableColumn]="'perc_candidate'" style="width: 6%">Candidate
                 <p-sortIcon [field]="'perc_candidate'"></p-sortIcon>
               </th>
               <th [pSortableColumn]="'template'"
-                  style="width: 36%; overflow: hidden; word-wrap: anywhere">{{this.tableDataUnified.cols[4]}}
+                  style="width: 36%; overflow: hidden; word-wrap: anywhere">State
                 <p-sortIcon [field]="'template'"></p-sortIcon>
               </th>
               <th [pSortableColumn]="'count_base'" class="text-center"
-                  style="width: 7%">{{this.tableDataUnified.cols[6]}} (B)
+                  style="width: 7%">Count (B)
                 <p-sortIcon [field]="'count_base'"></p-sortIcon>
               </th>
               <th [pSortableColumn]="'count_cand'" class="text-center"
-                  style="width: 7%">{{this.tableDataUnified.cols[6]}} (C)
+                  style="width: 7%">Count (C)
                 <p-sortIcon [field]="'count_cand'"></p-sortIcon>
               </th>
               <th [pSortableColumn]="'change_perc'" class="text-center"
-                  style="width: 7%">{{this.tableDataUnified.cols[7]}}
+                  style="width: 7%">Change
                 <p-sortIcon [field]="'change_perc'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'coverage'" style="width: 7%">{{this.tableDataUnified.cols[8]}}
+              <th [pSortableColumn]="'coverage'" style="width: 7%">Coverage
                 <p-sortIcon [field]="'coverage'"></p-sortIcon>
               </th>
-              <th [pSortableColumn]="'level'" style="width: 5%">{{this.tableDataUnified.cols[9]}}
+              <th [pSortableColumn]="'level'" style="width: 5%">Level
                 <p-sortIcon [field]="'level'"></p-sortIcon>
               </th>
               <th [pSortableColumn]="'semantics'"
-                  style="width: 7%">{{this.tableDataUnified.cols[10]}}
+                  style="width: 7%">Semantics
                 <p-sortIcon [field]="'semantics'"></p-sortIcon>
               </th>
             </tr>
@@ -396,22 +397,22 @@
             <tr>
               <td>
                 <span
-                  [class]="'severity-badge severity-' + Severity[item.risk_severity]">{{ Severity[item.risk_severity] }}
+                  [class]="'severity-badge severity-' + Severity[riskToDescription(item.risk_score)]">{{ Severity[riskToDescription(item.risk_score)] }}
                 </span>
               </td>
 
               <td>
-                {{item.risk_description}}
+                {{item.state | titlecase}} state
               </td>
 
               <td>
-                <div style="background-color: {{item.b_color}}">{{item.perc_baseline}}%</div>
+                <div>{{item.percentage_baseline}}%</div>
                 <!--                            <div>{{row.perc_baseline}}%</div>-->
 
               </td>
 
               <td>
-                <div style="background-color: {{item.c_color}}">{{item.perc_candidate}}%</div>
+                <div>{{item.percentage_candidate}}%</div>
                 <!--                            <div>{{row.perc_candidate}}%</div>-->
 
               </td>
@@ -432,30 +433,30 @@
 
               <td>
                 <div class="col text-center">
-                  <span style="color: #999">{{item.count_base}}</span>
+                  <span style="color: #999">{{item.count_baseline}}</span>
                 </div>
               <td>
                 <div class="col text-center">
-                  <span style="color: #999">{{item.count_cand}}</span>
+                  <span style="color: #999">{{item.count_candidate}}</span>
                 </div>
               </td>
 
               <td class="text-center" style="color: #999;">
                 <!--                {% if row.change_perc >= 0 %}+{% endif %}{{ (row.change_perc * 100)|round|int }}%-->
-                {{item.change_perc * 100 | ngxRound}}%
-                ({{item.change_count}})
+                {{item.freq_change * 100 | ngxRound}}%
+                ({{item.count_candidate - item.count_baseline}})
               </td>
 
               <td>
-                {{item.coverage}}%
+                {{(item.coverage_candidate * 100) | number:'1.0-1'}}%
               </td>
 
-              <td class="level" style="color: {{item.semantic_color[1]}}">
+              <td class="level" style="color: {{levelColor(item.level)}}">
                 <div>{{item.level}}</div>
               </td>
 
               <td class="semantics text-left"
-                  style="color: {{item.semantic_color[0]}}">{{item.semantics.toUpperCase()}}
+                  style="color: {{SemanticsColor[item.predicted_anomaly]}}">{{Semantics[item.predicted_anomaly]}}
               </td>
 
             </tr>

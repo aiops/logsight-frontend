@@ -8,48 +8,72 @@
     [rowsPerPageOptions]="rowsPerPageOptions"
     [rows]="rowsPerPageOptions[0]"
     sortMode="multiple">
-    <ng-template pTemplate="caption">
-        <div class="table-header  align-items-center">
-            <h2></h2>
-            <div>
-              <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-                <button
-                    pButton
-                    type="button"
-                    label="Delete"
-                    class="p-button-danger"
-                    icon="pi pi-trash"
-                    [disabled]="selectedItems.length === 0"
-                    (click)="deleteItems()">
-                </button>
-            </div>
+       <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-1">
+          <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+          <button
+            pButton
+            type="button"
+            label="Delete"
+            pTooltip="Performs deletion on selected verifications from the table."
+            class="p-button-danger"
+            icon="pi pi-trash"
+            [disabled]="selectedItems.length === 0"
+            (click)="deleteItems()">
+          </button>
         </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-9"></div>
+
+            <div class="col-2 text-right" pTooltip="To manage and search trough the history of verifications much easily, a time range can be selected by clicking on the datepicker icon." >
+              <p class="my-auto"> {{startDateTime |date:'MMM dd, yyyy, HH:mm:ss'}}
+                <br>
+                {{endDateTime | date:'MMM dd, yyyy, HH:mm:ss'}} </p>
+            </div>
+            <div class="col-1 text-center">
+              <p-overlayPanel #op [dismissable]="false" [appendTo]="'body'">
+                <ng-template pTemplate>
+                  <elastic-custom-datepicker
+                                             (search)="onDateTimeSearch($event)">
+                  </elastic-custom-datepicker>
+                </ng-template>
+              </p-overlayPanel>
+              <button (click)="op.toggle($event)" pButton pRipple type="button"
+                      icon="pi pi-calendar"
+                      class="my-auto p-button-rounded"></button>
+            </div>
+          </div>
+        </div>
+      </div>
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th style="width: 3%;" rowspan="2">
+            <th style="width: 3%;">
                 <p-tableHeaderCheckbox name="verifications" ></p-tableHeaderCheckbox>
             </th>
             <th style="width: 10%" [pSortableColumn]="'timestamp'">Date <p-sortIcon [field]="'timestamp'"></p-sortIcon> </th>
             <th style="width: 10%" [pSortableColumn]="'compareId'">Verification ID <p-sortIcon [field]="'compareId'"></p-sortIcon></th>
             <th style="width: 20%">Baseline tags</th>
             <th style="width: 20%">Candidate tags</th>
-            <th style="width: 7%" [pSortableColumn]="'risk'">Risk <p-sortIcon [field]="'risk'"></p-sortIcon></th>
-            <th style="width: 10%" [pSortableColumn]="'severity'">Severity <p-sortIcon [field]="'severity'"></p-sortIcon></th>
-            <th style="width: 10%" [pSortableColumn]="'status'">Status <p-sortIcon [field]="'status'"></p-sortIcon></th>
+            <th pTooltip="Indicates the estimated risk of the candidate logs when compare to the baseline. Different factor contribute to risk estimation such as bugs and differences in execution between baseline and candidate." style="width: 7%" [pSortableColumn]="'risk'">Risk <p-sortIcon [field]="'risk'"></p-sortIcon></th>
+            <th pTooltip="Human readable classification of the risk. High risk indicates that problems were found in the logs." style="width: 10%" [pSortableColumn]="'severity'">Severity <p-sortIcon [field]="'severity'"></p-sortIcon></th>
+            <th pTooltip="By default all created verifications get status Raised. If a particular verification is under investigation by developers, one can change the status to Assigned, or if completed to Resolved." style="width: 10%" [pSortableColumn]="'status'">Status <p-sortIcon [field]="'status'"></p-sortIcon></th>
             <th style="width: 10%" class="text-center"></th>
         </tr>
         <tr>
+          <th></th>
             <th>
-                <p-calendar
-                    (onSelect)="filterByDate($event)"
-                    (onClearClick)="filterByDate('')"
-                    [showButtonBar]="true"
-                    styleClass="p-column-filter"
-                    placeholder="Search"
-                    [readonlyInput]="true"
-                    dateFormat="mm/dd/yy">
-                </p-calendar>
+<!--                <p-calendar-->
+<!--                    (onSelect)="filterByDate($event)"-->
+<!--                    (onClearClick)="filterByDate('')"-->
+<!--                    [showButtonBar]="true"-->
+<!--                    styleClass="p-column-filter"-->
+<!--                    placeholder="Search"-->
+<!--                    [readonlyInput]="true"-->
+<!--                    dateFormat="mm/dd/yy">-->
+<!--                </p-calendar>-->
             </th>
             <th>
                 <input
@@ -95,7 +119,6 @@
             </th>
           <th>
           </th>
-          <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex>
@@ -103,7 +126,7 @@
             <td>
               <p-checkbox name="verifications" [value]="item" [(ngModel)]="selectedItems"></p-checkbox>
             </td>
-            <td>{{item.timestamp | date: 'MMM d, y, hh:mm:ss'}}</td>
+            <td>{{item.timestamp | date: 'MMM dd, yyyy, HH:mm:ss'}}</td>
             <td><p pTooltip="{{item.compareId}}" tooltipPosition="top">{{item.compareId.slice(0,7)}}</p></td>
             <td>
                 <nb-tag-list>

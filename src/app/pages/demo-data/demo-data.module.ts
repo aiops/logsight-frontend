@@ -24,15 +24,6 @@ import {ButtonModule} from "primeng/button";
     DemoDataPage,
   ],
 
-  providers: [
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: {
-        fullLibraryLoader: () => import('highlight.js')
-      }
-    }
-  ],
-
 })
 export class DemoDataModule {
 }

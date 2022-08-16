@@ -5,7 +5,10 @@
  */
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NbMenuService } from '@nebular/theme';
-import { Router } from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
+import {filter} from "rxjs/operators";
+
+declare const gtag: Function;
 @Component({
   selector: 'ngx-app',
   template: '<router-outlet></router-outlet><simple-notifications [options]="notificationOptions"></simple-notifications>',
@@ -22,6 +25,15 @@ export class AppComponent implements OnInit {
   };
 
   constructor(private menuService: NbMenuService, private router: Router) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      /** START : Code to Track Page View  */
+       gtag('event', 'page_view', {
+          page_path: event.urlAfterRedirects
+       })
+      /** END */
+    })
   }
 
   ngOnInit(): void {

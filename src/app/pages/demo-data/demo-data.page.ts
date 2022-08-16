@@ -4,59 +4,51 @@ import {NotificationsService} from 'angular2-notifications';
 import {IntegrationService} from '../../@core/service/integration.service';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {TourService} from "ngx-ui-tour-md-menu";
 import {ApiService} from "../../@core/service/api.service";
 import {Receipt} from "../../@core/common/receipt";
 import {combineLatest, empty, Observable, Subject, timer} from "rxjs";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
-import {IncidentTableData} from "../../@core/common/incident-table-data";
-import {ChartRequest} from "../../@core/common/chart-request";
-import {ChartConfig} from "../../@core/common/chart-config";
-import {DashboardService} from "../dashboard/dashboard.service";
+import {IncidentsService} from "../../incidents/services/incidents.service";
+import {VerificationService} from "../../verification/services/verification.service";
+import {TagRequest} from "../../@core/common/TagRequest";
 
 @Component({
-  selector: 'demo-data',
-  styleUrls: ['./demo-data.page.scss'],
-  templateUrl: './demo-data.page.html',
+  selector: 'demo-data', styleUrls: ['./demo-data.page.scss'], templateUrl: './demo-data.page.html',
 })
 export class DemoDataPage implements OnInit, OnDestroy {
   isSpinning = false;
-  demoStartTime = "2021-12-01T10:17:43.000Z"
-  demoEndTime = "2021-12-31T09:17:43.000Z"
+  demoStartTime = "2021-12-01T10:17:43.000"
+  demoEndTime = "2021-12-31T09:17:43.000"
+  dateTimeType = "absolute"
 
   topIncidents$: Observable<any>;
   applicationId = null;
   private stopPolling = new Subject();
   r$: Subject<boolean> = new Subject();
   userId: string;
-  isLoadDemo=0;
+  isLoadDemo = 0;
   private destroy$: Subject<void> = new Subject<void>();
-  constructor(private integrationService: IntegrationService, private dashboardService: DashboardService, private authService: AuthenticationService, private apiService: ApiService,
-              private notificationService: NotificationsService, private http: HttpClient, private router: Router, private tourService: TourService) {
 
-    this.topIncidents$ = combineLatest([timer(2, 5000), this.r$]).pipe(
-      switchMap(() => this.loadTopKIncidents(this.demoStartTime, this.demoEndTime, 5, this.applicationId).pipe(catchError((error) => this.handleError(error)))),
-      share(),
-      takeUntil(this.stopPolling)
-        );
+  constructor(private integrationService: IntegrationService, private verificationService: VerificationService, private authService: AuthenticationService, private apiService: ApiService, private notificationService: NotificationsService, private http: HttpClient, private router: Router) {
+
+    this.topIncidents$ = combineLatest([timer(2, 2000), this.r$]).pipe(switchMap(() => this.loadIncidents().pipe(catchError((error) => this.handleError(error)))), share(), takeUntil(this.stopPolling));
   }
 
   ngOnInit(): void {
-    this.userId = localStorage.getItem('userId')
     setTimeout(_ => this.r$.next(), 1000); //hack to start first refresh
     this.topIncidents$.subscribe(data => {
-      data = data.data.data
-      if (data.length > 0) {
-        if (this.isLoadDemo == 2){
-          this.redirectToDashboard()
+      if (data.tagKeys.length > 0 && this.isLoadDemo != 0) {
+        if (this.isLoadDemo == 2) {
+          this.redirectToVerification()
           this.isLoadDemo = 0
         }
         this.isLoadDemo = 2
       }
-    }, error => {
+    }, () => {
     })
   }
-    ngOnDestroy() {
+
+  ngOnDestroy() {
     this.stopPolling.next();
     this.destroy$.next()
     this.destroy$.complete()
@@ -67,20 +59,15 @@ export class DemoDataPage implements OnInit, OnDestroy {
     return empty();
   }
 
-  loadTopKIncidents(startTime: string, endTime: string, numberOfIncidents: number, applicationId: string) {
-    let parameters = {"type":"tablechart", "feature": "system_overview", "indexType":"incidents", "startTime": startTime, "stopTime": endTime, "numElements": numberOfIncidents}
-    let chartRequest = new ChartRequest(new ChartConfig(parameters), applicationId)
-    return this.dashboardService.loadTopKIncidentsData(this.userId, chartRequest);
+  loadIncidents() {
+    return this.verificationService.loadAvailableTagKeys(new TagRequest([]));
   }
 
-  redirectToDashboard() {
+  redirectToVerification() {
     this.isSpinning = false
-    this.router.navigate(['/pages', 'dashboard'], {
+    this.router.navigate(['/pages', 'compare'], {
       queryParams: {
-        startTime: this.demoStartTime,
-        endTime: this.demoEndTime,
-        dateTimeType: "absolute",
-        sample: true
+        startTime: this.demoStartTime, endTime: this.demoEndTime, dateTimeType: "absolute", sample: true
       }
     })
   }

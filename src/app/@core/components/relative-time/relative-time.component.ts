@@ -36,10 +36,11 @@ export class RelativeTimeComponent implements OnInit {
                 } else if (measurement == 'w') {
                     finalMeasurementNumber *= 24 * 60 * 7
                 } else if (measurement == 'mo') {
-                    finalMeasurementNumber *= 24 * 60 * 7 * 30
+                    finalMeasurementNumber *= 24 * 60 * 30.5
                 } else if (measurement == 'y') {
-                    finalMeasurementNumber *= 24 * 60 * 7 * 30 * 12
+                    finalMeasurementNumber *= 24 * 60 * 30.5 * 12
                 }
+                // TODO check this conversion with the months and years
                 result = `now-${finalMeasurementNumber}m`
             }
             this.onChange.emit(result)

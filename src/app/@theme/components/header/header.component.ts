@@ -57,67 +57,67 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private tourService: TourService,
               private apiService: ApiService,) {
 
-              this.tourService.initialize([
-                {
-                anchorId: 'anchorDashboard',
-                content: 'The Dashboard shows an overview of your system. This includes overview of the observed services, the statistics of their log data, as well as top incidents within a period of time.',
-                enableBackdrop: true,
-                },
-                {
-                  anchorId: 'anchorLogLevels',
-                  content: 'The log messages contain an important information about their log level. Here you can observe the counts between error and normal logs. Increased error counts may suggest anomalous behaviour.',
-                  enableBackdrop: true
-                },
-                {
-                  anchorId: 'anchorCognitiveAnomalies',
-                  content: 'This summarizes the deep learning anomaly detection method, which analyzes the semantics of each log message to detect abnormalities. High number of threat messages may indicate a failure!',
-                  enableBackdrop: true
-                },
-                {
-                  anchorId: 'anchorSystemOverview',
-                  content: 'Get an overview of the system! Clicking on a red box will redirect you to a detailed view of the period! Green color represents normal state.',
-                  enableBackdrop: true
-                },
-                {
-                  anchorId: 'anchorTopIncidents',
-                  content: 'Here you can see the top most severe incidents in the last 24 hours. Clicking on ' +
-                    'View Details will show you details of the incident!\n\n For example, the most severe incident detected is from the Resource Manager service. \n\n When multiple threads call the function almost simultaneously, the arguments will be out or order since it was not thread-safe. This needs to be fixed by making it thread-safe.\n' +
-                    '--> [hadoop] MAPREDUCE-3531 Report | Version 0.23.1',
-                  enableBackdrop: true
-                },
-                {
-                  anchorId: 'anchorIncidentsTab',
-                  content: 'In this view, the details of the selected incident are shown! Clicking on View Details will show you the details of the incident!',
-                  enableBackdrop: true,
-                  route: '/pages/incidents'
-                },
-                {
-                  anchorId: 'compareExplanation',
-                  content: 'In this tab, you can compare logs and verify deployments.',
-                  enableBackdrop: true,
-                  route: '/pages/compare'
-                }
-                ,
-                {
-                  anchorId: 'compareVerify',
-                  content: 'Select your application, select the tags, and click on Verify to see the results!',
-                  route: '/pages/compare',
-                  enableBackdrop: true,
-                },
-                {
-                  anchorId: 'profile',
-                  content: 'In this tab, you can manage your user and applications.',
-                  enableBackdrop: true,
-                  route: '/pages/profile'
-                },
-                {
-                  anchorId: 'compareVerify',
-                  content: 'Select baseline tags -> applicationName: resource_manager, version: v1.0.0, and candidate tags -> applicationName: resource_manager, version: v1.1.0, click Create and start exploring on your own.',
-                  route: '/pages/compare',
-                  enableBackdrop: true,
-                }
-
-                ]);
+              // this.tourService.initialize([
+              //   {
+              //   anchorId: 'anchorDashboard',
+              //   content: 'The Dashboard shows an overview of your system. This includes overview of the observed services, the statistics of their log data, as well as top incidents within a period of time.',
+              //   enableBackdrop: true,
+              //   },
+              //   {
+              //     anchorId: 'anchorLogLevels',
+              //     content: 'The log messages contain an important information about their log level. Here you can observe the counts between error and normal logs. Increased error counts may suggest anomalous behaviour.',
+              //     enableBackdrop: true
+              //   },
+              //   {
+              //     anchorId: 'anchorCognitiveAnomalies',
+              //     content: 'This summarizes the deep learning anomaly detection method, which analyzes the semantics of each log message to detect abnormalities. High number of threat messages may indicate a failure!',
+              //     enableBackdrop: true
+              //   },
+              //   {
+              //     anchorId: 'anchorSystemOverview',
+              //     content: 'Get an overview of the system! Clicking on a red box will redirect you to a detailed view of the period! Green color represents normal state.',
+              //     enableBackdrop: true
+              //   },
+              //   {
+              //     anchorId: 'anchorTopIncidents',
+              //     content: 'Here you can see the top most severe incidents in the last 24 hours. Clicking on ' +
+              //       'View Details will show you details of the incident!\n\n For example, the most severe incident detected is from the Resource Manager service. \n\n When multiple threads call the function almost simultaneously, the arguments will be out or order since it was not thread-safe. This needs to be fixed by making it thread-safe.\n' +
+              //       '--> [hadoop] MAPREDUCE-3531 Report | Version 0.23.1',
+              //     enableBackdrop: true
+              //   },
+              //   {
+              //     anchorId: 'anchorIncidentsTab',
+              //     content: 'In this view, the details of the selected incident are shown! Clicking on View Details will show you the details of the incident!',
+              //     enableBackdrop: true,
+              //     route: '/pages/incidents'
+              //   },
+              //   {
+              //     anchorId: 'compareExplanation',
+              //     content: 'In this tab, you can compare logs and verify deployments.',
+              //     enableBackdrop: true,
+              //     route: '/pages/compare'
+              //   }
+              //   ,
+              //   {
+              //     anchorId: 'compareVerify',
+              //     content: 'Select your application, select the tags, and click on Verify to see the results!',
+              //     route: '/pages/compare',
+              //     enableBackdrop: true,
+              //   },
+              //   {
+              //     anchorId: 'profile',
+              //     content: 'In this tab, you can manage your user and applications.',
+              //     enableBackdrop: true,
+              //     route: '/pages/profile'
+              //   },
+              //   {
+              //     anchorId: 'compareVerify',
+              //     content: 'Select baseline tags -> applicationName: resource_manager, version: v1.0.0, and candidate tags -> applicationName: resource_manager, version: v1.1.0, click Create and start exploring on your own.',
+              //     route: '/pages/compare',
+              //     enableBackdrop: true,
+              //   }
+              //
+              //   ]);
 
             }
   ngOnInit() {
@@ -207,9 +207,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return;
   }
 
-    startTutorial(){
-    this.tourService.start()
-  }
+  //   startTutorial(){
+  //   this.tourService.start()
+  // }
 
 }
 
@@ -221,10 +221,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/send-logs'
   },
   {
-    title: 'Dashboard',
-    icon: 'grid-outline',
-    link: '/pages/dashboard',
-    home: true
+    title: 'Profile',
+    link: '/pages/profile',
   },
   {
     title: 'Incidents',
@@ -232,13 +230,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/incidents',
   },
   {
-    title: 'Variable analysis',
+    title: 'Compare',
     icon: 'bar-chart',
-    link: '/pages/variable-analysis',
+    link: '/pages/compare',
+    home: true
   },
-  {
-    title: 'Send logs',
-    icon: 'link-outline',
-    link: '/pages/file-upload',
-  }
 ]

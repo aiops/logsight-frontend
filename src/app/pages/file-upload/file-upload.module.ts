@@ -39,14 +39,6 @@ import {TourMatMenuModule} from "ngx-ui-tour-md-menu";
     FileUploadPage,
   ],
 
-  providers: [
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: {
-        fullLibraryLoader: () => import('highlight.js')
-      }
-    }
-  ],
 
 })
 export class FileUploadModule {

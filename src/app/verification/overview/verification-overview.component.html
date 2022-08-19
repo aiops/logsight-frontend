@@ -1,5 +1,5 @@
 <p-card>
-<p-table
+  <p-table
     #overviewTable
     [value]="items"
     [(selection)]="selectedItems"
@@ -8,47 +8,49 @@
     [rowsPerPageOptions]="rowsPerPageOptions"
     [rows]="rowsPerPageOptions[0]"
     sortMode="multiple">
-       <ng-template pTemplate="caption">
-      <div class="row">
-        <div class="col-1">
-          <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-          <button
-            pButton
-            type="button"
-            label="Delete"
-            pTooltip="Performs deletion on selected verifications from the table."
-            class="p-button-danger"
-            icon="pi pi-trash"
-            [disabled]="selectedItems.length === 0"
-            (click)="deleteItems()">
-          </button>
-        </div>
-        <div class="col">
-          <div class="row">
-            <div class="col-9"></div>
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-1">
+            <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+            <button
+              pButton
+              type="button"
+              name="delete-btn"
+              id="delete-btn"
+              label="Delete"
+              pTooltip="Performs deletion on selected verifications from the table."
+              class="p-button-danger"
+              icon="pi pi-trash"
+              [disabled]="selectedItems.length === 0"
+              (click)="deleteItems()">
+            </button>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col-9"></div>
 
-            <div class="col-2 text-right" pTooltip="To manage and search trough the history of verifications much easily, a time range can be selected by clicking on the datepicker icon." >
-              <p class="my-auto"> {{startDateTime |date:'MMM dd, yyyy, HH:mm:ss'}}
-                <br>
-                {{endDateTime | date:'MMM dd, yyyy, HH:mm:ss'}} </p>
-            </div>
-            <div class="col-1 text-center">
-              <p-overlayPanel #op [dismissable]="false" [appendTo]="'body'">
-                <ng-template pTemplate>
-                  <elastic-custom-datepicker
-                                             (search)="onDateTimeSearch($event)">
-                  </elastic-custom-datepicker>
-                </ng-template>
-              </p-overlayPanel>
-              <button (click)="op.toggle($event)" pButton pRipple type="button"
-                      icon="pi pi-calendar"
-                      class="my-auto p-button-rounded"></button>
+              <div class="col-2 text-right" pTooltip="To manage and search through the history of verifications much easily, a time range can be selected by clicking on the datepicker icon." >
+                <p class="my-auto"> {{startDateTime |date:'MMM dd, yyyy, HH:mm:ss'}}
+                  <br>
+                  {{endDateTime | date:'MMM dd, yyyy, HH:mm:ss'}} </p>
+              </div>
+              <div class="col-1 text-center">
+                <p-overlayPanel #op [dismissable]="false" [appendTo]="'body'">
+                  <ng-template pTemplate>
+                    <elastic-custom-datepicker
+                                              (search)="onDateTimeSearch($event)">
+                    </elastic-custom-datepicker>
+                  </ng-template>
+                </p-overlayPanel>
+                <button (click)="op.toggle($event)" pButton pRipple type="button"
+                        icon="pi pi-calendar"
+                        class="my-auto p-button-rounded"></button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
+      </ng-template>
+      <ng-template pTemplate="header">
         <tr>
             <th style="width: 3%;">
                 <p-tableHeaderCheckbox name="verifications" ></p-tableHeaderCheckbox>
@@ -78,6 +80,7 @@
             <th>
                 <input
                     pInputText
+                    name="verification-id-filter"
                     type="text"
                     (input)="filterByVerificationId($event)"
                     placeholder="Search"
@@ -120,14 +123,14 @@
           <th>
           </th>
         </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item let-rowIndex>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-rowIndex>
         <tr>
             <td>
               <p-checkbox name="verifications" [value]="item" [(ngModel)]="selectedItems"></p-checkbox>
             </td>
             <td>{{item.timestamp | date: 'MMM dd, yyyy, HH:mm:ss'}}</td>
-            <td><p pTooltip="{{item.compareId}}" tooltipPosition="top">{{item.compareId.slice(0,7)}}</p></td>
+            <td class="compare-id"><p pTooltip="{{item.compareId}}" tooltipPosition="top">{{item.compareId.slice(0,7)}}</p></td>
             <td>
                 <nb-tag-list>
                   <nb-tag *ngFor="let tagKey of item.baselineTags" [text]="tagKey"
@@ -158,9 +161,15 @@
                 </p-dropdown>
             </td>
            <td class="text-center">
-                <button (click)="viewInsights(item.compareId)" pButton type="button" label="View insights" ></button>
+                <button 
+                  (click)="viewInsights(item.compareId)" 
+                  pButton 
+                  type="button" 
+                  label="View insights" 
+                  class="view-insights-btn">
+                </button>
             </td>
         </tr>
-    </ng-template>
-</p-table>
+      </ng-template>
+  </p-table>
 </p-card>

@@ -61,7 +61,11 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit {
   startDateTime =  moment().utc(false).subtract(720, "minutes").format(this.dateFormat)
 
 
-  constructor(private verificationService: VerificationService, private router: Router, private verificationSharingService: VerificationSharingService, private confirmationService: ConfirmationService) {
+  constructor(
+    private verificationService: VerificationService, 
+    private router: Router, 
+    private verificationSharingService: VerificationSharingService, 
+    private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -133,14 +137,10 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit {
             this.tableRef.value = this.tableRef.value.filter(item => i.compareId != item.compareId)
           })
         }
-      }
+      },
+      
     });
   }
-
-  // filterByDate(event) {
-  //   //TODO: Discuss if the filter should be range or equals.
-  //   this.tableRef.filter(event, 'timestamp', 'equals');
-  // }
 
   filterByVerificationId(event) {
     this.tableRef.filter(event.target.value, 'compareId', 'startsWith');

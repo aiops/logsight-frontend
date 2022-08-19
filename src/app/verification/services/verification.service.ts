@@ -19,7 +19,7 @@ import { mapAnalytics } from '../mapping/analytics.mapping';
 })
 export class VerificationService {
 
-  constructor(private http: HttpClient, private apiService: ApiService) {
+  constructor(private apiService: ApiService) {
   }
 
   getOverview(startDateTime, endDateTime): Observable<OverviewItem[]> {

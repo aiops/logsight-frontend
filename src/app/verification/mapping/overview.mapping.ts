@@ -10,7 +10,7 @@ export function mapOverview(response: OverviewResultResponse): OverviewItem[] {
             risk: item._source.risk,
             severity: item._source.severity,
             status: item._source.status,
-            timestamp: item._source.timestamp,
+            timestamp: new Date(item._source.timestamp),
             selected: false
         }
     });

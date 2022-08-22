@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col">
-      {{ tagType }} tags <i class="pi pi-info-circle" [pTooltip]="tooltipText"></i>
+    <div class="col tag-type">
+        {{ tagType }} tags <i class="pi pi-info-circle" [pTooltip]="tooltipText"></i>
     </div>
   </div>
 <div class="row pt-2">
@@ -18,7 +18,7 @@
                     placeholder="Value"></p-dropdown>
     </div>
     <div class="col-2 my-auto">
-        <button class="p-button-lg" label="Add" (click)="setTagKeyValue()" pButton style="text-transform: none;"
+        <button class="p-button-lg add-tag" label="Add" (click)="setTagKeyValue()" pButton style="text-transform: none;"
                 type="button">
         </button>
     </div>

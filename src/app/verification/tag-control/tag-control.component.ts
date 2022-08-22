@@ -16,7 +16,7 @@ import { VerificationService } from '../services/verification.service';
 // This component can be moved to a Shared/Common module if it needs to be used in different modules.
 export class TagControlComponent implements OnInit {
   @Input() tagType: TagType;
-  @Input() tagMap:  Map<string, string>;
+  @Input() tagMap: Map<string, string> = new Map<string, string>();
   @Input() indexType?: string = '*';
 
   tagKeyOptions: Tag[];

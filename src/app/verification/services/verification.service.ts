@@ -1,7 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {Status} from '../models/status.enum';
 import {TagRequest, TagValueRequest} from "../../@core/common/TagRequest";
 import {
   IssuesKPIVerificationRequest,
@@ -10,19 +9,23 @@ import {
 } from "../../@core/common/verification-request";
 import {ChartRequest} from "../../@core/common/chart-request";
 import {ApiService} from "../../@core/service/api.service";
-import {OverviewVerificationData} from "../../@core/common/verification-data";
+import { map } from 'rxjs/operators';
+import { mapOverview } from '../mapping/overview.mapping';
+import { OverviewItem } from '../models/overview.model';
+import { mapAnalytics } from '../mapping/analytics.mapping';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VerificationService {
 
-  constructor(private http: HttpClient, private apiService: ApiService) {
+  constructor(private apiService: ApiService) {
   }
 
-  getOverview(startDateTime, endDateTime): Observable<any> {
-    console.log(startDateTime, endDateTime)
-    return this.apiService.get(`/api/v1/logs/compare?startTime=${startDateTime}&stopTime=${endDateTime}`);
+  getOverview(startDateTime, endDateTime): Observable<OverviewItem[]> {
+    return this.apiService.get(`/api/v1/logs/compare?startTime=${startDateTime}&stopTime=${endDateTime}`).pipe(
+      map(mapOverview)
+    );
   }
 
   changeStatus(request: UpdateVerificationStatusRequest) {
@@ -53,9 +56,9 @@ export class VerificationService {
     return this.apiService.post(`/api/v1/users/${userId}/charts/map`, issuesKPIVerificationRequest);
   }
 
-
   loadBarData(userId: string, chartRequest: ChartRequest) {
-    return this.apiService.post(`/api/v1/users/${userId}/charts/barchart`, chartRequest);
+    return this.apiService.post(`/api/v1/users/${userId}/charts/barchart`, chartRequest).pipe(
+      map(mapAnalytics)
+    );
   }
-
 }

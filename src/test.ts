@@ -17,6 +17,7 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
+import { MockInstance, MockService, ngMocks } from 'ng-mocks';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare const __karma__: any;
@@ -36,3 +37,17 @@ const context = require.context('./', true, /\.spec\.ts$/);
 context.keys().map(context);
 // Finally, start Karma to run the tests.
 __karma__.start();
+
+
+
+// auto spy
+ngMocks.autoSpy('jasmine');
+
+// auto restore for jasmine and jest <27
+// declare const jasmine: any;
+jasmine.getEnv().addReporter({
+  specDone: MockInstance.restore,
+  specStarted: MockInstance.remember,
+  suiteDone: MockInstance.restore,
+  suiteStarted: MockInstance.remember,
+});

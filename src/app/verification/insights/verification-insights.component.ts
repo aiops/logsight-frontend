@@ -7,11 +7,7 @@ import {VerificationService} from '../services/verification.service';
 import {VerificationData} from "../../@core/common/verification-data";
 import {verificationData} from "../fake-data/verification_data";
 import {ActivatedRoute} from "@angular/router";
-
-interface DropdownOption {
-  value: any;
-  label: string;
-}
+import { DropdownOption } from '../models/dropdown-option.model';
 
 @Component({
   selector: 'verification-insights',

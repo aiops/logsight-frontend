@@ -4,52 +4,23 @@
   <p-card header="Filter">
     <div class="row">
       <div class="col-8">
+        <tag-control [tagType]="TagType.Baseline" [tagMap]="baselineTagMap" [indexType]="tagIndexType"></tag-control>
+      </div>
+      <div class="col-2 text-right">
         <div class="row">
           <div class="col">
             Tags <i class="pi pi-info-circle" pTooltip="Tags that select the data to extract KPIs."></i>
           </div>
         </div>
-        <div class="row pt-2">
-          <div class="col-4 my-auto">
-            <p-dropdown (onChange)="baselineTagKeySelected($event)" [(ngModel)]="baselineTagKey" [filter]="true"
-                        [options]="baselineTags"
-                        filterBy="tagName"
-                        optionLabel="tagName" optionValue="tagName" placeholder="Name">
-            </p-dropdown>
-          </div>
-          <div class="col-4 my-auto">
-            <p-dropdown (onChange)="baselineTagValueSelected($event)" [(ngModel)]="baselineTagId" [filter]="true"
-                        [options]="baselineTagValues"
-                        filterBy="tagValue" optionLabel="tagValue" optionValue="tagValue"
-                        placeholder="Value"></p-dropdown>
-          </div>
-          <div class="col-2 my-auto border-right text-center">
-            <button (click)="setBaselineTagKeyValue()" class="p-button-lg" label="Add" pButton
-                    style="text-transform: none;"
-                    type="button">
-            </button>
-          </div>
-          <div class="col-2 my-auto text-right">
+        <div class="row">
+          <div class="col pt-2">
             <button (click)="loadAnalytics()" [loading]="isLoading" class="p-button-lg" label="Search" pButton
                     style="text-transform: none;"
                     type="button">
             </button>
           </div>
         </div>
-
-        <div class="row pt-2">
-          <div *ngIf="baselineTagMapKeys.length" class="col">
-            <nb-tag-list (tagRemove)="onBaselineTagRemove($event)">
-              <nb-tag *ngFor="let tagKey of baselineTagMapKeys" [text]="tagKey + ':' + baselineTagMap.get(tagKey)"
-                      appearance="filled"
-                      removable
-                      status="primary" style="text-transform: none"></nb-tag>
-            </nb-tag-list>
-          </div>
-          <div *ngIf="baselineTagMapKeys.length" class="col-2"></div>
-        </div>
       </div>
-
     </div>
   </p-card>
 

@@ -13,16 +13,17 @@ import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SliderModule } from 'primeng/slider';
 import { CheckboxModule } from 'primeng/checkbox';
-import { NbTagModule } from '@nebular/theme';
+import { NbTagModule, NbThemeModule } from '@nebular/theme';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
 import { PagesModule } from '../../pages/pages.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Status } from '../../incidents/models/status.enum';
+import { MockModule, MockProvider } from 'ng-mocks';
 
 describe('OverviewComponent', () => {
   let component: VerificationOverviewComponent;
@@ -32,6 +33,41 @@ describe('OverviewComponent', () => {
   // let confirmationServiceSpy = jasmine.createSpyObj('ConfirmationService', ['confirm']);
 
   beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        CommonModule,                                                                                                                 
+        FormsModule,
+        BrowserAnimationsModule,
+        CardModule,
+        TableModule, 
+        CheckboxModule,
+        MultiSelectModule,
+        ConfirmDialogModule,
+        DropdownModule,
+        SliderModule,
+        OverlayPanelModule,
+        // RouterTestingModule
+        NbTagModule,  
+        NbThemeModule.forRoot({ name: 'default' }),
+      ],
+      declarations: [ VerificationOverviewComponent, Table ],
+      providers: [
+        { provide: VerificationService, useValue: verificationServiceSpy },
+        { provide: Router, useValue: null },
+        { 
+          provide: VerificationSharingService, 
+          useValue: { currentData: of(''), setData: () => { return; } }
+        },
+        ConfirmationService
+      ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(VerificationOverviewComponent);
+    component = fixture.componentInstance;
+    template = fixture.debugElement;
 
     let getOverviewResponse = of([
       {
@@ -68,41 +104,6 @@ describe('OverviewComponent', () => {
     ])
 
     verificationServiceSpy.getOverview.and.returnValue(getOverviewResponse);
-
-    await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,                                                                                                                 
-        FormsModule,
-        BrowserAnimationsModule,
-        CardModule,
-        TableModule, 
-        CheckboxModule,
-        MultiSelectModule,
-        ConfirmDialogModule,
-        OverlayPanelModule,
-        DropdownModule,
-        SliderModule,
-        // RouterTestingModule
-        // NbTagModule,  
-      ],
-      declarations: [ VerificationOverviewComponent, Table ],
-      providers: [
-        { provide: VerificationService, useValue: verificationServiceSpy },
-        { provide: Router, useValue: null },
-        { 
-          provide: VerificationSharingService, 
-          useValue: { currentData: of(''), setData: () => { return; } }
-        },
-        { provide: ConfirmationService } //, useValue: confirmationServiceSpy },
-      ]
-    })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(VerificationOverviewComponent);
-    component = fixture.componentInstance;
-    template = fixture.debugElement;
   });
 
   it('should create', () => {
@@ -139,7 +140,7 @@ describe('OverviewComponent', () => {
 
     expect(verificationServiceSpy.changeStatus).toHaveBeenCalled();
     expect(item.status).toBe(Status.Assigned);
-    
+
     flush();
   }));
 
@@ -224,7 +225,23 @@ describe('OverviewComponent', () => {
   }));
 
   it('pressing delete button deletes an item', fakeAsync(() => {
-    component.deleteItems();
+    // Arrange
+    fixture.detectChanges();
+    tick();
+
+    verificationServiceSpy.delete.and.returnValue(of(null));
+
+    let initialItemsLength = component.items.length;
+    let selectedItem = component.items[0];
+
+    component.selectedItems.push(selectedItem);
+
+    fixture.detectChanges();
+    tick();
+    
+    // Act
+    let deleteBtn = template.query(By.css('#delete-btn'));
+    deleteBtn.nativeElement.click();
 
     fixture.detectChanges();
     tick();
@@ -235,53 +252,10 @@ describe('OverviewComponent', () => {
     fixture.detectChanges();
     tick();
 
-    // fixture.detectChanges();
-    // tick();
-
-    // fixture.componentInstance.ngAfterViewInit();
-    // tick();
-
-    // fixture.detectChanges();
+    // Assert
+    expect(verificationServiceSpy.delete).toHaveBeenCalled();
     
-    // spyOn(component, 'deleteItems');
-
-    // let firstItemCheckbox = template.query(By.css('p-checkbox input'));
-    // firstItemCheckbox.nativeElement.click();
-    
-    // fixture.detectChanges();
-    // tick();
-
-    // let firstItemCompareId = template.query(By.css('.compare-id p')).nativeElement.textContent as string;
-    
-    // let deleteBtn = template.query(By.css('#delete-btn'));
-    // expect(deleteBtn.nativeElement.getAttribute('disabled')).toBeNull();
-
-    // deleteBtn.nativeElement.click();
-
-    // fixture.detectChanges();
-    // tick();
-
-    // // let confirmationService = TestBed.inject(ConfirmationService);
-
-    // let currentArrayLength = component.items.length;
-    
-    // // spyOn(confirmationService, 'confirm').and.callFake((params: Confirmation) => {
-    // //   params.accept();
-    // // });
-
-    // // confirmationService.confirm((confirm: Confirmation) => confirm.accept());
-
-    // let acceptButton = template.query(By.css('.p-confirm-dialog-accept'));
-    // acceptButton.nativeElement.click();
-
-    // fixture.detectChanges();
-    // tick(1000);
-
-    // expect(verificationServiceSpy.delete).toHaveBeenCalled();
-    
-    // let item = component.items.find(item => item.compareId == firstItemCompareId);
-    // expect(item).toBeUndefined();
-    // expect(currentArrayLength).toBe(currentArrayLength - 1);
+    expect(component.items).not.toContain(selectedItem);
+    expect(component.items.length).toBe(initialItemsLength - 1);
   }));
-  
 });

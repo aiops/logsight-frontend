@@ -6,31 +6,29 @@ import { DebugElement } from '@angular/core';
 import { VerificationService } from '../services/verification.service';
 import { Router } from '@angular/router';
 import { VerificationSharingService } from '../services/verification-sharing.service';
-import { Confirmation, ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
 import { Table, TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
-import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SliderModule } from 'primeng/slider';
 import { CheckboxModule } from 'primeng/checkbox';
 import { NbTagModule, NbThemeModule } from '@nebular/theme';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
-import { PagesModule } from '../../pages/pages.module';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Status } from '../../incidents/models/status.enum';
-import { MockModule, MockProvider } from 'ng-mocks';
+import { routes } from '../../pages/pages-routing.module';
 
 describe('OverviewComponent', () => {
   let component: VerificationOverviewComponent;
   let fixture: ComponentFixture<VerificationOverviewComponent>;
   let template: DebugElement;
   let verificationServiceSpy = jasmine.createSpyObj('VerificationService', ['getOverview', 'delete', 'changeStatus']);
-  // let confirmationServiceSpy = jasmine.createSpyObj('ConfirmationService', ['confirm']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -46,14 +44,13 @@ describe('OverviewComponent', () => {
         DropdownModule,
         SliderModule,
         OverlayPanelModule,
-        // RouterTestingModule
+        RouterTestingModule.withRoutes(routes),
         NbTagModule,  
         NbThemeModule.forRoot({ name: 'default' }),
       ],
       declarations: [ VerificationOverviewComponent, Table ],
       providers: [
         { provide: VerificationService, useValue: verificationServiceSpy },
-        { provide: Router, useValue: null },
         { 
           provide: VerificationSharingService, 
           useValue: { currentData: of(''), setData: () => { return; } }
@@ -111,6 +108,7 @@ describe('OverviewComponent', () => {
   });
 
   it('#statusChanged changes the selected item status', fakeAsync(() => {
+    // Arrange
     verificationServiceSpy.changeStatus.and.returnValue(of(null));
 
     fixture.detectChanges();
@@ -126,6 +124,7 @@ describe('OverviewComponent', () => {
 
     expect(item.status).toBe(Status.Raised);
 
+    // Act
     let statusSelect = template.query(By.css('tbody .p-dropdown div'));
     statusSelect.nativeElement.click();
 
@@ -138,6 +137,7 @@ describe('OverviewComponent', () => {
     fixture.detectChanges();
     tick();
 
+    // Arrange
     expect(verificationServiceSpy.changeStatus).toHaveBeenCalled();
     expect(item.status).toBe(Status.Assigned);
 
@@ -145,6 +145,7 @@ describe('OverviewComponent', () => {
   }));
 
   it('#getOverview adds records to the table', fakeAsync(() => {
+    // Arrange
     fixture.detectChanges();
     tick();
 
@@ -155,6 +156,7 @@ describe('OverviewComponent', () => {
 
     let rows = template.queryAll(By.css('tbody tr'));
 
+    // Assert
     expect(verificationServiceSpy.getOverview).toHaveBeenCalled();
     expect(rows.length).toBeGreaterThan(0);
     expect(rows.length).toBe(component.items.length);
@@ -162,6 +164,7 @@ describe('OverviewComponent', () => {
   }));
 
   it('selecting table elements works', fakeAsync(() => {
+    // Arrange
     fixture.detectChanges();
     tick();
 
@@ -170,16 +173,37 @@ describe('OverviewComponent', () => {
 
     fixture.detectChanges();
 
+    // Act
     let firstItemCheckbox = template.query(By.css('p-checkbox input'));
     firstItemCheckbox.nativeElement.click();
 
     fixture.detectChanges();
     tick();
     
+    // Assert
     expect(fixture.componentInstance.selectedItems.length).toBeGreaterThan(0);
   }));
 
+  it('clicking the insights button redirects to the insights tab', fakeAsync(() => {
+    // Arrange
+    let router = TestBed.inject(Router);
+    
+    fixture.detectChanges();
+    tick();
+
+    // Act
+    let item = component.items[0];
+    let insightsBtn = template.query(By.css('.view-insights-btn'));
+    insightsBtn.nativeElement.click();
+
+    fixture.detectChanges();
+    tick();
+
+    expect(router.url).toBe(`/pages/compare/insights?compareId=${item.compareId}`);
+  }));
+
   it('delete button can\'t be pressed when there are no selected items', fakeAsync(() => {
+    // Arrange
     fixture.detectChanges();
     tick();
 
@@ -191,12 +215,14 @@ describe('OverviewComponent', () => {
     spyOn(component, 'deleteItems');
     let deleteBtn = template.query(By.css('#delete-btn'));
 
+    // Assert
     expect(deleteBtn.nativeElement.click).toThrowError();
     expect(deleteBtn.nativeElement.getAttribute('disabled')).toBe('');
     expect(component.deleteItems).not.toHaveBeenCalled();
   }));
 
   it('pressing delete button calls deleteItems() when there are selected elements', fakeAsync(() => {
+    // Arrange
     fixture.detectChanges();
     tick();
 
@@ -207,6 +233,7 @@ describe('OverviewComponent', () => {
     
     spyOn(component, 'deleteItems');
 
+    // Act
     let firstItemCheckbox = template.query(By.css('p-checkbox input'));
     firstItemCheckbox.nativeElement.click();
     
@@ -221,6 +248,7 @@ describe('OverviewComponent', () => {
     fixture.detectChanges();
     tick();
 
+    // Assert
     expect(component.deleteItems).toHaveBeenCalled();
   }));
 

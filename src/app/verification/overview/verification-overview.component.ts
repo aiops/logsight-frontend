@@ -134,7 +134,8 @@ export class VerificationOverviewComponent implements OnInit, AfterViewInit {
       accept: () => {
         for (let i of this.selectedItems) {
           this.verificationService.delete(i.compareId).subscribe(res => {
-            this.tableRef.value = this.tableRef.value.filter(item => i.compareId != item.compareId)
+            let itemIndex = this.items.findIndex(item => item.compareId === i.compareId);
+            this.items.splice(itemIndex, 1);
           })
         }
       },

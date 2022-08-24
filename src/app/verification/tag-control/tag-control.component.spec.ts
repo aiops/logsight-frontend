@@ -3,7 +3,7 @@ import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbTagModule } from '@nebular/theme';
+import { NbFocusMonitor, NbTagModule, NbThemeModule } from '@nebular/theme';
 import { MockModule, MockProvider } from 'ng-mocks';
 import { DropdownModule } from 'primeng/dropdown';
 import { TooltipModule } from 'primeng/tooltip';
@@ -49,7 +49,8 @@ describe('TagControlComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         DropdownModule,
-        MockModule(NbTagModule),
+        NbTagModule,
+        NbThemeModule.forRoot({ name: 'default' }),
         MockModule(FormsModule),
         MockModule(TooltipModule),
         MockModule(BrowserAnimationsModule)
@@ -84,7 +85,7 @@ describe('TagControlComponent', () => {
     expect(tagTypeText.trim()).toBe('Baseline tags');
   });
 
-  it('should add a new tag', fakeAsync(() => {
+  it('selecting a value from the dropdowns adds a new tag', fakeAsync(() => {
     fixture.detectChanges();
     tick();
     
@@ -119,9 +120,42 @@ describe('TagControlComponent', () => {
     tick();
 
     let tag = template.query(By.css('nb-tag'));
-    expect(tag.nativeElement.getAttribute('ng-reflect-text'))
+    expect((tag.nativeElement.textContent as string).trim())
       .toBe(`${availableTagKeys.tagKeys[0].tagName}:${availableTagValues.tagValues[0].tagValue}`);
 
     flush();
+  }));
+
+  it('calling #setKeyValue adds a new tag', fakeAsync(() => {
+    component.tagKey = 'key';
+    component.tagId = 'value';
+
+    component.setTagKeyValue();
+    
+    fixture.detectChanges();
+    tick();
+
+    let tag = template.query(By.css('nb-tag'));
+    expect((tag.nativeElement.textContent as string).trim())
+      .toBe('key:value');
+    expect(component.tagMap.size).toBe(1);
+  }));
+
+  it('clicking on the X button removes the tag', fakeAsync(() => {
+    component.tagKey = 'key';
+    component.tagId = 'value';
+
+    component.setTagKeyValue();
+
+    fixture.detectChanges();
+    tick();
+
+    let removeBtn = template.query(By.css('.nb-tag-remove'));
+    removeBtn.nativeElement.click();
+
+    fixture.detectChanges();
+    tick();
+
+    expect(component.tagMap.size).toBe(0);
   }));
 });

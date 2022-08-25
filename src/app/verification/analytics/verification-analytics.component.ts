@@ -65,7 +65,7 @@ export class VerificationAnalyticsComponent implements OnInit {
   verificationFrequencyCount = 0
   verificationFrequencyWeek = 0
 
-  verificationVelocityMinValue = 999
+  verificationVelocityMinValue = 0
   verificationVelocityMaxValue = 0
   verificationVelocityMeanValue = 0
   verificationVelocityBarData = []
@@ -133,7 +133,9 @@ export class VerificationAnalyticsComponent implements OnInit {
     let chartRequestRisk = new ChartRequest(new ChartConfig(parametersRisk), null)
     this.verificationService.loadBarData(this.userId, chartRequestRisk).subscribe(data => {
       data = data.data.data
-      let count = 0
+      let countMin = 0
+      let countMax = 0
+      let countMean = 0
       this.meanRisk = 0
       this.maxRisk = 0
       this.minRisk = 0
@@ -142,13 +144,13 @@ export class VerificationAnalyticsComponent implements OnInit {
           for (let j = 0; j < data[i].series.length; j++) {
             if (data[i].series[j].name == "Min risk" && data[i].series[j].value != 0) {
               this.minRisk += Number(data[i].series[j].value)
+              countMin += 1
             } else if (data[i].series[j].name == "Max risk" && data[i].series[j].value != 0) {
               this.maxRisk += Number(data[i].series[j].value)
+              countMax += 1
             } else if (data[i].series[j].name == "Mean risk" && data[i].series[j].value != 0) {
               this.meanRisk += Number(data[i].series[j].value)
-            }
-            if (data[i].series[j].value != 0) {
-              count += 1
+              countMean += 1
             }
           }
           var date = moment.utc(data[i].name, 'YYYY-MM-DD HH:mm').format('DD-MM-YYYY HH:mm');
@@ -156,9 +158,9 @@ export class VerificationAnalyticsComponent implements OnInit {
           var local = moment(stillUtc, 'DD-MM-YYYY HH:mm').local().format('MMM DD HH:mm');
           data[i].name = local.toString()
         }
-        this.meanRisk = this.meanRisk / (count / 3)
-        this.maxRisk = this.maxRisk / (count / 3)
-        this.minRisk = this.minRisk / (count / 3)
+        this.meanRisk = this.meanRisk / countMean
+        this.maxRisk = this.maxRisk / countMax
+        this.minRisk = this.minRisk / countMin
         this.riskBarData = data;
       }
     });

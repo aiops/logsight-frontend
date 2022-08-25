@@ -89,7 +89,7 @@
           <div class="col-4 border-right my-auto">
             <div class="row">
               <div class="col text-center">
-                <h3 class="text-primary">{{verificationVelocityMeanValue | number:'1.0-0'}} s</h3>
+                <h3 class="text-primary">{{verificationVelocityMeanValue | number:'1.2-2'}} s</h3>
                 Verification velocity
                 <div class="row justify-content-center my-auto">
                   <vertical-bar-chart [data]="verificationVelocityBarData"></vertical-bar-chart>
@@ -105,10 +105,10 @@
               <div class="col text-center">
                 <div class="row pt-3">
                   <div class="col text-right border-right"><h3
-                    class="text-primary">{{verificationVelocityMinValue | number:'1.0-0'}} s</h3>
+                    class="text-primary">{{verificationVelocityMinValue | number:'1.2-2'}} s</h3>
                     Minimum
                   </div>
-                  <div class="col text-left"><h3 class="text-primary">{{verificationVelocityMaxValue | number:'1.0-0'}}
+                  <div class="col text-left"><h3 class="text-primary">{{verificationVelocityMaxValue | number:'1.2-2'}}
                     s</h3>
                     Maximum
                   </div>
@@ -136,11 +136,11 @@
               <div class="col text-center">
                 <div class="row pt-3">
                   <div class="col text-right border-right"><h3
-                    class="text-danger">{{verificationFailureRatioMaxValue | number:'1.0-0'}}</h3>
+                    class="text-danger">{{verificationFailureRatioMaxValue | number:'1.2-2'}}</h3>
                     Maximum
                   </div>
                   <div class="col text-left"><h3
-                    class="text-danger">{{verificationFailureRatioWeek | number:'1.0-0'}}</h3>
+                    class="text-danger">{{verificationFailureRatioWeek | number:'1.2-2'}}</h3>
                     Last week
                   </div>
                 </div>

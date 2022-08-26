@@ -10,6 +10,7 @@ export interface VerificationStateItem {
   count_total: number;
   coverage_candidate: number;
   level: string;
+  code_location: string;
   percentage_baseline: number;
   percentage_candidate: number;
   risk_color: string;

@@ -417,7 +417,19 @@
 
               </td>
 
-              <td>{{item.template}}</td>
+              <td *ngIf="item.code_location">
+                <a href="{{item.code_location}}">
+                <div style="height:100%;width:100%">
+                   {{item.template}}
+                </div>
+              </a>
+              </td>
+              <td *ngIf="!item.code_location">
+                <div style="height:100%;width:100%">
+                   {{item.template}}
+                </div>
+              </td>
+
 
               <!--            <td >-->
               <!--&lt;!&ndash;                {% if row.template_code %}&ndash;&gt;-->

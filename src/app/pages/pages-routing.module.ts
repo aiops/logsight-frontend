@@ -15,6 +15,9 @@ const routes: Routes = [{
     path: 'incidents', loadChildren: () => import('../incidents/incidents.module')
       .then(m => m.IncidentsModule),
   }, {
+    path: 'file-upload', loadChildren: () => import('./file-upload/file-upload.module')
+      .then(m => m.FileUploadModule),
+  }, {
     path: 'demo-data', loadChildren: () => import('./demo-data/demo-data.module')
       .then(m => m.DemoDataModule),
   }, {

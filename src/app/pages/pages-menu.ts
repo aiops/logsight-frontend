@@ -8,6 +8,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true
   },
   {
+    title: 'File upload',
+    icon: 'link-outline',
+    link: '/pages/file-upload',
+  },
+  {
     title: 'Sample data',
     icon: 'link-outline',
     link: '/pages/sample-data',

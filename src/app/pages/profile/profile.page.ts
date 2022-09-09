@@ -7,9 +7,8 @@ import {NotificationsService} from "angular2-notifications";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../auth/login.service";
 import {ApiService} from "../../@core/service/api.service";
+import {Application} from "../../@core/common/application";
 import {LogsightUser} from "../../@core/common/logsight-user";
-import {loadStripe} from "@stripe/stripe-js/pure";
-import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'profile', styleUrls: ['./profile.page.scss'], templateUrl: './profile.page.html',
@@ -17,6 +16,7 @@ import {environment} from "../../../environments/environment";
 export class ProfilePage implements OnInit {
   key: string;
   email: string;
+  quantity: number;
   response: HighlightResult;
   isMatching = true;
   formPassword = new FormGroup({
@@ -35,18 +35,19 @@ export class ProfilePage implements OnInit {
     domain: ['#00ff00', '#ff0000', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
 
-  userId: string;
-  user: LogsightUser | null;
-  isSpinning = false;
-  stripePromise = loadStripe(environment.stripePkId);
+  units: string = 'GBs';
 
-  constructor(private router: Router,
-              private integrationService: IntegrationService,
-              private authService: AuthenticationService,
-              private notificationService: NotificationsService,
-              private route: ActivatedRoute,
-              private loginService: LoginService,
-              private apiService: ApiService) {
+  userId: string;
+
+  user: LogsightUser | null
+  applicationId: string;
+  isSpinning = false;
+  applications: Application[] = [];
+  applicationName: string;
+
+
+  constructor(private router: Router, private integrationService: IntegrationService, private authService: AuthenticationService, private notificationService: NotificationsService, private route: ActivatedRoute, private loginService: LoginService, private apiService: ApiService) {
+
   }
 
   ngOnInit(): void {
@@ -56,48 +57,18 @@ export class ProfilePage implements OnInit {
       this.id = resp.userId
       this.user = resp
     })
-
-    this.route.queryParams.subscribe(params => {
-      if (params.payment == 'false') {
-        this.apiService.handleErrors({"error":"Payment failed", "message":"Please go to your customer payment portal, and check details."})
-      }
-    }, error => {
-      this.apiService.handleErrors(error)
-    })
+    this.loadApplications(this.userId)
   }
 
-  async stripeCLick() {
-    const payment = {
-      currency: 'usd',
-      email: this.email,
-      priceID: environment.stripePriceId,
-      cancelUrl: environment.stripeCancelUrl,
-      successUrl: environment.stripeSuccessUrl,
-    };
-    const stripe = await this.stripePromise;
-    this.integrationService.subscription(payment).subscribe(data => {
-      console.log(data)
-      if (data.isAlreadySubscribed) {
-        stripe.redirectToCheckout({
-          sessionId: data.sessionId
-        })
+  applicationSelected(appId: string) {
+    this.applications.forEach(it => {
+      if (appId == it.applicationId) {
+        this.applicationName = it.name
       }
-      else{
-        this.notificationService.success("Already subscribed", "If you look to extend your limites over the Developer plan, please reach out support@logsight.ai", {
-      timeOut: 10000,
-      showProgressBar: true,
-      pauseOnHover: true,
-      clickToClose: true
     })
-      }
-    });
+    appId === null ? this.applicationId = null : this.applicationId = appId;
   }
-  async stripeCustomerPortal() {
-    const stripe = await this.stripePromise;
-    this.integrationService.checkCustomerPortal().subscribe(data => {
-      window.open(data['stripeCustomerPortalUrl'], "_blank");
-    });
-  }
+
 
   changePassword() {
     this.formPassword.get("userId").setValue(this.id)
@@ -116,4 +87,36 @@ export class ProfilePage implements OnInit {
   }
 
 
+  createApplication() {
+    this.isSpinning = true
+    if (this.form) {
+      this.integrationService.createApplication(this.userId, {applicationName: this.form.get("name").value}).subscribe(resp => {
+        setTimeout(_ => {
+          this.applicationSelected(resp.applicationId);
+        }, 50);
+        this.loadApplications(this.userId);
+        this.form.reset()
+        this.isSpinning = false
+        this.notificationService.success("Application created", "Application successfully created.", this.apiService.getNotificationOpetions())
+      }, error => {
+        this.apiService.handleErrors(error)
+        this.isSpinning = false
+      })
+    }
+  }
+
+  removeApplication(id: string) {
+    this.integrationService.deleteApplication(this.userId, id).subscribe(resp => {
+      this.notificationService.success('Success', 'Application successfully deleted', this.apiService.getNotificationOpetions())
+      this.loadApplications(this.userId)
+    }, error => {
+      this.apiService.handleErrors(error)
+    })
+  }
+
+  loadApplications(userId: string) {
+    this.integrationService.loadApplications(userId).subscribe(resp => {
+      this.applications = resp.applications
+    })
+  }
 }

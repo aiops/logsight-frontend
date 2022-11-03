@@ -1414,6 +1414,7 @@ section {
   overflow: hidden;
 }
 
+
 .team .member .member-img:after {
   position: absolute;
   content: "";

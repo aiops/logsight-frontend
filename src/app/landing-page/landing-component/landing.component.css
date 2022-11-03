@@ -30,6 +30,7 @@
     height: 100px;
 }
 
+
 .accordion-button {
   position: relative;
   display: flex;
@@ -155,5 +156,3 @@
 .accordion-flush .accordion-item .accordion-button {
   border-radius: 0
 }
-
-

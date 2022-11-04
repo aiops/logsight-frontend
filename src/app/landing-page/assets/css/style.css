@@ -41,7 +41,7 @@ section {
 
 .section-header {
   text-align: center;
-  padding-bottom: 40px;
+  padding-bottom: 10px;
 }
 
 .section-header h2 {
@@ -54,7 +54,7 @@ section {
 }
 
 .section-header p {
-  margin: 10px 0 0 0;
+  margin: 0 0 0 0;
   padding: 0;
   font-size: 26px;
   line-height: 42px;
@@ -734,7 +734,7 @@ section {
 }
 
 .features .feature-icons {
-  margin-top: 120px;
+  margin-top: 0px;
 }
 
 .features .feature-icons h3 {
